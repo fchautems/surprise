@@ -21,7 +21,15 @@ test("every local service-worker shell asset exists", async () => {
 
 test("the document exposes the controls required by the application", async () => {
   const html = await readFile("index.html", "utf8");
-  for (const id of ["map", "routes", "new-dialog", "intro-dialog", "ending-dialog", "sound-toggle", "install-app"]) {
+  for (const id of ["map", "routes", "new-dialog", "intro-dialog", "ending-dialog", "sound-toggle", "install-app", "language-toggle"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
+});
+
+test("the application shell has no remote runtime dependencies", async () => {
+  const files = await Promise.all(["index.html", "styles.css", "src/app.js"].map((path) => readFile(path, "utf8")));
+  files.forEach((content) => {
+    assert.doesNotMatch(content, /fonts\.googleapis|unpkg|cdn\.jsdelivr/);
+    assert.doesNotMatch(content, /<(script|link)[^>]+https?:\/\//);
+  });
 });

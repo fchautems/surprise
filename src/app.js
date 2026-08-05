@@ -1,5 +1,6 @@
 import { countEchoes, generateWorld, routeDistance, weatherForDay, createInitialState } from "./world.js";
 import { AtlasAmbience } from "./audio.js";
+import { applyTranslations, preferredLocale, translate } from "./i18n.js";
 
 const elements = {
   canvas: document.querySelector("#map"),
@@ -35,6 +36,7 @@ let hover = null;
 let animationFrame;
 let installPrompt = null;
 const ambience = new AtlasAmbience();
+let currentLocale = preferredLocale(location.search, navigator.languages || [navigator.language]);
 
 function defaultSeed() {
   const querySeed = new URLSearchParams(location.search).get("atlas");
@@ -54,13 +56,14 @@ function loadState(nextWorld) {
 
 function save() { localStorage.setItem(storageKey(world.seed), JSON.stringify(state)); }
 
-function openWorld(seed) {
-  world = generateWorld(seed);
+function openWorld(seed, locale = currentLocale) {
+  world = generateWorld(seed, 28, locale);
   state = loadState(world);
   const url = new URL(location.href);
   url.searchParams.set("atlas", world.seed);
+  url.searchParams.set("lang", currentLocale);
   history.replaceState(null, "", url);
-  elements.seedLabel.textContent = `Chart ${world.hash.toUpperCase()}`;
+  elements.seedLabel.textContent = translate(currentLocale, "chart", { hash: world.hash.toUpperCase() });
   elements.total.textContent = world.islands.length;
   elements.echoTarget.textContent = world.echoTarget;
   updateJournal();
@@ -132,8 +135,8 @@ function draw(time = 0) {
 
     if (known || hover === index) {
       context.fillStyle = known ? colours.ink : colours.reachable;
-      context.font = `${known ? 11 : 10}px DM Mono, monospace`;
-      context.fillText(known ? island.name : "uncharted", point.x + radius + 7, point.y + 4);
+      context.font = `${known ? 11 : 10}px Cascadia Mono, Consolas, monospace`;
+      context.fillText(known ? island.name : translate(currentLocale, "unknown").toLowerCase(), point.x + radius + 7, point.y + 4);
     }
   });
 
@@ -143,7 +146,9 @@ function draw(time = 0) {
 function formatCoordinates(island) {
   const latitude = ((.5 - island.y) * 120).toFixed(2);
   const longitude = ((island.x - .5) * 220).toFixed(2);
-  return `${Math.abs(latitude)}° ${latitude >= 0 ? "N" : "S"} · ${Math.abs(longitude)}° ${longitude >= 0 ? "E" : "W"}`;
+  const latitudeCardinal = latitude >= 0 ? translate(currentLocale, "north") : translate(currentLocale, "south");
+  const longitudeCardinal = longitude >= 0 ? translate(currentLocale, "east") : translate(currentLocale, "west");
+  return `${Math.abs(latitude)}° ${latitudeCardinal} · ${Math.abs(longitude)}° ${longitudeCardinal}`;
 }
 
 function updateJournal() {
@@ -157,7 +162,7 @@ function updateJournal() {
   elements.kind.textContent = island.kind;
   elements.observation.textContent = island.description;
   elements.fragment.textContent = island.fragment ? `“${island.fragment}”` : "";
-  elements.distance.textContent = `${state.distance} nautical miles`;
+  elements.distance.textContent = translate(currentLocale, "miles", { distance: state.distance });
   elements.routes.replaceChildren(...island.neighbours
     .slice()
     .sort((first, second) => routeDistance(world, state.current, first) - routeDistance(world, state.current, second))
@@ -167,9 +172,9 @@ function updateJournal() {
       button.type = "button";
       button.className = "route-button";
       const title = document.createElement("b");
-      title.textContent = isKnown(islandId) ? destination.name : "Uncharted shore";
+      title.textContent = isKnown(islandId) ? destination.name : translate(currentLocale, "unknown");
       const note = document.createElement("span");
-      note.textContent = `${routeDistance(world, state.current, islandId)} nautical miles`;
+      note.textContent = translate(currentLocale, "miles", { distance: routeDistance(world, state.current, islandId) });
       button.append(title, note);
       button.addEventListener("mouseenter", () => { hover = islandId; });
       button.addEventListener("mouseleave", () => { hover = null; });
@@ -179,7 +184,8 @@ function updateJournal() {
   elements.log.replaceChildren(...state.log.slice().reverse().map((entry) => {
     const item = document.createElement("li");
     const place = world.islands[entry.island];
-    item.innerHTML = `Day ${entry.day} · <b>${place.name}</b>${entry.distance ? ` · ${entry.distance} nm` : " · first landing"}`;
+    const journey = entry.distance ? translate(currentLocale, "miles", { distance: entry.distance }) : translate(currentLocale, "firstLanding");
+    item.textContent = translate(currentLocale, "logEntry", { day: entry.day, name: place.name, journey });
     return item;
   }));
 }
@@ -194,12 +200,12 @@ function travel(index) {
   state.log.push({ day: state.day, island: index, distance: travelled });
   save();
   updateJournal();
-  elements.mapHint.textContent = `Arrived at ${world.islands[index].name}`;
-  setTimeout(() => { elements.mapHint.textContent = "Choose a visible island to travel"; }, 1800);
+  elements.mapHint.textContent = translate(currentLocale, "arrived", { name: world.islands[index].name });
+  setTimeout(() => { elements.mapHint.textContent = translate(currentLocale, "mapHint"); }, 1800);
   if (!state.endingSeen && countEchoes(world, state) >= world.echoTarget) {
     state.endingSeen = true;
     save();
-    elements.endingCopy.textContent = `Across ${state.distance} nautical miles, five voices have repeated the same impossible idea: this atlas was waiting for you specifically.`;
+    elements.endingCopy.textContent = translate(currentLocale, "endingCopy", { distance: state.distance });
     setTimeout(() => elements.endingDialog.showModal(), 650);
   }
 }
@@ -231,13 +237,13 @@ elements.canvas.addEventListener("pointermove", (event) => {
   elements.canvas.style.cursor = hover !== null && isReachable(hover) ? "pointer" : "crosshair";
   if (hover !== null && isReachable(hover)) {
     const destination = world.islands[hover];
-    const name = isKnown(hover) ? destination.name : "Uncharted shore";
-    elements.mapHint.textContent = `${name} · ${routeDistance(world, state.current, hover)} nautical miles`;
+    const name = isKnown(hover) ? destination.name : translate(currentLocale, "unknown");
+    elements.mapHint.textContent = `${name} · ${translate(currentLocale, "miles", { distance: routeDistance(world, state.current, hover) })}`;
   } else {
-    elements.mapHint.textContent = "Choose a visible island to travel";
+    elements.mapHint.textContent = translate(currentLocale, "mapHint");
   }
 });
-elements.canvas.addEventListener("pointerleave", () => { hover = null; elements.mapHint.textContent = "Choose a visible island to travel"; });
+elements.canvas.addEventListener("pointerleave", () => { hover = null; elements.mapHint.textContent = translate(currentLocale, "mapHint"); });
 elements.canvas.addEventListener("click", (event) => { const index = findIsland(event); if (index !== null) travel(index); });
 window.addEventListener("resize", resize);
 
@@ -251,14 +257,14 @@ document.querySelector("#random-seed").addEventListener("click", () => {
   elements.seedInput.value = `${words[Math.floor(Math.random() * words.length)]}-${Math.random().toString(36).slice(2, 7)}`;
 });
 elements.dialog.addEventListener("close", () => {
-  if (elements.dialog.returnValue === "create") openWorld(elements.seedInput.value.trim() || defaultSeed());
+  if (elements.dialog.returnValue === "create") openWorld(elements.seedInput.value.trim() || defaultSeed(), currentLocale);
 });
 document.querySelector("#share").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(location.href);
-    elements.shareStatus.textContent = "Link copied";
+    elements.shareStatus.textContent = translate(currentLocale, "linkCopied");
   } catch {
-    elements.shareStatus.textContent = "Use the address in your browser";
+    elements.shareStatus.textContent = translate(currentLocale, "browserAddress");
   }
   setTimeout(() => { elements.shareStatus.textContent = ""; }, 2200);
 });
@@ -267,9 +273,11 @@ document.querySelector("#sound-toggle").addEventListener("click", async (event) 
   try {
     const active = await ambience.toggle();
     button.setAttribute("aria-pressed", String(active));
-    button.querySelector(".action-label").textContent = active ? "Sound on" : "Sound off";
+    const key = active ? "soundOn" : "soundOff";
+    button.querySelector(".action-label").dataset.i18n = key;
+    button.querySelector(".action-label").textContent = translate(currentLocale, key);
   } catch {
-    button.querySelector(".action-label").textContent = "Sound unavailable";
+    button.querySelector(".action-label").textContent = translate(currentLocale, "soundUnavailable");
     button.disabled = true;
   }
 });
@@ -291,13 +299,22 @@ window.addEventListener("appinstalled", () => { installButton.hidden = true; });
 document.querySelector("#ending-share").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(location.href);
-    document.querySelector("#ending-share").textContent = "Atlas link copied";
+    document.querySelector("#ending-share").textContent = translate(currentLocale, "atlasLinkCopied");
   } catch {
-    document.querySelector("#ending-share").textContent = "Copy the browser address";
+    document.querySelector("#ending-share").textContent = translate(currentLocale, "copyBrowserAddress");
   }
 });
 
-openWorld(defaultSeed());
+document.querySelector("#language-toggle").addEventListener("click", () => {
+  currentLocale = currentLocale === "fr" ? "en" : "fr";
+  applyTranslations(currentLocale);
+  document.querySelector("#language-toggle").textContent = translate(currentLocale, "languageLabel");
+  openWorld(world.seed, currentLocale);
+});
+
+applyTranslations(currentLocale);
+document.querySelector("#language-toggle").textContent = translate(currentLocale, "languageLabel");
+openWorld(defaultSeed(), currentLocale);
 cancelAnimationFrame(animationFrame);
 draw();
 

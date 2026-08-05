@@ -1,4 +1,4 @@
-const CACHE_NAME = "quiet-atlas-v3";
+const CACHE_NAME = "quiet-atlas-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,6 +7,8 @@ const APP_SHELL = [
   "./icons/atlas.svg",
   "./src/app.js",
   "./src/audio.js",
+  "./src/content.js",
+  "./src/i18n.js",
   "./src/random.js",
   "./src/world.js"
 ];

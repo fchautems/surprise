@@ -16,18 +16,19 @@
     <main class="shell">
       <header class="masthead">
         <div>
-          <p class="eyebrow">Field notes from elsewhere</p>
+          <p class="eyebrow" data-i18n="fieldNotes">Field notes from elsewhere</p>
           <h1>The Quiet Atlas</h1>
         </div>
         <div class="header-actions">
           <span id="seed-label" class="seed-label"></span>
+          <button id="language-toggle" class="icon-button language-toggle" type="button" aria-label="Change language">FR</button>
           <button id="sound-toggle" class="icon-button" type="button" aria-pressed="false" title="Toggle ambient sound">
-            <span class="sound-icon" aria-hidden="true">◌</span><span class="action-label">Sound off</span>
+            <span class="sound-icon" aria-hidden="true">◌</span><span class="action-label" data-i18n="soundOff">Sound off</span>
           </button>
           <button id="install-app" class="icon-button" type="button" hidden>
-            <span aria-hidden="true">↓</span><span class="action-label">Install</span>
+            <span aria-hidden="true">↓</span><span class="action-label" data-i18n="install">Install</span>
           </button>
-          <button id="new-atlas" class="text-button" type="button">New atlas</button>
+          <button id="new-atlas" class="text-button" type="button" data-i18n="newAtlas">New atlas</button>
         </div>
       </header>
 
@@ -36,25 +37,25 @@
           <canvas id="map" aria-label="Map of an unknown archipelago"></canvas>
           <div class="map-vignette" aria-hidden="true"></div>
           <div class="compass" aria-hidden="true"><span>N</span></div>
-          <div class="map-hint" id="map-hint">Choose a visible island to travel</div>
+          <div class="map-hint" id="map-hint" data-i18n="mapHint">Choose a visible island to travel</div>
         </div>
 
         <aside class="journal">
           <div class="status-row">
             <div>
-              <span class="status-label">Day</span>
+              <span class="status-label" data-i18n="day">Day</span>
               <strong id="day">1</strong>
             </div>
             <div>
-              <span class="status-label">Weather</span>
+              <span class="status-label" data-i18n="weather">Weather</span>
               <strong id="weather">Still air</strong>
             </div>
             <div>
-              <span class="status-label">Found</span>
+              <span class="status-label" data-i18n="found">Found</span>
               <strong><span id="found">1</span>/<span id="total">0</span></strong>
             </div>
             <div>
-              <span class="status-label">Echoes</span>
+              <span class="status-label" data-i18n="echoes">Echoes</span>
               <strong><span id="echoes">0</span>/<span id="echo-target">5</span></strong>
             </div>
           </div>
@@ -69,22 +70,22 @@
 
           <div class="routes-wrap">
             <div class="section-title">
-              <h3>Possible crossings</h3>
-              <span>select a shore</span>
+              <h3 data-i18n="possibleCrossings">Possible crossings</h3>
+              <span data-i18n="selectShore">select a shore</span>
             </div>
             <div id="routes" class="routes"></div>
           </div>
 
           <div class="log-wrap">
             <div class="section-title">
-              <h3>Expedition log</h3>
+              <h3 data-i18n="expeditionLog">Expedition log</h3>
               <span id="distance"></span>
             </div>
             <ol id="log" class="log"></ol>
           </div>
 
           <footer class="journal-footer">
-            <button id="share" class="primary-button" type="button">Copy this world's link</button>
+            <button id="share" class="primary-button" type="button" data-i18n="copyLink">Copy this world's link</button>
             <span id="share-status" role="status"></span>
           </footer>
         </aside>
@@ -94,44 +95,44 @@
     <dialog id="new-dialog">
       <form method="dialog">
         <button class="dialog-close" value="cancel" aria-label="Close">×</button>
-        <p class="eyebrow">Open another chart</p>
-        <h2>Every name hides a world.</h2>
-        <p>Enter any word, date, or phrase. The same phrase will always lead back to the same archipelago.</p>
-        <label for="seed-input">Atlas name</label>
-        <input id="seed-input" name="seed" maxlength="60" autocomplete="off" placeholder="e.g. the blue hour" />
+        <p class="eyebrow" data-i18n="openChart">Open another chart</p>
+        <h2 data-i18n="everyName">Every name hides a world.</h2>
+        <p data-i18n="seedHelp">Enter any word, date, or phrase. The same phrase will always lead back to the same archipelago.</p>
+        <label for="seed-input" data-i18n="atlasName">Atlas name</label>
+        <input id="seed-input" name="seed" maxlength="60" autocomplete="off" placeholder="e.g. the blue hour" data-i18n-placeholder="seedPlaceholder" />
         <div class="dialog-actions">
-          <button id="random-seed" class="text-button" type="button">Surprise me</button>
-          <button class="primary-button" value="create">Open atlas</button>
+          <button id="random-seed" class="text-button" type="button" data-i18n="surpriseMe">Surprise me</button>
+          <button class="primary-button" value="create" data-i18n="openAtlas">Open atlas</button>
         </div>
       </form>
     </dialog>
 
     <dialog id="intro-dialog" class="intro-dialog">
       <form method="dialog">
-        <p class="eyebrow">An atlas with no author</p>
-        <h2>A coast has appeared.</h2>
-        <p>No one has charted what lies beyond it. Travel between the visible shores, record what you find, and listen for echoes left by an earlier expedition.</p>
+        <p class="eyebrow" data-i18n="introEyebrow">An atlas with no author</p>
+        <h2 data-i18n="introTitle">A coast has appeared.</h2>
+        <p data-i18n="introCopy">No one has charted what lies beyond it. Travel between the visible shores, record what you find, and listen for echoes left by an earlier expedition.</p>
         <div class="intro-key">
           <span aria-hidden="true">○</span>
-          <p><b>Known island</b><br />Its name remains on the chart.</p>
+          <p><b data-i18n="knownIsland">Known island</b><br /><span data-i18n="knownHelp">Its name remains on the chart.</span></p>
         </div>
         <div class="intro-key">
           <span class="unknown-key" aria-hidden="true">○</span>
-          <p><b>Uncharted shore</b><br />Near enough to reach from your position.</p>
+          <p><b data-i18n="unknownShore">Uncharted shore</b><br /><span data-i18n="unknownHelp">Near enough to reach from your position.</span></p>
         </div>
-        <button class="primary-button intro-start" value="begin">Begin the expedition</button>
+        <button class="primary-button intro-start" value="begin" data-i18n="begin">Begin the expedition</button>
       </form>
     </dialog>
 
     <dialog id="ending-dialog" class="ending-dialog">
       <form method="dialog">
-        <p class="eyebrow">A pattern in the static</p>
-        <h2>The echoes make a sentence.</h2>
+        <p class="eyebrow" data-i18n="endingEyebrow">A pattern in the static</p>
+        <h2 data-i18n="endingTitle">The echoes make a sentence.</h2>
         <p id="ending-copy"></p>
         <div class="constellation" aria-hidden="true">✦ · ✧ · ✦</div>
         <div class="dialog-actions ending-actions">
-          <button id="ending-share" class="text-button" type="button">Copy the atlas link</button>
-          <button class="primary-button" value="continue">Keep exploring</button>
+          <button id="ending-share" class="text-button" type="button" data-i18n="endingShare">Copy the atlas link</button>
+          <button class="primary-button" value="continue" data-i18n="keepExploring">Keep exploring</button>
         </div>
       </form>
     </dialog>
