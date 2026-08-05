@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1720" />
+    <meta name="description" content="A small world that exists only when you explore it." />
+    <title>The Quiet Atlas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">Field notes from elsewhere</p>
+          <h1>The Quiet Atlas</h1>
+        </div>
+        <div class="header-actions">
+          <span id="seed-label" class="seed-label"></span>
+          <button id="new-atlas" class="text-button" type="button">New atlas</button>
+        </div>
+      </header>
+
+      <section class="atlas" aria-label="Map and expedition log">
+        <div class="map-panel">
+          <canvas id="map" aria-label="Map of an unknown archipelago"></canvas>
+          <div class="map-vignette" aria-hidden="true"></div>
+          <div class="compass" aria-hidden="true"><span>N</span></div>
+          <div class="map-hint" id="map-hint">Choose a visible island to travel</div>
+        </div>
+
+        <aside class="journal">
+          <div class="status-row">
+            <div>
+              <span class="status-label">Day</span>
+              <strong id="day">1</strong>
+            </div>
+            <div>
+              <span class="status-label">Weather</span>
+              <strong id="weather">Still air</strong>
+            </div>
+            <div>
+              <span class="status-label">Found</span>
+              <strong><span id="found">1</span>/<span id="total">0</span></strong>
+            </div>
+          </div>
+
+          <article class="place-card" aria-live="polite">
+            <p class="coordinates" id="coordinates"></p>
+            <h2 id="place-name"></h2>
+            <p class="place-kind" id="place-kind"></p>
+            <p class="observation" id="observation"></p>
+            <blockquote id="fragment"></blockquote>
+          </article>
+
+          <div class="log-wrap">
+            <div class="section-title">
+              <h3>Expedition log</h3>
+              <span id="distance"></span>
+            </div>
+            <ol id="log" class="log"></ol>
+          </div>
+
+          <footer class="journal-footer">
+            <button id="share" class="primary-button" type="button">Copy this world's link</button>
+            <span id="share-status" role="status"></span>
+          </footer>
+        </aside>
+      </section>
+    </main>
+
+    <dialog id="new-dialog">
+      <form method="dialog">
+        <button class="dialog-close" value="cancel" aria-label="Close">×</button>
+        <p class="eyebrow">Open another chart</p>
+        <h2>Every name hides a world.</h2>
+        <p>Enter any word, date, or phrase. The same phrase will always lead back to the same archipelago.</p>
+        <label for="seed-input">Atlas name</label>
+        <input id="seed-input" name="seed" maxlength="60" autocomplete="off" placeholder="e.g. the blue hour" />
+        <div class="dialog-actions">
+          <button id="random-seed" class="text-button" type="button">Surprise me</button>
+          <button class="primary-button" value="create">Open atlas</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
+
