@@ -44,6 +44,10 @@
               <span class="status-label">Found</span>
               <strong><span id="found">1</span>/<span id="total">0</span></strong>
             </div>
+            <div>
+              <span class="status-label">Echoes</span>
+              <strong><span id="echoes">0</span>/<span id="echo-target">5</span></strong>
+            </div>
           </div>
 
           <article class="place-card" aria-live="polite">
@@ -53,6 +57,14 @@
             <p class="observation" id="observation"></p>
             <blockquote id="fragment"></blockquote>
           </article>
+
+          <div class="routes-wrap">
+            <div class="section-title">
+              <h3>Possible crossings</h3>
+              <span>select a shore</span>
+            </div>
+            <div id="routes" class="routes"></div>
+          </div>
 
           <div class="log-wrap">
             <div class="section-title">
@@ -85,7 +97,19 @@
       </form>
     </dialog>
 
+    <dialog id="ending-dialog" class="ending-dialog">
+      <form method="dialog">
+        <p class="eyebrow">A pattern in the static</p>
+        <h2>The echoes make a sentence.</h2>
+        <p id="ending-copy"></p>
+        <div class="constellation" aria-hidden="true">✦ · ✧ · ✦</div>
+        <div class="dialog-actions ending-actions">
+          <button id="ending-share" class="text-button" type="button">Copy the atlas link</button>
+          <button class="primary-button" value="continue">Keep exploring</button>
+        </div>
+      </form>
+    </dialog>
+
     <script type="module" src="src/app.js"></script>
   </body>
 </html>
-

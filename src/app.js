@@ -1,4 +1,4 @@
-import { generateWorld, routeDistance, weatherForDay, createInitialState } from "./world.js";
+import { countEchoes, generateWorld, routeDistance, weatherForDay, createInitialState } from "./world.js";
 
 const elements = {
   canvas: document.querySelector("#map"),
@@ -6,18 +6,23 @@ const elements = {
   weather: document.querySelector("#weather"),
   found: document.querySelector("#found"),
   total: document.querySelector("#total"),
+  echoes: document.querySelector("#echoes"),
+  echoTarget: document.querySelector("#echo-target"),
   coordinates: document.querySelector("#coordinates"),
   name: document.querySelector("#place-name"),
   kind: document.querySelector("#place-kind"),
   observation: document.querySelector("#observation"),
   fragment: document.querySelector("#fragment"),
   log: document.querySelector("#log"),
+  routes: document.querySelector("#routes"),
   distance: document.querySelector("#distance"),
   seedLabel: document.querySelector("#seed-label"),
   mapHint: document.querySelector("#map-hint"),
   shareStatus: document.querySelector("#share-status"),
   dialog: document.querySelector("#new-dialog"),
-  seedInput: document.querySelector("#seed-input")
+  seedInput: document.querySelector("#seed-input"),
+  endingDialog: document.querySelector("#ending-dialog"),
+  endingCopy: document.querySelector("#ending-copy")
 };
 
 const context = elements.canvas.getContext("2d");
@@ -54,6 +59,7 @@ function openWorld(seed) {
   history.replaceState(null, "", url);
   elements.seedLabel.textContent = `Chart ${world.hash.toUpperCase()}`;
   elements.total.textContent = world.islands.length;
+  elements.echoTarget.textContent = world.echoTarget;
   updateJournal();
   resize();
 }
@@ -142,12 +148,31 @@ function updateJournal() {
   elements.day.textContent = state.day;
   elements.weather.textContent = weatherForDay(world, state.day);
   elements.found.textContent = state.visited.length;
+  elements.echoes.textContent = countEchoes(world, state);
   elements.coordinates.textContent = formatCoordinates(island);
   elements.name.textContent = island.name;
   elements.kind.textContent = island.kind;
   elements.observation.textContent = island.description;
   elements.fragment.textContent = island.fragment ? `“${island.fragment}”` : "";
   elements.distance.textContent = `${state.distance} nautical miles`;
+  elements.routes.replaceChildren(...island.neighbours
+    .slice()
+    .sort((first, second) => routeDistance(world, state.current, first) - routeDistance(world, state.current, second))
+    .map((islandId) => {
+      const destination = world.islands[islandId];
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "route-button";
+      const title = document.createElement("b");
+      title.textContent = isKnown(islandId) ? destination.name : "Uncharted shore";
+      const note = document.createElement("span");
+      note.textContent = `${routeDistance(world, state.current, islandId)} nautical miles`;
+      button.append(title, note);
+      button.addEventListener("mouseenter", () => { hover = islandId; });
+      button.addEventListener("mouseleave", () => { hover = null; });
+      button.addEventListener("click", () => travel(islandId));
+      return button;
+    }));
   elements.log.replaceChildren(...state.log.slice().reverse().map((entry) => {
     const item = document.createElement("li");
     const place = world.islands[entry.island];
@@ -168,6 +193,12 @@ function travel(index) {
   updateJournal();
   elements.mapHint.textContent = `Arrived at ${world.islands[index].name}`;
   setTimeout(() => { elements.mapHint.textContent = "Choose a visible island to travel"; }, 1800);
+  if (!state.endingSeen && countEchoes(world, state) >= world.echoTarget) {
+    state.endingSeen = true;
+    save();
+    elements.endingCopy.textContent = `Across ${state.distance} nautical miles, five voices have repeated the same impossible idea: this atlas was waiting for you specifically.`;
+    setTimeout(() => elements.endingDialog.showModal(), 650);
+  }
 }
 
 function findIsland(event) {
@@ -195,8 +226,15 @@ function resize() {
 elements.canvas.addEventListener("pointermove", (event) => {
   hover = findIsland(event);
   elements.canvas.style.cursor = hover !== null && isReachable(hover) ? "pointer" : "crosshair";
+  if (hover !== null && isReachable(hover)) {
+    const destination = world.islands[hover];
+    const name = isKnown(hover) ? destination.name : "Uncharted shore";
+    elements.mapHint.textContent = `${name} · ${routeDistance(world, state.current, hover)} nautical miles`;
+  } else {
+    elements.mapHint.textContent = "Choose a visible island to travel";
+  }
 });
-elements.canvas.addEventListener("pointerleave", () => { hover = null; });
+elements.canvas.addEventListener("pointerleave", () => { hover = null; elements.mapHint.textContent = "Choose a visible island to travel"; });
 elements.canvas.addEventListener("click", (event) => { const index = findIsland(event); if (index !== null) travel(index); });
 window.addEventListener("resize", resize);
 
@@ -221,8 +259,15 @@ document.querySelector("#share").addEventListener("click", async () => {
   }
   setTimeout(() => { elements.shareStatus.textContent = ""; }, 2200);
 });
+document.querySelector("#ending-share").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(location.href);
+    document.querySelector("#ending-share").textContent = "Atlas link copied";
+  } catch {
+    document.querySelector("#ending-share").textContent = "Copy the browser address";
+  }
+});
 
 openWorld(defaultSeed());
 cancelAnimationFrame(animationFrame);
 draw();
-

@@ -73,14 +73,40 @@ function makeSites(random, count) {
   return sites;
 }
 
-function nearestNeighbours(islands, sourceIndex, count = 3) {
-  const source = islands[sourceIndex];
-  return islands
-    .map((island, index) => ({ index, distance: distance(source, island) }))
-    .filter(({ index }) => index !== sourceIndex)
-    .sort((first, second) => first.distance - second.distance)
-    .slice(0, count)
-    .map(({ index }) => index);
+function connectIslands(islands) {
+  const links = islands.map(() => new Set());
+  const connected = new Set([0]);
+
+  // A minimum-distance spanning tree guarantees that no generated map contains
+  // a beautiful but permanently unreachable pocket of islands.
+  while (connected.size < islands.length) {
+    let shortest = null;
+    for (const from of connected) {
+      islands.forEach((island, to) => {
+        if (connected.has(to)) return;
+        const length = distance(islands[from], island);
+        if (!shortest || length < shortest.length) shortest = { from, to, length };
+      });
+    }
+    links[shortest.from].add(shortest.to);
+    links[shortest.to].add(shortest.from);
+    connected.add(shortest.to);
+  }
+
+  // Add local alternatives so exploration involves choices rather than a tree.
+  islands.forEach((source, from) => {
+    const nearest = islands
+      .map((island, to) => ({ to, length: distance(source, island) }))
+      .filter(({ to }) => to !== from && !links[from].has(to))
+      .sort((first, second) => first.length - second.length);
+    while (links[from].size < 3 && nearest.length) {
+      const { to } = nearest.shift();
+      links[from].add(to);
+      links[to].add(from);
+    }
+  });
+
+  return links.map((neighbours) => [...neighbours].sort((first, second) => first - second));
 }
 
 export function generateWorld(seedPhrase, count = 28) {
@@ -100,17 +126,24 @@ export function generateWorld(seedPhrase, count = 28) {
       name,
       kind,
       description: `${description}. ${random.pick(details)}`,
-      fragment: random() > 0.56 ? random.pick(fragments) : "",
+      fragment: "",
       phase: random.between(0, Math.PI * 2)
     };
   });
-  islands.forEach((island, index) => { island.neighbours = nearestNeighbours(islands, index, 3); });
+  const connections = connectIslands(islands);
+  islands.forEach((island, index) => { island.neighbours = connections[index]; });
 
   const start = islands
     .map((island, index) => ({ index, score: Math.hypot(island.x - .5, island.y - .5) }))
     .sort((first, second) => first.score - second.score)[0].index;
 
-  return { seed, hash: hashString(seed).toString(36), islands, start, weather };
+  const fragmentTotal = Math.min(8, islands.length - 1);
+  const fragmentSites = random.shuffle(islands.map(({ id }) => id).filter((id) => id !== start)).slice(0, fragmentTotal);
+  fragmentSites.forEach((islandId, index) => {
+    islands[islandId].fragment = fragments[index];
+  });
+
+  return { seed, hash: hashString(seed).toString(36), islands, start, weather, fragmentTotal, echoTarget: Math.min(5, fragmentTotal) };
 }
 
 export function routeDistance(world, from, to) {
@@ -128,7 +161,23 @@ export function createInitialState(world) {
     visited: [world.start],
     day: 1,
     distance: 0,
-    log: [{ day: 1, island: world.start, distance: 0 }]
+    log: [{ day: 1, island: world.start, distance: 0 }],
+    endingSeen: false
   };
 }
 
+export function countEchoes(world, state) {
+  return state.visited.reduce((total, islandId) => total + (world.islands[islandId].fragment ? 1 : 0), 0);
+}
+
+export function reachableIslands(world, start = world.start) {
+  const found = new Set([start]);
+  const queue = [start];
+  while (queue.length) {
+    const current = queue.shift();
+    world.islands[current].neighbours.forEach((next) => {
+      if (!found.has(next)) { found.add(next); queue.push(next); }
+    });
+  }
+  return found;
+}
