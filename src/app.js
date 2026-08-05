@@ -1,4 +1,5 @@
 import { countEchoes, generateWorld, routeDistance, weatherForDay, createInitialState } from "./world.js";
+import { AtlasAmbience } from "./audio.js";
 
 const elements = {
   canvas: document.querySelector("#map"),
@@ -32,6 +33,8 @@ let world;
 let state;
 let hover = null;
 let animationFrame;
+let installPrompt = null;
+const ambience = new AtlasAmbience();
 
 function defaultSeed() {
   const querySeed = new URLSearchParams(location.search).get("atlas");
@@ -259,6 +262,32 @@ document.querySelector("#share").addEventListener("click", async () => {
   }
   setTimeout(() => { elements.shareStatus.textContent = ""; }, 2200);
 });
+document.querySelector("#sound-toggle").addEventListener("click", async (event) => {
+  const button = event.currentTarget;
+  try {
+    const active = await ambience.toggle();
+    button.setAttribute("aria-pressed", String(active));
+    button.querySelector(".action-label").textContent = active ? "Sound on" : "Sound off";
+  } catch {
+    button.querySelector(".action-label").textContent = "Sound unavailable";
+    button.disabled = true;
+  }
+});
+
+const installButton = document.querySelector("#install-app");
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  installButton.hidden = false;
+});
+installButton.addEventListener("click", async () => {
+  if (!installPrompt) return;
+  await installPrompt.prompt();
+  await installPrompt.userChoice;
+  installPrompt = null;
+  installButton.hidden = true;
+});
+window.addEventListener("appinstalled", () => { installButton.hidden = true; });
 document.querySelector("#ending-share").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(location.href);
@@ -271,3 +300,13 @@ document.querySelector("#ending-share").addEventListener("click", async () => {
 openWorld(defaultSeed());
 cancelAnimationFrame(animationFrame);
 draw();
+
+if (!localStorage.getItem("quiet-atlas:introduction-seen")) {
+  const introduction = document.querySelector("#intro-dialog");
+  introduction.showModal();
+  introduction.addEventListener("close", () => localStorage.setItem("quiet-atlas:introduction-seen", "true"), { once: true });
+}
+
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", () => navigator.serviceWorker.register("service-worker.js"));
+}

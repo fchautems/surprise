@@ -6,6 +6,9 @@
     <meta name="theme-color" content="#0b1720" />
     <meta name="description" content="A small world that exists only when you explore it." />
     <title>The Quiet Atlas</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/atlas.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/atlas.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -18,6 +21,12 @@
         </div>
         <div class="header-actions">
           <span id="seed-label" class="seed-label"></span>
+          <button id="sound-toggle" class="icon-button" type="button" aria-pressed="false" title="Toggle ambient sound">
+            <span class="sound-icon" aria-hidden="true">◌</span><span class="action-label">Sound off</span>
+          </button>
+          <button id="install-app" class="icon-button" type="button" hidden>
+            <span aria-hidden="true">↓</span><span class="action-label">Install</span>
+          </button>
           <button id="new-atlas" class="text-button" type="button">New atlas</button>
         </div>
       </header>
@@ -94,6 +103,23 @@
           <button id="random-seed" class="text-button" type="button">Surprise me</button>
           <button class="primary-button" value="create">Open atlas</button>
         </div>
+      </form>
+    </dialog>
+
+    <dialog id="intro-dialog" class="intro-dialog">
+      <form method="dialog">
+        <p class="eyebrow">An atlas with no author</p>
+        <h2>A coast has appeared.</h2>
+        <p>No one has charted what lies beyond it. Travel between the visible shores, record what you find, and listen for echoes left by an earlier expedition.</p>
+        <div class="intro-key">
+          <span aria-hidden="true">○</span>
+          <p><b>Known island</b><br />Its name remains on the chart.</p>
+        </div>
+        <div class="intro-key">
+          <span class="unknown-key" aria-hidden="true">○</span>
+          <p><b>Uncharted shore</b><br />Near enough to reach from your position.</p>
+        </div>
+        <button class="primary-button intro-start" value="begin">Begin the expedition</button>
       </form>
     </dialog>
 

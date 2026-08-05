@@ -71,6 +71,23 @@ h1 { margin: 0; font-size: clamp(28px, 3vw, 40px); letter-spacing: -.02em; }
 }
 .text-button:hover { border-color: var(--gold); color: var(--gold); }
 
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 10px;
+}
+.icon-button:hover, .icon-button[aria-pressed="true"] { color: var(--gold); }
+.icon-button[hidden] { display: none; }
+.sound-icon { font-size: 17px; line-height: 0; }
+.icon-button[aria-pressed="true"] .sound-icon { animation: sound-pulse 2.4s ease-in-out infinite; }
+@keyframes sound-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; text-shadow: 0 0 8px var(--gold); } }
+
 .atlas {
   height: calc(100vh - 146px);
   min-height: 620px;
@@ -169,6 +186,14 @@ dialog input { width: 100%; padding: 13px; border: 1px solid var(--line); outlin
 dialog input:focus { border-color: var(--gold); }
 .dialog-close { position: absolute; right: 14px; top: 10px; border: 0; background: transparent; color: var(--muted); font-size: 25px; cursor: pointer; }
 .dialog-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; }
+.intro-dialog form { padding: 44px; }
+.intro-dialog h2 { font-size: 41px; }
+.intro-key { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: center; margin-top: 13px; }
+.intro-key > span { color: var(--gold); font-size: 25px; }
+.intro-key > .unknown-key { color: var(--cyan); opacity: .55; }
+.intro-key p { margin: 0; }
+.intro-key b { color: var(--ink); font-weight: 400; }
+.intro-start { width: 100%; margin-top: 28px; padding: 13px; }
 .ending-dialog { text-align: center; }
 .ending-dialog form { padding: 48px; }
 .ending-dialog .eyebrow { color: var(--gold); }
@@ -192,6 +217,8 @@ dialog input:focus { border-color: var(--gold); }
   .shell { padding: 14px; }
   .masthead { height: 68px; }
   .header-actions { padding-top: 10px; }
+  .action-label { display: none; }
+  .header-actions { gap: 15px; }
   .status-row { grid-template-columns: repeat(2, 1fr); row-gap: 14px; }
   .status-row > div:nth-child(3) { border-left: 0; padding-left: 0; }
   .map-panel { min-height: 350px; }
@@ -199,4 +226,6 @@ dialog input:focus { border-color: var(--gold); }
   .ending-dialog form { padding: 34px 24px; }
 }
 
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; }
+}

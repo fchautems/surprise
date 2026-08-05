@@ -1,0 +1,19 @@
+{
+  "name": "The Quiet Atlas",
+  "short_name": "Quiet Atlas",
+  "description": "A small world that exists only when you explore it.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#071015",
+  "theme_color": "#0b1720",
+  "icons": [
+    {
+      "src": "icons/atlas.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
