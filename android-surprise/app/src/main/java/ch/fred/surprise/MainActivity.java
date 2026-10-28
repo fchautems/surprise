@@ -134,6 +134,9 @@ public class MainActivity extends Activity {
     private android.widget.ProgressBar progress;
     private Button next, joker;
     private GradientDrawable shape(int color,int radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(radius);return d;}
+    private GradientDrawable outlinedShape(int color,int accent){
+        GradientDrawable d=shape(color,dp(16)); d.setStroke(dp(2),accent); return d;
+    }
     private TextView label(String s,int size,int color){TextView v=new TextView(this);v.setText(s);v.setTextSize(size);v.setTextColor(color);v.setGravity(Gravity.CENTER);return v;}
     private int categoryColor(String name){
         switch(name){
@@ -184,6 +187,7 @@ public class MainActivity extends Activity {
         android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
         int dailyBest=prefs.getString("dailyDate","").equals(today) ? prefs.getInt("dailyBest",0) : 0;
         Button daily=makeMenuButton(dailyBest>0 ? "Défi du jour · record "+dailyBest : "Défi du jour");
+        daily.setBackground(outlinedShape(CARD,GOLD)); daily.setTextColor(GOLD);
         choices.addView(daily); daily.setOnClickListener(v->{gameMode="DÉFI";newGame();});
         Button theme=makeMenuButton("Choisir un thème");
         choices.addView(theme); theme.setOnClickListener(v->showThemes());
@@ -200,7 +204,8 @@ public class MainActivity extends Activity {
         header.setText("CHOISIS TON THÈME"); category.setText("✦  EXPLORATION  ✦"); category.setTextColor(GOLD);
         question.setText("Quelle escale te tente ?"); feedback.setText(""); next.setText("Retour"); next.setVisibility(View.VISIBLE);
         for(String theme:new String[]{"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS"}){
-            Button b=makeMenuButton(theme); choices.addView(b);
+            Button b=makeMenuButton(theme); b.setTextColor(categoryColor(theme));
+            b.setBackground(outlinedShape(CARD,categoryColor(theme))); choices.addView(b);
             b.setOnClickListener(v->{gameMode=theme;newGame();});
         }
         scroll.post(()->scroll.scrollTo(0,0));
@@ -217,7 +222,7 @@ public class MainActivity extends Activity {
             options=restoredOptions.clone();
         }else{Collections.shuffle(a,gameMode.equals("DÉFI") ? new Random((long)dailyDate.hashCode()*31+index) : rng); options=a.toArray(new String[0]);}
         for(String value:options){
-            Button b=new Button(this);b.setText(value);b.setTextColor(WHITE);b.setTextSize(17);b.setAllCaps(false);b.setBackgroundTintList(null);b.setBackground(shape(CARD,dp(16)));
+            Button b=new Button(this);b.setText(value);b.setTextColor(WHITE);b.setTextSize(17);b.setAllCaps(false);b.setBackgroundTintList(null);b.setBackground(outlinedShape(CARD,categoryColor(q[0])));
             b.setMinHeight(dp(56)); b.setPadding(dp(12),dp(10),dp(12),dp(10));
             LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.setMargins(0,dp(5),0,dp(5)); choices.addView(b,lp);
             if(hiddenOptions!=null && java.util.Arrays.asList(hiddenOptions).contains(value)) { b.setEnabled(false); b.setAlpha(0.35f); }
