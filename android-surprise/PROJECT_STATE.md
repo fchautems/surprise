@@ -1,8 +1,8 @@
 # État du projet — 28 octobre 2026
 
-Application Android native : partie de 8 questions tirées sans répétition parmi 16, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
+Application Android native : partie de 8 questions tirées sans répétition parmi 40, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles : analyse automatisée du contenu vérifiant 16 questions, quatre choix distincts et nombre suffisant pour une partie. Compilation et test sur appareil non effectués : SDK et Gradle absents localement. Workflow GitHub Actions ajouté pour construire et publier un APK de debug ; son exécution et son résultat restent à vérifier. Aucun APK vérifié à ce stade.
+Contrôles : analyse automatisée du contenu vérifiant 16 questions, quatre choix distincts et nombre suffisant pour une partie. SDK et Gradle absents localement. La CI a compilé le commit b17cb782 et produit un APK debug dont l'intégrité ZIP a été contrôlée. La compilation des changements ultérieurs et le test sur émulateur restent à confirmer ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -29,3 +29,12 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Les runs 40669294053, 40669327985 et 40669345484 ont échoué à la compilation : caractères littéraux inversés introduits dans MainActivity.java. La cause a été lue dans les logs.
 - Correction poussée : b17cb782 ; vérification textuelle de l'absence de ces séquences hors chaînes réussie. Nouveau workflow lancé par ce commit : résultat encore inconnu. La version la plus récente ne possède pas encore d'APK confirmé ; la dernière version compilée avec succès reste 7af4e5a9.
 - Durée cumulée de la session : environ 2 min 45. La comparaison chiffrée ci-dessus précède le correctif ; consulter le diff complet au prochain passage. Prochaine action impérative : inspecter la compilation du correctif et le test émulateur, corriger tout échec.
+
+
+## Session du 28 octobre 2026, 12:04:19–12:06:00 Europe/Zurich (1 min 41)
+- Base : f4725dccc7122ea18f7960fecb78fb738d004f38. Commits poussés : a6c4dcd4, fefe7141, ebbd52fc ; un autre commit enregistre ce journal. Fichiers changés : workflow, MainActivity.java, emulator_smoke.py et ce journal. Diff hors journal : 30 ajouts, 4 suppressions.
+- Le run 40669504680 a confirmé la compilation et l'export de l'APK du commit b17cb782 ; l'archive téléchargée et l'APK ont passé unzip -t. SHA-256 APK : 99f4390fc1aa5107d3f27ba7d2e33703d754b6a20574bf0df5a6d7fea7b696b4. Le test sur émulateur est resté en cours plus de 55 minutes ; impossible de consulter les logs pendant l'exécution (404). Aucun succès d'émulateur n'est revendiqué.
+- Améliorations : permutation des choix stable à la rotation, contrôle de cette stabilité dans le test d'interface, 10 questions supplémentaires. Accélération KVM, limite de 15 minutes pour l'émulateur et groupe de concurrence configurés pour éviter les futurs blocages. Aucun réglage de modèle modifié.
+- Test local du contenu réussi (1 test, 40 questions) ; syntaxe Python du test interface validée. Le run 40677164244 est en cours et le run 40677210129 en attente ; la compilation ni l'APK des modifications de cette session ne sont encore confirmés.
+- Limites : pas d'émulateur/SDK/Gradle/javac/adb local, pas de téléphone. L'objectif indicatif de durée n'a pas été atteint ; la session a lancé les validations accessibles, sans attente artificielle.
+- Prochaine action : examiner les runs 40677164244 et 40677210129, en particulier l'émulateur accéléré ; corriger tout échec, puis vérifier un APK de la dernière version et continuer la finition.
