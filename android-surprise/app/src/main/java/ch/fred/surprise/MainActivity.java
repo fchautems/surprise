@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
     private static final int ROUND=8;
     private final Random rng=new Random();
     private final ArrayList<Integer> order=new ArrayList<>();
-    private int index,score,streak,best,correctCount; private boolean answered, showingHome, jokerUsed;
+    private int index,score,streak,best,correctCount,longestStreak; private boolean answered, showingHome, jokerUsed;
     private String[] hiddenOptions;
     private String[] options; private String selected; private int earned;
     private LinearLayout root,choices;
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
         java.util.Set<String> played = new java.util.HashSet<>();
         for(int i=0;i<ROUND;i++) played.add(Integer.toString(order.get(i)));
         getPreferences(MODE_PRIVATE).edit().putStringSet("recent",played).apply();
-        index=score=streak=correctCount=0; answered=false; jokerUsed=false; hiddenOptions=null;
+        index=score=streak=correctCount=longestStreak=0; answered=false; jokerUsed=false; hiddenOptions=null;
         showQuestion();
     }
     private void showHome(){
@@ -106,7 +106,8 @@ public class MainActivity extends Activity {
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI");
         question.setText("Une petite aventure à chaque partie");
         int record=getPreferences(MODE_PRIVATE).getInt("best",0);
-        feedback.setText(record>0 ? "Ton record : "+record+" points" : "Huit étapes, des surprises et un peu de chance.");
+        int games=getPreferences(MODE_PRIVATE).getInt("games",0);
+        feedback.setText(games>0 ? "Record : "+record+" points  ·  Parties : "+games : "Huit étapes, des surprises et un peu de chance.");
         feedback.setTextColor(GOLD); next.setText("C’est parti"); next.setVisibility(View.VISIBLE);
     }
     private void showQuestion(){hiddenOptions=null; showQuestion(null);}
@@ -144,7 +145,7 @@ public class MainActivity extends Activity {
     }
     private void answer(String value){
         if(answered)return;answered=true;joker.setEnabled(false);progress.setProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
-        if(ok){streak++;correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
+        if(ok){streak++;longestStreak=Math.max(streak,longestStreak);correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
         else {streak=0;feedback.setText("La réponse : "+correct);}
         feedback.setTextColor(ok?GOLD:WHITE);
         header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
@@ -155,10 +156,16 @@ public class MainActivity extends Activity {
         }
         next.setText(index==ROUND-1?"Voir le résultat":"Continuer");next.setVisibility(View.VISIBLE);
     }
+    private void recordRound(){
+        android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
+        prefs.edit().putInt("games",prefs.getInt("games",0)+1)
+            .putInt("totalCorrect",prefs.getInt("totalCorrect",0)+correctCount)
+            .putInt("longest",Math.max(prefs.getInt("longest",0),longestStreak)).apply();
+    }
     private void finishRound(){
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
         choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");
-        question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nRecord : "+best+" points\nUne nouvelle partie ?");feedback.setTextColor(GOLD);
+        question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points");feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
     }
     @Override public void onCreate(Bundle saved){
@@ -180,15 +187,15 @@ public class MainActivity extends Activity {
         joker.setOnClickListener(v->useJoker());
         feedback=label("",16,GOLD);LinearLayout.LayoutParams fp=new LinearLayout.LayoutParams(-1,-2);fp.setMargins(0,dp(16),0,dp(12));root.addView(feedback,fp);
         next=new Button(this);next.setAllCaps(false);next.setTextColor(BG);next.setTextSize(17);next.setBackground(shape(GOLD,dp(16)));next.setMinHeight(dp(56)); root.addView(next,new LinearLayout.LayoutParams(-1,-2));
-        next.setOnClickListener(v->{if(showingHome || index>=ROUND){newGame();}else if(index==ROUND-1){index++;finishRound();}else{index++;showQuestion();}});
+        next.setOnClickListener(v->{if(showingHome || index>=ROUND){newGame();}else if(index==ROUND-1){index++;recordRound();finishRound();}else{index++;showQuestion();}});
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
-            int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");jokerUsed=saved.getBoolean("jokerUsed");hiddenOptions=saved.getStringArray("hiddenOptions");
-            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
+            int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");longestStreak=saved.getInt("longestStreak");jokerUsed=saved.getBoolean("jokerUsed");hiddenOptions=saved.getStringArray("hiddenOptions");
+            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount, oldLongest=longestStreak; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; longestStreak=oldLongest; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
         }else showHome();
     }
     @Override protected void onSaveInstanceState(Bundle out){
-        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putBoolean("home",showingHome);out.putBoolean("jokerUsed",jokerUsed);if(hiddenOptions!=null)out.putStringArray("hiddenOptions",hiddenOptions); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
+        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putInt("longestStreak",longestStreak);out.putBoolean("home",showingHome);out.putBoolean("jokerUsed",jokerUsed);if(hiddenOptions!=null)out.putStringArray("hiddenOptions",hiddenOptions); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
         super.onSaveInstanceState(out);
     }
 }
