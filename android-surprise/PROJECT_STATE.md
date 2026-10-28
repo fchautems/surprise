@@ -5,3 +5,12 @@ Application Android native : partie de 8 questions tirées sans répétition par
 Contrôles : analyse automatisée du contenu vérifiant 16 questions, quatre choix distincts et nombre suffisant pour une partie. Compilation et test sur appareil non effectués : SDK et Gradle absents localement. Workflow GitHub Actions ajouté pour construire et publier un APK de debug ; son exécution et son résultat restent à vérifier. Aucun APK vérifié à ce stade.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
+
+
+## Session du 28 octobre 2026, 09:41:20–09:44:00 Europe/Zurich (environ 2 min 40)
+- Base de départ : 559dc7ad2a0b0e09c52fd6ad768862078ba5d305. Six commits poussés : 1bdefeb4, f25cd8ee, a822e0df, a7a41e9a, f7b3ac53, b7b69691. Le présent fichier fait l'objet d'un commit supplémentaire.
+- Fichiers modifiés : MainActivity.java, QuizRules.java, tests/QuizRulesTest.java, tests/test_bank.py, .github/workflows/android-surprise.yml et PROJECT_STATE.md. Diff des cinq fichiers de code/configuration avant ce journal : 74 lignes ajoutées, 5 supprimées.
+- Changements : banque enrichie à 30 questions distinctes, points isolés en Java et testés, affichage des points préservé après rotation, vérification automatique des données et des règles ajoutée au workflow.
+- Contrôles : test Python du contenu réussi localement (1 test) et en CI ; test Java des scores réussi en CI (20 séries, entrées invalides). Java local ne possède pas javac ni SDK ni Gradle. Compilation Gradle et production d'APK réussies en CI pour a7a41e9a (run 40658782305, artefact 12803410818). L'ancienne archive APK du run 40646993824 a été téléchargée et son intégrité ZIP vérifiée ; cela ne valide pas le fonctionnement Android.
+- La compilation du commit intermédiaire 1bdefeb4 a échoué car la classe ajoutée au commit suivant n'existait pas encore ; les compilations ultérieures f25cd8ee, a822e0df et a7a41e9a ont réussi. Le run du commit b7b69691 est en cours, ses deux tests ont réussi, compilation non encore confirmée. Aucun test sur téléphone ni émulateur. Aucun modèle ou niveau n'a été modifié.
+- Prochaine action : vérifier le run b7b69691 et l'artefact correspondant ; tester sur émulateur ou appareil si disponible, puis améliorer substantiellement visuel et rejouabilité. Durée inférieure à l'objectif indicatif ; la session s'arrête après ces vérifications et modifications, sans attente artificielle.
