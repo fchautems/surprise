@@ -187,5 +187,33 @@ adb("shell", "input", "keyevent", "4")
 dialog = wait_dump()
 assert find_text(dialog, "Quitter la partie"), texts(dialog)
 tap_text(dialog, "Quitter")
-assert find_text(wait_dump(), "BIENVENUE"), "Leaving the game failed"
+root = wait_dump()
+assert find_text(root, "BIENVENUE"), "Leaving the game failed"
+
+# Today's challenge must be reproducible and its record must survive a restart.
+tap_text(root, "Défi du jour")
+root = wait_dump()
+daily_first = set(texts(root)) & bank
+assert len(daily_first) == 1, texts(root)
+adb("shell", "input", "keyevent", "4")
+tap_text(wait_dump(), "Quitter")
+tap_text(wait_dump(), "Défi du jour")
+root = wait_dump()
+assert (set(texts(root)) & bank) == daily_first, "Daily challenge changed on replay"
+for index in range(8):
+    adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
+    root = wait_dump()
+    shown = set(texts(root)) & bank
+    assert len(shown) == 1, texts(root)
+    correct = correct_by_question[next(iter(shown))]
+    tap_text(root, correct)
+    tap_text(wait_dump(), "Continuer" if index < 7 else "Voir le résultat")
+root = wait_dump()
+assert find_text(root, "130 points"), texts(root)
+tap_text(root, "Accueil")
+root = wait_dump()
+assert find_text(root, "Défi du jour · record 130"), texts(root)
+adb("shell", "am", "force-stop", "ch.fred.surprise")
+adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+assert find_text(wait_dump(), "Défi du jour · record 130"), "Daily record lost on restart"
 print("Android UI smoke test passed")
