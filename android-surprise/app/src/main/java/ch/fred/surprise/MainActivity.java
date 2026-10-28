@@ -90,6 +90,7 @@ public class MainActivity extends Activity {
         {"ALLEMAND","Que signifie « Wie viel kostet das ? » ?","Combien cela coûte-t-il ?","Quelle heure est-il ?","Où habites-tu ?","Comment vas-tu ?"},
         {"TEMPS","Que signifie généralement « automatique » pour une montre mécanique ?","Elle se remonte grâce aux mouvements du poignet","Elle fonctionne uniquement au soleil","Elle se connecte obligatoirement au téléphone","Elle ne possède aucun ressort"},
         {"TEMPS","Dans une montre mécanique, où l'énergie est-elle stockée ?","Dans un ressort","Dans un réservoir d'eau","Dans une antenne","Dans le verre"},
+        {"TEMPS","Quelle unité correspond à un millième de seconde ?","Une milliseconde","Une minute","Une heure","Un jour"},
         {"TEMPS","Quel objet indique les heures et les minutes ?","Une montre","Une boussole","Un thermomètre","Une balance"},
         {"TEMPS","Combien de secondes compte une minute ?","60","100","24","12"},
         {"TEMPS","Quel mécanisme mesure le temps dans une montre mécanique ?","Un mouvement à engrenages","Une antenne GPS obligatoire","Un écran tactile","Un panneau solaire obligatoire"}
@@ -97,7 +98,8 @@ public class MainActivity extends Activity {
     private static final int ROUND=8;
     private final Random rng=new Random();
     private final ArrayList<Integer> order=new ArrayList<>();
-    private int index,score,streak,best,correctCount,longestStreak; private boolean answered, showingHome, jokerUsed;
+    private int index,score,streak,best,correctCount,longestStreak; private boolean answered, showingHome, jokerUsed, choosingTheme;
+    private String gameMode="MÉLANGE";
     private String[] hiddenOptions;
     private String[] options; private String selected; private int earned;
     private LinearLayout root,choices;
@@ -119,9 +121,17 @@ public class MainActivity extends Activity {
     }
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private void newGame(){
-        showingHome=false;
+        showingHome=false; choosingTheme=false;
         java.util.Set<String> recent = getPreferences(MODE_PRIVATE).getStringSet("recent", java.util.Collections.emptySet());
-        order.clear(); order.addAll(QuizRules.order(BANK.length, ROUND, recent, rng));
+        ArrayList<Integer> pool=new ArrayList<>(); java.util.Set<String> localRecent=new java.util.HashSet<>();
+        for(int i=0;i<BANK.length;i++){
+            if(gameMode.equals("MÉLANGE") || BANK[i][0].equals(gameMode)){
+                if(recent.contains(Integer.toString(i))) localRecent.add(Integer.toString(pool.size()));
+                pool.add(i);
+            }
+        }
+        ArrayList<Integer> picked=QuizRules.order(pool.size(),ROUND,localRecent,rng);
+        order.clear(); for(int i:picked) order.add(pool.get(i));
         java.util.Set<String> played = new java.util.HashSet<>();
         for(int i=0;i<ROUND;i++) played.add(Integer.toString(order.get(i)));
         getPreferences(MODE_PRIVATE).edit().putStringSet("recent",played).apply();
@@ -133,13 +143,32 @@ public class MainActivity extends Activity {
         return QuizRules.award(prefs.getInt("games",0),prefs.getInt("totalCorrect",0),prefs.getInt("longest",0));
     }
     private void showHome(){
-        showingHome=true; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
+        showingHome=true; choosingTheme=false; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI"); category.setTextColor(GOLD);
         question.setText("Une petite aventure à chaque partie");
         int record=getPreferences(MODE_PRIVATE).getInt("best",0);
         int games=getPreferences(MODE_PRIVATE).getInt("games",0);
         feedback.setText(games>0 ? "✦  "+currentAward()+"\nRecord : "+record+" points  ·  Parties : "+games : "Huit étapes, des surprises et un peu de chance.");
         feedback.setTextColor(GOLD); next.setText("C’est parti"); next.setVisibility(View.VISIBLE);
+        Button theme=makeMenuButton("Choisir un thème");
+        choices.addView(theme); theme.setOnClickListener(v->showThemes());
+    }
+    private Button makeMenuButton(String text){
+        Button b=new Button(this); b.setText(text); b.setAllCaps(false); b.setTextSize(16);
+        b.setTextColor(WHITE); b.setBackgroundTintList(null); b.setBackground(shape(CARD,dp(16)));
+        b.setMinHeight(dp(52)); LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);
+        lp.setMargins(0,dp(5),0,dp(5)); b.setLayoutParams(lp); return b;
+    }
+    private void showThemes(){
+        showingHome=false; choosingTheme=true; answered=false; selected=null;
+        choices.removeAllViews(); joker.setVisibility(View.GONE); progress.setProgress(0);
+        header.setText("CHOISIS TON THÈME"); category.setText("✦  EXPLORATION  ✦"); category.setTextColor(GOLD);
+        question.setText("Quelle escale te tente ?"); feedback.setText(""); next.setText("Retour"); next.setVisibility(View.VISIBLE);
+        for(String theme:new String[]{"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS"}){
+            Button b=makeMenuButton(theme); choices.addView(b);
+            b.setOnClickListener(v->{gameMode=theme;newGame();});
+        }
+        scroll.post(()->scroll.scrollTo(0,0));
     }
     private void showQuestion(){hiddenOptions=null; showQuestion(null);}
     private void showQuestion(String[] restoredOptions){
@@ -199,6 +228,7 @@ public class MainActivity extends Activity {
         choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");category.setTextColor(GOLD);
         question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points\n✦  "+currentAward());feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
+        Button home=makeMenuButton("Accueil"); choices.addView(home); home.setOnClickListener(v->showHome());
     }
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);
@@ -219,15 +249,15 @@ public class MainActivity extends Activity {
         joker.setOnClickListener(v->useJoker());
         feedback=label("",16,GOLD);LinearLayout.LayoutParams fp=new LinearLayout.LayoutParams(-1,-2);fp.setMargins(0,dp(16),0,dp(12));root.addView(feedback,fp);
         next=new Button(this);next.setAllCaps(false);next.setTextColor(BG);next.setTextSize(17);next.setBackgroundTintList(null);next.setBackground(shape(GOLD,dp(16)));next.setMinHeight(dp(56)); root.addView(next,new LinearLayout.LayoutParams(-1,-2));
-        next.setOnClickListener(v->{if(showingHome || index>=ROUND){newGame();}else if(index==ROUND-1){index++;recordRound();finishRound();}else{index++;showQuestion();}});
+        next.setOnClickListener(v->{if(choosingTheme){showHome();}else if(showingHome){gameMode="MÉLANGE";newGame();}else if(index>=ROUND){newGame();}else if(index==ROUND-1){index++;recordRound();finishRound();}else{index++;showQuestion();}});
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
-            int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");longestStreak=saved.getInt("longestStreak");jokerUsed=saved.getBoolean("jokerUsed");hiddenOptions=saved.getStringArray("hiddenOptions");
-            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount, oldLongest=longestStreak; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; longestStreak=oldLongest; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points"+(streak>1 ? "  ·  Série : "+streak : ""));}}
+            int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");longestStreak=saved.getInt("longestStreak");jokerUsed=saved.getBoolean("jokerUsed");hiddenOptions=saved.getStringArray("hiddenOptions");gameMode=saved.getString("gameMode","MÉLANGE");
+            if(saved.getBoolean("choosingTheme")) showThemes(); else if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount, oldLongest=longestStreak; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; longestStreak=oldLongest; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points"+(streak>1 ? "  ·  Série : "+streak : ""));}}
         }else showHome();
     }
     @Override protected void onSaveInstanceState(Bundle out){
-        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putInt("longestStreak",longestStreak);out.putBoolean("home",showingHome);out.putBoolean("jokerUsed",jokerUsed);if(hiddenOptions!=null)out.putStringArray("hiddenOptions",hiddenOptions); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
+        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putInt("longestStreak",longestStreak);out.putBoolean("home",showingHome);out.putBoolean("choosingTheme",choosingTheme);out.putString("gameMode",gameMode);out.putBoolean("jokerUsed",jokerUsed);if(hiddenOptions!=null)out.putStringArray("hiddenOptions",hiddenOptions); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
         super.onSaveInstanceState(out);
     }
 }
