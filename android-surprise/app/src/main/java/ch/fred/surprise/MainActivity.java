@@ -80,7 +80,8 @@ public class MainActivity extends Activity {
         ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);Collections.shuffle(a,rng);options=a.toArray(new String[0]);
         for(String value:options){
             Button b=new Button(this);b.setText(value);b.setTextColor(WHITE);b.setTextSize(17);b.setAllCaps(false);b.setBackground(shape(CARD,dp(16)));
-            b.setMinHeight(dp(56)); b.setPadding(dp(12),dp(10),dp(12),dp(10));\n            LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.setMargins(0,dp(5),0,dp(5)); choices.addView(b,lp);
+            b.setMinHeight(dp(56)); b.setPadding(dp(12),dp(10),dp(12),dp(10));
+            LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.setMargins(0,dp(5),0,dp(5)); choices.addView(b,lp);
             b.setOnClickListener(v->answer(value));
         }
     }
@@ -88,7 +89,8 @@ public class MainActivity extends Activity {
         if(answered)return;answered=true;selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
         if(ok){streak++;correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
         else {streak=0;feedback.setText("La réponse : "+correct);}
-        feedback.setTextColor(ok?GOLD:WHITE);\n        header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
+        feedback.setTextColor(ok?GOLD:WHITE);
+        header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         for(int i=0;i<choices.getChildCount();i++){
             Button b=(Button)choices.getChildAt(i);b.setEnabled(false);
             if(b.getText().toString().equals(correct))b.setBackground(shape(Color.rgb(36,105,88),dp(16)));
