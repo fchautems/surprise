@@ -16,6 +16,11 @@ public final class QuizRulesTest {
             java.util.ArrayList<Integer> order = QuizRules.order(40, 8, previous, new java.util.Random(seed));
             if (order.size()!=40 || new java.util.HashSet<>(order).size()!=40) throw new AssertionError("duplicates");
             for (int i=0; i<8; i++) if (previous.contains(order.get(i).toString())) throw new AssertionError("repetition");
+            // At the minimum thematic size, all eight previous questions must be
+            // avoided in the next round, regardless of the shuffle seed.
+            java.util.ArrayList<Integer> themed = QuizRules.order(16, 8, previous, new java.util.Random(seed));
+            if (themed.size()!=16 || new java.util.HashSet<>(themed).size()!=16) throw new AssertionError("themed duplicates");
+            for (int i=0; i<8; i++) if (previous.contains(themed.get(i).toString())) throw new AssertionError("themed repetition");
             java.util.ArrayList<Integer> small = QuizRules.order(8, 8, previous, new java.util.Random(seed));
             if (new java.util.HashSet<>(small).size()!=8) throw new AssertionError("small bank");
         }
