@@ -1,8 +1,8 @@
 # État du projet — 28 octobre 2026
 
-Application Android native : partie de 8 questions tirées sans répétition parmi 77, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
+Application Android native : partie de 8 questions tirées sans répétition parmi 100, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 55aaf0fe ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 3db7b758 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -90,3 +90,11 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Validation : test local d'intégrité et de taille minimale des six thèmes réussi ; syntaxe Python vérifiée. Run 40732274979, commit 55aaf0fe : compilation, tests de règles et de contenu et parcours sur émulateur API 29 réussis, y compris taille de texte agrandie, rotations, joker, sélection du thème MUSIQUE et restauration du menu. Les autres thèmes ont un contrôle de taille mais n'ont pas été joués séparément sur émulateur.
 - APK debug : artefact 12834882984 téléchargé ; archive et APK passent unzip -t ; SHA-256 APK deaf6eb2ed3ccd893e0f5a3769e6242c0c4f657729195685158e4efba660933c. Aucun test sur téléphone physique ni contrôle visuel humain. Modèle et niveau inchangés.
 - Durée inférieure à l'objectif indicatif, incluant la validation CI effective. Prochaine action : enrichir les thèmes les plus courts pour limiter les répétitions, tester chaque thème et améliorer la finition visuelle.
+
+
+## Session du 28 octobre 2026, 19:04:50–19:11:51 Europe/Zurich (7 min 01)
+- Base 8fdfcf27 ; commits poussés 9f6a6a9f, b9649d4d, 9bdc2e9a et 3db7b758 ; un commit supplémentaire enregistre ce journal. Fichiers : MainActivity.java, tests/test_bank.py, tests/emulator_smoke.py, tests/QuizRulesTest.java et PROJECT_STATE.md. Diff hors journal : 43 lignes ajoutées, 2 supprimées.
+- Développement : 23 questions supplémentaires, 100 au total et au moins 16 par thème, afin de permettre deux parties consécutives de huit sans répétition dans un thème. Tests renforcés : seuil minimal par thème, tirage sans répétition sur 100 graines et entrée dans chacun des six thèmes sur émulateur.
+- Validation : test Python local de la banque et compilation syntaxique Python réussis ; CI 40742105182 sur 3db7b758 terminée avec succès : tests de contenu et règles, compilation Gradle et parcours sur émulateur Android API 29 réussis, dont six entrées thématiques. Les runs intermédiaires ont été annulés automatiquement après les commits suivants.
+- APK debug : artefact 12838878597 téléchargé ; archive et APK contrôlés avec unzip -t ; SHA-256 APK 9bfadff6e94296333c0da332b076eb11b89dcdddeaa3c4c385edd358aff367d6. Aucun test sur téléphone physique ni inspection visuelle humaine. SDK Android, Gradle et javac indisponibles localement ; compilation et tests Java réalisés en CI. Aucun réglage de modèle ou de niveau modifié.
+- Durée inférieure à l'objectif indicatif ; changements et contrôles ci-dessus effectués, sans attente artificielle ni limite de quota mesurée. Prochaine action : améliorer la finition visuelle et l'intérêt des parties, poursuivre les contrôles sur émulateur et prévoir une validation sur appareil physique.
