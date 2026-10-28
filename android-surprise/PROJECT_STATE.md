@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 100, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 3db7b758 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit bd1278a8 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -98,3 +98,11 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Validation : test Python local de la banque et compilation syntaxique Python réussis ; CI 40742105182 sur 3db7b758 terminée avec succès : tests de contenu et règles, compilation Gradle et parcours sur émulateur Android API 29 réussis, dont six entrées thématiques. Les runs intermédiaires ont été annulés automatiquement après les commits suivants.
 - APK debug : artefact 12838878597 téléchargé ; archive et APK contrôlés avec unzip -t ; SHA-256 APK 9bfadff6e94296333c0da332b076eb11b89dcdddeaa3c4c385edd358aff367d6. Aucun test sur téléphone physique ni inspection visuelle humaine. SDK Android, Gradle et javac indisponibles localement ; compilation et tests Java réalisés en CI. Aucun réglage de modèle ou de niveau modifié.
 - Durée inférieure à l'objectif indicatif ; changements et contrôles ci-dessus effectués, sans attente artificielle ni limite de quota mesurée. Prochaine action : améliorer la finition visuelle et l'intérêt des parties, poursuivre les contrôles sur émulateur et prévoir une validation sur appareil physique.
+
+
+## Session du 28 octobre 2026, 19:56:26–20:11:50 Europe/Zurich (15 min 24)
+- Base 66096bd6 ; commits poussés fa672aea, d41c3f6b, 1dd7de81 et bd1278a8 ; un commit supplémentaire consigne ce journal. Fichiers modifiés : MainActivity.java, tests/emulator_smoke.py et PROJECT_STATE.md. Diff hors journal : 60 lignes ajoutées, 8 supprimées.
+- Développement : récapitulatif consultable des réponses manquées ; conservation du contenu après rotation sans doublon ; confirmation avant de quitter une partie et navigation de retour adaptée aux autres écrans.
+- Contrôles locaux : intégrité de la banque Python et compilation syntaxique du test Python réussies. CI 40749932471 : compilation et APK réussis mais test émulateur échoué sur la recherche d'un bouton de dialogue. Recherche rendue insensible à la casse et diagnostic enrichi. CI 40750457177 : compilation, tests et émulateur réussis. Puis ajout de vérifications supplémentaires de la rotation du bilan et de l'abandon confirmé ; CI 40751365380 au commit bd1278a8 terminée avec succès, y compris compilation, tests de contenu et règles et parcours sur émulateur API 29.
+- APK debug de la dernière validation : artefact 12843598016 téléchargé, archive et APK vérifiés avec unzip -t ; SHA-256 APK 3761d6d4852745017cc33e93ea91e70d09ba15dce322557e1935c246cb2447a7. L'APK est compilé et testé automatiquement sur émulateur, sans test sur téléphone physique ni inspection visuelle humaine.
+- Limites : SDK/Gradle/javac absents localement, contrôles Android réalisés en CI ; modèle et niveau inchangés. Durée inférieure à l'objectif indicatif, incluant diagnostic, correction et attente effective de deux validations CI ; aucune limite de quota précise mesurée. Prochaine action : enrichir la dimension ludique et la finition visuelle, puis maintenir les tests et préparer la livraison.
