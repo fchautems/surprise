@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 76, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit acc6e277 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 5753646b ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -72,3 +72,12 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Test de contenu local réussi (76 questions), syntaxe Python vérifiée. Run 40712337335 au commit acc6e277 : tests de contenu et de règles, compilation, installation et parcours complet sur émulateur API 29 réussis ; captures de trois écrans générées et archives vérifiées. Analyse technique : images 320×640 non vides et texte détecté par OCR ; pas d'inspection visuelle humaine.
 - APK debug produit : artefact 12827815030, archive et APK contrôlés par unzip -t, SHA-256 df777af565283b53207cb8023a09888ab875aa113d71146b9d3f426cba02f2f4. Test sur téléphone physique non effectué. Aucun réglage de modèle modifié.
 - Durée inférieure à l'objectif indicatif : changements, contrôles et attente des résultats CI effectifs, sans attente artificielle. Prochaine action : améliorer la variété et tester notamment une grande taille de police et un écran plus grand ; inspecter les captures en privé si une voie de consultation non visible par l'utilisateur est disponible.
+
+
+## Session du 28 octobre 2026, 16:55:54–17:01:51 Europe/Zurich (5 min 57)
+- Base b2263937 ; commits poussés 300860b0, 42067531, 1bf4c0fa, 83bdfe32, 5753646b ; un commit supplémentaire enregistre ce journal.
+- Fichiers : MainActivity.java, QuizRules.java, tests/QuizRulesTest.java, tests/emulator_smoke.py et PROJECT_STATE.md. Diff hors journal : 42 ajouts, 4 suppressions.
+- Développement : récompenses persistantes par seuils de parties, réponses et séries ; remise en haut de l'écran à chaque nouvelle question ; contrôles de seuils et de valeurs invalides, parcours sur émulateur avec taille de police 1,3.
+- Validation : test local d'intégrité réussi et syntaxe Python vérifiée. Run 40721178648 au commit 5753646b : tests de règles et contenu, compilation et parcours complet sur émulateur API 29 réussis, y compris rotation, reprise, joker et navigation avec texte agrandi. Artefact APK debug 12830492119 téléchargé, archive et APK vérifiés avec unzip -t. SHA-256 APK : 185aa1074c033c058648f561a05a5e03b81414a2d5b83560593deccaa840640d.
+- Limites : pas de test sur téléphone physique ni de contrôle visuel humain ; SDK/Gradle absents localement. Modèle et niveau non modifiés. Durée inférieure à l'objectif indicatif ; travail suivi de l'attente des tests CI.
+- Prochaine action : développer la variété ludique et l'ergonomie, inspecter les images en privé si possible, tester une taille d'écran moderne et conserver des builds vérifiés.
