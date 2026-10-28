@@ -70,6 +70,7 @@ for index in range(8):
         # checking it, so this verifies restoration across both recreations.
         wait_dump()
         adb("shell", "settings", "put", "system", "user_rotation", "0")
+        adb("shell", "input", "swipe", "160", "540", "160", "180", "300")
         root = wait_dump()
         after = find_text(root, "Bravo") or find_text(root, "La réponse")
         assert before == after, (before, after, texts(root))
