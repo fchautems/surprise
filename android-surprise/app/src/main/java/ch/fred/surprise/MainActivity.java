@@ -93,7 +93,30 @@ public class MainActivity extends Activity {
         {"TEMPS","Quelle unité correspond à un millième de seconde ?","Une milliseconde","Une minute","Une heure","Un jour"},
         {"TEMPS","Quel objet indique les heures et les minutes ?","Une montre","Une boussole","Un thermomètre","Une balance"},
         {"TEMPS","Combien de secondes compte une minute ?","60","100","24","12"},
-        {"TEMPS","Quel mécanisme mesure le temps dans une montre mécanique ?","Un mouvement à engrenages","Une antenne GPS obligatoire","Un écran tactile","Un panneau solaire obligatoire"}
+        {"TEMPS","Quel mécanisme mesure le temps dans une montre mécanique ?","Un mouvement à engrenages","Une antenne GPS obligatoire","Un écran tactile","Un panneau solaire obligatoire"},
+        {"TEMPS","Que signifie GMT sur une montre à deux fuseaux horaires ?","Greenwich Mean Time","Global Mechanical Timing","General Minute Timer","Green Mountain Time"},
+        {"TEMPS","Que mesure un chronographe ?","Une durée déclenchée et arrêtée","La profondeur de l'océan","La pression atmosphérique","La distance à la Lune"},
+        {"TEMPS","Quel matériau est souvent utilisé pour le verre d'une montre résistante aux rayures ?","Le saphir synthétique","Le papier","Le caoutchouc","Le bois de sapin"},
+        {"TEMPS","Comment appelle-t-on l'indication de la date sur un cadran ?","Un quantième","Un diapason","Une couronne solaire","Une clef de sol"},
+        {"TEMPS","Sur un cadran classique, combien de minutes séparent deux chiffres voisins ?","Cinq","Deux","Dix","Quinze"},
+        {"TEMPS","Quel composant transmet généralement l'énergie entre les rouages et le balancier ?","L'échappement","Le bracelet","La lunette décorative","Le fermoir"},
+        {"TEMPS","Une montre à quartz utilise généralement quel élément pour réguler le temps ?","Un cristal de quartz","Un pendule en bois","Un ressort de stylo","Une roue hydraulique"},
+        {"TEMPS","Que désigne la réserve de marche d'une montre mécanique ?","Son autonomie après remontage","La longueur de son bracelet","La profondeur de son cadran","Sa résistance aux rayures"},
+        {"VOYAGE","Quel fleuve traverse Genève après sa sortie du Léman ?","Le Rhône","La Seine","Le Pô","Le Danube"},
+        {"VOYAGE","Quel pays a pour capitale Berne ?","La Suisse","L'Autriche","La Belgique","Le Portugal"},
+        {"VOYAGE","Quelle ville se situe au bord du lac de Zurich ?","Zurich","Sion","Coire","Bellinzone"},
+        {"VOYAGE","Quelle langue est principalement parlée au Tessin ?","L'italien","Le néerlandais","Le suédois","Le portugais"},
+        {"VOYAGE","Quel massif se trouve entre la Suisse et la France ?","Le Jura","Les Andes","L'Himalaya","L'Oural"},
+        {"CIEL","Comment nomme-t-on une étoile filante ?","Un météore","Une comète immobile","Une planète naine","Un satellite naturel"},
+        {"CIEL","Quel corps céleste tourne autour d'une planète ?","Un satellite","Une constellation","Une galaxie","Un horizon"},
+        {"CIEL","Quel phénomène explique l'alternance du jour et de la nuit ?","La rotation de la Terre","Les phases de la Lune","La rotation de Mars","Les marées"},
+        {"CIEL","Quelle planète du système solaire est la plus grande ?","Jupiter","Mars","Mercure","Vénus"},
+        {"ALLEMAND","Que signifie « der Kaffee » ?","Le café","Le thé","Le lait","Le sucre"},
+        {"ALLEMAND","Comment dit-on « bonne nuit » en allemand ?","Gute Nacht","Guten Morgen","Vielen Dank","Bis bald"},
+        {"ALLEMAND","Que signifie « der Hund » ?","Le chien","Le chat","L'oiseau","Le cheval"},
+        {"ALLEMAND","Quel mot allemand signifie « aujourd'hui » ?","Heute","Morgen","Gestern","Immer"},
+        {"ALLEMAND","Que signifie « bitte » dans une demande polie ?","S'il te plaît","Jamais","Hier","Peut-être"},
+        {"CUISINE","Quel ingrédient principal entre dans une meringue classique ?","Des blancs d'œufs et du sucre","Des pommes de terre","Du riz et du bouillon","Du beurre et du sel"}
     };
     private static final int ROUND=8;
     private final Random rng=new Random();
