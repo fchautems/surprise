@@ -61,12 +61,13 @@ public class MainActivity extends Activity {
     private static final int ROUND=8;
     private final Random rng=new Random();
     private final ArrayList<Integer> order=new ArrayList<>();
-    private int index,score,streak,best,correctCount; private boolean answered, showingHome;
+    private int index,score,streak,best,correctCount; private boolean answered, showingHome, jokerUsed;
+    private String[] hiddenOptions;
     private String[] options; private String selected; private int earned;
     private LinearLayout root,choices;
     private TextView header,category,question,feedback;
     private android.widget.ProgressBar progress;
-    private Button next;
+    private Button next, joker;
     private GradientDrawable shape(int color,int radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(radius);return d;}
     private TextView label(String s,int size,int color){TextView v=new TextView(this);v.setText(s);v.setTextSize(size);v.setTextColor(color);v.setGravity(Gravity.CENTER);return v;}
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
@@ -77,20 +78,21 @@ public class MainActivity extends Activity {
         java.util.Set<String> played = new java.util.HashSet<>();
         for(int i=0;i<ROUND;i++) played.add(Integer.toString(order.get(i)));
         getPreferences(MODE_PRIVATE).edit().putStringSet("recent",played).apply();
-        index=score=streak=correctCount=0; answered=false;
+        index=score=streak=correctCount=0; answered=false; jokerUsed=false; hiddenOptions=null;
         showQuestion();
     }
     private void showHome(){
-        showingHome=true; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0);
+        showingHome=true; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI");
         question.setText("Une petite aventure à chaque partie");
         int record=getPreferences(MODE_PRIVATE).getInt("best",0);
         feedback.setText(record>0 ? "Ton record : "+record+" points" : "Huit étapes, des surprises et un peu de chance.");
         feedback.setTextColor(GOLD); next.setText("C’est parti"); next.setVisibility(View.VISIBLE);
     }
-    private void showQuestion(){showQuestion(null);}
+    private void showQuestion(){hiddenOptions=null; showQuestion(null);}
     private void showQuestion(String[] restoredOptions){
         answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE); progress.setProgress(index);
+        joker.setVisibility(View.VISIBLE); joker.setEnabled(!jokerUsed); joker.setText(jokerUsed ? "Joker utilisé" : "Joker 50 / 50 · une fois");
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         category.setText(q[0]); question.setText(q[1]); feedback.setText("");
         ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);
@@ -101,11 +103,27 @@ public class MainActivity extends Activity {
             Button b=new Button(this);b.setText(value);b.setTextColor(WHITE);b.setTextSize(17);b.setAllCaps(false);b.setBackground(shape(CARD,dp(16)));
             b.setMinHeight(dp(56)); b.setPadding(dp(12),dp(10),dp(12),dp(10));
             LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.setMargins(0,dp(5),0,dp(5)); choices.addView(b,lp);
+            if(hiddenOptions!=null && java.util.Arrays.asList(hiddenOptions).contains(value)) { b.setEnabled(false); b.setAlpha(0.35f); }
             b.setOnClickListener(v->answer(value));
         }
     }
+    private void useJoker(){
+        if(jokerUsed || answered)return;
+        ArrayList<String> wrong=new ArrayList<>();
+        String correct=BANK[order.get(index)][2];
+        for(String option:options) if(!option.equals(correct)) wrong.add(option);
+        Collections.shuffle(wrong,rng);
+        hiddenOptions=new String[]{wrong.get(0),wrong.get(1)};
+        jokerUsed=true; joker.setEnabled(false); joker.setText("Joker utilisé");
+        for(int i=0;i<choices.getChildCount();i++){
+            Button button=(Button)choices.getChildAt(i);
+            if(java.util.Arrays.asList(hiddenOptions).contains(button.getText().toString())){
+                button.setEnabled(false); button.setAlpha(0.35f);
+            }
+        }
+    }
     private void answer(String value){
-        if(answered)return;answered=true;progress.setProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
+        if(answered)return;answered=true;joker.setEnabled(false);progress.setProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
         if(ok){streak++;correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
         else {streak=0;feedback.setText("La réponse : "+correct);}
         feedback.setTextColor(ok?GOLD:WHITE);
@@ -119,7 +137,7 @@ public class MainActivity extends Activity {
     }
     private void finishRound(){
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
-        choices.removeAllViews();progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");
+        choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");
         question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nRecord : "+best+" points\nUne nouvelle partie ?");feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
     }
@@ -136,17 +154,21 @@ public class MainActivity extends Activity {
         category=label("",14,GOLD);LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);cp.setMargins(0,dp(24),0,dp(8));root.addView(category,cp);
         question=label("",25,WHITE);question.setTypeface(null,Typeface.BOLD);root.addView(question);
         choices=new LinearLayout(this);choices.setOrientation(LinearLayout.VERTICAL);LinearLayout.LayoutParams choicesP=new LinearLayout.LayoutParams(-1,-2);choicesP.setMargins(0,dp(22),0,0);root.addView(choices,choicesP);
+        joker=new Button(this); joker.setAllCaps(false); joker.setTextSize(14); joker.setTextColor(GOLD);
+        joker.setBackground(shape(CARD,dp(12))); joker.setMinHeight(dp(48));
+        LinearLayout.LayoutParams jp=new LinearLayout.LayoutParams(-1,-2);jp.setMargins(0,dp(8),0,0);root.addView(joker,jp);
+        joker.setOnClickListener(v->useJoker());
         feedback=label("",16,GOLD);LinearLayout.LayoutParams fp=new LinearLayout.LayoutParams(-1,-2);fp.setMargins(0,dp(16),0,dp(12));root.addView(feedback,fp);
         next=new Button(this);next.setAllCaps(false);next.setTextColor(BG);next.setTextSize(17);next.setBackground(shape(GOLD,dp(16)));next.setMinHeight(dp(56)); root.addView(next,new LinearLayout.LayoutParams(-1,-2));
         next.setOnClickListener(v->{if(showingHome || index>=ROUND){newGame();}else if(index==ROUND-1){index++;finishRound();}else{index++;showQuestion();}});
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
-            int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");
+            int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");jokerUsed=saved.getBoolean("jokerUsed");hiddenOptions=saved.getStringArray("hiddenOptions");
             if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
         }else showHome();
     }
     @Override protected void onSaveInstanceState(Bundle out){
-        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putBoolean("home",showingHome); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
+        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putBoolean("home",showingHome);out.putBoolean("jokerUsed",jokerUsed);if(hiddenOptions!=null)out.putStringArray("hiddenOptions",hiddenOptions); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
         super.onSaveInstanceState(out);
     }
 }
