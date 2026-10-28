@@ -14,7 +14,7 @@ class BankTests(unittest.TestCase):
         self.assertGreaterEqual(len(rows), round_size * 3)
         from collections import Counter
         counts = Counter(row[0] for row in rows)
-        self.assertEqual(set(counts), {"MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS"})
+        self.assertEqual(set(counts), {"MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS", "CRYPTO"})
         for name, count in counts.items():
             self.assertGreaterEqual(count, round_size * 2, name)
         self.assertEqual(len({row[1] for row in rows}), len(rows))
