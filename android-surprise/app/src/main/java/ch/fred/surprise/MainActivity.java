@@ -101,6 +101,7 @@ public class MainActivity extends Activity {
     private String[] hiddenOptions;
     private String[] options; private String selected; private int earned;
     private LinearLayout root,choices;
+    private android.widget.ScrollView scroll;
     private TextView header,category,question,feedback;
     private android.widget.ProgressBar progress;
     private Button next, joker;
@@ -143,6 +144,7 @@ public class MainActivity extends Activity {
     private void showQuestion(){hiddenOptions=null; showQuestion(null);}
     private void showQuestion(String[] restoredOptions){
         answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE); progress.setProgress(index);
+        scroll.post(()->scroll.scrollTo(0,0));
         joker.setVisibility(View.VISIBLE); joker.setEnabled(!jokerUsed); joker.setText(jokerUsed ? "Joker utilisé" : "Joker 50 / 50 · une fois");
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         category.setText("✦  "+q[0]+"  ✦"); category.setTextColor(categoryColor(q[0])); question.setText(q[1]); feedback.setText("");
@@ -201,7 +203,7 @@ public class MainActivity extends Activity {
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);
         getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
-        android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.setFillViewport(true);scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
+        scroll=new android.widget.ScrollView(this);scroll.setFillViewport(true);scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);root.setPadding(dp(22),dp(24),dp(22),dp(24));scroll.addView(root);
         header=label("",14,GOLD);header.setTypeface(null,Typeface.BOLD);root.addView(header);
         progress=new android.widget.ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
