@@ -16,7 +16,7 @@ class BankTests(unittest.TestCase):
         counts = Counter(row[0] for row in rows)
         self.assertEqual(set(counts), {"MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS"})
         for name, count in counts.items():
-            self.assertGreaterEqual(count, round_size, name)
+            self.assertGreaterEqual(count, round_size * 2, name)
         self.assertEqual(len({row[1] for row in rows}), len(rows))
         for category, question, *answers in rows:
             self.assertTrue(category.strip())
