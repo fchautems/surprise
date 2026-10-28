@@ -30,16 +30,16 @@ def texts(root):
     return [n.attrib.get("text", "") for n in root.iter("node")]
 
 def tap_text(root, label):
-    if not find_text(root, label):
+    if not any(n.attrib.get("text", "").casefold() == label.casefold() for n in root.iter("node")):
         adb("shell", "input", "swipe", "160", "540", "160", "180", "300")
         root = wait_dump()
     for node in root.iter("node"):
-        if node.attrib.get("text") == label:
+        if node.attrib.get("text", "").casefold() == label.casefold():
             b = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
             assert len(b) == 4, node.attrib
             adb("shell", "input", "tap", str((b[0]+b[2])//2), str((b[1]+b[3])//2))
             return
-    raise AssertionError("Missing control: " + label)
+    raise AssertionError("Missing control: " + label + " in " + repr(texts(root)))
 
 def find_text(root, fragment):
     return next((v for v in texts(root) if fragment in v), None)
