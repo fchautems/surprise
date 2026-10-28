@@ -90,6 +90,16 @@ public class MainActivity extends Activity {
     private Button next, joker;
     private GradientDrawable shape(int color,int radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(radius);return d;}
     private TextView label(String s,int size,int color){TextView v=new TextView(this);v.setText(s);v.setTextSize(size);v.setTextColor(color);v.setGravity(Gravity.CENTER);return v;}
+    private int categoryColor(String name){
+        switch(name){
+            case "MUSIQUE": return Color.rgb(241,179,122);
+            case "CUISINE": return Color.rgb(244,168,141);
+            case "VOYAGE": return Color.rgb(147,207,201);
+            case "CIEL": return Color.rgb(179,185,255);
+            case "ALLEMAND": return Color.rgb(218,184,234);
+            default: return GOLD;
+        }
+    }
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private void newGame(){
         showingHome=false;
@@ -103,7 +113,7 @@ public class MainActivity extends Activity {
     }
     private void showHome(){
         showingHome=true; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
-        header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI");
+        header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI"); category.setTextColor(GOLD);
         question.setText("Une petite aventure à chaque partie");
         int record=getPreferences(MODE_PRIVATE).getInt("best",0);
         int games=getPreferences(MODE_PRIVATE).getInt("games",0);
@@ -115,7 +125,7 @@ public class MainActivity extends Activity {
         answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE); progress.setProgress(index);
         joker.setVisibility(View.VISIBLE); joker.setEnabled(!jokerUsed); joker.setText(jokerUsed ? "Joker utilisé" : "Joker 50 / 50 · une fois");
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
-        category.setText(q[0]); question.setText(q[1]); feedback.setText("");
+        category.setText("✦  "+q[0]+"  ✦"); category.setTextColor(categoryColor(q[0])); question.setText(q[1]); feedback.setText("");
         ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);
         if(restoredOptions!=null && restoredOptions.length==a.size() && a.containsAll(java.util.Arrays.asList(restoredOptions))){
             options=restoredOptions.clone();
@@ -145,7 +155,7 @@ public class MainActivity extends Activity {
     }
     private void answer(String value){
         if(answered)return;answered=true;joker.setEnabled(false);progress.setProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
-        if(ok){streak++;longestStreak=Math.max(streak,longestStreak);correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
+        if(ok){streak++;longestStreak=Math.max(streak,longestStreak);correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points"+(streak>1 ? "  ·  Série : "+streak : ""));}
         else {streak=0;feedback.setText("La réponse : "+correct);}
         feedback.setTextColor(ok?GOLD:WHITE);
         header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
@@ -164,7 +174,7 @@ public class MainActivity extends Activity {
     }
     private void finishRound(){
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
-        choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");
+        choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");category.setTextColor(GOLD);
         question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points");feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
     }
@@ -191,7 +201,7 @@ public class MainActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
             int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");longestStreak=saved.getInt("longestStreak");jokerUsed=saved.getBoolean("jokerUsed");hiddenOptions=saved.getStringArray("hiddenOptions");
-            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount, oldLongest=longestStreak; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; longestStreak=oldLongest; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
+            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount, oldLongest=longestStreak; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; longestStreak=oldLongest; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points"+(streak>1 ? "  ·  Série : "+streak : ""));}}
         }else showHome();
     }
     @Override protected void onSaveInstanceState(Bundle out){
