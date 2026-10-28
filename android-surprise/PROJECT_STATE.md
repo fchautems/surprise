@@ -1,8 +1,8 @@
 # État du projet — 28 octobre 2026
 
-Application Android native : partie de 8 questions tirées sans répétition parmi 76, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
+Application Android native : partie de 8 questions tirées sans répétition parmi 77, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 5753646b ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 55aaf0fe ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -81,3 +81,12 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Validation : test local d'intégrité réussi et syntaxe Python vérifiée. Run 40721178648 au commit 5753646b : tests de règles et contenu, compilation et parcours complet sur émulateur API 29 réussis, y compris rotation, reprise, joker et navigation avec texte agrandi. Artefact APK debug 12830492119 téléchargé, archive et APK vérifiés avec unzip -t. SHA-256 APK : 185aa1074c033c058648f561a05a5e03b81414a2d5b83560593deccaa840640d.
 - Limites : pas de test sur téléphone physique ni de contrôle visuel humain ; SDK/Gradle absents localement. Modèle et niveau non modifiés. Durée inférieure à l'objectif indicatif ; travail suivi de l'attente des tests CI.
 - Prochaine action : développer la variété ludique et l'ergonomie, inspecter les images en privé si possible, tester une taille d'écran moderne et conserver des builds vérifiés.
+
+
+## Session du 28 octobre 2026, 18:03:04–18:09:17 Europe/Zurich (6 min 13)
+- Base 8d29dfe2 ; commits poussés 97628090, 706bd315, 55aaf0fe et un commit additionnel pour ce journal.
+- Fichiers : MainActivity.java, tests/emulator_smoke.py, tests/test_bank.py et PROJECT_STATE.md ; diff hors journal : 57 ajouts, 8 suppressions.
+- Développement : mode libre et six thèmes au choix, répétition du thème lors d'une revanche, retour à l'accueil, conservation du choix pendant la rotation ; adaptation du tirage au sous-ensemble sélectionné. Une question ajoutée pour assurer huit questions dans chaque thème. Lorsque le thème contient seulement huit questions, les mêmes questions reviennent nécessairement, dans un ordre mélangé.
+- Validation : test local d'intégrité et de taille minimale des six thèmes réussi ; syntaxe Python vérifiée. Run 40732274979, commit 55aaf0fe : compilation, tests de règles et de contenu et parcours sur émulateur API 29 réussis, y compris taille de texte agrandie, rotations, joker, sélection du thème MUSIQUE et restauration du menu. Les autres thèmes ont un contrôle de taille mais n'ont pas été joués séparément sur émulateur.
+- APK debug : artefact 12834882984 téléchargé ; archive et APK passent unzip -t ; SHA-256 APK deaf6eb2ed3ccd893e0f5a3769e6242c0c4f657729195685158e4efba660933c. Aucun test sur téléphone physique ni contrôle visuel humain. Modèle et niveau inchangés.
+- Durée inférieure à l'objectif indicatif, incluant la validation CI effective. Prochaine action : enrichir les thèmes les plus courts pour limiter les répétitions, tester chaque thème et améliorer la finition visuelle.
