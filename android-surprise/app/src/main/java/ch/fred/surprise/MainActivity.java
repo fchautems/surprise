@@ -339,6 +339,7 @@ public class MainActivity extends Activity {
         getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
         scroll=new android.widget.ScrollView(this);scroll.setFillViewport(true);scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);root.setPadding(dp(22),dp(24),dp(22),dp(24));scroll.addView(root);
+        scroll.setOnApplyWindowInsetsListener((view,insets)->{root.setPadding(dp(22),dp(24)+insets.getSystemWindowInsetTop(),dp(22),dp(24)+insets.getSystemWindowInsetBottom());return insets;});
         header=label("",14,GOLD);header.setTypeface(null,Typeface.BOLD);root.addView(header);
         progress=new android.widget.ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
         progress.setMax(ROUND); progress.setProgressTintList(android.content.res.ColorStateList.valueOf(GOLD));
