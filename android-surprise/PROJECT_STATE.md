@@ -1,8 +1,8 @@
 # État du projet — 28 octobre 2026
 
-Application Android native : partie de 8 questions tirées sans répétition parmi 60, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
+Application Android native : partie de 8 questions tirées sans répétition parmi 76, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 348dbd84 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit acc6e277 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -64,3 +64,11 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Validation : run 40702329953, commit 348dbd84 : tests de contenu et de règles réussis, compilation APK debug réussie, test sur émulateur API 29 réussi y compris joker, rotations, partie complète, reprise et persistance après redémarrage. Artefact 12821289203 téléchargé ; archive et APK contrôlés par unzip -t. SHA-256 APK f2a2324417a88a95bf3599d0f39c68b8b237bc517e9995d35e8231c6c01cf66e.
 - Limites : pas de téléphone physique ni de contrôle visuel humain de l'interface ; SDK et Gradle absents localement. Pas de changement de modèle ou de niveau. La durée est inférieure à l'objectif indicatif ; elle comprend le travail et la validation CI effective.
 - Prochaine action : inspection visuelle privée par capture émulateur si faisable, enrichissement du contenu et vérification des états à tailles de police et écrans variés.
+
+
+## Session du 28 octobre 2026, 16:03:27–16:10:04 Europe/Zurich (6 min 37)
+- Base a5bd64f0. Commits poussés : 9aa873ff, ec654507, 77ccf732, acc6e277 ; un commit supplémentaire pour ce journal. Fichiers : MainActivity.java, tests/emulator_smoke.py, .github/workflows/android-surprise.yml et PROJECT_STATE.md. Diff hors journal : 48 ajouts, 5 suppressions.
+- Ajout de 16 questions, accents de couleurs par thème et affichage des séries, restauré à l'identique après rotation. Capture d'états pour revue interne depuis l'émulateur.
+- Test de contenu local réussi (76 questions), syntaxe Python vérifiée. Run 40712337335 au commit acc6e277 : tests de contenu et de règles, compilation, installation et parcours complet sur émulateur API 29 réussis ; captures de trois écrans générées et archives vérifiées. Analyse technique : images 320×640 non vides et texte détecté par OCR ; pas d'inspection visuelle humaine.
+- APK debug produit : artefact 12827815030, archive et APK contrôlés par unzip -t, SHA-256 df777af565283b53207cb8023a09888ab875aa113d71146b9d3f426cba02f2f4. Test sur téléphone physique non effectué. Aucun réglage de modèle modifié.
+- Durée inférieure à l'objectif indicatif : changements, contrôles et attente des résultats CI effectifs, sans attente artificielle. Prochaine action : améliorer la variété et tester notamment une grande taille de police et un écran plus grand ; inspecter les captures en privé si une voie de consultation non visible par l'utilisateur est disponible.
