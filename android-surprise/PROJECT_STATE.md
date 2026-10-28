@@ -1,8 +1,8 @@
 # État du projet — 28 octobre 2026
 
-Application Android native : partie de 8 questions tirées sans répétition parmi 100, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
+Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 57dd0dfd ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 0040e1b8 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -132,3 +132,11 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 
 - Validation finale : run 40775225634 au commit 57dd0dfd terminé avec succès. Les parcours complets, dont revanche de huit réponses, score parfait, non-répétition et défi quotidien, ont réussi sur émulateurs API 29 et 35 ; les tests de données et règles et la compilation ont réussi. Le résultat est celui de cette version précise.
 - Limites : aucun appareil physique ni inspection visuelle humaine ; SDK/Gradle/javac absents localement. Modèle et niveau non modifiés. Durée incluant développement, diagnostic, correction et attente effective des CI, sans attente artificielle ; limite de quota précise non mesurée. Prochaine action : poursuivre l'amélioration ludique et visuelle et préparer la livraison. Le suivi provisoire a été committé en fea45743 ; ce complément fait l'objet d'un dernier commit.
+
+
+## Session du 28 octobre 2026, 23:10:56–23:47:47 Europe/Zurich (36 min 51)
+- Base 4606859a ; commits poussés 929b3718, c249f837, a748d5c4, 5553b6f8, d2aec71b et 0040e1b8 ; un commit supplémentaire consigne ce journal. Fichiers : MainActivity.java, AndroidManifest.xml, res/drawable/ic_surprise.xml, tests/test_bank.py, tests/emulator_smoke.py et PROJECT_STATE.md. Diff hors journal : 51 lignes ajoutées, 5 supprimées.
+- Développement : nouvelle catégorie crypto personnalisée, 16 questions, soit 116 questions au total et sept thèmes d'au moins 16 questions ; couleur dédiée, icône vectorielle installable et tests d'accès à toutes les catégories. Un second cycle de test parcourt entièrement la nouvelle catégorie et vérifie huit questions distinctes et un score parfait.
+- Contrôles locaux : test d'intégrité de la banque et syntaxe Python réussis. CI 40778094988 au commit d2aec71b : compilation et parcours API 29/35 réussis. CI 40780277789 au commit 0040e1b8 : compilation, tests de contenu et règles, parcours complets API 29 et 35 réussis, y compris nouvelle catégorie, revanche et défi. Contrôle automatique de la banque structurel ; pas de revue factuelle externe exhaustive des nouvelles questions.
+- APK debug : artefact 12856547444 téléchargé ; archive et APK passent unzip -t ; SHA-256 APK 0e72a28459219b71306cb2d00bf48627a6318d7a3e12c94c5e5f2229e032adb6. Aucun test sur téléphone physique ni inspection visuelle humaine. La compilation valide la ressource d'icône mais son rendu n'a pas été vérifié par une personne.
+- Limites : SDK Android, Gradle et javac absents localement ; compilations et tests Android exécutés en CI. Modèle et niveau inchangés. Durée incluant implémentation, deux cycles de validation et attente effective de CI ; aucune attente artificielle ni limite précise de quota mesurée. Prochaine action : renforcer la variété ludique au-delà du quiz, contrôler les faits et poursuivre la finition.
