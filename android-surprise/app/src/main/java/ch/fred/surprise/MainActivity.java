@@ -32,13 +32,27 @@ public class MainActivity extends Activity {
         {"CIEL","Quel est le satellite naturel de la Terre ?","La Lune","Titan","Europe","Phobos"},
         {"ALLEMAND","Que signifie « Danke » ?","Merci","Bonjour","Au revoir","S'il te plaît"},
         {"ALLEMAND","Quel mot signifie « musique » ?","Musik","Wasser","Garten","Fenster"},
+        {"MUSIQUE","Quel symbole abaisse une note d’un demi-ton ?","Le bémol","Le dièse","La clé de sol","Le point"},
+        {"MUSIQUE","Quelle famille comprend le saxophone ?","Les bois","Les cordes","Les percussions","Les claviers"},
+        {"MUSIQUE","Combien de notes comporte une gamme majeure avant son octave ?","Sept","Cinq","Six","Huit"},
+        {"CUISINE","Quel fromage est traditionnel dans une fondue moitié-moitié ?","Gruyère et vacherin fribourgeois","Mozzarella et feta","Parmesan et ricotta","Brie et camembert"},
+        {"CUISINE","Quel gaz fait lever une pâte fermentée ?","Le dioxyde de carbone","L'oxygène","L'hélium","L'azote"},
+        {"CUISINE","De quel fruit provient le raisin sec ?","Le raisin","La prune","La pomme","La datte"},
+        {"VOYAGE","Quelle ville suisse se trouve au bord du Léman ?","Lausanne","Lucerne","Coire","Bâle"},
+        {"VOYAGE","Quelle île portugaise est située dans l'Atlantique ?","Madère","Corse","Sardaigne","Crète"},
+        {"CIEL","Quelle planète est connue pour ses anneaux ?","Saturne","Mercure","Mars","Vénus"},
+        {"CIEL","Quelle étoile est au centre du système solaire ?","Le Soleil","Sirius","Polaris","Véga"},
+        {"ALLEMAND","Que signifie « Wasser » ?","Eau","Pain","Lait","Café"},
+        {"ALLEMAND","Comment dit-on « bonjour » en allemand ?","Guten Tag","Gute Nacht","Auf Wiedersehen","Danke schön"},
+        {"TEMPS","Quel objet indique les heures et les minutes ?","Une montre","Une boussole","Un thermomètre","Une balance"},
+        {"TEMPS","Combien de secondes compte une minute ?","60","100","24","12"},
         {"TEMPS","Quel mécanisme mesure le temps dans une montre mécanique ?","Un mouvement à engrenages","Une antenne GPS obligatoire","Un écran tactile","Un panneau solaire obligatoire"}
     };
     private static final int ROUND=8;
     private final Random rng=new Random();
     private final ArrayList<Integer> order=new ArrayList<>();
     private int index,score,streak,best; private boolean answered;
-    private String[] options; private String selected;
+    private String[] options; private String selected; private int earned;
     private LinearLayout root,choices;
     private TextView header,category,question,feedback;
     private Button next;
@@ -47,7 +61,7 @@ public class MainActivity extends Activity {
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private void newGame(){order.clear();for(int i=0;i<BANK.length;i++)order.add(i);Collections.shuffle(order,rng);index=score=streak=0;answered=false;showQuestion();}
     private void showQuestion(){
-        answered=false; selected=null; choices.removeAllViews(); next.setVisibility(View.GONE);
+        answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE);
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         category.setText(q[0]); question.setText(q[1]); feedback.setText("");
         ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);Collections.shuffle(a,rng);options=a.toArray(new String[0]);
@@ -59,7 +73,7 @@ public class MainActivity extends Activity {
     }
     private void answer(String value){
         if(answered)return;answered=true;selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
-        if(ok){streak++;score+=10+Math.min(streak-1,5)*2;feedback.setText("✦ Bravo !  +"+(10+Math.min(streak-1,5)*2)+" points");}
+        if(ok){streak++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
         else {streak=0;feedback.setText("La réponse : "+correct);}
         feedback.setTextColor(ok?GOLD:WHITE);
         for(int i=0;i<choices.getChildCount();i++){
@@ -90,11 +104,11 @@ public class MainActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
             int[] arr=saved.getIntArray("order");for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");
-            if(index>=ROUND)finishRound();else {showQuestion(); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak; answer(previous); score=oldScore; streak=oldStreak;}}
+            if(index>=ROUND)finishRound();else {showQuestion(); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak; answer(previous); score=oldScore; streak=oldStreak; earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
         }else newGame();
     }
     @Override protected void onSaveInstanceState(Bundle out){
-        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak); if(answered)out.putString("selected",selected);
+        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
         super.onSaveInstanceState(out);
     }
 }
