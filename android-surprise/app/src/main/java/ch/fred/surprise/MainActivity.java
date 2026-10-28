@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
     private String[] options; private String selected; private int earned;
     private LinearLayout root,choices;
     private TextView header,category,question,feedback;
+    private android.widget.ProgressBar progress;
     private Button next;
     private GradientDrawable shape(int color,int radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(radius);return d;}
     private TextView label(String s,int size,int color){TextView v=new TextView(this);v.setText(s);v.setTextSize(size);v.setTextColor(color);v.setGravity(Gravity.CENTER);return v;}
@@ -80,7 +81,7 @@ public class MainActivity extends Activity {
         showQuestion();
     }
     private void showHome(){
-        showingHome=true; answered=false; selected=null; choices.removeAllViews();
+        showingHome=true; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0);
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI");
         question.setText("Une petite aventure à chaque partie");
         int record=getPreferences(MODE_PRIVATE).getInt("best",0);
@@ -89,7 +90,7 @@ public class MainActivity extends Activity {
     }
     private void showQuestion(){showQuestion(null);}
     private void showQuestion(String[] restoredOptions){
-        answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE);
+        answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE); progress.setProgress(index);
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         category.setText(q[0]); question.setText(q[1]); feedback.setText("");
         ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);
@@ -104,7 +105,7 @@ public class MainActivity extends Activity {
         }
     }
     private void answer(String value){
-        if(answered)return;answered=true;selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
+        if(answered)return;answered=true;progress.setProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
         if(ok){streak++;correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
         else {streak=0;feedback.setText("La réponse : "+correct);}
         feedback.setTextColor(ok?GOLD:WHITE);
@@ -118,7 +119,7 @@ public class MainActivity extends Activity {
     }
     private void finishRound(){
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
-        choices.removeAllViews();header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");
+        choices.removeAllViews();progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");
         question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nRecord : "+best+" points\nUne nouvelle partie ?");feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
     }
@@ -128,6 +129,10 @@ public class MainActivity extends Activity {
         android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(BG);
         root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);root.setPadding(dp(22),dp(24),dp(22),dp(24));scroll.addView(root);
         header=label("",14,GOLD);header.setTypeface(null,Typeface.BOLD);root.addView(header);
+        progress=new android.widget.ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
+        progress.setMax(ROUND); progress.setProgressTintList(android.content.res.ColorStateList.valueOf(GOLD));
+        LinearLayout.LayoutParams progressParams=new LinearLayout.LayoutParams(-1,dp(6));
+        progressParams.setMargins(dp(24),dp(16),dp(24),0); root.addView(progress,progressParams);
         category=label("",14,GOLD);LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);cp.setMargins(0,dp(24),0,dp(8));root.addView(category,cp);
         question=label("",25,WHITE);question.setTypeface(null,Typeface.BOLD);root.addView(question);
         choices=new LinearLayout(this);choices.setOrientation(LinearLayout.VERTICAL);LinearLayout.LayoutParams choicesP=new LinearLayout.LayoutParams(-1,-2);choicesP.setMargins(0,dp(22),0,0);root.addView(choices,choicesP);
