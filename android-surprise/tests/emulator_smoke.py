@@ -54,7 +54,7 @@ for index in range(8):
     displayed = set(texts(root)) & bank
     assert len(displayed) == 1 and not (displayed & seen), displayed
     seen.update(displayed)
-    buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true" and not n.attrib.get("text", "").startswith("Joker")]
+    buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true" and n.attrib.get("enabled") == "true" and not n.attrib.get("text", "").startswith("Joker")]
     assert len(buttons) >= 2, texts(root)
     original_order = [button.attrib["text"] for button in buttons]
     chosen = buttons[0].attrib["text"]
@@ -62,7 +62,7 @@ for index in range(8):
         tap_text(root, "Joker 50 / 50 · une fois")
         adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
         root = wait_dump()
-        buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true" and not n.attrib.get("text", "").startswith("Joker")]
+        buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true" and n.attrib.get("enabled") == "true" and not n.attrib.get("text", "").startswith("Joker")]
         assert len(buttons) == 2, texts(root)
         chosen = buttons[0].attrib["text"]
     tap_text(root, chosen)
