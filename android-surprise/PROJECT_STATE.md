@@ -23,3 +23,9 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Validation : contrôle local Python de la banque réussi ; syntaxe Python du test émulateur validée ; tests du contenu et des scores réussis dans les runs 40669345484 et 40669373304. Run initial 40658936321 : compilation réussie et APK debug présent (artefact 12803171751, commit 7af4e5a9). La compilation des changements de cette session et le nouveau test sur émulateur sont encore en cours ; ils ne sont pas déclarés réussis.
 - Limites : absence locale de SDK Android, Gradle, javac, adb et appareil. Pas de test confirmé sur émulateur ni téléphone physique. Modèle et effort non modifiés. La session a duré moins que la durée indicative ; les vérifications CI ont été lancées et restent à contrôler au prochain passage.
 - Prochaine action : consulter le résultat des runs 40669345484, 40669373304 et du run associé à a89ededa ; diagnostiquer tout échec de l'émulateur, vérifier l'APK et poursuivre l'amélioration visuelle et ludique.
+
+
+### Complément à 11:06:47
+- Les runs 40669294053, 40669327985 et 40669345484 ont échoué à la compilation : caractères littéraux inversés introduits dans MainActivity.java. La cause a été lue dans les logs.
+- Correction poussée : b17cb782 ; vérification textuelle de l'absence de ces séquences hors chaînes réussie. Nouveau workflow lancé par ce commit : résultat encore inconnu. La version la plus récente ne possède pas encore d'APK confirmé ; la dernière version compilée avec succès reste 7af4e5a9.
+- Durée cumulée de la session : environ 2 min 45. La comparaison chiffrée ci-dessus précède le correctif ; consulter le diff complet au prochain passage. Prochaine action impérative : inspecter la compilation du correctif et le test émulateur, corriger tout échec.
