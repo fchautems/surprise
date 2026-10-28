@@ -210,7 +210,7 @@ assert find_text(root, "MANCHE  1") and find_text(root, "MUSIQUE"), texts(root)
 category_bank = {}
 for match in re.finditer(r'\{"([^"]+)","([^"]+)","[^"]+","[^"]+","[^"]+","[^"]+"\}', source):
     category_bank.setdefault(match.group(1), set()).add(match.group(2))
-for theme in ("MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS"):
+for theme in ("MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS", "CRYPTO"):
     adb("shell", "am", "force-stop", "ch.fred.surprise")
     adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
     tap_text(wait_dump(), "Choisir un thème")
