@@ -45,6 +45,7 @@ for index in range(8):
     assert find_text(root, "MANCHE  " + str(index+1)), texts(root)
     buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true"]
     assert len(buttons) == 4, texts(root)
+    original_order = [button.attrib["text"] for button in buttons]
     chosen = buttons[0].attrib["text"]
     tap_text(root, chosen)
     root = wait_dump()
@@ -56,6 +57,8 @@ for index in range(8):
         root = wait_dump()
         after = find_text(root, "Bravo") or find_text(root, "La réponse")
         assert before == after, (before, after)
+        rotated = [n.attrib.get("text") for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("text") in original_order]
+        assert rotated == original_order, (original_order, rotated)
         adb("shell", "settings", "put", "system", "user_rotation", "0")
         root = wait_dump()
     tap_text(root, "Continuer" if index < 7 else "Voir le résultat")
