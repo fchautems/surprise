@@ -125,6 +125,7 @@ public class MainActivity extends Activity {
     private String gameMode="MÉLANGE";
     private String dailyDate="";
     private final ArrayList<String> review = new ArrayList<>();
+    private final ArrayList<Integer> missed = new ArrayList<>();
     private boolean restoringAnswer;
     private String[] hiddenOptions;
     private String[] options; private String selected; private int earned;
@@ -151,6 +152,7 @@ public class MainActivity extends Activity {
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private void newGame(){
         showingHome=false; choosingTheme=false;
+        if(gameMode.equals("RATTRAPAGE")) gameMode="MÉLANGE";
         boolean daily=gameMode.equals("DÉFI");
         if(daily) dailyDate=java.time.LocalDate.now().toString();
         java.util.Set<String> recent = getPreferences(MODE_PRIVATE).getStringSet("recent", java.util.Collections.emptySet());
@@ -168,7 +170,20 @@ public class MainActivity extends Activity {
         java.util.Set<String> played = new java.util.HashSet<>();
         for(int i=0;i<ROUND;i++) played.add(Integer.toString(order.get(i)));
         if(!daily) getPreferences(MODE_PRIVATE).edit().putStringSet("recent",played).apply();
-        index=score=streak=correctCount=longestStreak=0; answered=false; jokerUsed=false; hiddenOptions=null; review.clear();
+        index=score=streak=correctCount=longestStreak=0; answered=false; jokerUsed=false; hiddenOptions=null; review.clear(); missed.clear();
+        showQuestion();
+    }
+    private void retryMissed(){
+        ArrayList<Integer> retry=new ArrayList<>(missed);
+        Collections.shuffle(retry,rng);
+        ArrayList<Integer> rest=new ArrayList<>();
+        for(int i=0;i<BANK.length;i++) if(!retry.contains(i)) rest.add(i);
+        Collections.shuffle(rest,rng);
+        for(int i=0;retry.size()<ROUND;i++) retry.add(rest.get(i));
+        order.clear(); order.addAll(retry);
+        gameMode="RATTRAPAGE"; showingHome=false; choosingTheme=false;
+        index=score=streak=correctCount=longestStreak=0;
+        answered=false; jokerUsed=false; hiddenOptions=null; review.clear(); missed.clear();
         showQuestion();
     }
     private String currentAward(){
@@ -248,7 +263,10 @@ public class MainActivity extends Activity {
         if(answered)return;answered=true;joker.setEnabled(false);progress.setProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
         if(ok){streak++;longestStreak=Math.max(streak,longestStreak);correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points"+(streak>1 ? "  ·  Série : "+streak : ""));}
         else {streak=0;feedback.setText("La réponse : "+correct);
-            if(!restoringAnswer) review.add(BANK[order.get(index)][1]+"\n→ "+correct);
+            if(!restoringAnswer){
+                review.add(BANK[order.get(index)][1]+"\n→ "+correct);
+                missed.add(order.get(index));
+            }
         }
         feedback.setTextColor(ok?GOLD:WHITE);
         header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
@@ -276,6 +294,9 @@ public class MainActivity extends Activity {
         question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points\n✦  "+currentAward());feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
         if(!review.isEmpty()){
+            Button retry=makeMenuButton("Prendre ma revanche"); choices.addView(retry);
+            retry.setBackground(outlinedShape(CARD,GOLD)); retry.setTextColor(GOLD);
+            retry.setOnClickListener(v->retryMissed());
             Button recap=makeMenuButton("Revoir mes réponses"); choices.addView(recap);
             recap.setOnClickListener(v->new android.app.AlertDialog.Builder(this)
                 .setTitle("À retenir").setMessage(android.text.TextUtils.join("\n\n",review))
@@ -314,12 +335,14 @@ public class MainActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
             ArrayList<String> savedReview=saved.getStringArrayList("review"); if(savedReview!=null) review.addAll(savedReview);
+            ArrayList<Integer> savedMissed=saved.getIntegerArrayList("missed"); if(savedMissed!=null) missed.addAll(savedMissed);
             int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");longestStreak=saved.getInt("longestStreak");jokerUsed=saved.getBoolean("jokerUsed");hiddenOptions=saved.getStringArray("hiddenOptions");gameMode=saved.getString("gameMode","MÉLANGE"); dailyDate=saved.getString("dailyDate","");
             if(saved.getBoolean("choosingTheme")) showThemes(); else if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount, oldLongest=longestStreak; restoringAnswer=true; answer(previous); restoringAnswer=false; score=oldScore; streak=oldStreak; correctCount=oldCorrect; longestStreak=oldLongest; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points"+(streak>1 ? "  ·  Série : "+streak : ""));}}
         }else showHome();
     }
     @Override protected void onSaveInstanceState(Bundle out){
         out.putStringArrayList("review",new ArrayList<>(review));
+        out.putIntegerArrayList("missed",new ArrayList<>(missed));
         int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putInt("longestStreak",longestStreak);out.putBoolean("home",showingHome);out.putBoolean("choosingTheme",choosingTheme);out.putString("gameMode",gameMode);out.putString("dailyDate",dailyDate);out.putBoolean("jokerUsed",jokerUsed);if(hiddenOptions!=null)out.putStringArray("hiddenOptions",hiddenOptions); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
         super.onSaveInstanceState(out);
     }
