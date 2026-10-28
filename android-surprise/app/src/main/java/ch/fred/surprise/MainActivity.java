@@ -71,8 +71,12 @@ public class MainActivity extends Activity {
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private void newGame(){
         showingHome=false;
-        order.clear(); for(int i=0;i<BANK.length;i++) order.add(i);
-        Collections.shuffle(order,rng); index=score=streak=correctCount=0; answered=false;
+        java.util.Set<String> recent = getPreferences(MODE_PRIVATE).getStringSet("recent", java.util.Collections.emptySet());
+        order.clear(); order.addAll(QuizRules.order(BANK.length, ROUND, recent, rng));
+        java.util.Set<String> played = new java.util.HashSet<>();
+        for(int i=0;i<ROUND;i++) played.add(Integer.toString(order.get(i)));
+        getPreferences(MODE_PRIVATE).edit().putStringSet("recent",played).apply();
+        index=score=streak=correctCount=0; answered=false;
         showQuestion();
     }
     private void showHome(){
@@ -115,7 +119,7 @@ public class MainActivity extends Activity {
     private void finishRound(){
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
         choices.removeAllViews();header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");
-        question.setText(score+" points");feedback.setText("Record : "+best+" points\nUne nouvelle partie ?");feedback.setTextColor(GOLD);
+        question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nRecord : "+best+" points\nUne nouvelle partie ?");feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
     }
     @Override public void onCreate(Bundle saved){
