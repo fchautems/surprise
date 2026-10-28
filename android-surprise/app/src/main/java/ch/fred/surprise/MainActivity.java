@@ -44,6 +44,16 @@ public class MainActivity extends Activity {
         {"CIEL","Quelle étoile est au centre du système solaire ?","Le Soleil","Sirius","Polaris","Véga"},
         {"ALLEMAND","Que signifie « Wasser » ?","Eau","Pain","Lait","Café"},
         {"ALLEMAND","Comment dit-on « bonjour » en allemand ?","Guten Tag","Gute Nacht","Auf Wiedersehen","Danke schön"},
+        {"MUSIQUE","Quel accord contient do, mi bémol et sol ?","Do mineur","Do majeur","Sol majeur","Fa majeur"},
+        {"MUSIQUE","Combien de demi-tons séparent deux notes à l'octave ?","Douze","Sept","Cinq","Huit"},
+        {"MUSIQUE","Dans le jazz, que désigne une improvisation ?","Une mélodie créée sur le moment","Une partition toujours identique","Un silence obligatoire","Un changement d'instrument"},
+        {"CUISINE","Quel ingrédient est à la base du pesto traditionnel ?","Le basilic","La menthe","La cannelle","Le cacao"},
+        {"CUISINE","Que signifie cuire al dente ?","Laisser une légère fermeté","Cuire jusqu'à dissolution","Servir glacé","Faire frire à sec"},
+        {"VOYAGE","Quelle ville se trouve au bord du détroit de Gibraltar ?","Tarifa","Madrid","Grenoble","Milan"},
+        {"CIEL","Quel instrument permet d'observer les astres lointains ?","Un télescope","Un microscope","Un stéthoscope","Un baromètre"},
+        {"CIEL","Quelle planète porte le nom du dieu romain de la guerre ?","Mars","Vénus","Neptune","Mercure"},
+        {"ALLEMAND","Que signifie « Guten Abend » ?","Bonsoir","Bonjour le matin","Bonne nuit","À demain"},
+        {"ALLEMAND","Que signifie « Brot » ?","Pain","Beurre","Fromage","Eau"},
         {"TEMPS","Quel objet indique les heures et les minutes ?","Une montre","Une boussole","Un thermomètre","Une balance"},
         {"TEMPS","Combien de secondes compte une minute ?","60","100","24","12"},
         {"TEMPS","Quel mécanisme mesure le temps dans une montre mécanique ?","Un mouvement à engrenages","Une antenne GPS obligatoire","Un écran tactile","Un panneau solaire obligatoire"}
@@ -73,11 +83,15 @@ public class MainActivity extends Activity {
         feedback.setText(record>0 ? "Ton record : "+record+" points" : "Huit étapes, des surprises et un peu de chance.");
         feedback.setTextColor(GOLD); next.setText("C’est parti"); next.setVisibility(View.VISIBLE);
     }
-    private void showQuestion(){
+    private void showQuestion(){showQuestion(null);}
+    private void showQuestion(String[] restoredOptions){
         answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE);
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         category.setText(q[0]); question.setText(q[1]); feedback.setText("");
-        ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);Collections.shuffle(a,rng);options=a.toArray(new String[0]);
+        ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);
+        if(restoredOptions!=null && restoredOptions.length==a.size() && a.containsAll(java.util.Arrays.asList(restoredOptions))){
+            options=restoredOptions.clone();
+        }else{Collections.shuffle(a,rng); options=a.toArray(new String[0]);}
         for(String value:options){
             Button b=new Button(this);b.setText(value);b.setTextColor(WHITE);b.setTextSize(17);b.setAllCaps(false);b.setBackground(shape(CARD,dp(16)));
             b.setMinHeight(dp(56)); b.setPadding(dp(12),dp(10),dp(12),dp(10));
@@ -119,11 +133,11 @@ public class MainActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
             int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");
-            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
+            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(saved.getStringArray("options")); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
         }else showHome();
     }
     @Override protected void onSaveInstanceState(Bundle out){
-        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putBoolean("home",showingHome); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
+        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);out.putInt("correctCount",correctCount);out.putBoolean("home",showingHome); if(!showingHome && index<ROUND && options!=null)out.putStringArray("options",options); if(answered){out.putString("selected",selected);out.putInt("earned",earned);}
         super.onSaveInstanceState(out);
     }
 }
