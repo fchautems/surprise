@@ -30,16 +30,23 @@ def texts(root):
     return [n.attrib.get("text", "") for n in root.iter("node")]
 
 def tap_text(root, label):
-    if not any(n.attrib.get("text", "").casefold() == label.casefold() for n in root.iter("node")):
-        adb("shell", "input", "swipe", "160", "540", "160", "180", "300")
-        root = wait_dump()
-    for node in root.iter("node"):
-        if node.attrib.get("text", "").casefold() == label.casefold():
-            b = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
+    # Controls close to the system gesture area can send the user to the
+    # launcher on newer Android versions. Bring them well inside the viewport.
+    for attempt in range(4):
+        node = next((n for n in root.iter("node")
+                     if n.attrib.get("text", "").casefold() == label.casefold()), None)
+        if node is not None:
+            b = list(map(int, re.findall(r"\\d+", node.attrib["bounds"])))
             assert len(b) == 4, node.attrib
-            adb("shell", "input", "tap", str((b[0]+b[2])//2), str((b[1]+b[3])//2))
-            return
-    raise AssertionError("Missing control: " + label + " in " + repr(texts(root)))
+            if 90 <= (b[1] + b[3]) // 2 <= 540:
+                adb("shell", "input", "tap", str((b[0]+b[2])//2), str((b[1]+b[3])//2))
+                return
+            direction = ("160", "480", "160", "240") if b[1] > 500 else ("160", "240", "160", "480")
+        else:
+            direction = ("160", "480", "160", "240")
+        adb("shell", "input", "swipe", *direction, "300")
+        root = wait_dump()
+    raise AssertionError("Missing or unsafe control: " + label + " in " + repr(texts(root)))
 
 def find_text(root, fragment):
     return next((v for v in texts(root) if fragment in v), None)
