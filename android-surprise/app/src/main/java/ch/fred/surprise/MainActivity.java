@@ -127,13 +127,17 @@ public class MainActivity extends Activity {
         index=score=streak=correctCount=longestStreak=0; answered=false; jokerUsed=false; hiddenOptions=null;
         showQuestion();
     }
+    private String currentAward(){
+        android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
+        return QuizRules.award(prefs.getInt("games",0),prefs.getInt("totalCorrect",0),prefs.getInt("longest",0));
+    }
     private void showHome(){
         showingHome=true; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI"); category.setTextColor(GOLD);
         question.setText("Une petite aventure à chaque partie");
         int record=getPreferences(MODE_PRIVATE).getInt("best",0);
         int games=getPreferences(MODE_PRIVATE).getInt("games",0);
-        feedback.setText(games>0 ? "Record : "+record+" points  ·  Parties : "+games : "Huit étapes, des surprises et un peu de chance.");
+        feedback.setText(games>0 ? "✦  "+currentAward()+"\nRecord : "+record+" points  ·  Parties : "+games : "Huit étapes, des surprises et un peu de chance.");
         feedback.setTextColor(GOLD); next.setText("C’est parti"); next.setVisibility(View.VISIBLE);
     }
     private void showQuestion(){hiddenOptions=null; showQuestion(null);}
@@ -191,7 +195,7 @@ public class MainActivity extends Activity {
     private void finishRound(){
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
         choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText("✦  BRAVO  ✦");category.setTextColor(GOLD);
-        question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points");feedback.setTextColor(GOLD);
+        question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points\n✦  "+currentAward());feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
     }
     @Override public void onCreate(Bundle saved){
