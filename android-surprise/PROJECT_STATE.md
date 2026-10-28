@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 100, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 5f5a108f ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI et test d'interface sur émulateur API 29 réussis pour le commit 57dd0dfd ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -124,8 +124,11 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : SDK Android, Gradle et javac absents localement ; compilations et tests Android exécutés en CI. Aucun réglage de modèle ou de niveau modifié. Durée incluant développement, diagnostic, corrections et attente effective des CI ; aucune attente artificielle ni limite de quota précise mesurée. Prochaine action : tester une revanche complète, poursuivre la qualité ludique et visuelle et préparer la livraison.
 
 
-## Session du 28 octobre 2026, à partir de 22:36:06 Europe/Zurich — suivi provisoire
+## Session du 28 octobre 2026, 22:36:06–23:06:08 Europe/Zurich (30 min 02)
 - Base 064af482 ; commits poussés 07f712bf, e93d4f7c et 57dd0dfd ; un commit supplémentaire enregistre ce suivi. Fichiers : MainActivity.java, tests/emulator_smoke.py et PROJECT_STATE.md. Diff hors journal : 27 lignes ajoutées, 8 supprimées.
 - Développement : la revanche complète ses questions manquées par des questions nouvelles plutôt que celles qui viennent d'être réussies ; résultat adapté à la revanche et au sans-faute. Un scénario joue et vérifie toute la revanche, son score, sa diversité et la sortie vers une nouvelle partie.
 - Contrôles locaux : intégrité de banque Python et syntaxe du scénario Python réussies. CI 40773386404 : compilation, tests et parcours complet sur API 29 réussis, y compris la revanche ; API 35 a échoué au contrôle de navigation avec texte agrandi. Le contrôle a été ajusté pour faire défiler vers le haut avant de lire l'état ; la cause exacte de l'échec reste à confirmer. Nouveau run 40775225634 pour 57dd0dfd : compilation et APK réussis, tests émulateurs encore en cours au moment de ce suivi.
 - APK debug du nouveau run : artefact 12855285007 téléchargé ; archive et APK passent unzip -t ; SHA-256 34594a1dfb21250344293e8940524df2a007e9605e7e6fe33a1654240c992827. Pas de test physique ni d'inspection visuelle humaine. Prochaine action : inspecter les deux jobs du run 40775225634, diagnostiquer tout échec et compléter le journal avec la durée et les résultats finaux.
+
+- Validation finale : run 40775225634 au commit 57dd0dfd terminé avec succès. Les parcours complets, dont revanche de huit réponses, score parfait, non-répétition et défi quotidien, ont réussi sur émulateurs API 29 et 35 ; les tests de données et règles et la compilation ont réussi. Le résultat est celui de cette version précise.
+- Limites : aucun appareil physique ni inspection visuelle humaine ; SDK/Gradle/javac absents localement. Modèle et niveau non modifiés. Durée incluant développement, diagnostic, correction et attente effective des CI, sans attente artificielle ; limite de quota précise non mesurée. Prochaine action : poursuivre l'amélioration ludique et visuelle et préparer la livraison. Le suivi provisoire a été committé en fea45743 ; ce complément fait l'objet d'un dernier commit.
