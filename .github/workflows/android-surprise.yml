@@ -35,3 +35,12 @@ jobs:
           name: android-debug-apk
           path: android-surprise/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+      - name: Test on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          disable-animations: true
+          script: |
+            adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
+            python3 android-surprise/tests/emulator_smoke.py
