@@ -58,6 +58,7 @@ correct_by_question = {
     for m in re.finditer(r'\{"[^"]+","([^"]+)","([^"]+)","[^"]+","[^"]+","[^"]+"\}', source)
 }
 seen = set()
+missed_questions = set()
 first_missed = None
 for index in range(8):
     adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
@@ -88,6 +89,8 @@ for index in range(8):
         wrong = [button.attrib["text"] for button in buttons if button.attrib["text"] != correct_by_question[first_missed]]
         assert len(wrong) == 1, (first_missed, buttons)
         chosen = wrong[0]
+    if chosen != correct_by_question[next(iter(displayed))]:
+        missed_questions.update(displayed)
     tap_text(root, chosen)
     adb("shell", "input", "swipe", "160", "540", "160", "180", "300")
     root = wait_dump()
@@ -131,7 +134,17 @@ dialog = wait_dump()
 recap = find_text(dialog, first_missed)
 assert recap and recap.count(first_missed) == 1, "Review lost or duplicated after result rotation"
 tap_text(dialog, "Fermer")
-tap_text(wait_dump(), "Rejouer")
+tap_text(wait_dump(), "Prendre ma revanche")
+retry = wait_dump()
+assert (set(texts(retry)) & bank) <= missed_questions and (set(texts(retry)) & bank), texts(retry)
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+retry_rotated = wait_dump()
+assert (set(texts(retry_rotated)) & bank) == (set(texts(retry)) & bank), "Retry lost on rotation"
+adb("shell", "input", "keyevent", "4")
+tap_text(wait_dump(), "Quitter")
+tap_text(wait_dump(), "C’est parti")
 replay = wait_dump()
 assert find_text(replay, "MANCHE  1"), "Replay failed"
 displayed = set(texts(replay)) & bank
