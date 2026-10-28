@@ -223,6 +223,9 @@ public class MainActivity extends Activity {
         Button daily=makeMenuButton(dailyBest>0 ? "Défi du jour · record "+dailyBest : "Défi du jour");
         daily.setBackground(outlinedShape(CARD,GOLD)); daily.setTextColor(GOLD);
         choices.addView(daily); daily.setOnClickListener(v->{gameMode="DÉFI";newGame();});
+        Button memory=makeMenuButton("Un jeu de mémoire"); choices.addView(memory);
+        memory.setBackground(outlinedShape(CARD,Color.rgb(179,185,255)));
+        memory.setOnClickListener(v->startActivity(new android.content.Intent(this,MemoryActivity.class)));
         Button theme=makeMenuButton("Choisir un thème");
         choices.addView(theme); theme.setOnClickListener(v->showThemes());
     }
