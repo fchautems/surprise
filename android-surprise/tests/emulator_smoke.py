@@ -20,6 +20,12 @@ def wait_dump():
             continue
     raise AssertionError("Unable to read UI hierarchy")
 
+def capture(name):
+    dest = Path(__file__).resolve().parents[1] / "test-screens"
+    dest.mkdir(exist_ok=True)
+    with (dest / (name + ".png")).open("wb") as output:
+        subprocess.run(["adb", "exec-out", "screencap", "-p"], stdout=output, check=True)
+
 def texts(root):
     return [n.attrib.get("text", "") for n in root.iter("node")]
 
@@ -43,6 +49,7 @@ adb("shell", "pm", "clear", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 root = wait_dump()
 assert find_text(root, "BIENVENUE"), texts(root)
+capture("accueil")
 tap_text(root, "C’est parti")
 source = (Path(__file__).resolve().parents[1] / "app/src/main/java/ch/fred/surprise/MainActivity.java").read_text(encoding="utf-8")
 bank = {m.group(1) for m in re.finditer(r'\{"[^"]+","([^"]+)","[^"]+","[^"]+","[^"]+","[^"]+"\}', source)}
@@ -53,6 +60,7 @@ for index in range(8):
     assert find_text(root, "MANCHE  " + str(index+1)), texts(root)
     displayed = set(texts(root)) & bank
     assert len(displayed) == 1 and not (displayed & seen), displayed
+    if index == 0: capture("partie")
     seen.update(displayed)
     buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true" and n.attrib.get("enabled") == "true" and not n.attrib.get("text", "").startswith("Joker")]
     assert len(buttons) >= 2, texts(root)
@@ -88,6 +96,7 @@ for index in range(8):
     tap_text(root, "Continuer" if index < 7 else "Voir le résultat")
 root = wait_dump()
 assert find_text(root, "PARTIE TERMINÉE"), texts(root)
+capture("resultat")
 assert find_text(root, "Record"), texts(root)
 result_before = find_text(root, "bonnes réponses")
 assert result_before, texts(root)
