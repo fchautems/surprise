@@ -176,8 +176,10 @@ public class MainActivity extends Activity {
     private void retryMissed(){
         ArrayList<Integer> retry=new ArrayList<>(missed);
         Collections.shuffle(retry,rng);
+        // Complete the round with new questions, not ones just answered correctly.
+        java.util.Set<Integer> previous=new java.util.HashSet<>(order.subList(0,ROUND));
         ArrayList<Integer> rest=new ArrayList<>();
-        for(int i=0;i<BANK.length;i++) if(!retry.contains(i)) rest.add(i);
+        for(int i=0;i<BANK.length;i++) if(!previous.contains(i)) rest.add(i);
         Collections.shuffle(rest,rng);
         for(int i=0;retry.size()<ROUND;i++) retry.add(rest.get(i));
         order.clear(); order.addAll(retry);
@@ -290,8 +292,8 @@ public class MainActivity extends Activity {
             prefs.edit().putString("dailyDate",dailyDate).putInt("dailyBest",Math.max(old,score)).apply();
         }
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
-        choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText(gameMode.equals("DÉFI") ? "✦  DÉFI DU JOUR  ✦" : "✦  BRAVO  ✦");category.setTextColor(GOLD);
-        question.setText(score+" points");feedback.setText(correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points\n✦  "+currentAward());feedback.setTextColor(GOLD);
+        choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText(gameMode.equals("DÉFI") ? "✦  DÉFI DU JOUR  ✦" : gameMode.equals("RATTRAPAGE") ? "✦  REVANCHE  ✦" : "✦  BRAVO  ✦");category.setTextColor(GOLD);
+        question.setText(score+" points");feedback.setText((correctCount==ROUND ? "✦ Sans-faute !\n" : "")+correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points\n✦  "+currentAward());feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
         if(!review.isEmpty()){
             Button retry=makeMenuButton("Prendre ma revanche"); choices.addView(retry);
