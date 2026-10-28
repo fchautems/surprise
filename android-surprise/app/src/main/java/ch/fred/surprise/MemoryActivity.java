@@ -17,7 +17,8 @@ import java.util.Collections;
 public final class MemoryActivity extends Activity {
     private static final int BG=Color.rgb(17,22,42), CARD=Color.rgb(31,42,68);
     private static final int GOLD=Color.rgb(255,195,107), WHITE=Color.rgb(245,242,235);
-    private static final String[] SYMBOLS={"♪","☕","✦","♛"};
+    private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆"};
+    private static final int PAIRS=4;
     private final int[] deck=new int[8];
     private final boolean[] matched=new boolean[8];
     private final Button[] cards=new Button[8];
@@ -38,8 +39,10 @@ public final class MemoryActivity extends Activity {
         b.setBackground(shape(CARD,GOLD)); b.setMinHeight(dp(52)); return b;
     }
     private void newGame(){
-        ArrayList<Integer> values=new ArrayList<>();
-        for(int i=0;i<SYMBOLS.length;i++){values.add(i);values.add(i);}
+        ArrayList<Integer> available=new ArrayList<>(), values=new ArrayList<>();
+        for(int i=0;i<SYMBOLS.length;i++)available.add(i);
+        Collections.shuffle(available);
+        for(int i=0;i<PAIRS;i++){int value=available.get(i);values.add(value);values.add(value);}
         Collections.shuffle(values);
         for(int i=0;i<deck.length;i++){deck[i]=values.get(i);matched[i]=false;}
         first=second=-1; moves=0; render();
@@ -54,7 +57,7 @@ public final class MemoryActivity extends Activity {
             second=i; moves++;
             if(deck[first]==deck[second]){
                 matched[first]=matched[second]=true; first=second=-1;
-                if(pairsFound()==SYMBOLS.length){
+                if(pairsFound()==PAIRS){
                     android.content.SharedPreferences p=getPreferences(MODE_PRIVATE);
                     int best=p.getInt("best",Integer.MAX_VALUE);
                     p.edit().putInt("best",Math.min(best,moves)).apply();
@@ -66,9 +69,9 @@ public final class MemoryActivity extends Activity {
     private void render(){
         int pairs=pairsFound();
         int best=getPreferences(MODE_PRIVATE).getInt("best",0);
-        status.setText(pairs==SYMBOLS.length
+        status.setText(pairs==PAIRS
             ? "✦ Bravo ! "+moves+" essais\nRecord : "+best
-            : pairs+" / 4 paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : ""));
+            : pairs+" / 4 paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
         for(int i=0;i<cards.length;i++){
             boolean visible=matched[i] || i==first || i==second;
             String value=visible ? SYMBOLS[deck[i]] : "?";
