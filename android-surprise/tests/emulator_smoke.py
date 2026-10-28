@@ -200,17 +200,34 @@ tap_text(wait_dump(), "Quitter")
 tap_text(wait_dump(), "Défi du jour")
 root = wait_dump()
 assert (set(texts(root)) & bank) == daily_first, "Daily challenge changed on replay"
+daily_seen = set()
 for index in range(8):
     adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
     root = wait_dump()
     shown = set(texts(root)) & bank
-    assert len(shown) == 1, texts(root)
+    assert len(shown) == 1 and not (shown & daily_seen), (shown, daily_seen)
+    daily_seen.update(shown)
+    if index == 0:
+        adb("shell", "settings", "put", "system", "user_rotation", "1")
+        wait_dump()
+        adb("shell", "settings", "put", "system", "user_rotation", "0")
+        root = wait_dump()
+        assert (set(texts(root)) & bank) == daily_first, "Daily question lost on rotation"
     correct = correct_by_question[next(iter(shown))]
     tap_text(root, correct)
     tap_text(wait_dump(), "Continuer" if index < 7 else "Voir le résultat")
 root = wait_dump()
 assert find_text(root, "130 points"), texts(root)
-tap_text(root, "Accueil")
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+root = wait_dump()
+assert find_text(root, "130 points"), "Daily result lost on rotation"
+tap_text(root, "Rejouer")
+root = wait_dump()
+assert (set(texts(root)) & bank) == daily_first, "Daily replay changed"
+adb("shell", "input", "keyevent", "4")
+tap_text(wait_dump(), "Quitter")
 root = wait_dump()
 assert find_text(root, "Défi du jour · record 130"), texts(root)
 adb("shell", "am", "force-stop", "ch.fred.surprise")
