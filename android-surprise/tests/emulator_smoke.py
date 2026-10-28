@@ -149,9 +149,23 @@ wait_dump()
 adb("shell", "settings", "put", "system", "user_rotation", "0")
 retry_rotated = wait_dump()
 assert (set(texts(retry_rotated)) & bank) == (set(texts(retry)) & bank), "Retry lost on rotation"
-adb("shell", "input", "keyevent", "4")
-tap_text(wait_dump(), "Quitter")
-tap_text(wait_dump(), "C’est parti")
+retry_seen = set()
+for index in range(8):
+    adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
+    root = wait_dump()
+    shown = set(texts(root)) & bank
+    assert len(shown) == 1 and not (shown & retry_seen), (shown, retry_seen)
+    if index < len(missed_questions):
+        assert shown <= missed_questions, (index, shown, missed_questions)
+    else:
+        assert not (shown & seen), ("filler question repeated", shown)
+    retry_seen.update(shown)
+    tap_text(root, correct_by_question[next(iter(shown))])
+    tap_text(wait_dump(), "Continuer" if index < 7 else "Voir le résultat")
+root = wait_dump()
+assert find_text(root, "130 points") and find_text(root, "Sans-faute"), texts(root)
+assert not find_text(root, "Prendre ma revanche"), "Perfect retry offered another retry"
+tap_text(root, "Rejouer")
 replay = wait_dump()
 assert find_text(replay, "MANCHE  1"), "Replay failed"
 displayed = set(texts(replay)) & bank
@@ -159,7 +173,7 @@ assert len(displayed) == 1 and not (displayed & seen), ("repeated across games",
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 root = wait_dump()
-assert find_text(root, "Parties : 1"), texts(root)
+assert find_text(root, "Parties : 2"), texts(root)
 # Repeat entry navigation with larger system text; scrolling must remain usable.
 adb("shell", "settings", "put", "system", "font_scale", "1.3")
 adb("shell", "am", "force-stop", "ch.fred.surprise")
