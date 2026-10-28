@@ -12,6 +12,11 @@ class BankTests(unittest.TestCase):
         rows = ENTRY.findall(source)
         round_size = int(re.search(r'ROUND=(\d+)', source).group(1))
         self.assertGreaterEqual(len(rows), round_size * 3)
+        from collections import Counter
+        counts = Counter(row[0] for row in rows)
+        self.assertEqual(set(counts), {"MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS"})
+        for name, count in counts.items():
+            self.assertGreaterEqual(count, round_size, name)
         self.assertEqual(len({row[1] for row in rows}), len(rows))
         for category, question, *answers in rows:
             self.assertTrue(category.strip())
