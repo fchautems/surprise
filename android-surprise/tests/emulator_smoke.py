@@ -187,7 +187,10 @@ buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.wid
 assert buttons, texts(root)
 tap_text(root, buttons[0].attrib["text"])
 tap_text(wait_dump(), "Continuer")
-assert find_text(wait_dump(), "MANCHE  2"), "Large-font continuation failed"
+# At large font sizes the header may be above the visible viewport.
+adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
+root = wait_dump()
+assert find_text(root, "MANCHE  2"), ("Large-font continuation failed", texts(root))
 adb("shell", "settings", "put", "system", "font_scale", "1.0")
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
