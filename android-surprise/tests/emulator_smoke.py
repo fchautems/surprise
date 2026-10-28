@@ -126,7 +126,12 @@ wait_dump()
 adb("shell", "settings", "put", "system", "user_rotation", "0")
 root = wait_dump()
 assert find_text(root, "bonnes réponses") == result_before, texts(root)
-tap_text(root, "Rejouer")
+tap_text(root, "Revoir mes réponses")
+dialog = wait_dump()
+recap = find_text(dialog, first_missed)
+assert recap and recap.count(first_missed) == 1, "Review lost or duplicated after result rotation"
+tap_text(dialog, "Fermer")
+tap_text(wait_dump(), "Rejouer")
 replay = wait_dump()
 assert find_text(replay, "MANCHE  1"), "Replay failed"
 displayed = set(texts(replay)) & bank
@@ -177,4 +182,10 @@ for theme in ("MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS"):
     assert find_text(root, "MANCHE  1"), (theme, texts(root))
     displayed = set(texts(root)) & bank
     assert len(displayed) == 1 and displayed <= category_bank[theme], (theme, displayed)
+# Confirm abandoning a game returns to the welcome screen.
+adb("shell", "input", "keyevent", "4")
+dialog = wait_dump()
+assert find_text(dialog, "Quitter la partie"), texts(dialog)
+tap_text(dialog, "Quitter")
+assert find_text(wait_dump(), "BIENVENUE"), "Leaving the game failed"
 print("Android UI smoke test passed")
