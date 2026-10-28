@@ -23,6 +23,14 @@ public final class QuizRulesTest {
             QuizRules.order(3, 4, java.util.Collections.emptySet(), new java.util.Random(1));
             throw new AssertionError("invalid round accepted");
         } catch (IllegalArgumentException expected) { }
-        System.out.println("Scoring and selection tests passed");
+        if (!QuizRules.award(0,0,0).equals("À découvrir")) throw new AssertionError("initial award");
+        if (!QuizRules.award(1,4,2).equals("Première escale")) throw new AssertionError("first award");
+        if (!QuizRules.award(3,8,3).equals("Fidèle aventurier")) throw new AssertionError("loyalty award");
+        if (!QuizRules.award(4,25,4).equals("Grand curieux")) throw new AssertionError("curiosity award");
+        if (!QuizRules.award(5,30,8).equals("Série parfaite")) throw new AssertionError("streak award");
+        if (!QuizRules.award(10,60,8).equals("Explorateur légendaire")) throw new AssertionError("legendary award");
+        try { QuizRules.award(-1,0,0); throw new AssertionError("negative accepted"); }
+        catch (IllegalArgumentException expected) { }
+        System.out.println("Scoring, selection and award tests passed");
     }
 }
