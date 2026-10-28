@@ -116,7 +116,20 @@ for _ in range(20):
 else:
     raise AssertionError("Memory game did not finish")
 root = wait_dump()
-assert find_text(root, "Bravo !") and find_text(root, "Record"), texts(root)
+result = find_text(root, "Bravo !")
+assert result and "Record" in result, texts(root)
+record = result.split("Record : ")[1]
+tap_text(root, "Nouvelle partie")
+root = wait_dump()
+assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
+for index in range(8):
+    root, node = card(root, index)
+    assert "cachée " in node.attrib["content-desc"], node.attrib
 tap_text(root, "Retour à l’accueil")
 assert find_text(wait_dump(), "BIENVENUE"), "Memory return failed"
+adb("shell", "am", "force-stop", "ch.fred.surprise")
+adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+tap_text(wait_dump(), "Un jeu de mémoire")
+root = wait_dump()
+assert find_text(root, "Record : " + record), "Memory record lost after restart"
 print("Memory game smoke test passed")
