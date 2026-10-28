@@ -53,7 +53,12 @@ capture("accueil")
 tap_text(root, "C’est parti")
 source = (Path(__file__).resolve().parents[1] / "app/src/main/java/ch/fred/surprise/MainActivity.java").read_text(encoding="utf-8")
 bank = {m.group(1) for m in re.finditer(r'\{"[^"]+","([^"]+)","[^"]+","[^"]+","[^"]+","[^"]+"\}', source)}
+correct_by_question = {
+    m.group(1): m.group(2)
+    for m in re.finditer(r'\{"[^"]+","([^"]+)","([^"]+)","[^"]+","[^"]+","[^"]+"\}', source)
+}
 seen = set()
+first_missed = None
 for index in range(8):
     adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
     root = wait_dump()
@@ -67,12 +72,22 @@ for index in range(8):
     original_order = [button.attrib["text"] for button in buttons]
     chosen = buttons[0].attrib["text"]
     if index == 0:
+        first_missed = next(iter(displayed))
+        # Accidental back presses offer a way to stay in the current game.
+        adb("shell", "input", "keyevent", "4")
+        dialog = wait_dump()
+        assert find_text(dialog, "Quitter la partie"), texts(dialog)
+        tap_text(dialog, "Rester")
+        root = wait_dump()
+        assert find_text(root, "MANCHE  1"), texts(root)
         tap_text(root, "Joker 50 / 50 · une fois")
         adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
         root = wait_dump()
         buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true" and n.attrib.get("enabled") == "true" and not n.attrib.get("text", "").startswith("Joker")]
         assert len(buttons) == 2, texts(root)
-        chosen = buttons[0].attrib["text"]
+        wrong = [button.attrib["text"] for button in buttons if button.attrib["text"] != correct_by_question[first_missed]]
+        assert len(wrong) == 1, (first_missed, buttons)
+        chosen = wrong[0]
     tap_text(root, chosen)
     adb("shell", "input", "swipe", "160", "540", "160", "180", "300")
     root = wait_dump()
@@ -100,6 +115,12 @@ capture("resultat")
 assert find_text(root, "Record"), texts(root)
 result_before = find_text(root, "bonnes réponses")
 assert result_before, texts(root)
+tap_text(root, "Revoir mes réponses")
+dialog = wait_dump()
+recap = find_text(dialog, first_missed)
+assert recap and correct_by_question[first_missed] in recap, texts(dialog)
+assert recap.count(first_missed) == 1, "Rotation duplicated the missed answer"
+tap_text(dialog, "Fermer")
 adb("shell", "settings", "put", "system", "user_rotation", "1")
 wait_dump()
 adb("shell", "settings", "put", "system", "user_rotation", "0")
