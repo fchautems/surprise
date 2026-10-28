@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
         if(answered)return;answered=true;selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
         if(ok){streak++;correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points");}
         else {streak=0;feedback.setText("La réponse : "+correct);}
-        feedback.setTextColor(ok?GOLD:WHITE);
+        feedback.setTextColor(ok?GOLD:WHITE);\n        header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         for(int i=0;i<choices.getChildCount();i++){
             Button b=(Button)choices.getChildAt(i);b.setEnabled(false);
             if(b.getText().toString().equals(correct))b.setBackground(shape(Color.rgb(36,105,88),dp(16)));
@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
             int[] arr=saved.getIntArray("order"); if(arr!=null) for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");correctCount=saved.getInt("correctCount");
-            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
+            if(saved.getBoolean("home") || order.size()<ROUND) showHome(); else if(index>=ROUND)finishRound();else {showQuestion(); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak, oldCorrect=correctCount; answer(previous); score=oldScore; streak=oldStreak; correctCount=oldCorrect; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score); earned=saved.getInt("earned"); if(previous.equals(BANK[order.get(index)][2])) feedback.setText("✦ Bravo !  +"+earned+" points");}}
         }else showHome();
     }
     @Override protected void onSaveInstanceState(Bundle out){
