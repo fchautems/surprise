@@ -38,3 +38,12 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Test local du contenu réussi (1 test, 40 questions) ; syntaxe Python du test interface validée. Le run 40677164244 est en cours et le run 40677210129 en attente ; la compilation ni l'APK des modifications de cette session ne sont encore confirmés.
 - Limites : pas d'émulateur/SDK/Gradle/javac/adb local, pas de téléphone. L'objectif indicatif de durée n'a pas été atteint ; la session a lancé les validations accessibles, sans attente artificielle.
 - Prochaine action : examiner les runs 40677164244 et 40677210129, en particulier l'émulateur accéléré ; corriger tout échec, puis vérifier un APK de la dernière version et continuer la finition.
+
+
+## Session du 28 octobre 2026, 12:55:28–13:01:06 Europe/Zurich (5 min 38)
+- Base f04e3124. Commits poussés : bda69bfc, 888b8236, 74098b50, 9d5ae3b0, bce28b6e ; un commit supplémentaire pour ce journal. Fichiers modifiés : MainActivity.java, QuizRules.java, tests/QuizRulesTest.java, tests/emulator_smoke.py et PROJECT_STATE.md. Diff hors journal : 45 lignes ajoutées, 11 supprimées.
+- Diagnostic : le run 40677210129 a compilé et installé l'APK sur émulateur, mais le test a échoué car la zone de résultat était hors de l'écran en paysage. Le test vérifie maintenant le retour en portrait avant de comparer l'état, sans attribuer la cause à l'application au-delà de ce qui est observé.
+- Améliorations : tirage privilégiant les questions absentes de la partie précédente, barre de progression, résumé des bonnes réponses ; tests des tirages sur 100 graines, petites banques et entrée invalide.
+- Validation : run 40683895963, commit bce28b6e : tests de contenu et de règles réussis, compilation assembleDebug réussie, artefact APK debug 12814581037 créé, puis test Android sur émulateur API 29 réussi. Le journal CI confirme lancement, partie complète, rotation aller-retour, résultat et nouvelle partie. L'APK issu de ce run n'a pas été testé sur téléphone physique.
+- Limites : SDK, Gradle, javac et adb absents localement ; pas de téléphone physique ; les changements de code sont validés par CI/émulateur et non par inspection visuelle humaine. Aucun changement de modèle ou de niveau. Durée inférieure à l'objectif indicatif ; le temps indiqué inclut l'attente effective des résultats CI, sans attente pour rallonger la session.
+- Prochaine action : renforcer encore l'originalité, la finition visuelle et la variété ludique ; conserver des tests Android verts et vérifier l'APK final avant livraison.
