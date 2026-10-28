@@ -54,13 +54,15 @@ for index in range(8):
         before = find_text(root, "Bravo") or find_text(root, "La réponse")
         adb("shell", "settings", "put", "system", "accelerometer_rotation", "0")
         adb("shell", "settings", "put", "system", "user_rotation", "1")
-        root = wait_dump()
-        after = find_text(root, "Bravo") or find_text(root, "La réponse")
-        assert before == after, (before, after)
-        rotated = [n.attrib.get("text") for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("text") in original_order]
-        assert rotated == original_order, (original_order, rotated)
+        # The compact landscape viewport may hide feedback. Rotate back before
+        # checking it, so this verifies restoration across both recreations.
+        wait_dump()
         adb("shell", "settings", "put", "system", "user_rotation", "0")
         root = wait_dump()
+        after = find_text(root, "Bravo") or find_text(root, "La réponse")
+        assert before == after, (before, after, texts(root))
+        rotated = [n.attrib.get("text") for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("text") in original_order]
+        assert rotated == original_order, (original_order, rotated)
     tap_text(root, "Continuer" if index < 7 else "Voir le résultat")
 root = wait_dump()
 assert find_text(root, "PARTIE TERMINÉE"), texts(root)
