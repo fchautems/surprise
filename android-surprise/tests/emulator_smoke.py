@@ -227,6 +227,25 @@ tap_text(dialog, "Quitter")
 root = wait_dump()
 assert find_text(root, "BIENVENUE"), "Leaving the game failed"
 
+# Play the newly added theme end to end, not just its first question.
+tap_text(root, "Choisir un thème")
+tap_text(wait_dump(), "CRYPTO")
+themed_seen = set()
+for index in range(8):
+    adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
+    root = wait_dump()
+    displayed = set(texts(root)) & bank
+    assert len(displayed) == 1 and displayed <= category_bank["CRYPTO"], texts(root)
+    assert not (displayed & themed_seen), displayed
+    themed_seen.update(displayed)
+    tap_text(root, correct_by_question[next(iter(displayed))])
+    tap_text(wait_dump(), "Continuer" if index < 7 else "Voir le résultat")
+root = wait_dump()
+assert find_text(root, "130 points"), texts(root)
+adb("shell", "input", "keyevent", "4")
+root = wait_dump()
+assert find_text(root, "BIENVENUE"), "Back from thematic result failed"
+
 # Today's challenge must be reproducible and its record must survive a restart.
 tap_text(root, "Défi du jour")
 root = wait_dump()
