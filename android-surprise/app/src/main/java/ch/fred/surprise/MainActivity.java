@@ -116,7 +116,23 @@ public class MainActivity extends Activity {
         {"ALLEMAND","Que signifie « der Hund » ?","Le chien","Le chat","L'oiseau","Le cheval"},
         {"ALLEMAND","Quel mot allemand signifie « aujourd'hui » ?","Heute","Morgen","Gestern","Immer"},
         {"ALLEMAND","Que signifie « bitte » dans une demande polie ?","S'il te plaît","Jamais","Hier","Peut-être"},
-        {"CUISINE","Quel ingrédient principal entre dans une meringue classique ?","Des blancs d'œufs et du sucre","Des pommes de terre","Du riz et du bouillon","Du beurre et du sel"}
+        {"CUISINE","Quel ingrédient principal entre dans une meringue classique ?","Des blancs d'œufs et du sucre","Des pommes de terre","Du riz et du bouillon","Du beurre et du sel"},
+        {"CRYPTO","Quel pseudonyme est associé à la création de Bitcoin ?","Satoshi Nakamoto","Alan Turing","Tim Berners-Lee","Ada Lovelace"},
+        {"CRYPTO","Quel symbole désigne généralement le bitcoin ?","BTC","ETH","CHF","EUR"},
+        {"CRYPTO","Quel est l'actif natif du réseau Ethereum ?","L'ether","Le bitcoin","Le franc suisse","Le litre"},
+        {"CRYPTO","Combien de bitcoins au maximum le protocole prévoit-il ?","Environ 21 millions","Un milliard exactement","100 millions par jour","Un nombre illimité"},
+        {"CRYPTO","Comment s'appelle le tout premier bloc d'une blockchain ?","Le bloc genesis","Le bloc final","Le bloc solaire","Le bloc horaire"},
+        {"CRYPTO","Que contient une blockchain publique ?","Un registre de transactions","Une collection de mots de passe en clair","Les photos du téléphone","Les clés privées de tous les utilisateurs"},
+        {"CRYPTO","Quel élément sert à signer une transaction dans un portefeuille ?","Une clé privée","Une adresse publique seule","Le nom du réseau Wi-Fi","La couleur de l'écran"},
+        {"CRYPTO","Que faut-il faire de sa phrase de récupération ?","La garder secrète et en sécurité","La publier sur les réseaux sociaux","L'envoyer à tous ses contacts","La graver sur son téléphone déverrouillé"},
+        {"CRYPTO","Comment appelle-t-on un portefeuille dont les clés sont gardées hors ligne ?","Un portefeuille à froid","Un portefeuille bouillant","Un portefeuille vocal","Un portefeuille météorologique"},
+        {"CRYPTO","Que représente un satoshi ?","Une très petite fraction de bitcoin","Un million de bitcoins","Un réseau Wi-Fi","Un type de montre"},
+        {"CRYPTO","Combien de satoshis composent un bitcoin ?","100 millions","100","1 000","21 millions"},
+        {"CRYPTO","À quoi sert généralement une adresse de réception crypto ?","À recevoir des fonds","À révéler sa clé privée","À arrêter la blockchain","À changer la date du téléphone"},
+        {"CRYPTO","Quel réseau de paiement est associé à Bitcoin pour de petits paiements rapides ?","Lightning","Ethernet","Bluetooth","Minitel"},
+        {"CRYPTO","Qu'est-ce qu'un explorateur de blocs permet de consulter ?","Des données publiques de la blockchain","Les phrases secrètes privées","Les mots de passe bancaires","Les fichiers supprimés du téléphone"},
+        {"CRYPTO","Comment s'appelle la réduction périodique de la récompense des mineurs Bitcoin ?","Le halving","Le swing","Le pétrissage","Le solstice"},
+        {"CRYPTO","Combien de mots contient souvent une phrase de récupération ?","12 ou 24","Un seul obligatoirement","100 exactement","Aucun"}
     };
     private static final int ROUND=8;
     private final Random rng=new Random();
@@ -146,6 +162,7 @@ public class MainActivity extends Activity {
             case "VOYAGE": return Color.rgb(147,207,201);
             case "CIEL": return Color.rgb(179,185,255);
             case "ALLEMAND": return Color.rgb(218,184,234);
+            case "CRYPTO": return Color.rgb(248,196,116);
             default: return GOLD;
         }
     }
@@ -220,7 +237,7 @@ public class MainActivity extends Activity {
         choices.removeAllViews(); joker.setVisibility(View.GONE); progress.setProgress(0);
         header.setText("CHOISIS TON THÈME"); category.setText("✦  EXPLORATION  ✦"); category.setTextColor(GOLD);
         question.setText("Quelle escale te tente ?"); feedback.setText(""); next.setText("Retour"); next.setVisibility(View.VISIBLE);
-        for(String theme:new String[]{"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS"}){
+        for(String theme:new String[]{"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS","CRYPTO"}){
             Button b=makeMenuButton(theme); b.setTextColor(categoryColor(theme));
             b.setBackground(outlinedShape(CARD,categoryColor(theme))); choices.addView(b);
             b.setOnClickListener(v->{gameMode=theme;newGame();});
