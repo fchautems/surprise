@@ -1,6 +1,6 @@
 # État du projet — 28 octobre 2026
 
-Application Android native : partie de 8 questions tirées sans répétition parmi 40, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
+Application Android native : partie de 8 questions tirées sans répétition parmi 60, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
 Contrôles : analyse automatisée du contenu vérifiant 16 questions, quatre choix distincts et nombre suffisant pour une partie. SDK et Gradle absents localement. La CI a compilé le commit b17cb782 et produit un APK debug dont l'intégrité ZIP a été contrôlée. La compilation des changements ultérieurs et le test sur émulateur restent à confirmer ; aucun test sur téléphone physique.
 
@@ -47,3 +47,12 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Validation : run 40683895963, commit bce28b6e : tests de contenu et de règles réussis, compilation assembleDebug réussie, artefact APK debug 12814581037 créé, puis test Android sur émulateur API 29 réussi. Le journal CI confirme lancement, partie complète, rotation aller-retour, résultat et nouvelle partie. L'APK issu de ce run n'a pas été testé sur téléphone physique.
 - Limites : SDK, Gradle, javac et adb absents localement ; pas de téléphone physique ; les changements de code sont validés par CI/émulateur et non par inspection visuelle humaine. Aucun changement de modèle ou de niveau. Durée inférieure à l'objectif indicatif ; le temps indiqué inclut l'attente effective des résultats CI, sans attente pour rallonger la session.
 - Prochaine action : renforcer encore l'originalité, la finition visuelle et la variété ludique ; conserver des tests Android verts et vérifier l'APK final avant livraison.
+
+
+## Session du 28 octobre 2026, 14:04:32–14:13:14 Europe/Zurich (8 min 42)
+- Base : 5cdc0abf. Commits poussés : ba429845, 67df23aa, cf24c092, 5373a3f9, 570c895b, ff1fd988 ; un commit additionnel pour ce journal. Fichiers : MainActivity.java, tests/emulator_smoke.py, PROJECT_STATE.md. Diff hors journal : 80 ajouts, 13 suppressions.
+- Ajout d'un joker 50/50 utilisable une fois par partie, état conservé à la rotation, 20 questions supplémentaires ; test du joker et de l'absence de répétition entre parties, navigation adaptée au petit écran.
+- Tests : test local d'intégrité de la banque réussi (60 questions), syntaxe Python vérifiée. Run 40693425460 : compilation et APK réussis mais test UI échoué en comptant les boutons désactivés ; diagnostic et correction de l'assertion. Run 40693873572 : compilation et tests de règles/contenu réussis ; test sur émulateur API 29 réussi (partie complète, joker, rotation et nouvelle partie sans répétition). Les logs et les étapes du job confirment le succès.
+- APK debug du commit ff1fd988, artefact 12818516467 : archive et APK téléchargés et contrôlés par unzip -t ; SHA-256 APK 925051a43c6f6bcd04c2a1dda38f4ce6ea380cf981570880c6116dd32b4d7c1d. Pas de test physique. Pas de changement du modèle ou de son niveau.
+- Durée inférieure à l'objectif indicatif, après cycles d'implémentation, diagnostic, correction et attente des tests ; aucun ralentissement artificiel.
+- Prochaine action : enrichir encore l'expérience visuelle et ludique ; inspecter si possible des captures émulateur en privé, conserver les tests verts et préparer l'APK final pour dimanche.
