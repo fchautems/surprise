@@ -82,6 +82,7 @@ public final class MemoryActivity extends Activity {
         ScrollView scroll=new ScrollView(this); scroll.setFillViewport(true); scroll.setBackgroundColor(BG);
         LinearLayout root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER); root.setPadding(dp(18),dp(20),dp(18),dp(20)); scroll.addView(root);
+        scroll.setOnApplyWindowInsetsListener((view,insets)->{root.setPadding(dp(18),dp(20)+insets.getSystemWindowInsetTop(),dp(18),dp(20)+insets.getSystemWindowInsetBottom());return insets;});
         TextView title=label("✦  MÉMO DES ÉTOILES  ✦",21,GOLD);
         title.setTypeface(null,Typeface.BOLD); root.addView(title);
         TextView hint=label("Retrouve les quatre paires, à ton rythme.",15,WHITE);
