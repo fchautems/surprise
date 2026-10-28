@@ -2,7 +2,7 @@ name: Android build
 on:
   push:
     branches: [anniversaire-2026]
-    paths: ['android-surprise/**', '.github/workflows/android-surprise.yml']
+    paths: ['android-surprise/**', '.github/workflows/android-surprise.yml', '!android-surprise/PROJECT_STATE.md']
   workflow_dispatch:
 permissions:
   contents: read
