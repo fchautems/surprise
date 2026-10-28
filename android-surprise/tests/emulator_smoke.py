@@ -143,4 +143,17 @@ assert find_text(root, "CHOISIS TON THÈME"), texts(root)
 tap_text(root, "MUSIQUE")
 root = wait_dump()
 assert find_text(root, "MANCHE  1") and find_text(root, "MUSIQUE"), texts(root)
+# Verify that every thematic entry opens a question from the chosen category.
+category_bank = {}
+for match in re.finditer(r'\{"([^"]+)","([^"]+)","[^"]+","[^"]+","[^"]+","[^"]+"\}', source):
+    category_bank.setdefault(match.group(1), set()).add(match.group(2))
+for theme in ("MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS"):
+    adb("shell", "am", "force-stop", "ch.fred.surprise")
+    adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+    tap_text(wait_dump(), "Choisir un thème")
+    tap_text(wait_dump(), theme)
+    root = wait_dump()
+    assert find_text(root, "MANCHE  1"), (theme, texts(root))
+    displayed = set(texts(root)) & bank
+    assert len(displayed) == 1 and displayed <= category_bank[theme], (theme, displayed)
 print("Android UI smoke test passed")
