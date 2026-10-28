@@ -36,7 +36,7 @@ def tap_text(root, label):
         node = next((n for n in root.iter("node")
                      if n.attrib.get("text", "").casefold() == label.casefold()), None)
         if node is not None:
-            b = list(map(int, re.findall(r"\\d+", node.attrib["bounds"])))
+            b = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
             assert len(b) == 4, node.attrib
             if 90 <= (b[1] + b[3]) // 2 <= 540:
                 adb("shell", "input", "tap", str((b[0]+b[2])//2), str((b[1]+b[3])//2))
