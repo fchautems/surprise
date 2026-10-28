@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
     private final Random rng=new Random();
     private final ArrayList<Integer> order=new ArrayList<>();
     private int index,score,streak,best; private boolean answered;
-    private String[] options;
+    private String[] options; private String selected;
     private LinearLayout root,choices;
     private TextView header,category,question,feedback;
     private Button next;
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private void newGame(){order.clear();for(int i=0;i<BANK.length;i++)order.add(i);Collections.shuffle(order,rng);index=score=streak=0;answered=false;showQuestion();}
     private void showQuestion(){
-        answered=false; choices.removeAllViews(); next.setVisibility(View.GONE);
+        answered=false; selected=null; choices.removeAllViews(); next.setVisibility(View.GONE);
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         category.setText(q[0]); question.setText(q[1]); feedback.setText("");
         ArrayList<String> a=new ArrayList<>();for(int i=2;i<q.length;i++)a.add(q[i]);Collections.shuffle(a,rng);options=a.toArray(new String[0]);
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
         }
     }
     private void answer(String value){
-        if(answered)return;answered=true;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
+        if(answered)return;answered=true;selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
         if(ok){streak++;score+=10+Math.min(streak-1,5)*2;feedback.setText("✦ Bravo !  +"+(10+Math.min(streak-1,5)*2)+" points");}
         else {streak=0;feedback.setText("La réponse : "+correct);}
         feedback.setTextColor(ok?GOLD:WHITE);
@@ -90,11 +90,11 @@ public class MainActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){
             int[] arr=saved.getIntArray("order");for(int x:arr)order.add(x);index=saved.getInt("index");score=saved.getInt("score");streak=saved.getInt("streak");
-            if(index>=ROUND)finishRound();else {showQuestion();}
+            if(index>=ROUND)finishRound();else {showQuestion(); String previous=saved.getString("selected"); if(previous!=null){int oldScore=score, oldStreak=streak; answer(previous); score=oldScore; streak=oldStreak;}}
         }else newGame();
     }
     @Override protected void onSaveInstanceState(Bundle out){
-        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak);
+        int[] arr=new int[order.size()];for(int i=0;i<arr.length;i++)arr[i]=order.get(i);out.putIntArray("order",arr);out.putInt("index",index);out.putInt("score",score);out.putInt("streak",streak); if(answered)out.putString("selected",selected);
         super.onSaveInstanceState(out);
     }
 }
