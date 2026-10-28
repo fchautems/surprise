@@ -4,6 +4,7 @@ import re
 import subprocess
 import time
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 def adb(*args):
     return subprocess.check_output(["adb", *args], text=True)
@@ -43,10 +44,16 @@ adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 root = wait_dump()
 assert find_text(root, "BIENVENUE"), texts(root)
 tap_text(root, "C’est parti")
+source = (Path(__file__).resolve().parents[1] / "app/src/main/java/ch/fred/surprise/MainActivity.java").read_text(encoding="utf-8")
+bank = {m.group(1) for m in re.finditer(r'\{"[^"]+","([^"]+)","[^"]+","[^"]+","[^"]+","[^"]+"\}', source)}
+seen = set()
 for index in range(8):
     adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
     root = wait_dump()
     assert find_text(root, "MANCHE  " + str(index+1)), texts(root)
+    displayed = set(texts(root)) & bank
+    assert len(displayed) == 1 and not (displayed & seen), displayed
+    seen.update(displayed)
     buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("clickable") == "true" and not n.attrib.get("text", "").startswith("Joker")]
     assert len(buttons) >= 2, texts(root)
     original_order = [button.attrib["text"] for button in buttons]
@@ -83,5 +90,8 @@ root = wait_dump()
 assert find_text(root, "PARTIE TERMINÉE"), texts(root)
 assert find_text(root, "Record"), texts(root)
 tap_text(root, "Rejouer")
-assert find_text(wait_dump(), "MANCHE  1"), "Replay failed"
+replay = wait_dump()
+assert find_text(replay, "MANCHE  1"), "Replay failed"
+displayed = set(texts(replay)) & bank
+assert len(displayed) == 1 and not (displayed & seen), ("repeated across games", displayed)
 print("Android UI smoke test passed")
