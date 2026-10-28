@@ -93,3 +93,31 @@ jobs:
           path: android-surprise/test-screens/*.png
           if-no-files-found: ignore
           retention-days: 7
+  memory:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [29, 35]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-debug-apk
+          path: android-surprise/app/build/outputs/apk/debug
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test memory game
+        timeout-minutes: 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          disable-animations: true
+          script: |
+            adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
+            python3 android-surprise/tests/memory_smoke.py || { adb logcat -d -s AndroidRuntime:E; exit 1; }
