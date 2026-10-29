@@ -201,6 +201,36 @@ for index in range(8):
     root, node = card(root, index)
     assert "cachée " in node.attrib["content-desc"], node.attrib
 assert find_text(root, "Record : " + record), "Reset erased record"
+# The optional hint reveals one matching pair, survives rotation and costs two moves.
+tap_text(root, "Indice · une fois (+2 essais)")
+root = wait_dump()
+revealed = []
+for index in range(8):
+    root, node = card(root, index)
+    desc = node.attrib["content-desc"]
+    if "visible " in desc:
+        revealed.append((index, desc.split()[-1]))
+assert len(revealed) == 2 and revealed[0][1] == revealed[1][1], revealed
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+root = wait_dump()
+for index, symbol in revealed:
+    root, node = card(root, index)
+    assert "visible " in node.attrib["content-desc"] and node.attrib["content-desc"].endswith(symbol)
+root = tap_card(root, revealed[0][0])
+root = tap_card(root, revealed[1][0])
+for index, _ in revealed:
+    root, node = card(root, index)
+    assert "trouvée " in node.attrib["content-desc"], node.attrib
+for _ in range(3):
+    adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
+root = wait_dump()
+assert find_text(root, "3 essais"), texts(root)
+tap_text(root, "Nouvelle partie")
+dialog = wait_dump()
+tap_text(dialog, "Recommencer")
+root = wait_dump()
 tap_text(root, "Retour à l’accueil")
 assert find_text(wait_dump(), "BIENVENUE"), "Memory return failed"
 adb("shell", "am", "force-stop", "ch.fred.surprise")

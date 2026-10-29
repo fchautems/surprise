@@ -30,7 +30,8 @@ public final class MemoryActivity extends Activity {
     private final LinearLayout[] rows=new LinearLayout[MAX_ROWS];
     private int columns=4;
     private int pairCount=4;
-    private Button difficulty;
+    private Button difficulty, hintButton;
+    private boolean hintUsed=false, hintVisible=false;
     private ScrollView gameScroll;
     private int first=-1,second=-1,moves=0;
     private TextView status;
@@ -62,7 +63,7 @@ public final class MemoryActivity extends Activity {
         for(int i=0;i<pairCount;i++){int value=available.get(i);values.add(value);values.add(value);}
         Collections.shuffle(values);
         for(int i=0;i<deck.length;i++){deck[i]=i<values.size()?values.get(i):0;matched[i]=false;}
-        first=second=-1; moves=0; newRecord=false; render();
+        first=second=-1; moves=0; newRecord=false; hintUsed=false; hintVisible=false; render();
         gameScroll.post(()->gameScroll.fullScroll(View.FOCUS_UP));
     }
     private String recordKey(){return pairCount==4 ? "best" : pairCount==6 ? "best6" : "best8";}
@@ -71,7 +72,9 @@ public final class MemoryActivity extends Activity {
         int count=0; for(boolean b:matched)if(b)count++; return count/2;
     }
     private void select(int i){
-        if(matched[i] || i==first || i==second)return;
+        if(matched[i])return;
+        if(hintVisible){first=second=-1;hintVisible=false;}
+        if(i==first || i==second)return;
         if(second!=-1){first=second=-1;}
         if(first==-1){first=i;}else{
             second=i; moves++;
@@ -86,6 +89,18 @@ public final class MemoryActivity extends Activity {
             }
         }
         render();
+    }
+    private void showHint(){
+        if(hintUsed || pairsFound()==pairCount)return;
+        for(int i=0;i<pairCount*2;i++){
+            if(matched[i])continue;
+            for(int j=i+1;j<pairCount*2;j++){
+                if(!matched[j] && deck[i]==deck[j]){
+                    first=i;second=j;hintUsed=true;hintVisible=true;moves+=2;
+                    render();return;
+                }
+            }
+        }
     }
     private boolean hasUnfinishedGame(){
         return pairsFound()<pairCount && (moves>0 || first!=-1);
@@ -117,9 +132,11 @@ public final class MemoryActivity extends Activity {
         String reward=stars==3 ? "✦ ✦ ✦" : stars==2 ? "✦ ✦" : "✦";
         status.setText(pairs==pairCount
             ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\n"+reward
-            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
+            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(hintVisible ? "\nUne paire dévoilée · à toi de jouer !" : second!=-1 ? "\nChoisis une autre carte." : ""));
         progress.setMax(pairCount); progress.setProgress(pairs);
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
+        hintButton.setEnabled(!hintUsed && pairs<pairCount);
+        hintButton.setText(hintUsed ? "Indice utilisé" : "Indice · une fois (+2 essais)");
         difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : "Mode : 4 paires");
         for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*columns<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
@@ -163,6 +180,9 @@ public final class MemoryActivity extends Activity {
             }
             root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
+        hintButton=button(""); LinearLayout.LayoutParams ih=new LinearLayout.LayoutParams(-1,dp(52));
+        ih.setMargins(dp(5),dp(10),dp(5),0);root.addView(hintButton,ih);
+        hintButton.setOnClickListener(v->showHint());
         difficulty=button(""); LinearLayout.LayoutParams dp=new LinearLayout.LayoutParams(-1,dp(52));
         dp.setMargins(dp(5),dp(10),dp(5),0); root.addView(difficulty,dp); difficulty.setOnClickListener(v->switchDifficulty());
         Button reset=button("Nouvelle partie"); LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,dp(52));
@@ -185,13 +205,13 @@ public final class MemoryActivity extends Activity {
                 pairCount=saved.getInt("pairCount",4); if(pairCount!=4 && pairCount!=6 && pairCount!=8)pairCount=4;
                 System.arraycopy(d,0,deck,0,deck.length);System.arraycopy(m,0,matched,0,matched.length);
                 first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);
-                newRecord=saved.getBoolean("newRecord",false);render();
+                newRecord=saved.getBoolean("newRecord",false);hintUsed=saved.getBoolean("hintUsed",false);hintVisible=saved.getBoolean("hintVisible",false);render();
             }else newGame();
         }else newGame();
     }
     @Override protected void onSaveInstanceState(Bundle out){
         out.putIntArray("deck",deck);out.putBooleanArray("matched",matched);out.putInt("pairCount",pairCount);
-        out.putInt("first",first);out.putInt("second",second);out.putInt("moves",moves);out.putBoolean("newRecord",newRecord);
+        out.putInt("first",first);out.putInt("second",second);out.putInt("moves",moves);out.putBoolean("newRecord",newRecord);out.putBoolean("hintUsed",hintUsed);out.putBoolean("hintVisible",hintVisible);
         super.onSaveInstanceState(out);
     }
 }
