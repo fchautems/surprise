@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40790159254 intégralement réussie sur le commit c117fd75, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. Les modifications postérieures nécessitent une nouvelle validation. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40792642660 intégralement réussie sur le commit 61d4a0a4, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -161,7 +161,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : SDK, Gradle et javac absents localement ; tests Android exécutés en CI, aucun téléphone physique ni contrôle visuel humain. Modèle et niveau non modifiés. La durée comprend travail effectif et attente des validations, sans attente artificielle. Prochaine action : consulter le résultat du job API 35 123177177643, diagnostiquer tout échec et vérifier l'APK de la version retenue avant livraison.
 
 
-## Session du 29 octobre 2026, à partir de 01:12:30 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 01:12:30–01:36:59 Europe/Zurich (24 min 29 s)
 - Base 5abb9634 ; commits poussés d5ccb7bb, 06b71859, 67250500, 61d4a0a4. Fichiers : MemoryActivity.java, tests/memory_smoke.py et PROJECT_STATE.md ; diff hors journal : 63 ajouts, 7 suppressions.
 - Développement : confirmation avant d'effacer ou d'abandonner une partie en cours, annulation sans perte de l'état, célébration d'un nouveau record conservée à la rotation. Tests automatisés ajoutés pour ces cas et la conservation du record.
 - Contrôles locaux : compilation syntaxique du test Python et test de structure de la banque réussis. CI précédente 40790159254 terminée avec succès sur tous les jobs : compilation, tests de contenu et règles, et parcours API 29/35 des deux jeux. APK debug de ce run 12860434758, intégrité ZIP vérifiée, SHA-256 c6cd1d12b157209caef1449d66e35d9b18a79a1286939365d6cf5cab727ea59b.
@@ -170,3 +170,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Complément CI 01:15 Europe/Zurich : run 40792642660 sur 61d4a0a4, compilation et production d'APK réussies, parcours API 29 en cours ; autres parcours non démarrés. Artefact 12862865095 téléchargé ; archive et APK passent unzip -t ; SHA-256 APK ee5515b91312de6007038040cc4feba28b23af6d5c32cd40e9e8874c9556b6ef. La réussite des tests Android reste à établir.
 
 - Complément CI : run 40792642660, compilation, tests de contenu et règles, parcours complet API 29 et tests du nouveau scénario API 29 et 35 réussis. Le parcours complet API 35 reste en cours ; aucun résultat final n'est encore déclaré.
+
+- Résultat final à 01:36:59 : run 40792642660 intégralement réussi ; compilation, tests de données et de règles et parcours sur émulateurs API 29 et 35 réussis pour le commit 61d4a0a4. Les changements sont poussés ; commits de suivi 5a1ba73c, 92dca0b5 et ba1ce739, plus ce dernier complément. Aucun test sur téléphone physique ni inspection visuelle humaine. Durée comprenant le travail et l'attente effective de la CI ; aucune limite de quota mesurée et aucun changement de modèle ou d'effort. Prochaine action : poursuivre l'amélioration de l'expérience et confirmer à nouveau l'APK final avant livraison.
