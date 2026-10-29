@@ -480,3 +480,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : identifier la CI du commit, suivre tests et compilation, contrôler l'intégrité de l'APK et corriger toute régression avant le bilan final.
 
 - Tests étendus dans 63410d0a puis b23c21d0 : interruption pendant une lecture ralentie, mise en arrière-plan et réouverture de l'activité ; cas Android non encore validé. Les workflows intermédiaires peuvent être remplacés par cette dernière version. Syntaxe Python validée avant ajout du délai ; à revérifier sur version finale.
+
+- CI 40952140872 sur b23c21d0 : compilation et tests unitaires réussis ; premier parcours Android 10 en cours. APK debug 12932236706 produit ; archive et APK vérifiés par unzip -t ; SHA-256 2a8af5ff2d4bd3a39bc5190ed8c2006b9868cf7cb652e03b131cdc393b3ab4e3. Syntaxe Python de la dernière version valide ; les scénarios d'interruption et de confirmation ne sont pas encore validés sur Android.
