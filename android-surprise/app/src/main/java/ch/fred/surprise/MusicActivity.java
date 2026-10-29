@@ -59,9 +59,9 @@ public final class MusicActivity extends Activity {
         }});
     }
     private void playNote(int note,int token){
-        playSamples(SoundWave.note(FREQ[note]),token);
+        playSamples(SoundWave.note(FREQ[note]),token,"note "+NAMES[note]);
     }
-    private void playSamples(short[] data,int token){
+    private void playSamples(short[] data,int token,String description){
         if(token!=generation || Thread.currentThread().isInterrupted())return;
         AudioTrack track=null;
         try {
@@ -81,8 +81,10 @@ public final class MusicActivity extends Activity {
             }
             track.play();
             if(track.getPlayState()!=AudioTrack.PLAYSTATE_PLAYING){android.util.Log.w("SurpriseAudio","play failed");warnSound(token);return;}
-            android.util.Log.i("SurpriseAudio","playback started");
-            Thread.sleep(260);
+            android.util.Log.i("SurpriseAudio","playback started: "+description);
+            // Check cancellation frequently so rapid free play or leaving the
+            // screen never leaves a long backlog of stale notes.
+            for(int elapsed=0;elapsed<260 && token==generation;elapsed+=10)Thread.sleep(10);
         } catch(InterruptedException interrupted){Thread.currentThread().interrupt();}
         catch(IllegalArgumentException | IllegalStateException failure){android.util.Log.w("SurpriseAudio","playback exception",failure);warnSound(token);}
         finally {if(track!=null){try{track.stop();}catch(IllegalStateException ignored){}track.release();}}
@@ -104,7 +106,7 @@ public final class MusicActivity extends Activity {
     private void choose(int note){
         if(playing)return;
         checkVolume();
-        final int token=generation;
+        final int token=freeMode ? ++generation : generation;
         audio.execute(()->{if(token==generation)playNote(note,token);});
         if(freeMode){status.setText("Mode libre · "+NAMES[note]);return;}
         if(note!=phrase[position]){
@@ -123,8 +125,8 @@ public final class MusicActivity extends Activity {
     private void chooseChord(int chord){
         if(!freeMode || playing)return;
         checkVolume();
-        int token=generation;
-        audio.execute(()->{if(token==generation)playSamples(SoundWave.chord(CHORDS[chord]),token);});
+        int token=++generation;
+        audio.execute(()->{if(token==generation)playSamples(SoundWave.chord(CHORDS[chord]),token,"accord "+CHORD_NAMES[chord]);});
         status.setText("Mode libre · "+CHORD_NAMES[chord]);
     }
     private void switchMode(){

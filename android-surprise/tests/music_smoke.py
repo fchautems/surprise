@@ -102,6 +102,22 @@ dump()
 adb("shell","settings","put","system","user_rotation","0")
 root=dump()
 assert has(root,"Mode libre"),texts(root)
+# Rapid taps must not build a backlog; the last requested note must start.
+adb("shell","input","swipe","160","200","160","520","300")
+root=dump()
+positions={}
+for label in ("Do","Ré","Mi"):
+    node=next(n for n in root.iter("node") if n.attrib.get("text")==label)
+    b=list(map(int,re.findall(r"\\d+",node.attrib["bounds"])))
+    positions[label]=(str((b[0]+b[2])//2),str((b[1]+b[3])//2))
+adb("logcat","-c")
+for label in ("Do","Ré","Mi"):
+    adb("shell","input","tap",*positions[label])
+time.sleep(1)
+recent=adb("logcat","-d","-s","SurpriseAudio:I")
+assert "playback started: note Mi" in recent, recent
+assert recent.rfind("playback started: note Mi") > recent.rfind("playback started: note Do"), recent
+root=dump()
 tap(root,"Fa maj7")
 adb("shell","input","swipe","160","200","160","520","300")
 root=dump()
