@@ -407,3 +407,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôle local complémentaire : calcul des indices de grille pour 2, 3 et 4 colonnes et les quatre tailles de jeu ; les 20 indices sont couverts sans trou et les tailles attendues respectées. Ce calcul ne remplace pas un test Android.
 
 - CI 40903578219 : le parcours mémoire complet avec dix paires réussit sur API 29 ; les six jobs ont finalement réussi, y compris le parcours complet sur API 35.
+
+
+## Session du 29 octobre 2026, début 18:05:06 Europe/Zurich (en cours)
+- Base 824d81a25ecedc53ad7a5b6dfe8c431c11b2be68 ; commit poussé 6b8d9da535691e9f3fd0518942112c6385026809.
+- Fichiers : MainActivity.java +8/-6 ; tests/emulator_smoke.py +45/-5 ; workflow +2/-2 ; total code/config +55/-13, hors journal.
+- Amélioration ludique : une revanche thématique reste dans le thème choisi, sans répétition des questions précédentes hors erreurs ; contexte préservé à la rotation et lors de revanches successives. Parcours étendu à une manche, sa revanche, les records et rotations ; durée maximale des émulateurs principaux augmentée pour ce parcours.
+- Contrôles locaux : syntaxe Python valide ; calcul vérifiant une réserve suffisante dans chaque thème pour 1 à 8 erreurs. SDK Android, Gradle, javac et adb absents. CI et APK du nouveau commit non encore vérifiés. CI précédente 40903578219 : six jobs réussis ; APK 12911080499, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni inspection visuelle humaine.
+- Prochaine action : inspecter le workflow et le nouvel APK, corriger les échecs éventuels et consigner les résultats.
