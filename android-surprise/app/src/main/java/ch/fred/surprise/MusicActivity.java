@@ -46,7 +46,11 @@ public final class MusicActivity extends Activity {
         b.setBackgroundTintList(null);b.setBackground(shape(CARD,GOLD));b.setMinHeight(dp(56));return b;
     }
     private void warnSound(int token){
-        runOnUiThread(()->{if(token==generation && !isFinishing())soundWarning.setText("Son indisponible : vérifie le volume ou réessaie.");});
+        runOnUiThread(()->{if(token==generation && !isFinishing()){
+            AudioManager manager=(AudioManager)getSystemService(AUDIO_SERVICE);
+            soundWarning.setText(manager!=null && manager.getStreamVolume(AudioManager.STREAM_MUSIC)==0
+                ? "Le volume multimédia est coupé." : "Son indisponible : vérifie le volume ou réessaie.");
+        }});
     }
     private void playNote(int note,int token){
         short[] data=SoundWave.note(FREQ[note]);
