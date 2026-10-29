@@ -461,3 +461,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la CI, contrôler l'APK et diagnostiquer les échecs ; terminer le bilan avec durée réelle et état final.
 
 - CI 40944727584 sur 25178124 : compilation et tests unitaires réussis, parcours principal Android 10 en cours. APK debug 12929070974 produit ; archive et APK vérifiés par unzip -t ; SHA-256 99b718b2c0c588a0a0a71d59f00e758447b2919547075b7c90999055205846f5. Les tests sur émulateurs restent à terminer.
+
+- CI 40944727584 : le parcours audio Android 10 a échoué car une note émise avant le début de la lecture testée a été comptée dans la nouvelle séquence ; les journaux montrent quatre notes dont une précédente, puis les trois de la mélodie. Correctif f7c24ea4 : marqueur de début de lecture dans les diagnostics et extraction du test après ce marqueur. Syntaxe Python valide et extraction vérifiée localement sur le journal reproduit. Validation Android encore à relancer ; la CI précédente est remplacée par le nouveau commit. La cause observée concerne l'isolation du scénario de test, pas une preuve d'erreur de lecture dans l'application.
