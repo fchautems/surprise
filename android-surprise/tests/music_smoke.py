@@ -55,6 +55,7 @@ assert has(root,"Normal"),texts(root)
 # Interrupt a slow playback by backgrounding the app, then resume the same activity.
 tap(root,"Écouter la mélodie")
 adb("shell","input","keyevent","KEYCODE_HOME")
+time.sleep(1)
 adb("shell","am","start","--activity-reorder-to-front","-n","ch.fred.surprise/.MusicActivity")
 root=dump()
 assert has(root,"Lecture interrompue"),texts(root)
