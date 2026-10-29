@@ -28,16 +28,16 @@ public final class MusicActivity extends Activity {
         {261.63,329.63,392.00,493.88}, {349.23,440.00,523.25,659.25},
         {392.00,493.88,587.33,698.46}
     };
-    private LinearLayout chords;
+    private LinearLayout chords, listenRow;
     private final ExecutorService audio=Executors.newSingleThreadExecutor();
     private final Random random=new Random();
     private int[] phrase={0,2,4};
     private int position=0, wins=0;
     private volatile int generation=0;
     private volatile boolean playing=false;
-    private boolean freeMode=false;
+    private boolean freeMode=false, slowMode=false;
     private TextView status, soundWarning;
-    private Button listenButton, modeButton;
+    private Button listenButton, modeButton, tempoButton;
 
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
@@ -95,11 +95,19 @@ public final class MusicActivity extends Activity {
     }
     private void listen(){
         if(playing || freeMode)return;
-        position=0;playing=true;final int token=++generation;final int[] copy=phrase.clone();
+        position=0;playing=true;final int token=++generation;final int[] copy=phrase.clone();final boolean slow=slowMode;
         checkVolume();
         status.setText("Écoute bien…");
         audio.execute(()->{
-            for(int note:copy){if(token!=generation || Thread.currentThread().isInterrupted())break;playNote(note,token);}
+            for(int i=0;i<copy.length;i++){
+                if(token!=generation || Thread.currentThread().isInterrupted())break;
+                playNote(copy[i],token);
+                if(slow && i<copy.length-1){
+                    try{
+                        for(int ms=0;ms<200 && token==generation;ms+=10)Thread.sleep(10);
+                    }catch(InterruptedException interrupted){Thread.currentThread().interrupt();break;}
+                }
+            }
             runOnUiThread(()->{if(token==generation && !isFinishing()){playing=false;status.setText("À toi de jouer !");}});
         });
     }
@@ -133,6 +141,8 @@ public final class MusicActivity extends Activity {
         generation++;playing=false;freeMode=!freeMode;soundWarning.setText("");
         modeButton.setText(freeMode ? "Revenir au défi" : "Jouer librement");
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        tempoButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         status.setText(freeMode ? "Mode libre · joue à ton rythme." : "Écoute la mélodie, puis joue-la.");
     }
@@ -141,7 +151,7 @@ public final class MusicActivity extends Activity {
         if(saved!=null){
             int[] p=saved.getIntArray("phrase");
             if(p!=null && p.length>=3 && p.length<=6){phrase=p;position=Math.max(0,Math.min(saved.getInt("position"),p.length-1));}
-            wins=Math.max(0,saved.getInt("wins"));freeMode=saved.getBoolean("freeMode",false);
+            wins=Math.max(0,saved.getInt("wins"));freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",false);
         }
         ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(BG);
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);
@@ -153,8 +163,18 @@ public final class MusicActivity extends Activity {
         int best=getPreferences(MODE_PRIVATE).getInt("melodies",0);
         status=label(freeMode ? "Mode libre · joue à ton rythme." : position>0 ? "Bien joué : "+position+" / "+phrase.length+" notes" : best>0?"Record : "+best+" · Écoute la mélodie.":"Écoute la mélodie, puis joue-la.",16,GOLD);root.addView(status);
         soundWarning=label("",14,WHITE);root.addView(soundWarning);
-        listenButton=button("Écouter la mélodie");LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(56));lp.setMargins(0,dp(14),0,dp(12));root.addView(listenButton,lp);listenButton.setOnClickListener(v->listen());
+        listenRow=new LinearLayout(this);listenRow.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(56));lp.setMargins(0,dp(14),0,dp(12));root.addView(listenRow,lp);
+        listenButton=button("Écouter la mélodie");listenButton.setTextSize(15);
+        listenRow.addView(listenButton,new LinearLayout.LayoutParams(0,dp(56),3));listenButton.setOnClickListener(v->listen());
+        tempoButton=button(slowMode ? "Normal" : "Lent");tempoButton.setTextSize(14);
+        LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(0,dp(56),1);tp.setMargins(dp(6),0,0,0);
+        listenRow.addView(tempoButton,tp);
+        tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");
+        tempoButton.setOnClickListener(v->{slowMode=!slowMode;tempoButton.setText(slowMode ? "Normal" : "Lent");tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");});
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        tempoButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         for(int row=0;row<2;row++){
             LinearLayout line=new LinearLayout(this);line.setOrientation(LinearLayout.HORIZONTAL);
             for(int col=0;col<3;col++){
@@ -182,6 +202,6 @@ public final class MusicActivity extends Activity {
     @Override protected void onStop(){generation++;playing=false;super.onStop();}
     @Override protected void onDestroy(){generation++;audio.shutdownNow();super.onDestroy();}
     @Override protected void onSaveInstanceState(Bundle out){
-        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);super.onSaveInstanceState(out);
+        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);super.onSaveInstanceState(out);
     }
 }
