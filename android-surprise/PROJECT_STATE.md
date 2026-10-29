@@ -199,3 +199,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Complément : CI 40803551852, compilation réussie et parcours API 29 en cours ; APK 12866908678 téléchargé, archive et APK passent unzip -t, SHA-256 4a7f4c45f03208d29cba4c7b61a8934c88b888f03a7e7af98ec97f5038dece8d. Tous les tests Android restent à confirmer pour ce commit.
 
 - Diagnostic CI : run 40803551852, compilation et parcours principal API 29 réussis ; test mémoire API 35 échoué car l'écran attendu n'était pas ouvert après une interaction. Cause exacte non établie ; une nouvelle tentative bornée d'ouverture a été ajoutée au scénario en 398ed130, sans masquer un échec persistant. Syntaxe Python et test de banque réussis localement. Nouveau run 40804994601 lancé ; ses résultats restent à vérifier.
+
+- CI 40804994601 : compilation du correctif réussie ; APK artefact 12867812287, archive et APK téléchargés et vérifiés avec unzip -t, SHA-256 30d33b22651591ad074be8450de1590ba6cc99d74b2b779c690cd81e3fcbc016. Les tests Android sont encore en cours ou en attente.
