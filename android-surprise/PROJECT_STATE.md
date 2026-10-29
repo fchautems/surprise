@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40792642660 intégralement réussie sur le commit 61d4a0a4, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40799461717 intégralement réussie sur le commit 3d2d5494, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -174,7 +174,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Résultat final à 01:36:59 : run 40792642660 intégralement réussi ; compilation, tests de données et de règles et parcours sur émulateurs API 29 et 35 réussis pour le commit 61d4a0a4. Les changements sont poussés ; commits de suivi 5a1ba73c, 92dca0b5 et ba1ce739, plus ce dernier complément. Aucun test sur téléphone physique ni inspection visuelle humaine. Durée comprenant le travail et l'attente effective de la CI ; aucune limite de quota mesurée et aucun changement de modèle ou d'effort. Prochaine action : poursuivre l'amélioration de l'expérience et confirmer à nouveau l'APK final avant livraison.
 
 
-## Session du 29 octobre 2026, à partir de 02:01:09 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 02:01:09–02:40:05 Europe/Zurich (38 min 56 s)
 - Base 77f6f4ca ; commits poussés 48bd606b, e598605b, 0af96f33, 66375e12, f0e64f19, b2bdbdfb, af655196 ; un commit supplémentaire enregistre ce suivi. Fichiers : MemoryActivity.java, tests/memory_smoke.py et PROJECT_STATE.md ; diff hors journal 107 ajouts, 25 suppressions.
 - Développement : second niveau à six paires, record indépendant conservé, conservation du niveau et de la partie à la rotation, confirmation avant changement de niveau en cours de partie. Test automatisé d'une partie complète du nouveau niveau, rotation, séparation des records et retour au niveau initial ; défilement amélioré pour parcourir le grand plateau.
 - Tests locaux : syntaxe du script Python et test de structure de banque réussis. Dernière validation complète connue : run 40792642660 sur 61d4a0a4, compilation et tous les parcours API 29 et 35 réussis, APK debug 12862865095 (SHA-256 ee5515b91312de6007038040cc4feba28b23af6d5c32cd40e9e8874c9556b6ef, archive et APK vérifiés). Nouveau run 40797998095 sur af655196 lancé, résultat encore inconnu ; les modifications de cette session ne sont pas déclarées compilées ou testées sur émulateur.
@@ -185,3 +185,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Diagnostic CI : parcours mémoire API 35 du run 40797998095 échoué car les expressions régulières de repérage des cartes contenaient un antislash en trop ; compilation et parcours principal API 29 réussis. Correctif du test poussé en 3d2d5494 ; nouveau run 40799461717 lancé, compilation et tests à confirmer. Les autres jobs du run précédent ont pu être annulés par le nouveau commit.
 
 - Correctif 3d2d5494 : syntaxe Python et test local du repérage sur une hiérarchie XML synthétique réussis. Run 40799461717 : compilation réussie ; APK artefact 12865058230 téléchargé, archive et APK passent unzip -t ; SHA-256 f737b029dae3adcd54c5e70ac1c6390a0d744a6c03b3f20acd8e95f1119fccb6. Les parcours Android de ce run restent à confirmer.
+
+- Résultat final à 02:40:05 : CI 40799461717 entièrement réussie, compilation, tests de contenu et de règles et parcours complets des deux modes sur API 29 et 35 compris. APK artefact 12865058230, SHA-256 f737b029dae3adcd54c5e70ac1c6390a0d744a6c03b3f20acd8e95f1119fccb6, archive et APK vérifiés. Régression du test CI diagnostiquée puis corrigée en 3d2d5494, validation locale de son repérage puis nouvelle CI réussie. Les commits de suivi sont 56546f82, c24dab20, 6aa94782 et c4c8551e ; ce complément fait l'objet d'un dernier commit. Diff de code hors journal : 107 ajouts et 25 suppressions ; correction de l'expression régulière comprise dans ce total.
+- Limites : aucun téléphone physique ni inspection visuelle humaine ; absence de SDK/Gradle/javac local. Aucun changement effectif du modèle ou de l'effort ; aucune limite précise de quota observée. Durée comprenant implémentation, diagnostic, correction et attente réelle des CI. Prochaine action : continuer la finition ludique et visuelle et vérifier de nouveau la version retenue pour la livraison.
