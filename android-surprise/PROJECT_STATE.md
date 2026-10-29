@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40827020425 intégralement réussie sur le commit 9875d5f2, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40833355037 intégralement réussie sur le commit 3318efe7, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -266,7 +266,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : pas de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine ; 160–239 dp couverts par modèle géométrique et non testés sur émulateur. Modèle et effort non modifiés, limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : poursuivre la finition ludique et visuelle et revalider l'APK final avant livraison.
 
 
-## Session du 29 octobre 2026, à partir de 08:04:28 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 08:04:28–08:30:00 Europe/Zurich (25 min 32 s)
 - Base 6f2dd71b ; commits poussés 8ad0b743, b85f8e00, 28ddd45a, e6a98310, 9b1a7972, 0cba16a7, c2154a39 et 3318efe7 ; un commit supplémentaire consigne ce suivi. Fichiers : SoundWave.java, MusicActivity.java, MainActivity.java, AndroidManifest.xml, tests/SoundWaveTest.java, tests/music_smoke.py, workflow et PROJECT_STATE.md. Diff hors journal : 277 ajouts, 1 suppression.
 - Développement : troisième activité ludique hors ligne, jeu d'écoute et de reproduction de mélodies, sons synthétisés à enveloppe douce, difficulté progressive, record local, reprise à la rotation et retour à l'accueil. Tests unitaires Java du signal et scénario Android complet, erreur puis réussite, rotation et persistance, ajoutés aux jobs API 29 et 35.
 - Contrôles locaux : syntaxe Python, intégrité de banque et lecture YAML réussies. CI précédente 40827020425 entièrement réussie sur API 29/35 ; APK 12877132019, SHA-256 4af45366bf0ba4d708a95b03f218c3d3e370b7b6d9bf75de8c649545719e5cef, archive et APK vérifiés. Run 40833355037 sur 3318efe7 en attente ; compilation, tests unitaires Java et Android de cette session à confirmer.
@@ -275,3 +275,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40833355037 : tests Java de synthèse des notes réussis, compilation réussie ; APK debug 12879811321 téléchargé, archive et APK passent unzip -t, SHA-256 0be423a99532d0ca2721bfdcb2bde6e54a3a30291eb03c94b95b4e8b9943be42. Parcours Android encore en cours ; qualité audible non vérifiée.
 
 - Complément CI 40833355037 : compilation, tests du signal, parcours principal API 29 et nouvelle activité API 29 et 35 réussis, y compris erreur, réussite, rotation et persistance ; trois autres jobs Android en cours. L'activation de l'audio et sa qualité perçue n'ont pas été vérifiées par écoute.
+
+- Résultat final à 08:30:00 : run 40833355037 entièrement réussi sur 3318efe7 : compilation, tests de données/règles, tests Java du signal et six jobs Android réussis, dont les parcours de la nouvelle activité sur API 29 et 35. APK debug 12879811321, SHA-256 0be423a99532d0ca2721bfdcb2bde6e54a3a30291eb03c94b95b4e8b9943be42 ; archive et APK contrôlés par unzip -t. Commits de suivi 187c088b, f5182223 et c66a2f52, plus ce complément.
+- Limites : aucun appareil physique ni inspection visuelle humaine ; qualité et restitution audibles non vérifiées, les tests vérifient la synthèse numérique et l'interface sans écoute. SDK/Gradle/javac absents localement. Modèle et effort non modifiés ; limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : signaler clairement une indisponibilité audio éventuelle, puis poursuivre la finition et vérifier l'APK final avant livraison.
