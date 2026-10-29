@@ -336,6 +336,53 @@ result8 = find_text(root, "Bravo !")
 assert result8 and "Nouveau record !" in result8, result8
 assert description(root, "8 paires trouvées sur 8"), "Expert progress incomplete"
 record8 = result8.split("Record : ")[1].splitlines()[0]
+# The longest mode has its own 20-card deck and record, including rotation.
+tap_text(root, "Défi : 10 paires")
+root = wait_dump()
+assert find_text(root, "0 / 10 paires") and not find_text(root, "Record : "), texts(root)
+known10 = {}
+for index in range(20):
+    root = tap_card(root, index)
+    root, node = card(root, index)
+    known10[index] = node.attrib["content-desc"].split()[-1]
+    if index == 0:
+        before = node.attrib["content-desc"]
+        adb("shell", "settings", "put", "system", "user_rotation", "1")
+        wait_dump()
+        adb("shell", "settings", "put", "system", "user_rotation", "0")
+        root = wait_dump()
+        root, node = card(root, index)
+        assert node.attrib["content-desc"] == before, "Longer mode lost state on rotation"
+assert all(list(known10.values()).count(value) == 2 for value in known10.values()), known10
+states10 = {}
+for index in range(20):
+    root, node = card(root, index)
+    states10[index] = node.attrib["content-desc"]
+solved10 = {i for i in range(20) if "trouvée " in states10[i]}
+visible10 = [i for i in range(20) if "visible " in states10[i]]
+if len(visible10) == 2:
+    target = next(i for i in range(20) if i not in solved10 and i not in visible10)
+    root = tap_card(root, target)
+    visible10 = [target]
+while len(solved10) < 20:
+    first10 = visible10[0] if visible10 else next(i for i in range(20) if i not in solved10)
+    if not visible10:
+        root = tap_card(root, first10)
+    second10 = next(i for i in range(20) if i != first10 and i not in solved10 and known10[i] == known10[first10])
+    root = tap_card(root, second10)
+    root, first_node = card(root, first10)
+    root, second_node = card(root, second10)
+    assert "trouvée " in first_node.attrib["content-desc"]
+    assert "trouvée " in second_node.attrib["content-desc"]
+    solved10.update((first10, second10))
+    visible10 = []
+for _ in range(6):
+    adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
+root = wait_dump()
+result10 = find_text(root, "Bravo !")
+assert result10 and "Nouveau record !" in result10, result10
+assert description(root, "10 paires trouvées sur 10"), texts(root)
+record10 = result10.split("Record : ")[1].splitlines()[0]
 tap_text(root, "Mode : 4 paires")
 root = wait_dump()
 assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
@@ -345,6 +392,9 @@ assert find_text(root, "0 / 6 paires") and find_text(root, "Record : " + record6
 tap_text(root, "Défi : 8 paires")
 root = wait_dump()
 assert find_text(root, "0 / 8 paires") and find_text(root, "Record : " + record8), texts(root)
+tap_text(root, "Défi : 10 paires")
+root = wait_dump()
+assert find_text(root, "0 / 10 paires") and find_text(root, "Record : " + record10), texts(root)
 # On a narrow 240dp display the cards must remain easy to touch.
 try:
     adb("shell", "wm", "size", "240x640")

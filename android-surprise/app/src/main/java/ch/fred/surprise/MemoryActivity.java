@@ -22,11 +22,11 @@ public final class MemoryActivity extends Activity {
     private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆","♫","★","♠","☁","♬","◉","☂","⌛"};
     private static final int[] INKS={0xffffd27d,0xffaee9e0,0xffffb9b9,0xffcbbdff,
         0xffa6d7ff,0xffffc6e5,0xffcce8a4,0xffffd9a0};
-    private static final int MAX_PAIRS=8;
+    private static final int MAX_PAIRS=10;
     private final int[] deck=new int[MAX_PAIRS*2];
     private final boolean[] matched=new boolean[MAX_PAIRS*2];
     private final Button[] cards=new Button[MAX_PAIRS*2];
-    private static final int MAX_ROWS=8;
+    private static final int MAX_ROWS=10;
     private final LinearLayout[] rows=new LinearLayout[MAX_ROWS];
     private int columns=4;
     private int pairCount=4;
@@ -66,8 +66,8 @@ public final class MemoryActivity extends Activity {
         first=second=-1; moves=0; newRecord=false; hintUsed=false; hintVisible=false; render();
         gameScroll.post(()->gameScroll.fullScroll(View.FOCUS_UP));
     }
-    private String recordKey(){return pairCount==4 ? "best" : pairCount==6 ? "best6" : "best8";}
-    private int nextPairCount(){return pairCount==4 ? 6 : pairCount==6 ? 8 : 4;}
+    private String recordKey(){return pairCount==4 ? "best" : pairCount==6 ? "best6" : pairCount==8 ? "best8" : "best10";}
+    private int nextPairCount(){return pairCount==4 ? 6 : pairCount==6 ? 8 : pairCount==8 ? 10 : 4;}
     private int pairsFound(){
         int count=0; for(boolean b:matched)if(b)count++; return count/2;
     }
@@ -137,7 +137,7 @@ public final class MemoryActivity extends Activity {
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         hintButton.setEnabled(!hintUsed && pairs<pairCount);
         hintButton.setText(hintUsed ? "Indice utilisé" : "Indice · une fois (+2 essais)");
-        difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : "Mode : 4 paires");
+        difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : pairCount==8 ? "Défi : 10 paires" : "Mode : 4 paires");
         for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*columns<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
             cards[i].setVisibility(i<pairCount*2 ? View.VISIBLE : View.INVISIBLE);
@@ -151,7 +151,7 @@ public final class MemoryActivity extends Activity {
     }
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved); getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
-        ScrollView scroll=new ScrollView(this); gameScroll=scroll; scroll.setFillViewport(true); scroll.setBackgroundColor(BG);
+        ScrollView scroll=new ScrollView(this); gameScroll=scroll; scroll.setFillViewport(true); scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         LinearLayout root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER); root.setPadding(dp(18),dp(20),dp(18),dp(20)); scroll.addView(root);
         scroll.setOnApplyWindowInsetsListener((view,insets)->{root.setPadding(dp(18),dp(20)+insets.getSystemWindowInsetTop(),dp(18),dp(20)+insets.getSystemWindowInsetBottom());return insets;});
@@ -201,9 +201,9 @@ public final class MemoryActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.getIntArray("deck")!=null && saved.getBooleanArray("matched")!=null){
             int[] d=saved.getIntArray("deck"); boolean[] m=saved.getBooleanArray("matched");
-            if(d.length==deck.length && m.length==matched.length){
-                pairCount=saved.getInt("pairCount",4); if(pairCount!=4 && pairCount!=6 && pairCount!=8)pairCount=4;
-                System.arraycopy(d,0,deck,0,deck.length);System.arraycopy(m,0,matched,0,matched.length);
+            if(d.length==m.length && (d.length==deck.length || d.length==16)){
+                pairCount=saved.getInt("pairCount",4); if(pairCount!=4 && pairCount!=6 && pairCount!=8 && pairCount!=10)pairCount=4;
+                System.arraycopy(d,0,deck,0,d.length);System.arraycopy(m,0,matched,0,m.length);
                 first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);
                 newRecord=saved.getBoolean("newRecord",false);hintUsed=saved.getBoolean("hintUsed",false);hintVisible=saved.getBoolean("hintVisible",false);render();
             }else newGame();
