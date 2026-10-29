@@ -61,9 +61,15 @@ public final class MusicActivity extends Activity {
             int bufferBytes=Math.max(data.length*2,minimum);
             track=new AudioTrack(AudioManager.STREAM_MUSIC,SoundWave.RATE,AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT,bufferBytes,AudioTrack.MODE_STATIC);
-            if(track.getState()!=AudioTrack.STATE_INITIALIZED){android.util.Log.w("SurpriseAudio","initialization failed");warnSound(token);return;}
+            int state=track.getState();
+            // Static tracks report NO_STATIC_DATA until the first successful write.
+            if(state!=AudioTrack.STATE_INITIALIZED && state!=AudioTrack.STATE_NO_STATIC_DATA){
+                android.util.Log.w("SurpriseAudio","initialization failed: "+state);warnSound(token);return;
+            }
             int written=track.write(data,0,data.length);
-            if(written!=data.length){android.util.Log.w("SurpriseAudio","write failed: "+written);warnSound(token);return;}
+            if(written!=data.length || track.getState()!=AudioTrack.STATE_INITIALIZED){
+                android.util.Log.w("SurpriseAudio","write failed: "+written+" state="+track.getState());warnSound(token);return;
+            }
             track.play();
             if(track.getPlayState()!=AudioTrack.PLAYSTATE_PLAYING){android.util.Log.w("SurpriseAudio","play failed");warnSound(token);return;}
             android.util.Log.i("SurpriseAudio","playback started");
