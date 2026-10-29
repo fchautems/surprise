@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public final class MemoryActivity extends Activity {
     private ScrollView gameScroll;
     private int first=-1,second=-1,moves=0;
     private TextView status;
+    private ProgressBar progress;
     private boolean newRecord=false;
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
@@ -107,6 +109,8 @@ public final class MemoryActivity extends Activity {
         status.setText(pairs==pairCount
             ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\n"+reward
             : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
+        progress.setMax(pairCount); progress.setProgress(pairs);
+        progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         difficulty.setText(pairCount==4 ? "Défi : 6 paires" : "Mode : 4 paires");
         for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*COLUMNS<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
@@ -129,6 +133,9 @@ public final class MemoryActivity extends Activity {
         TextView hint=label("Retrouve les paires, à ton rythme.",15,WHITE);
         LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(-1,-2); hintP.setMargins(0,dp(10),0,dp(12)); root.addView(hint,hintP);
         status=label("",16,GOLD); root.addView(status);
+        progress=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
+        progress.setProgressTintList(android.content.res.ColorStateList.valueOf(GOLD));
+        LinearLayout.LayoutParams pp=new LinearLayout.LayoutParams(-1,dp(6)); pp.setMargins(dp(5),dp(8),dp(5),dp(4)); root.addView(progress,pp);
         for(int row=0;row<ROWS;row++){
             LinearLayout line=new LinearLayout(this); line.setOrientation(LinearLayout.HORIZONTAL); rows[row]=line;
             for(int col=0;col<COLUMNS;col++){
