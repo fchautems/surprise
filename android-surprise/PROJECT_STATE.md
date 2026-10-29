@@ -528,3 +528,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la CI, contrôler l'APK, diagnostiquer et corriger tout échec, puis consigner durée et bilan.
 
 - CI 40969770644 sur 4ac6f171 : compilation et tests unitaires réussis. APK debug 12940116195 produit ; archive et APK vérifiés par unzip -t ; SHA-256 03805d751c892fdca2913178da27b16912dcd4e2f8c86283d2b3cd4b2f98ff35. Les six parcours Android sont à vérifier.
+
+- CI 40969770644 : tests ciblés de l'indice, de sa persistance à la rotation et de sa remise à zéro réussis sur Android 10 et 15 ; quatre autres parcours restent en cours. Aucun contrôle visuel ou sonore humain.
