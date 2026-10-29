@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40853835903 intégralement réussie sur le commit 0ac081e3, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40861840953 intégralement réussie sur le commit 63e3fcc4, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -334,9 +334,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre la finition, vérifier les futurs runs et préparer la livraison avec APK et instructions d'installation.
 
 
-## Session du 29 octobre 2026, début 11:58:36 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 11:58:36–12:22:10 Europe/Zurich (23 min 34 s, attente CI comprise)
 - Base 8a7b1c23098c200c607ae532effee712a783d88f ; commit de code poussé 63e3fcc4de4034c6883827838f71343a604a08b9.
 - Fichiers modifiés : MemoryActivity.java +26/-6, tests/memory_smoke.py +30/-0 ; total code +56/-6 hors journal.
 - Jeu : indice facultatif utilisable une fois, coût de deux essais, sans clignotement ni temporisation ; conservation lors de la rotation, désactivation après usage, remise à zéro par nouvelle partie. Test du parcours, du coût et de la rotation ajouté.
-- Contrôles locaux : syntaxe Python valide. SDK Android, Gradle, javac et adb absents ; CI 40861840953 en cours : compilation, tests unitaires et parcours principal Android 10 réussis ; quatre jobs réussis dont le parcours de l'indice sur Android 10 ; deux parcours Android 15 en cours. APK debug 12890909718 produit, archive et APK vérifiés par unzip -t, SHA-256 c47ee5dd9cc5f5b98d98d23a4c4da18551311988934782b8dd1445dd0fde36e1. CI précédente 40853835903 : six jobs réussis ; APK 12888038098 vérifié par unzip -t, SHA-256 212a8f8bd048c59a594af4595bd4e689d6e12ea703f18aff5c175430be90d5b1. Aucun test sur téléphone physique.
-- Prochaine action : vérifier compilation, APK et six jobs ; corriger tout échec puis consigner durée et résultats.
+- Contrôles locaux : syntaxe Python valide. SDK Android, Gradle, javac et adb absents ; CI 40861840953 intégralement réussie : compilation, tests unitaires et six jobs sur émulateurs Android 10 et 15 ; les deux parcours mémoire comprennent l'indice, son coût et la rotation. APK debug 12890909718 produit, archive et APK vérifiés par unzip -t, SHA-256 c47ee5dd9cc5f5b98d98d23a4c4da18551311988934782b8dd1445dd0fde36e1. CI précédente 40853835903 : six jobs réussis ; APK 12888038098 vérifié par unzip -t, SHA-256 212a8f8bd048c59a594af4595bd4e689d6e12ea703f18aff5c175430be90d5b1. Aucun test sur téléphone physique.
+- Commits de suivi poussés : 89dc517a, 391a5fac, 3260b034, 4e54b81d et le présent bilan. Aucun échec CI ; aucun téléphone physique ni inspection visuelle humaine. Modèle et effort inchangés ; quota restant non mesurable.
+- Prochaine action : poursuivre les améliorations ludiques, vérifier les prochains builds et préparer la livraison avec l'APK et les instructions d'installation.
