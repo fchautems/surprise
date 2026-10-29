@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40871978414 réussie après relance sur le commit 1f9b227d, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40877672411 réussie sur le commit 4695e862, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -361,9 +361,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40871978414 : cinq jobs réussis, un échec d'interface système de l'émulateur ; relance ciblée du job 123447104871 acceptée après la fin des autres jobs. La deuxième tentative a réussi : les six jobs sont désormais réussis.
 
 
-## Session du 29 octobre 2026, début 13:57:06 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, début 13:57:06 Europe/Zurich ; dernière activité vérifiée 13:59:24 (2 min 18 s au minimum, fin réelle inconnue : interruption de l'environnement)
 - Base e8f77fbaf0663a6361b88d0cfabef14fe57af202 ; commit de code poussé 4695e862bb26d84edc6833702cde2a9602940666.
 - Fichiers modifiés : MusicActivity.java +28/-8 et tests/music_smoke.py +8/-0 ; total code +36/-8 hors journal.
 - Ajout d'une écoute lente optionnelle pour le défi, pauses interruptibles, préférence conservée lors de la rotation, commandes accessibles et masquées en mode libre. Parcours automatique étendu à la lecture ralentie et à la rotation.
-- Contrôles locaux : syntaxe Python valide. SDK Android, Gradle, javac et adb indisponibles localement ; CI 40877672411 : compilation et tests unitaires réussis, parcours sur émulateur en cours ; APK debug 12898951872 produit, archive et APK vérifiés par unzip -t, SHA-256 675a43a73edd34fb52aff7f5b81439b01dadbc4a532b67f9e0410482772770d9. CI précédente 40871978414 : six jobs réussis après relance ; APK 12896097667, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni écoute humaine.
-- Prochaine action : inspecter le workflow et l'APK, corriger les éventuels échecs puis consigner les résultats et la durée.
+- Contrôles locaux : syntaxe Python valide. SDK Android, Gradle, javac et adb indisponibles localement ; CI 40877672411 : compilation, tests unitaires et six parcours sur émulateurs Android 10 et 15 réussis ; APK debug 12898951872 produit, archive et APK vérifiés par unzip -t, SHA-256 675a43a73edd34fb52aff7f5b81439b01dadbc4a532b67f9e0410482772770d9. CI précédente 40871978414 : six jobs réussis après relance ; APK 12896097667, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni écoute humaine.
+- Commits poussés : 4695e862, a4f0a6df, 45b98a22 et ce bilan. Aucun téléphone physique ni écoute humaine ; modèle et effort inchangés. L'heure exacte de fin de la session interrompue est inconnue : les 65 minutes écoulées avant la reprise ne sont pas comptées comme travail.
+- Prochaine action : poursuivre les améliorations et tester les prochaines modifications.
