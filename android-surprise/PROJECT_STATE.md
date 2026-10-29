@@ -508,3 +508,6 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - La nouvelle CI et son APK restent à vérifier. Prochaine action : suivre les sept jobs, diagnostiquer les échecs, vérifier l'intégrité de l'APK et consigner durée, diff et résultats finaux.
 
 - CI 40963180862 sur f71bc9c3 : compilation et tests unitaires réussis. APK debug 12936457079 produit, archive et APK vérifiés par unzip -t ; SHA-256 4b864923e184b9b0687d9a68e5e0f5b5bdb3bd47f1ffc8fa865cd306ab915726. Les parcours sur émulateurs restent à valider.
+
+- CI 40963180862 : séparation des jobs effective, build réussi et six parcours lancés après le build. Le test de reprise a échoué sur API 29 (lanceur reste visible) et 35 (identité shell incohérente avec UID run-as) ; l'activité réelle n'a pas été vérifiée. Le scénario a été retiré dans d20defc2, sans déclarer la reprise validée. Les jobs restants de ce run ont été remplacés par la CI suivante.
+- d20defc2 : préférence de vitesse et registre sauvegardés entre visites, contexte de progression réaffiché au retour ; test étendu pour vérifier les deux préférences après fermeture/réouverture. Syntaxe Python valide ; tests Android, compilation et APK de cette version à vérifier. Pas de téléphone physique ni écoute humaine.
