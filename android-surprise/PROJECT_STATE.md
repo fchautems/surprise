@@ -394,3 +394,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI finale 40898996736 sur cc659fd6 : tests de banque (2), tests unitaires, compilation et six jobs sur Android 10 et 15 réussis. APK debug 12907863418 produit ; archive et APK vérifiés par unzip -t ; SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Les runs intermédiaires 40898176551 et 40898913002 ont été remplacés avant validation complète.
 
 - Contrôle négatif local : modification volontaire d'une question historique dans une copie temporaire ; le nouveau test échoue comme attendu, confirmant qu'il détecte cette régression. Aucun fichier de projet n'a été modifié par cette vérification.
+
+
+## Session du 29 octobre 2026, début 16:37:27 Europe/Zurich (en cours)
+- Base eba8291260a19f42bc76ff441b676c6ee6c35375 ; commit poussé 09239b8a796db03966d454e2f6ac5c68b80a9b99.
+- Fichiers : MemoryActivity.java +9/-9 ; tests/memory_smoke.py +50/-0 ; workflow +1/-1 ; total code/config +60/-10 hors journal.
+- Jeu enrichi d'un défi à dix paires avec record séparé et continuité des anciennes parties en rotation ; fond harmonisé sans animation. Test étendu au parcours complet et à la rotation ; limite de durée du job mémoire augmentée pour le parcours supplémentaire.
+- Contrôle local : syntaxe Python valide ; SDK Android, Gradle, javac et adb absents. CI et APK de ce commit à vérifier. CI précédente 40898996736 : six jobs réussis ; APK 12907863418 vérifié par unzip -t, SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Aucun téléphone physique ni inspection visuelle humaine.
+- Prochaine action : suivre la CI, vérifier le nouvel APK, corriger les échecs éventuels et consigner les résultats.
