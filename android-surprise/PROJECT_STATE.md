@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40903578219 réussie sur le commit 09239b8a, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40918092684 réussie sur le commit 6b8d9da5, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -409,9 +409,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40903578219 : le parcours mémoire complet avec dix paires réussit sur API 29 ; les six jobs ont finalement réussi, y compris le parcours complet sur API 35.
 
 
-## Session du 29 octobre 2026, début 18:05:06 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 18:05:06–18:31:41 Europe/Zurich (26 min 35 s, validations comprises)
 - Base 824d81a25ecedc53ad7a5b6dfe8c431c11b2be68 ; commit poussé 6b8d9da535691e9f3fd0518942112c6385026809.
 - Fichiers : MainActivity.java +8/-6 ; tests/emulator_smoke.py +45/-5 ; workflow +2/-2 ; total code/config +55/-13, hors journal.
 - Amélioration ludique : une revanche thématique reste dans le thème choisi, sans répétition des questions précédentes hors erreurs ; contexte préservé à la rotation et lors de revanches successives. Parcours étendu à une manche, sa revanche, les records et rotations ; durée maximale des émulateurs principaux augmentée pour ce parcours.
-- Contrôles locaux : syntaxe Python valide ; calcul vérifiant une réserve suffisante dans chaque thème pour 1 à 8 erreurs. SDK Android, Gradle, javac et adb absents. CI 40918092684 : compilation, tests unitaires et parcours étendu Android 10 réussis ; cinq jobs complémentaires en cours. APK debug 12916088132 produit ; archive et APK vérifiés par unzip -t ; SHA-256 9796b50f3da71d7d612ad2c7a6e39700d86f8412a801b02c8ef13ead04d7a246. CI précédente 40903578219 : six jobs réussis ; APK 12911080499, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni inspection visuelle humaine.
-- Prochaine action : inspecter le workflow et le nouvel APK, corriger les échecs éventuels et consigner les résultats.
+- Contrôles locaux : syntaxe Python valide ; calcul vérifiant une réserve suffisante dans chaque thème pour 1 à 8 erreurs. SDK Android, Gradle, javac et adb absents. CI 40918092684 : compilation, tests unitaires et six jobs sur Android 10 et 15 réussis ; parcours thématique et revanche complets vérifiés sur les deux versions. APK debug 12916088132 produit ; archive et APK vérifiés par unzip -t ; SHA-256 9796b50f3da71d7d612ad2c7a6e39700d86f8412a801b02c8ef13ead04d7a246. CI précédente 40903578219 : six jobs réussis ; APK 12911080499, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni inspection visuelle humaine.
+- Commits poussés : 6b8d9da5 et suivis b314543a, 0561c450, b6a22d3e et le présent bilan. Aucun échec CI ; aucun téléphone physique ni inspection visuelle humaine. Modèle et effort inchangés ; quota restant inconnu.
+- Prochaine action : poursuivre la finition, vérifier les prochains builds et préparer les instructions de livraison.
