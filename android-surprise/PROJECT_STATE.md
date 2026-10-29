@@ -526,3 +526,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Ajout d'un indice facultatif, utilisable une fois par mélodie et indiquant la prochaine note ; état préservé à la rotation et remis à zéro à la mélodie suivante. Désactivé pendant l'écoute et masqué en mode libre. Test sur émulateur étendu à l'indice, la rotation et la remise à zéro.
 - Contrôle local : syntaxe Python valide ; SDK Android, Gradle et adb absents. Dernière CI complète 40963667502 : sept jobs réussis, APK 12937355818 et son intégrité vérifiés. Nouvelle compilation, APK et tests Android non encore vérifiés. Aucun téléphone physique ni écoute humaine ; le scénario d'interruption antérieur reste sans test Android dédié.
 - Prochaine action : suivre la CI, contrôler l'APK, diagnostiquer et corriger tout échec, puis consigner durée et bilan.
+
+- CI 40969770644 sur 4ac6f171 : compilation et tests unitaires réussis. APK debug 12940116195 produit ; archive et APK vérifiés par unzip -t ; SHA-256 03805d751c892fdca2913178da27b16912dcd4e2f8c86283d2b3cd4b2f98ff35. Les six parcours Android sont à vérifier.
