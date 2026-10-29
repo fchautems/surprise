@@ -174,6 +174,18 @@ assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record)
 for index in range(8):
     root, node = card(root, index)
     assert "cachée " in node.attrib["content-desc"], node.attrib
+# A replay must not reuse exactly the same set of symbols.
+replay = {}
+for index in range(8):
+    root = tap_card(root, index)
+    root, node = card(root, index)
+    replay[index] = node.attrib["content-desc"].split()[-1]
+assert set(replay.values()) != set(known.values()), "Replay reused the same symbol set"
+tap_text(root, "Nouvelle partie")
+root = wait_dump()
+if find_text(root, "La partie en cours sera perdue."):
+    tap_text(root, "Recommencer")
+    root = wait_dump()
 root = tap_card(root, 0)
 tap_text(root, "Nouvelle partie")
 dialog = wait_dump()
