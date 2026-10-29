@@ -201,3 +201,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Diagnostic CI : run 40803551852, compilation et parcours principal API 29 réussis ; test mémoire API 35 échoué car l'écran attendu n'était pas ouvert après une interaction. Cause exacte non établie ; une nouvelle tentative bornée d'ouverture a été ajoutée au scénario en 398ed130, sans masquer un échec persistant. Syntaxe Python et test de banque réussis localement. Nouveau run 40804994601 lancé ; ses résultats restent à vérifier.
 
 - CI 40804994601 : compilation du correctif réussie ; APK artefact 12867812287, archive et APK téléchargés et vérifiés avec unzip -t, SHA-256 30d33b22651591ad074be8450de1590ba6cc99d74b2b779c690cd81e3fcbc016. Les tests Android sont encore en cours ou en attente.
+
+- Complément CI : run 40804994601 sur 398ed130 : compilation, parcours principal API 29 et scénarios mémoire API 29 et 35 réussis, y compris les nouveaux contrôles. Parcours principal API 35 toujours en cours.
