@@ -513,3 +513,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - d20defc2 : préférence de vitesse et registre sauvegardés entre visites, contexte de progression réaffiché au retour ; test étendu pour vérifier les deux préférences après fermeture/réouverture. Syntaxe Python valide ; tests Android, compilation et APK de cette version à vérifier. Pas de téléphone physique ni écoute humaine.
 
 - CI 40963667502 sur d20defc2 : compilation et tests unitaires réussis ; six parcours Android lancés ou en attente. APK debug 12937355818 produit ; archive et APK vérifiés par unzip -t ; SHA-256 92ec4c2659465aa8a2111e3abcdb1ed34443fbbae45ba90112d0b81a8fc38922. Les préférences et le workflow en parallèle restent à valider sur émulateurs.
+
+- CI 40963667502 : tests ciblés des préférences réussis sur Android 10 et 15 ; quatre autres parcours en cours. Le test de reprise après interruption reste absent et non validé. La séparation des jobs a permis de lancer les six parcours après le build, sans attendre la fin du parcours principal.
