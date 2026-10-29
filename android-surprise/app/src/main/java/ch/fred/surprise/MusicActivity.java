@@ -166,7 +166,7 @@ public final class MusicActivity extends Activity {
         listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
-        status.setText(freeMode ? "Mode libre · joue à ton rythme." : "Écoute la mélodie, puis joue-la.");
+        status.setText(freeMode ? "Mode libre · joue à ton rythme." : position>0 ? "Bien joué : "+position+" / "+phrase.length+" notes" : "Écoute la mélodie, puis joue-la.");
     }
     private void confirmLeaving(){
         if(wins==0 && position==0){finish();return;}
@@ -179,11 +179,13 @@ public final class MusicActivity extends Activity {
     }
     @Override public void onBackPressed(){confirmLeaving();}
     @Override public void onCreate(Bundle saved){
-        super.onCreate(saved);phrase=nextPhrase(3,null);setVolumeControlStream(AudioManager.STREAM_MUSIC);getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
+        super.onCreate(saved);phrase=nextPhrase(3,null);
+        slowMode=getPreferences(MODE_PRIVATE).getBoolean("slowMode",false);
+        octaveHigh=getPreferences(MODE_PRIVATE).getBoolean("octaveHigh",false);setVolumeControlStream(AudioManager.STREAM_MUSIC);getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
         if(saved!=null){
             int[] p=saved.getIntArray("phrase");
             if(p!=null && p.length>=3 && p.length<=6){phrase=p;position=Math.max(0,Math.min(saved.getInt("position"),p.length-1));}
-            wins=Math.max(0,saved.getInt("wins"));freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",false);octaveHigh=saved.getBoolean("octaveHigh",false);
+            wins=Math.max(0,saved.getInt("wins"));freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",slowMode);octaveHigh=saved.getBoolean("octaveHigh",octaveHigh);
         }
         ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(BG);
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);
@@ -203,7 +205,7 @@ public final class MusicActivity extends Activity {
         LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(0,dp(56),1);tp.setMargins(dp(6),0,0,0);
         listenRow.addView(tempoButton,tp);
         tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");
-        tempoButton.setOnClickListener(v->{slowMode=!slowMode;tempoButton.setText(slowMode ? "Normal" : "Lent");tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");});
+        tempoButton.setOnClickListener(v->{slowMode=!slowMode;getPreferences(MODE_PRIVATE).edit().putBoolean("slowMode",slowMode).apply();tempoButton.setText(slowMode ? "Normal" : "Lent");tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");});
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         tempoButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
@@ -232,6 +234,7 @@ public final class MusicActivity extends Activity {
         octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         octaveButton.setOnClickListener(v->{
             octaveHigh=!octaveHigh;
+            getPreferences(MODE_PRIVATE).edit().putBoolean("octaveHigh",octaveHigh).apply();
             octaveButton.setText(octaveHigh ? "Octave normale" : "Octave +");
             status.setText(octaveHigh ? "Mode libre · octave haute" : "Mode libre · octave normale");
         });
