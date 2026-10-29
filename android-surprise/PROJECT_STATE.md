@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40815008504 intégralement réussie sur le commit 7fc13666, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40821273009 intégralement réussie sur le commit 031be47b, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -238,7 +238,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : pas de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine. Modèle et effort non modifiés, limite de quota non mesurée. Durée incluant implémentation, tests et attente réelle de la CI. Prochaine action : poursuivre la finition ludique et visuelle et revalider l'APK retenu pour la livraison.
 
 
-## Session du 29 octobre 2026, à partir de 06:03:07 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 06:03:07–06:28:25 Europe/Zurich (25 min 18 s)
 - Base 23419481 ; commits poussés cc74d323 et 031be47b ; un commit supplémentaire consigne ce suivi. Fichiers : MemoryActivity.java, tests/memory_smoke.py, PROJECT_STATE.md ; diff hors journal 59 ajouts, 8 suppressions.
 - Développement : troisième niveau à huit paires avec record distinct, plateau 4 × 4 pour conserver une disposition compacte, conservation du niveau à la rotation. Test Android d'une partie complète au nouveau niveau, de la rotation et des records séparés pour les trois niveaux.
 - Contrôles locaux : syntaxe Python et intégrité de la banque réussies. CI précédente 40815008504 entièrement réussie, compilation et parcours API 29/35 inclus ; APK 12872585010, SHA-256 1d23298a67237192292437e06ad8004a9d32ecd4158dc49dcba603e01f29de92, archive et APK vérifiés. Nouveau run 40821273009 sur 031be47b en attente ; compilation et tests Android de cette session à confirmer.
@@ -247,3 +247,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Complément : 30 000 plateaux aléatoires simulés séparément de l'application pour les trois niveaux (paires et variation) réussis. CI 40821273009 : compilation réussie, parcours Android API 29 en cours ; APK debug 12874372742 téléchargé, archive et APK passent unzip -t ; SHA-256 b8823de3b0943384d75aeabf7a530b498ac055c0797e577b528863f91c67d473. Tests Android encore à confirmer.
 
 - Complément CI 40821273009 : compilation, parcours principal API 29 et parties de mémoire complètes sur API 29 et 35 réussis, y compris le nouveau niveau et ses records ; parcours principal API 35 encore en cours.
+
+- Résultat final à 06:28:25 : run 40821273009 entièrement réussi sur 031be47b ; compilation, tests de contenu et de règles et parcours complets API 29/35 réussis, y compris le nouveau niveau et ses records. APK debug 12874372742, SHA-256 b8823de3b0943384d75aeabf7a530b498ac055c0797e577b528863f91c67d473 ; archive et APK vérifiés avec unzip -t. Commits de suivi 2cddc86b, c7657ddc et 47fd7c00, plus ce complément.
+- Limites : aucun test sur téléphone physique ni inspection visuelle humaine, notamment des cibles tactiles sur très petits écrans ; SDK/Gradle/javac absents localement. Modèle et effort inchangés, limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : poursuivre la finition ludique et visuelle et vérifier l'APK final avant livraison.
