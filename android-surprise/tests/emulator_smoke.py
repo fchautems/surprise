@@ -244,9 +244,27 @@ for index in range(8):
     tap_text(wait_dump(), "Continuer" if index < 7 else "Voir le résultat")
 root = wait_dump()
 assert find_text(root, "130 points"), texts(root)
+assert find_text(root, "Record CRYPTO : 130 points"), texts(root)
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+root = wait_dump()
+assert find_text(root, "Record CRYPTO : 130 points"), "Thematic record lost on rotation"
 adb("shell", "input", "keyevent", "4")
 root = wait_dump()
 assert find_text(root, "BIENVENUE"), "Back from thematic result failed"
+tap_text(root, "Mes records")
+dialog = wait_dump()
+assert find_text(dialog, "CRYPTO  ·  130 points"), texts(dialog)
+assert find_text(dialog, "À découvrir"), texts(dialog)
+tap_text(dialog, "Fermer")
+adb("shell", "am", "force-stop", "ch.fred.surprise")
+adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+tap_text(wait_dump(), "Mes records")
+dialog = wait_dump()
+assert find_text(dialog, "CRYPTO  ·  130 points"), "Thematic record lost after restart"
+tap_text(dialog, "Fermer")
+root = wait_dump()
 
 # Today's challenge must be reproducible and its record must survive a restart.
 tap_text(root, "Défi du jour")
