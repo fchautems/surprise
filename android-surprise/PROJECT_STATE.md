@@ -197,3 +197,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : SDK/Gradle/javac absents localement ; aucun téléphone physique ni inspection visuelle humaine. Aucun changement de modèle ou de niveau. Prochaine action : consulter compilation, APK et tous les jobs CI, corriger les éventuelles régressions et consigner les résultats et la durée réels.
 
 - Complément : CI 40803551852, compilation réussie et parcours API 29 en cours ; APK 12866908678 téléchargé, archive et APK passent unzip -t, SHA-256 4a7f4c45f03208d29cba4c7b61a8934c88b888f03a7e7af98ec97f5038dece8d. Tous les tests Android restent à confirmer pour ce commit.
+
+- Diagnostic CI : run 40803551852, compilation et parcours principal API 29 réussis ; test mémoire API 35 échoué car l'écran attendu n'était pas ouvert après une interaction. Cause exacte non établie ; une nouvelle tentative bornée d'ouverture a été ajoutée au scénario en 398ed130, sans masquer un échec persistant. Syntaxe Python et test de banque réussis localement. Nouveau run 40804994601 lancé ; ses résultats restent à vérifier.
