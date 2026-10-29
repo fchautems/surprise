@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40833355037 intégralement réussie sur le commit 3318efe7, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40848237189 intégralement réussie sur le commit 260aa2eb, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -307,7 +307,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : aucun téléphone physique, écoute réelle ni inspection visuelle humaine ; l'émulateur API 29 a signalé un problème de restitution audio, cause et comportement sur appareil non établis. SDK/Gradle/javac absents localement ; modèle et effort inchangés. Durée comprenant travail, diagnostic, correctifs et attente réelle des CI ; limite de quota non mesurée. Prochaine action prioritaire : inspecter les trois jobs restants de 40843750660, diagnostiquer le problème de restitution audio sur API 29 et compléter les contrôles avant livraison.
 
 
-## Session du 29 octobre 2026, à partir de 09:58:18 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 09:58:18–10:39:26 Europe/Zurich (41 min 8 s)
 - Base 3d6b9665 ; commits poussés 3b10b6d0 et 55905dab ; un commit supplémentaire consigne ce suivi. Fichiers : MusicActivity.java, tests/music_smoke.py, PROJECT_STATE.md ; diff hors journal 16 ajouts, 5 suppressions.
 - Diagnostic et amélioration : allocation du tampon audio tenant compte du minimum Android ; journalisation de l'initialisation, des erreurs et du démarrage de lecture ; le test d'interface exige désormais la preuve que la lecture est entrée en état actif. Une lecture effectivement audible reste à vérifier sur téléphone.
 - Contrôles locaux : syntaxe Python et intégrité de banque réussies. Run précédent 40843750660 : compilation, parcours principal API 29, mémoire API 29/35 et musique API 29/35 réussis ; parcours principal API 35 annulé automatiquement par le nouveau commit, donc CI globale non réussie. APK précédent 12883792732, SHA-256 d31091c30d29d35afc6adb883d5eda5fac715da89f72b82634a23f91336e9f16, archive et APK vérifiés. Run 40846196889 sur 55905dab lancé, résultats encore inconnus.
@@ -320,3 +320,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40848237189 : compilation et tests Java réussis ; parcours principal API 29 en cours. APK debug 12886425482 téléchargé ; archive et APK passent unzip -t ; SHA-256 4ff82f36f017ce11fffb94a2b617a276cd650ad14d96722cbcfe834553d1d388. Tests de lecture Android toujours en attente.
 
 - Complément CI 40848237189 : les parcours musique API 29 et 35 réussissent ; leurs journaux confirment plusieurs passages en état PLAYING après écriture, contrairement à la version précédente. L'hypothèse sur l'état initial est confortée par le succès du correctif, sans écoute réelle de la sortie. Les trois autres jobs sont encore en cours.
+
+- Résultat final à 10:39:26 : CI 40848237189 entièrement réussie sur 260aa2eb : compilation, tests de signal et de données/règles, six jobs Android API 29/35 ; journaux des deux parcours musique confirmant l'état PLAYING après écriture. Le correctif de l'état statique a résolu l'échec observé sur les deux émulateurs ; une écoute réelle et le comportement sur appareil physique ne sont pas vérifiés. APK debug 12886425482, SHA-256 4ff82f36f017ce11fffb94a2b617a276cd650ad14d96722cbcfe834553d1d388 ; archive et APK vérifiés par unzip -t.
+- Diff final hors journal : MusicActivity.java +18/-5, tests/music_smoke.py +4/-0, total +22/-5 ; commit supplémentaire 260aa2eb ; suivis d3091196, 4fda639b, c5634bf1, 2698224d et 873ed112, plus ce complément. Aucun test sur téléphone physique ni inspection visuelle humaine ; SDK/Gradle/javac absents localement. Modèle et effort inchangés ; limite de quota non mesurée. Durée comprenant diagnostic, correctif et attente effective de deux CI. Prochaine action : poursuivre la finition ludique et visuelle et tester l'APK final avant livraison.
