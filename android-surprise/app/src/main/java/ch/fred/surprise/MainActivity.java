@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
         {"ALLEMAND","Que signifie « der Kaffee » ?","Le café","Le thé","Le lait","Le sucre"},
         {"ALLEMAND","Comment dit-on « bonne nuit » en allemand ?","Gute Nacht","Guten Morgen","Vielen Dank","Bis bald"},
         {"ALLEMAND","Que signifie « der Hund » ?","Le chien","Le chat","L'oiseau","Le cheval"},
-        {"ALLEMAND","Quel mot allemand signifie « aujourd'hui » ?","Heute","Morgen","Gestern","Immer"},
+        {"ALLEMAND","Que signifie « Tschüss » ?","Salut, au revoir","Merci beaucoup","Bonne nuit","Combien coûte cela ?"},
         {"ALLEMAND","Que signifie « bitte » dans une demande polie ?","S'il te plaît","Jamais","Hier","Peut-être"},
         {"CUISINE","Quel ingrédient principal entre dans une meringue classique ?","Des blancs d'œufs et du sucre","Des pommes de terre","Du riz et du bouillon","Du beurre et du sel"},
         {"CRYPTO","Quel pseudonyme est associé à la création de Bitcoin ?","Satoshi Nakamoto","Alan Turing","Tim Berners-Lee","Ada Lovelace"},
@@ -132,7 +132,28 @@ public class MainActivity extends Activity {
         {"CRYPTO","Quel réseau de paiement est associé à Bitcoin pour de petits paiements rapides ?","Lightning","Ethernet","Bluetooth","Minitel"},
         {"CRYPTO","Qu'est-ce qu'un explorateur de blocs permet de consulter ?","Des données publiques de la blockchain","Les phrases secrètes privées","Les mots de passe bancaires","Les fichiers supprimés du téléphone"},
         {"CRYPTO","Comment s'appelle la réduction périodique de la récompense des mineurs Bitcoin ?","Le halving","Le swing","Le pétrissage","Le solstice"},
-        {"CRYPTO","Combien de mots contient souvent une phrase de récupération ?","12 ou 24","Un seul obligatoirement","100 exactement","Aucun"}
+        {"CRYPTO","Combien de mots contient souvent une phrase de récupération ?","12 ou 24","Un seul obligatoirement","100 exactement","Aucun"},
+        {"MUSIQUE","Dans un accord de do majeur septième, quelle note s'ajoute à do, mi et sol ?","Si","Si bémol","Ré bémol","Fa dièse"},
+        {"MUSIQUE","Quelle note est la tierce mineure de do ?","Mi bémol","Mi","Fa","Sol"},
+        {"MUSIQUE","Dans une mesure à trois-quatre, combien de noires remplissent une mesure ?","Trois","Deux","Quatre","Six"},
+        {"CUISINE","Pour 1 kg de farine, combien d’eau donne une hydratation de 70 % ?","700 g","70 g","1 400 g","7 g"},
+        {"CUISINE","Quel microorganisme fait gonfler une pâte à pain levée ?","Une levure","Une algue","Un insecte","Un mollusque"},
+        {"CUISINE","Dans une pâte à pain, que mesure l'hydratation ?","La quantité d'eau rapportée à la farine","La quantité de sel rapportée à l'huile","Le temps de cuisson en minutes","La température du four"},
+        {"VOYAGE","Quelle langue est principalement parlée au Portugal ?","Le portugais","Le néerlandais","Le suédois","Le polonais"},
+        {"VOYAGE","Quel pays entoure entièrement l'État du Vatican ?","L'Italie","La Suisse","Le Portugal","L'Autriche"},
+        {"VOYAGE","Quel lac suisse se trouve entre les cantons de Vaud et de Neuchâtel ?","Le lac de Neuchâtel","Le lac de Zurich","Le lac des Quatre-Cantons","Le lac de Lugano"},
+        {"CIEL","Que voit-on lors d'une nouvelle lune ?","La face éclairée est tournée surtout à l'opposé de la Terre","La Lune disparaît de son orbite","La Lune émet sa propre lumière","La Terre devient une étoile"},
+        {"CIEL","Quel objet tourne autour d'une planète ?","Un satellite naturel","Une constellation","Une galaxie entière nécessairement","Un horizon"},
+        {"CIEL","Que désigne une année terrestre ?","Environ une révolution de la Terre autour du Soleil","Une rotation de la Terre sur elle-même","Une révolution de la Lune autour de Mars","Une nuit sur Terre"},
+        {"ALLEMAND","Que signifie « Ich habe Hunger » ?","J'ai faim","J'ai froid","Je suis en retard","Je cherche la gare"},
+        {"ALLEMAND","Quel mot allemand signifie « aujourd'hui » ?","Heute","Morgen","Gestern","Immer"},
+        {"ALLEMAND","Que signifie « Wo ist der Bahnhof ? » ?","Où est la gare ?","Quand part le bateau ?","Quel est le prix ?","Où est le jardin ?"},
+        {"TEMPS","Sur un cadran de 12 heures, combien de tours fait l'aiguille des heures en 24 heures ?","Deux","Un","Quatre","Douze"},
+        {"TEMPS","Que fait la couronne d'une montre mécanique lorsqu'on la remonte manuellement ?","Elle permet d'armer le ressort","Elle recharge un écran tactile","Elle mesure la température extérieure","Elle tourne le bracelet"},
+        {"TEMPS","Quelle complication affiche généralement le jour du mois ?","Le quantième","Le tachymètre","La lunette tournante","Le fermoir"},
+        {"CRYPTO","Dans Bitcoin, quel élément relie un bloc à son prédécesseur ?","Une empreinte cryptographique du bloc précédent","Le nom du propriétaire","Un numéro de téléphone","Une image du portefeuille"},
+        {"CRYPTO","Quelle pratique évite de confier sa phrase de récupération à un inconnu ?","La garder secrète","La publier sur un forum","L'envoyer par messagerie à un inconnu","La mettre en commentaire public"},
+        {"CRYPTO","Dans Ethereum, que paie généralement une transaction ?","Des frais de réseau","Un abonnement postal","Une cotisation au canton","Des frais de carte SIM"}
     };
     private static final int ROUND=8;
     private static final String[] THEMES={"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS","CRYPTO"};
