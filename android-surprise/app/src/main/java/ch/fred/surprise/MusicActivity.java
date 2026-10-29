@@ -111,7 +111,7 @@ public final class MusicActivity extends Activity {
         TextView hint=label("Écoute, puis retrouve les notes. Monte le son si tu veux !",15,WHITE);
         LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,-2);hp.setMargins(0,dp(12),0,dp(10));root.addView(hint,hp);
         int best=getPreferences(MODE_PRIVATE).getInt("melodies",0);
-        status=label(freeMode ? "Mode libre · joue à ton rythme." : best>0?"Record : "+best+" · Écoute la mélodie.":"Écoute la mélodie, puis joue-la.",16,GOLD);root.addView(status);
+        status=label(freeMode ? "Mode libre · joue à ton rythme." : position>0 ? "Bien joué : "+position+" / "+phrase.length+" notes" : best>0?"Record : "+best+" · Écoute la mélodie.":"Écoute la mélodie, puis joue-la.",16,GOLD);root.addView(status);
         soundWarning=label("",14,WHITE);root.addView(soundWarning);
         listenButton=button("Écouter la mélodie");LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(56));lp.setMargins(0,dp(14),0,dp(12));root.addView(listenButton,lp);listenButton.setOnClickListener(v->listen());
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
