@@ -315,4 +315,31 @@ assert find_text(root, "0 / 6 paires") and find_text(root, "Record : " + record6
 tap_text(root, "Défi : 8 paires")
 root = wait_dump()
 assert find_text(root, "0 / 8 paires") and find_text(root, "Record : " + record8), texts(root)
+# On a narrow 240dp display the cards must remain easy to touch.
+try:
+    adb("shell", "wm", "size", "240x640")
+    adb("shell", "wm", "density", "160")
+    adb("shell", "am", "force-stop", "ch.fred.surprise")
+    adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+    root = open_memory()
+    positions = []
+    for index in range(4):
+        root, node = card(root, index)
+        bounds = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
+        assert bounds[2] - bounds[0] >= 48, ("Narrow touch target", index, bounds)
+        positions.append(bounds)
+    assert positions[0][1] == positions[1][1] == positions[2][1], positions
+    assert positions[3][1] > positions[0][1], ("Expected three-column layout", positions)
+    root = tap_card(root, 0)
+    root, node = card(root, 0)
+    before = node.attrib["content-desc"]
+    adb("shell", "settings", "put", "system", "user_rotation", "1")
+    wait_dump()
+    adb("shell", "settings", "put", "system", "user_rotation", "0")
+    root = wait_dump()
+    root, node = card(root, 0)
+    assert node.attrib["content-desc"] == before, "Narrow-screen rotation lost state"
+finally:
+    adb("shell", "wm", "size", "reset")
+    adb("shell", "wm", "density", "reset")
 print("Memory game smoke test passed")
