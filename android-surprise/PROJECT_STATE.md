@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40861840953 intégralement réussie sur le commit 63e3fcc4, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40871978414 réussie après relance sur le commit 1f9b227d, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -343,12 +343,14 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre les améliorations ludiques, vérifier les prochains builds et préparer la livraison avec l'APK et les instructions d'installation.
 
 
-## Session du 29 octobre 2026, début 13:00:35 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 13:00:35–13:48:47 Europe/Zurich (48 min 12 s, validations et relance comprises)
 - Base 80dc6ada81db4a867d58871f8f5b8cde995cd954 ; commit de code poussé 2201b747f058f10f53dc8dc51956c611de8f0629.
 - Fichiers modifiés : MusicActivity.java +9/-7 ; tests/music_smoke.py +16/-0 ; total code +25/-7, hors journal.
 - Correction fonctionnelle : en mode libre, les frappes récentes remplacent les sons devenus obsolètes, sans file d'attente cumulative ; annulation vérifiée toutes les 10 ms pendant la lecture, y compris à la sortie. Ajout d'un parcours de frappes rapides et vérification de la dernière note démarrée. Le mode défi conserve sa séquence.
 - Contrôles locaux : syntaxe Python valide ; Android SDK, Gradle, javac et adb absents. CI 40869857203 : compilation, tests unitaires et parcours principal Android 10 réussis ; cinq validations complémentaires en cours. APK debug 12894884079 généré, archive et APK vérifiés par unzip -t ; SHA-256 c7bb11530c02d0f62d9408f7babe4e81456671f8f59b56c271b861f3fc051369. CI précédente 40861840953 : six jobs réussis ; APK 12890909718, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni écoute humaine.
-- Prochaine action : inspecter la CI, corriger les échecs éventuels, vérifier l'APK et consigner les résultats et la durée.
+- Commits poussés : 2201b747, 1f9b227d et suivis 00290a61, b622c067, cc6dd070, 74bdf104, d95c7f1e, 20179fb0, f351b944, 650d97bc et le présent bilan. Diff de code final : MusicActivity.java +9/-7, music_smoke.py +16/-0 ; total +25/-7 hors journal.
+- Limites : aucun téléphone physique, ni écoute humaine ; SDK, Gradle, javac et adb indisponibles localement. Modèle et effort inchangés ; quota restant inconnu.
+- Prochaine action : poursuivre la finition, consolider les contrôles sur émulateur et préparer la livraison de dimanche avec l'APK et les instructions.
 
 - Diagnostic : les parcours ciblés API 29 et 35 de CI 40869857203 ont échoué avant la vérification fonctionnelle : expression régulière du test trop échappée, coordonnées non extraites. Corrigé dans 1f9b227d ; syntaxe Python et extraction de coordonnées vérifiées localement. Nouvelle CI déclenchée, résultats à vérifier ; les trois autres jobs du run initial ont été annulés par le nouveau commit.
 
@@ -356,4 +358,4 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - CI 40871978414 : tests ciblés API 29/35 réussis après correction ; le parcours mémoire API 35 a échoué car la boîte système de l'émulateur signalait « System UI isn't responding » avant l'ouverture de l'application. Mémoire API 29 réussie ; parcours principal API 35 encore en cours. Relance du seul job échoué tentée, refusée par GitHub tant que le workflow tourne (403 « already running »). Relancer après sa fin ; il ne s'agit pas d'une validation complète.
 
-- CI 40871978414 : cinq jobs réussis, un échec d'interface système de l'émulateur ; relance ciblée du job 123447104871 acceptée après la fin des autres jobs. Résultat de la nouvelle tentative en attente.
+- CI 40871978414 : cinq jobs réussis, un échec d'interface système de l'émulateur ; relance ciblée du job 123447104871 acceptée après la fin des autres jobs. La deuxième tentative a réussi : les six jobs sont désormais réussis.
