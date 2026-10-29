@@ -2,9 +2,9 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40848237189 intégralement réussie sur le commit 260aa2eb, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40853835903 intégralement réussie sur le commit 0ac081e3, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
-Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
+Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
 
 ## Session du 28 octobre 2026, 09:41:20–09:44:00 Europe/Zurich (environ 2 min 40)
@@ -325,9 +325,10 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Diff final hors journal : MusicActivity.java +18/-5, tests/music_smoke.py +4/-0, total +22/-5 ; commit supplémentaire 260aa2eb ; suivis d3091196, 4fda639b, c5634bf1, 2698224d et 873ed112, plus ce complément. Aucun test sur téléphone physique ni inspection visuelle humaine ; SDK/Gradle/javac absents localement. Modèle et effort inchangés ; limite de quota non mesurée. Durée comprenant diagnostic, correctif et attente effective de deux CI. Prochaine action : poursuivre la finition ludique et visuelle et tester l'APK final avant livraison.
 
 
-## Session du 29 octobre 2026, début 10:57:58 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 10:57:58–11:22:09 Europe/Zurich (24 min 11 s, attente CI comprise)
 - Base : 60f02dc0551b083f0451df6586f092dccd4d2588. Commit de code poussé : 0ac081e3dbcf0765b9140a3f89f87f627a4f60c5.
 - Fichiers : MusicActivity.java (+29/-1), SoundWave.java (+14/-0), SoundWaveTest.java (+20/-0), music_smoke.py (+8/-0) ; total code +71/-1, hors journal.
 - Ajout de trois accords synthétisés en mode libre, conservés après rotation, avec contrôle de volume et tests de composition spectrale et de parcours sur émulateur.
-- Contrôles : syntaxe Python locale valide ; SDK, Gradle, javac et adb absents localement. CI 40853835903 en cours : tests unitaires, compilation et parcours principal sur Android 10 réussis ; cinq jobs complémentaires sur Android 10 et 15 en attente. APK debug 12888038098 produit, archive et APK vérifiés par unzip -t ; SHA-256 APK 212a8f8bd048c59a594af4595bd4e689d6e12ea703f18aff5c175430be90d5b1. Dernière CI confirmée : 40848237189, six jobs réussis ; APK debug 12886425482, intégrité ZIP vérifiée. Aucun test sur téléphone ni écoute humaine de l'audio.
-- Prochaine action : inspecter la CI, corriger tout échec puis vérifier l'APK et consigner les résultats et durée.
+- Contrôles : syntaxe Python locale valide ; SDK, Gradle, javac et adb absents localement. CI 40853835903 intégralement réussie : compilation, tests unitaires et six jobs sur Android 10 et 15. Les journaux des deux tests ciblés confirment PLAYING ; aucune écoute humaine n'a vérifié la qualité du son. APK debug 12888038098 produit, archive et APK vérifiés par unzip -t ; SHA-256 APK 212a8f8bd048c59a594af4595bd4e689d6e12ea703f18aff5c175430be90d5b1. Dernière CI confirmée : 40848237189, six jobs réussis ; APK debug 12886425482, intégrité ZIP vérifiée. Aucun test sur téléphone ni écoute humaine de l'audio.
+- Autres commits poussés : 320ccc54, 5d406483, 96038ec7 et le commit de ce bilan (journal seulement). Aucun échec de CI pendant cette session ; aucun appareil physique disponible. Réglage de modèle ou effort non modifié.
+- Prochaine action : poursuivre la finition, vérifier les futurs runs et préparer la livraison avec APK et instructions d'installation.
