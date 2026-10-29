@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40898996736 réussie sur le commit cc659fd6, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40903578219 réussie sur le commit 09239b8a, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -396,13 +396,14 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôle négatif local : modification volontaire d'une question historique dans une copie temporaire ; le nouveau test échoue comme attendu, confirmant qu'il détecte cette régression. Aucun fichier de projet n'a été modifié par cette vérification.
 
 
-## Session du 29 octobre 2026, début 16:37:27 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 16:37:27–17:01:17 Europe/Zurich (23 min 50 s, validations comprises)
 - Base eba8291260a19f42bc76ff441b676c6ee6c35375 ; commit poussé 09239b8a796db03966d454e2f6ac5c68b80a9b99.
 - Fichiers : MemoryActivity.java +9/-9 ; tests/memory_smoke.py +50/-0 ; workflow +1/-1 ; total code/config +60/-10 hors journal.
 - Jeu enrichi d'un défi à dix paires avec record séparé et continuité des anciennes parties en rotation ; fond harmonisé sans animation. Test étendu au parcours complet et à la rotation ; limite de durée du job mémoire augmentée pour le parcours supplémentaire.
-- Contrôle local : syntaxe Python valide ; SDK Android, Gradle, javac et adb absents. CI 40903578219 : compilation, tests unitaires et parcours principal Android 10 réussis ; cinq jobs supplémentaires en attente. APK debug 12911080499 produit ; archive et APK vérifiés par unzip -t ; SHA-256 12aeb02157e4e80f1148a77dd569762a6892588cbb3d7e3570c2d72d72039c23. CI précédente 40898996736 : six jobs réussis ; APK 12907863418 vérifié par unzip -t, SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Aucun téléphone physique ni inspection visuelle humaine.
-- Prochaine action : suivre la CI, vérifier le nouvel APK, corriger les échecs éventuels et consigner les résultats.
+- Contrôle local : syntaxe Python valide ; SDK Android, Gradle, javac et adb absents. CI 40903578219 : compilation, tests unitaires et six parcours sur Android 10 et 15 réussis. APK debug 12911080499 produit ; archive et APK vérifiés par unzip -t ; SHA-256 12aeb02157e4e80f1148a77dd569762a6892588cbb3d7e3570c2d72d72039c23. CI précédente 40898996736 : six jobs réussis ; APK 12907863418 vérifié par unzip -t, SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Aucun téléphone physique ni inspection visuelle humaine.
+- Commits poussés : 09239b8a et suivis 2853d5d9, 0d905ca5, 1eb61b22, f09135c1, fa0091e8 et ce bilan. Aucun échec CI ; aucun téléphone physique ni inspection visuelle humaine. Modèle et effort inchangés ; quota restant inconnu.
+- Prochaine action : poursuivre la finition, tester les prochaines versions et préparer la livraison et ses instructions.
 
 - Contrôle local complémentaire : calcul des indices de grille pour 2, 3 et 4 colonnes et les quatre tailles de jeu ; les 20 indices sont couverts sans trou et les tailles attendues respectées. Ce calcul ne remplace pas un test Android.
 
-- CI 40903578219 : le parcours mémoire complet avec dix paires réussit sur API 29 ; quatre jobs réussis, deux sur API 35 encore en cours.
+- CI 40903578219 : le parcours mémoire complet avec dix paires réussit sur API 29 ; les six jobs ont finalement réussi, y compris le parcours complet sur API 35.
