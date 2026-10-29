@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40888097787 réussie sur le commit ab0b1905, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40898996736 réussie sur le commit cc659fd6, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -380,16 +380,17 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40888097787 : parcours ciblés Android 10 et 15 réussis ; leurs journaux confirment l'entrée en lecture de la note haute. Les trois autres parcours ont ensuite réussi. Il ne s'agit pas d'une écoute humaine ni d'un essai sur appareil physique.
 
 
-## Session du 29 octobre 2026, début 16:05:28 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 16:05:28–16:35:07 Europe/Zurich (29 min 39 s, validations comprises)
 - Base fbd6c57736f78bbbc25a125d0792ebd8c9f31280 ; commit de code poussé fd9a30836fdf05e62cc89ed6d046e38b1464b4c1.
-- Fichier : MainActivity.java +23/-2, hors journal. Banque enrichie de 116 à 137 questions (trois par thème), ajoutées en fin pour préserver les indices des questions existantes. Un doublon détecté au contrôle local a été remplacé avant le commit.
+- Diff final hors journal : MainActivity.java +22/-1 et tests/test_bank.py +10/-0, total +32/-1. Banque enrichie de 116 à 137 questions (trois par thème), ajoutées en fin pour préserver les indices des questions existantes. Un doublon détecté au contrôle local a été remplacé avant le commit.
 - Tests locaux : 137 questions distinctes et quatre réponses distinctes par question ; premier contrôle ayant révélé un doublon corrigé, second contrôle réussi ; test autonome officiel test_bank.py réussi localement (1 test). SDK Android, Gradle, javac et adb absents localement. CI 40898176551 : test de contenu, tests unitaires et compilation réussis ; parcours émulateur en cours. APK debug 12908555959 produit ; archive et APK vérifiés par unzip -t ; SHA-256 2a255ac49be14a88ee96c827f9abf0af13766bb224e69ca6204879d43eed9e36. CI précédente 40888097787 : six jobs réussis ; APK 12902883824 vérifié par unzip -t, SHA-256 7242401410e88d65b231a2f2135a6de7833b1b426e0cc5cb14cd840f78211e0b. Aucun test sur téléphone physique.
-- Prochaine action : vérifier les tests de contenu, la compilation, l'APK et les parcours sur émulateurs ; corriger les échecs éventuels.
+- Commits poussés : fd9a3083, a56320ef, cc659fd6 et suivis 074f245f, a9e17515, 124276c8, e88e5b93, 7c6387e8, 36be4c48, 5791bfa2, 207809d8 et ce bilan. Aucun téléphone physique ni écoute humaine. Modèle et effort inchangés ; quota restant inconnu.
+- Prochaine action : poursuivre la finition, vérifier les nouvelles versions et préparer la livraison et ses instructions.
 
 - Un contrôle comparant précisément les 116 anciennes lignes a révélé qu'un remplacement de doublon avait modifié une entrée existante (index 97) : la première affirmation de préservation était prématurée. Correctif a56320ef : ancienne entrée restaurée, nouveau doublon remplacé en fin de banque ; test local confirmé sur les 116 indices, les 21 ajouts et l'unicité. La CI 40898176551 a été remplacée ; nouveau workflow à vérifier.
 
 - Test durable ajouté dans tests/test_bank.py : empreinte des 116 questions historiques pour détecter toute réorganisation ou modification nécessitant revue. Les deux tests de banque passent localement après le correctif. Commit cc659fd6 ; diff final préliminaire hors journal : MainActivity.java +22/-1, test_bank.py +10/-0, total +32/-1. Une nouvelle CI est déclenchée et remplace les validations intermédiaires.
 
-- CI finale 40898996736 sur cc659fd6 : tests de banque (2), tests unitaires, compilation et parcours principal Android 10 réussis ; cinq jobs complémentaires en attente. APK debug 12907863418 produit ; archive et APK vérifiés par unzip -t ; SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Les runs intermédiaires 40898176551 et 40898913002 ont été remplacés avant validation complète.
+- CI finale 40898996736 sur cc659fd6 : tests de banque (2), tests unitaires, compilation et six jobs sur Android 10 et 15 réussis. APK debug 12907863418 produit ; archive et APK vérifiés par unzip -t ; SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Les runs intermédiaires 40898176551 et 40898913002 ont été remplacés avant validation complète.
 
 - Contrôle négatif local : modification volontaire d'une question historique dans une copie temporaire ; le nouveau test échoue comme attendu, confirmant qu'il détecte cette régression. Aucun fichier de projet n'a été modifié par cette vérification.
