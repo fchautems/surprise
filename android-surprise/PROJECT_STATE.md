@@ -236,3 +236,10 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 
 - Résultat final à 05:20:48 : run 40815008504 entièrement réussi sur 7fc13666 : compilation, tests de données/règles, parcours API 29 et 35 et vérification de persistance des nouveaux records réussis. APK debug 12872585010, SHA-256 1d23298a67237192292437e06ad8004a9d32ecd4158dc49dcba603e01f29de92 ; archive et APK vérifiés par unzip -t. Commits de suivi 25261884, 97283526 et 21af4420 et 17ee2525, plus ce complément.
 - Limites : pas de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine. Modèle et effort non modifiés, limite de quota non mesurée. Durée incluant implémentation, tests et attente réelle de la CI. Prochaine action : poursuivre la finition ludique et visuelle et revalider l'APK retenu pour la livraison.
+
+
+## Session du 29 octobre 2026, à partir de 06:03:07 Europe/Zurich — suivi provisoire
+- Base 23419481 ; commits poussés cc74d323 et 031be47b ; un commit supplémentaire consigne ce suivi. Fichiers : MemoryActivity.java, tests/memory_smoke.py, PROJECT_STATE.md ; diff hors journal 59 ajouts, 8 suppressions.
+- Développement : troisième niveau à huit paires avec record distinct, plateau 4 × 4 pour conserver une disposition compacte, conservation du niveau à la rotation. Test Android d'une partie complète au nouveau niveau, de la rotation et des records séparés pour les trois niveaux.
+- Contrôles locaux : syntaxe Python et intégrité de la banque réussies. CI précédente 40815008504 entièrement réussie, compilation et parcours API 29/35 inclus ; APK 12872585010, SHA-256 1d23298a67237192292437e06ad8004a9d32ecd4158dc49dcba603e01f29de92, archive et APK vérifiés. Nouveau run 40821273009 sur 031be47b en attente ; compilation et tests Android de cette session à confirmer.
+- Limites : SDK/Gradle/javac absents localement ; aucun téléphone physique ni inspection visuelle humaine. Modèle et niveau non modifiés. Prochaine action : vérifier compilation, APK et tous les jobs CI, corriger les échecs et noter la durée réelle.
