@@ -186,6 +186,11 @@ root = wait_dump()
 if find_text(root, "La partie en cours sera perdue."):
     tap_text(root, "Recommencer")
     root = wait_dump()
+current_record = find_text(root, "Record : ")
+assert current_record, texts(root)
+updated_record = current_record.split("Record : ")[1].splitlines()[0]
+assert int(updated_record) <= int(record), "Record became worse after replay"
+record = updated_record
 root = tap_card(root, 0)
 tap_text(root, "Nouvelle partie")
 dialog = wait_dump()
