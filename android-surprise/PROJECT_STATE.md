@@ -390,6 +390,6 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - Test durable ajouté dans tests/test_bank.py : empreinte des 116 questions historiques pour détecter toute réorganisation ou modification nécessitant revue. Les deux tests de banque passent localement après le correctif. Commit cc659fd6 ; diff final préliminaire hors journal : MainActivity.java +22/-1, test_bank.py +10/-0, total +32/-1. Une nouvelle CI est déclenchée et remplace les validations intermédiaires.
 
-- CI finale 40898996736 sur cc659fd6 : tests de banque (2), tests unitaires et compilation réussis ; émulateur principal en cours. APK debug 12907863418 produit ; archive et APK vérifiés par unzip -t ; SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Les runs intermédiaires 40898176551 et 40898913002 ont été remplacés avant validation complète.
+- CI finale 40898996736 sur cc659fd6 : tests de banque (2), tests unitaires, compilation et parcours principal Android 10 réussis ; cinq jobs complémentaires en attente. APK debug 12907863418 produit ; archive et APK vérifiés par unzip -t ; SHA-256 d4c7b6756afd0a9bf8d03b9d4cc7f5b3f0f02fa8d40e572303e3e444a338a9cb. Les runs intermédiaires 40898176551 et 40898913002 ont été remplacés avant validation complète.
 
 - Contrôle négatif local : modification volontaire d'une question historique dans une copie temporaire ; le nouveau test échoue comme attendu, confirmant qu'il détecte cette régression. Aucun fichier de projet n'a été modifié par cette vérification.
