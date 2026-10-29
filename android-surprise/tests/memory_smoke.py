@@ -58,10 +58,16 @@ adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "pm", "clear", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 # A separate matching game: discover every card, rotate, then solve the board.
-root = wait_dump()
-tap_text(root, "Un jeu de mémoire")
-root = wait_dump()
-assert find_text(root, "MÉMO DES ÉTOILES"), texts(root)
+def open_memory():
+    root = wait_dump()
+    for _ in range(3):
+        if find_text(root, "MÉMO DES ÉTOILES"):
+            return root
+        tap_text(root, "Un jeu de mémoire")
+        root = wait_dump()
+    raise AssertionError("Memory screen did not open: " + repr(texts(root)))
+
+root = open_memory()
 assert description(root, "0 paires trouvées sur 4"), "Initial progress missing"
 
 def card(root, index):
@@ -182,8 +188,7 @@ tap_text(root, "Retour à l’accueil")
 assert find_text(wait_dump(), "BIENVENUE"), "Memory return failed"
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
-tap_text(wait_dump(), "Un jeu de mémoire")
-root = wait_dump()
+root = open_memory()
 assert find_text(root, "Record : " + record), "Memory record lost after restart"
 # The longer mode has its own board, saved orientation and separate record.
 tap_text(root, "Défi : 6 paires")
