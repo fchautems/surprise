@@ -163,4 +163,51 @@ adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 tap_text(wait_dump(), "Un jeu de mémoire")
 root = wait_dump()
 assert find_text(root, "Record : " + record), "Memory record lost after restart"
+# The longer mode has its own board, saved orientation and separate record.
+tap_text(root, "Défi : 6 paires")
+root = wait_dump()
+assert find_text(root, "0 / 6 paires"), texts(root)
+assert not find_text(root, "Record : "), "Four-pair record leaked into six-pair mode"
+known6 = {}
+for index in range(12):
+    root = tap_card(root, index)
+    root, node = card(root, index)
+    desc = node.attrib["content-desc"]
+    assert "visible " in desc or "trouvée " in desc, desc
+    known6[index] = desc.split()[-1]
+    if index == 0:
+        adb("shell", "settings", "put", "system", "user_rotation", "1")
+        wait_dump()
+        adb("shell", "settings", "put", "system", "user_rotation", "0")
+        root = wait_dump()
+        root, node = card(root, index)
+        assert node.attrib["content-desc"] == desc, "Long mode lost its state on rotation"
+assert all(list(known6.values()).count(value) == 2 for value in known6.values()), known6
+for _ in range(30):
+    states = {}
+    for index in range(12):
+        root, node = card(root, index)
+        states[index] = node.attrib["content-desc"]
+    remaining = [i for i in range(12) if "trouvée " not in states[i]]
+    if not remaining:
+        break
+    visible = [i for i in remaining if "visible " in states[i]]
+    if len(visible) == 2:
+        target = next(i for i in remaining if i not in visible)
+    elif len(visible) == 1:
+        target = next(i for i in remaining if i != visible[0] and known6[i] == known6[visible[0]])
+    else:
+        target = remaining[0]
+    root = tap_card(root, target)
+else:
+    raise AssertionError("Long memory game did not finish")
+result6 = find_text(wait_dump(), "Bravo !")
+assert result6 and "Nouveau record !" in result6, result6
+record6 = result6.split("Record : ")[1].splitlines()[0]
+tap_text(wait_dump(), "Mode : 4 paires")
+root = wait_dump()
+assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
+tap_text(root, "Défi : 6 paires")
+root = wait_dump()
+assert find_text(root, "0 / 6 paires") and find_text(root, "Record : " + record6), texts(root)
 print("Memory game smoke test passed")
