@@ -35,7 +35,7 @@ public final class MemoryActivity extends Activity {
     private boolean escapade=false;
     private boolean hintUsed=false, hintVisible=false;
     private ScrollView gameScroll;
-    private int first=-1,second=-1,moves=0;
+    private int first=-1,second=-1,moves=0,streak=0,bestStreak=0;
     private TextView status;
     private ProgressBar progress;
     private boolean newRecord=false;
@@ -65,7 +65,7 @@ public final class MemoryActivity extends Activity {
         for(int i=0;i<pairCount;i++){int value=available.get(i);values.add(value);values.add(value);}
         Collections.shuffle(values);
         for(int i=0;i<deck.length;i++){deck[i]=i<values.size()?values.get(i):0;matched[i]=false;}
-        first=second=-1; moves=0; newRecord=false; hintUsed=false; hintVisible=false; render();
+        first=second=-1; moves=0; streak=bestStreak=0; newRecord=false; hintUsed=false; hintVisible=false; render();
         gameScroll.post(()->gameScroll.fullScroll(View.FOCUS_UP));
     }
     private String recordKey(){return pairCount==4 ? "best" : pairCount==6 ? "best6" : pairCount==8 ? "best8" : "best10";}
@@ -81,6 +81,7 @@ public final class MemoryActivity extends Activity {
         if(first==-1){first=i;}else{
             second=i; moves++;
             if(deck[first]==deck[second]){
+                streak++; bestStreak=Math.max(bestStreak,streak);
                 matched[first]=matched[second]=true; first=second=-1;
                 if(pairsFound()==pairCount){
                     android.content.SharedPreferences p=getPreferences(MODE_PRIVATE);
@@ -88,7 +89,7 @@ public final class MemoryActivity extends Activity {
                     newRecord=moves<best;
                     p.edit().putInt(recordKey(),Math.min(best,moves)).apply();
                 }
-            }
+            }else streak=0;
         }
         render();
     }
@@ -98,7 +99,7 @@ public final class MemoryActivity extends Activity {
             if(matched[i])continue;
             for(int j=i+1;j<pairCount*2;j++){
                 if(!matched[j] && deck[i]==deck[j]){
-                    first=i;second=j;hintUsed=true;hintVisible=true;moves+=2;
+                    first=i;second=j;hintUsed=true;hintVisible=true;moves+=2;streak=0;
                     render();return;
                 }
             }
@@ -148,8 +149,8 @@ public final class MemoryActivity extends Activity {
         int stars=moves<=pairCount+1 ? 3 : moves<=pairCount*2 ? 2 : 1;
         String reward=stars==3 ? "✦ ✦ ✦" : stars==2 ? "✦ ✦" : "✦";
         status.setText(pairs==pairCount
-            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\n"+reward
-            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(hintVisible ? "\nUne paire dévoilée · à toi de jouer !" : second!=-1 ? "\nChoisis une autre carte." : ""));
+            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\nMeilleure série : "+bestStreak+"\n"+reward
+            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(streak>=2 ? "\nSérie : "+streak+" paires !" : "")+(best>0 ? "\nRecord : "+best : "")+(hintVisible ? "\nUne paire dévoilée · à toi de jouer !" : second!=-1 ? "\nChoisis une autre carte." : ""));
         progress.setMax(pairCount); progress.setProgress(pairs);
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         hintButton.setEnabled(!hintUsed && pairs<pairCount);
@@ -226,14 +227,14 @@ public final class MemoryActivity extends Activity {
             if(d.length==m.length && (d.length==deck.length || d.length==16)){
                 pairCount=saved.getInt("pairCount",4); if(pairCount!=4 && pairCount!=6 && pairCount!=8 && pairCount!=10)pairCount=4;
                 System.arraycopy(d,0,deck,0,d.length);System.arraycopy(m,0,matched,0,m.length);
-                first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);
+                first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);streak=saved.getInt("streak",0);bestStreak=saved.getInt("bestStreak",0);
                 newRecord=saved.getBoolean("newRecord",false);hintUsed=saved.getBoolean("hintUsed",false);hintVisible=saved.getBoolean("hintVisible",false);render();
             }else newGame();
         }else newGame();
     }
     @Override protected void onSaveInstanceState(Bundle out){
         out.putIntArray("deck",deck);out.putBooleanArray("matched",matched);out.putInt("pairCount",pairCount);
-        out.putInt("first",first);out.putInt("second",second);out.putInt("moves",moves);out.putBoolean("newRecord",newRecord);out.putBoolean("hintUsed",hintUsed);out.putBoolean("hintVisible",hintVisible);
+        out.putInt("first",first);out.putInt("second",second);out.putInt("moves",moves);out.putInt("streak",streak);out.putInt("bestStreak",bestStreak);out.putBoolean("newRecord",newRecord);out.putBoolean("hintUsed",hintUsed);out.putBoolean("hintVisible",hintVisible);
         super.onSaveInstanceState(out);
     }
 }

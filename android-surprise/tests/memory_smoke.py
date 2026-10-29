@@ -176,7 +176,7 @@ else:
     raise AssertionError("Memory game did not finish")
 root = wait_dump()
 result = find_text(root, "Bravo !")
-assert result and "Record" in result, texts(root)
+assert result and "Record" in result and "Meilleure série : " in result, texts(root)
 assert description(root, "4 paires trouvées sur 4"), "Completed progress missing"
 assert "Nouveau record !" in result, result
 moves = int(re.search(r"Bravo ! (\d+) essais", result).group(1))
@@ -187,7 +187,7 @@ adb("shell", "settings", "put", "system", "user_rotation", "1")
 wait_dump()
 adb("shell", "settings", "put", "system", "user_rotation", "0")
 root = wait_dump()
-assert "Nouveau record !" in find_text(root, "Bravo !"), "Record message lost on rotation"
+assert find_text(root, "Bravo !") == result, "Result or streak lost on rotation"
 tap_text(root, "Nouvelle partie")
 root = wait_dump()
 assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
@@ -311,6 +311,7 @@ for _ in range(4):
     adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
 result6 = find_text(wait_dump(), "Bravo !")
 assert result6 and "Nouveau record !" in result6, result6
+assert re.search(r"Meilleure série : [1-6]", result6), result6
 assert description(wait_dump(), "6 paires trouvées sur 6"), "Long-mode progress incomplete"
 moves6 = int(re.search(r"Bravo ! (\d+) essais", result6).group(1))
 expected_stars6 = 3 if moves6 <= 7 else 2 if moves6 <= 12 else 1
