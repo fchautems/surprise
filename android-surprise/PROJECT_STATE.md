@@ -245,3 +245,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : SDK/Gradle/javac absents localement ; aucun téléphone physique ni inspection visuelle humaine. Modèle et niveau non modifiés. Prochaine action : vérifier compilation, APK et tous les jobs CI, corriger les échecs et noter la durée réelle.
 
 - Complément : 30 000 plateaux aléatoires simulés séparément de l'application pour les trois niveaux (paires et variation) réussis. CI 40821273009 : compilation réussie, parcours Android API 29 en cours ; APK debug 12874372742 téléchargé, archive et APK passent unzip -t ; SHA-256 b8823de3b0943384d75aeabf7a530b498ac055c0797e577b528863f91c67d473. Tests Android encore à confirmer.
+
+- Complément CI 40821273009 : compilation, parcours principal API 29 et parties de mémoire complètes sur API 29 et 35 réussis, y compris le nouveau niveau et ses records ; parcours principal API 35 encore en cours.
