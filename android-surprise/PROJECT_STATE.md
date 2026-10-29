@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40809295370 intégralement réussie sur le commit e7985c37, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40815008504 intégralement réussie sur le commit 7fc13666, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -222,7 +222,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : absence de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine, en particulier des nouveaux symboles. Modèle et effort non modifiés, limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : examiner la lisibilité visuelle et poursuivre la finition, puis revalider l'APK final pour livraison.
 
 
-## Session du 29 octobre 2026, à partir de 04:55:58 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 04:55:58–05:20:48 Europe/Zurich (24 min 50 s)
 - Base c4d19484 ; commits poussés 0ba9e434, b0e84506 et 7fc13666 ; un commit supplémentaire consigne ce suivi. Fichiers : MainActivity.java, tests/emulator_smoke.py, PROJECT_STATE.md ; diff hors journal 44 ajouts, 2 suppressions.
 - Développement : records distincts pour les thèmes de jeu, consultables depuis l'accueil et au résultat ; conservation des records à la rotation et au redémarrage, absence de record pour un thème non terminé. Recentrage automatique de l'accueil et des résultats. Tests Android renforcés pour les records, la rotation et la persistance.
 - Contrôles locaux : syntaxe du script Python et test de banque réussis. CI précédente 40809295370 entièrement réussie sur API 29 et 35 ; APK 12869741901, SHA-256 5cdd360127a48b964526bfbda6342a6c9367143104243819c9fd8a7d432de498, archives vérifiées. Nouveau run 40815008504 sur 7fc13666 en attente ; compilation et tests Android de cette session non encore confirmés.
@@ -233,3 +233,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40815008504 : compilation, tests de données et de règles, parcours principal complet sur API 29 réussis, y compris records par thème et persistance ; parcours API 35 et tests mémoire API 29/35 en cours.
 
 - Complément CI : tests mémoire complets réussis sur API 29 et 35 ; le parcours principal API 35 reste en cours.
+
+- Résultat final à 05:20:48 : run 40815008504 entièrement réussi sur 7fc13666 : compilation, tests de données/règles, parcours API 29 et 35 et vérification de persistance des nouveaux records réussis. APK debug 12872585010, SHA-256 1d23298a67237192292437e06ad8004a9d32ecd4158dc49dcba603e01f29de92 ; archive et APK vérifiés par unzip -t. Commits de suivi 25261884, 97283526 et 21af4420 et 17ee2525, plus ce complément.
+- Limites : pas de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine. Modèle et effort non modifiés, limite de quota non mesurée. Durée incluant implémentation, tests et attente réelle de la CI. Prochaine action : poursuivre la finition ludique et visuelle et revalider l'APK retenu pour la livraison.
