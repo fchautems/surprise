@@ -62,16 +62,23 @@ assert find_text(root, "MÉMO DES ÉTOILES"), texts(root)
 
 def card(root, index):
     prefix = "Carte " + str(index + 1) + " : "
-    for _ in range(4):
+    for _ in range(10):
         node = next((n for n in root.iter("node") if n.attrib.get("content-desc", "").startswith(prefix)), None)
         if node is not None:
-            return root, node
-        if index < 4:
-            adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
+            bounds = list(map(int, re.findall(r"\\d+", node.attrib["bounds"])))
+            if len(bounds) == 4 and 60 <= (bounds[1] + bounds[3]) // 2 <= 560:
+                return root, node
+            down = len(bounds) == 4 and (bounds[1] + bounds[3]) // 2 > 560
         else:
+            visible = [int(m.group(1))-1 for n in root.iter("node")
+                       if (m := re.match(r"Carte (\\d+) :", n.attrib.get("content-desc", "")))]
+            down = not visible or index > max(visible)
+        if down:
             adb("shell", "input", "swipe", "160", "480", "160", "220", "300")
+        else:
+            adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
         root = wait_dump()
-    raise AssertionError("Memory card missing: " + str(index + 1))
+    raise AssertionError("Memory card missing or outside safe area: " + str(index + 1))
 
 def tap_card(root, index):
     root, node = card(root, index)
