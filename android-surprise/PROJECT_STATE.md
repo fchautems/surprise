@@ -378,3 +378,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre la finition, tester les versions futures et préparer la livraison avec APK et instructions.
 
 - CI 40888097787 : parcours ciblés Android 10 et 15 réussis ; leurs journaux confirment l'entrée en lecture de la note haute. Les trois autres parcours ont ensuite réussi. Il ne s'agit pas d'une écoute humaine ni d'un essai sur appareil physique.
+
+
+## Session du 29 octobre 2026, début 16:05:28 Europe/Zurich (en cours)
+- Base fbd6c57736f78bbbc25a125d0792ebd8c9f31280 ; commit de code poussé fd9a30836fdf05e62cc89ed6d046e38b1464b4c1.
+- Fichier : MainActivity.java +23/-2, hors journal. Banque enrichie de 116 à 137 questions (trois par thème), ajoutées en fin pour préserver les indices des questions existantes. Un doublon détecté au contrôle local a été remplacé avant le commit.
+- Tests locaux : 137 questions distinctes et quatre réponses distinctes par question ; premier contrôle ayant révélé un doublon corrigé, second contrôle réussi. SDK Android, Gradle, javac et adb absents localement. CI 40898176551 lancée ; résultat et APK non encore vérifiés. CI précédente 40888097787 : six jobs réussis ; APK 12902883824 vérifié par unzip -t, SHA-256 7242401410e88d65b231a2f2135a6de7833b1b426e0cc5cb14cd840f78211e0b. Aucun test sur téléphone physique.
+- Prochaine action : vérifier les tests de contenu, la compilation, l'APK et les parcours sur émulateurs ; corriger les échecs éventuels.
