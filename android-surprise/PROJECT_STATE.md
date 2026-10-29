@@ -429,4 +429,4 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - Autre cause plausible : le contrôle était tapé près de la zone système. bf176112 limite les appuis aux coordonnées plus sûres et corrige la direction de défilement en utilisant le centre du contrôle. Syntaxe Python valide. Relance CI à vérifier ; aucune conclusion sur la cause exacte avant résultats.
 
-- CI de correction 40929352471 sur bf176112 : tests unitaires et compilation réussis ; émulateurs en cours. APK debug 12921478422 ; archive et APK vérifiés par unzip -t ; SHA-256 463cc2fa0b61ce05ccf16c2850b58d8ed06b8739329a1f271843ef79dea62163. Les CI 40926254092 et 40929298704 ont été annulées après les corrections.
+- CI de correction 40929352471 sur bf176112 : tests unitaires, compilation et parcours principal Android 10 réussis ; cinq autres jobs en cours. APK debug 12921478422 ; archive et APK vérifiés par unzip -t ; SHA-256 463cc2fa0b61ce05ccf16c2850b58d8ed06b8739329a1f271843ef79dea62163. Les CI 40926254092 et 40929298704 ont été annulées après les corrections.
