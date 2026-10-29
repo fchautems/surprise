@@ -97,6 +97,26 @@ def tap_card(root, index):
     adb("shell", "input", "tap", str((bounds[0]+bounds[2])//2), str((bounds[1]+bounds[3])//2))
     return wait_dump()
 
+# Change the visual set, preserve it on rotation, and return without losing records.
+tap_text(root, "Cartes : escapade")
+root = wait_dump()
+root = tap_card(root, 0)
+root, node = card(root, 0)
+pack_desc = node.attrib["content-desc"]
+assert "visible " in pack_desc and pack_desc.split()[-1] in {"🎹","🍕","⌚","☕","🌙","🎷","🍇","🏔","🎸","🚂","⭐","🍋","🌻","🎺","🐈","🎲"}, pack_desc
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+root = wait_dump()
+root, node = card(root, 0)
+assert node.attrib["content-desc"] == pack_desc, "Visual set lost after rotation"
+tap_text(root, "Cartes : étoiles")
+dialog = wait_dump()
+assert find_text(dialog, "Changer les cartes"), texts(dialog)
+tap_text(dialog, "Changer")
+root = wait_dump()
+assert description(root, "0 paires trouvées sur 4"), texts(root)
+
 known = {}
 for index in range(8):
     root = tap_card(root, index)

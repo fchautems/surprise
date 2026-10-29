@@ -20,6 +20,7 @@ public final class MemoryActivity extends Activity {
     private static final int BG=Color.rgb(17,22,42), CARD=Color.rgb(31,42,68);
     private static final int GOLD=Color.rgb(255,195,107), WHITE=Color.rgb(245,242,235);
     private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆","♫","★","♠","☁","♬","◉","☂","⌛"};
+    private static final String[] ESCAPADE={"🎹","🍕","⌚","☕","🌙","🎷","🍇","🏔","🎸","🚂","⭐","🍋","🌻","🎺","🐈","🎲"};
     private static final int[] INKS={0xffffd27d,0xffaee9e0,0xffffb9b9,0xffcbbdff,
         0xffa6d7ff,0xffffc6e5,0xffcce8a4,0xffffd9a0};
     private static final int MAX_PAIRS=10;
@@ -30,7 +31,8 @@ public final class MemoryActivity extends Activity {
     private final LinearLayout[] rows=new LinearLayout[MAX_ROWS];
     private int columns=4;
     private int pairCount=4;
-    private Button difficulty, hintButton;
+    private Button difficulty, hintButton, paletteButton;
+    private boolean escapade=false;
     private boolean hintUsed=false, hintVisible=false;
     private ScrollView gameScroll;
     private int first=-1,second=-1,moves=0;
@@ -115,6 +117,21 @@ public final class MemoryActivity extends Activity {
             .show();
     }
     @Override public void onBackPressed(){confirmLeaving();}
+    private void changePalette(){
+        if(hasUnfinishedGame()){
+            new android.app.AlertDialog.Builder(this)
+                .setTitle("Changer les cartes ?")
+                .setMessage("La partie en cours sera perdue.")
+                .setNegativeButton("Continuer",(dialog,which)->dialog.dismiss())
+                .setPositiveButton("Changer",(dialog,which)->applyPalette())
+                .show();
+        }else applyPalette();
+    }
+    private void applyPalette(){
+        escapade=!escapade;
+        getPreferences(MODE_PRIVATE).edit().putBoolean("escapade",escapade).apply();
+        newGame();
+    }
     private void switchDifficulty(){
         if(hasUnfinishedGame()){
             new android.app.AlertDialog.Builder(this)
@@ -137,12 +154,13 @@ public final class MemoryActivity extends Activity {
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         hintButton.setEnabled(!hintUsed && pairs<pairCount);
         hintButton.setText(hintUsed ? "Indice utilisé" : "Indice · une fois (+2 essais)");
+        paletteButton.setText(escapade ? "Cartes : étoiles" : "Cartes : escapade");
         difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : pairCount==8 ? "Défi : 10 paires" : "Mode : 4 paires");
         for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*columns<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
             cards[i].setVisibility(i<pairCount*2 ? View.VISIBLE : View.INVISIBLE);
             boolean visible=matched[i] || i==first || i==second;
-            String value=visible ? SYMBOLS[deck[i]] : "?";
+            String value=visible ? (escapade ? ESCAPADE : SYMBOLS)[deck[i]] : "?";
             cards[i].setText(value); cards[i].setEnabled(!matched[i]);
             cards[i].setTextColor(visible ? INKS[deck[i]%INKS.length] : WHITE);
             cards[i].setContentDescription("Carte "+(i+1)+" : "+(matched[i] ? "trouvée " : visible ? "visible " : "cachée ")+value);
@@ -150,7 +168,7 @@ public final class MemoryActivity extends Activity {
         }
     }
     @Override public void onCreate(Bundle saved){
-        super.onCreate(saved); getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
+        super.onCreate(saved); escapade=getPreferences(MODE_PRIVATE).getBoolean("escapade",false); getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
         ScrollView scroll=new ScrollView(this); gameScroll=scroll; scroll.setFillViewport(true); scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         LinearLayout root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER); root.setPadding(dp(18),dp(20),dp(18),dp(20)); scroll.addView(root);
@@ -185,6 +203,10 @@ public final class MemoryActivity extends Activity {
         hintButton.setOnClickListener(v->showHint());
         difficulty=button(""); LinearLayout.LayoutParams dp=new LinearLayout.LayoutParams(-1,dp(52));
         dp.setMargins(dp(5),dp(10),dp(5),0); root.addView(difficulty,dp); difficulty.setOnClickListener(v->switchDifficulty());
+        paletteButton=button("");
+        LinearLayout.LayoutParams paletteParams=new LinearLayout.LayoutParams(-1,dp(52));
+        paletteParams.setMargins(dp(5),dp(10),dp(5),0);root.addView(paletteButton,paletteParams);
+        paletteButton.setOnClickListener(v->changePalette());
         Button reset=button("Nouvelle partie"); LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,dp(52));
         rp.setMargins(dp(5),dp(10),dp(5),0); root.addView(reset,rp); reset.setOnClickListener(v->{
             if(hasUnfinishedGame()){
