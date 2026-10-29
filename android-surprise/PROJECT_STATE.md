@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40804994601 intégralement réussie sur le commit 398ed130, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40809295370 intégralement réussie sur le commit e7985c37, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -208,7 +208,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Diff final hors journal par rapport à 31d18203 : MemoryActivity.java 17 ajouts/6 suppressions, tests/memory_smoke.py 31 ajouts/6 suppressions, total 48 ajouts/12 suppressions. Commits de code supplémentaires : 398ed130 ; suivis e6cb60cb, f5c43ed3, ddd8fdfd, 09f3cd08 et ff17ae4c, plus ce complément. Aucune inspection visuelle humaine ni test sur téléphone physique. Pas de changement de modèle ou d'effort ; aucune limite de quota précise observée. Durée comprenant travail, diagnostic et attente réelle des deux CI. Prochaine action : poursuivre la finition visuelle, l'expérience ludique et vérifier l'APK final avant livraison.
 
 
-## Session du 29 octobre 2026, à partir de 03:55:14 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 03:55:14–04:19:28 Europe/Zurich (24 min 14 s)
 - Base c713d98c ; commits poussés 9093219d, 6f8ae468, e21bf220 et e7985c37 ; un commit supplémentaire consigne ce suivi. Fichiers : MemoryActivity.java, tests/memory_smoke.py et PROJECT_STATE.md ; diff hors journal 27 ajouts, 2 suppressions.
 - Développement : 16 motifs au lieu de huit, couleurs distinctes pour les cartes révélées, contrastes renforcés ; une revanche sur le même niveau ne reprend pas exactement le même ensemble de motifs. Test automatisé de deux parties consécutives, y compris le maintien ou l'amélioration du record.
 - Contrôles locaux : syntaxe Python et test de banque réussis ; rapports de contraste calculés pour toutes les couleurs sur les deux fonds >= 4,5 ; 20 000 tirages/revanches simulés séparément de l'application réussis. CI précédente 40804994601 entièrement réussie ; APK debug 12867812287 (SHA-256 30d33b22651591ad074be8450de1590ba6cc99d74b2b779c690cd81e3fcbc016, archive et APK vérifiés). Nouveau run 40809295370 sur e7985c37 en attente ; compilation et parcours de cette session encore inconnus.
@@ -217,3 +217,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40809295370 : compilation réussie, parcours Android API 29 en cours. APK debug 12869741901 téléchargé ; archive et APK passent unzip -t ; SHA-256 5cdd360127a48b964526bfbda6342a6c9367143104243819c9fd8a7d432de498. Les tests Android restent à confirmer.
 
 - Complément CI 40809295370 : compilation, parcours principal API 29 et tests de mémoire API 29 et 35 réussis, y compris le contrôle de variété des parties ; parcours principal API 35 encore en cours.
+
+- Résultat final à 04:19:28 : run 40809295370 entièrement réussi sur e7985c37, y compris compilation, tests de données et règles, parcours API 29 et 35 et vérification de variété. APK debug 12869741901, SHA-256 5cdd360127a48b964526bfbda6342a6c9367143104243819c9fd8a7d432de498 ; archive et APK vérifiés par unzip -t. Commits de suivi 393ecfa9, 42e3325d et 6e6b9c26, plus ce complément.
+- Limites : absence de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine, en particulier des nouveaux symboles. Modèle et effort non modifiés, limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : examiner la lisibilité visuelle et poursuivre la finition, puis revalider l'APK final pour livraison.
