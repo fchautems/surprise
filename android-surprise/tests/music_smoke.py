@@ -69,6 +69,9 @@ assert len(notes)==3 and all(a!=b for a,b in zip(notes,notes[1:])), (notes,playe
 tap(root,notes[0])
 root=dump()
 assert has(root,"1 / 3 notes"),texts(root)
+def selected_note(root, name):
+    return any(n.attrib.get("content-desc")=="Note "+name+" · dernière jouée" for n in root.iter("node"))
+assert selected_note(root,notes[0]), "Last played key not marked"
 tap(root,"Indice")
 root=dump()
 assert has(root,"Indice : prochaine note · "+notes[1]), texts(root)
@@ -80,6 +83,7 @@ adb("shell","settings","put","system","user_rotation","0")
 root=dump()
 node=next(n for n in root.iter("node") if n.attrib.get("text")=="Indice utilisé")
 assert node.attrib.get("enabled")=="false", "Hint reused after rotation"
+assert selected_note(root,notes[0]), "Selected key lost on rotation"
 wrong=next(n for n in ("Do","Ré","Mi","Sol","La") if n!=notes[1])
 tap(root,wrong)
 root=dump()
@@ -125,6 +129,7 @@ for _ in range(8):
     root=dump()
     if has(root,"À toi de jouer"):break
 assert has(root,"À toi de jouer"),texts(root)
+assert not any("dernière jouée" in n.attrib.get("content-desc","") for n in root.iter("node")), "Old key remained marked"
 second_log=adb("logcat","-d","-s","SurpriseAudio:I")
 assert "melody playback started" in second_log, second_log
 second=re.findall(r"playback started: note (Do|Ré|Mi|Sol|La)(?:\s|$)",second_log.split("melody playback started")[-1])

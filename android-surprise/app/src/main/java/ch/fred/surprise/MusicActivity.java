@@ -32,7 +32,8 @@ public final class MusicActivity extends Activity {
     private final ExecutorService audio=Executors.newSingleThreadExecutor();
     private final Random random=new Random();
     private int[] phrase;
-    private int position=0, wins=0;
+    private int position=0, wins=0, lastNote=-1;
+    private final Button[] keys=new Button[NAMES.length];
     private volatile int generation=0;
     private volatile boolean playing=false;
     private boolean freeMode=false, slowMode=false, octaveHigh=false, hintUsed=false;
@@ -97,7 +98,7 @@ public final class MusicActivity extends Activity {
     }
     private void listen(){
         if(playing || freeMode)return;
-        position=0;playing=true;hintButton.setEnabled(false);final int token=++generation;final int[] copy=phrase.clone();final boolean slow=slowMode;
+        position=0;lastNote=-1;renderKeys();playing=true;hintButton.setEnabled(false);final int token=++generation;final int[] copy=phrase.clone();final boolean slow=slowMode;
         checkVolume();
         status.setText("Écoute bien…");
         audio.execute(()->{
@@ -137,8 +138,17 @@ public final class MusicActivity extends Activity {
         hintButton.setText("Indice utilisé");
         status.setText("Indice : prochaine note · "+NAMES[phrase[position]]);
     }
+    private void renderKeys(){
+        for(int i=0;i<keys.length;i++){
+            if(keys[i]==null)continue;
+            boolean selected=i==lastNote;
+            keys[i].setBackground(shape(selected ? Color.rgb(70,89,120) : CARD,selected ? WHITE : GOLD));
+            keys[i].setContentDescription("Note "+NAMES[i]+(selected ? " · dernière jouée" : ""));
+        }
+    }
     private void choose(int note){
         if(playing)return;
+        lastNote=note;renderKeys();
         checkVolume();
         final int token=freeMode ? ++generation : generation;
         final boolean high=freeMode && octaveHigh;
@@ -160,13 +170,14 @@ public final class MusicActivity extends Activity {
     }
     private void chooseChord(int chord){
         if(!freeMode || playing)return;
+        lastNote=-1;renderKeys();
         checkVolume();
         int token=++generation;
         audio.execute(()->{if(token==generation)playSamples(SoundWave.chord(CHORDS[chord]),token,"accord "+CHORD_NAMES[chord]);});
         status.setText("Mode libre · "+CHORD_NAMES[chord]);
     }
     private void switchMode(){
-        generation++;playing=false;freeMode=!freeMode;soundWarning.setText("");
+        generation++;playing=false;freeMode=!freeMode;lastNote=-1;renderKeys();soundWarning.setText("");
         modeButton.setText(freeMode ? "Revenir au défi" : "Jouer librement");
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         tempoButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
@@ -194,9 +205,11 @@ public final class MusicActivity extends Activity {
         if(saved!=null){
             int[] p=saved.getIntArray("phrase");
             if(p!=null && p.length>=3 && p.length<=6){phrase=p;position=Math.max(0,Math.min(saved.getInt("position"),p.length-1));}
+            lastNote=saved.getInt("lastNote",-1);if(lastNote<0 || lastNote>=NAMES.length)lastNote=-1;
             wins=Math.max(0,saved.getInt("wins"));hintUsed=saved.getBoolean("hintUsed",false);freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",slowMode);octaveHigh=saved.getBoolean("octaveHigh",octaveHigh);
         }
-        ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(BG);
+        ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);
+        scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);
         root.setPadding(dp(18),dp(24),dp(18),dp(24));scroll.addView(root);
         scroll.setOnApplyWindowInsetsListener((view,insets)->{root.setPadding(dp(18),dp(24)+insets.getSystemWindowInsetTop(),dp(18),dp(24)+insets.getSystemWindowInsetBottom());return insets;});
@@ -227,10 +240,11 @@ public final class MusicActivity extends Activity {
             LinearLayout line=new LinearLayout(this);line.setOrientation(LinearLayout.HORIZONTAL);
             for(int col=0;col<3;col++){
                 int i=row*3+col;if(i>=NAMES.length)break;
-                Button b=button(NAMES[i]);b.setContentDescription("Note "+NAMES[i]);
+                Button b=button(NAMES[i]);keys[i]=b;
                 LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(64),1);p.setMargins(dp(4),dp(5),dp(4),dp(5));line.addView(b,p);b.setOnClickListener(v->choose(i));
             }root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
+        renderKeys();
         chords=new LinearLayout(this);chords.setOrientation(LinearLayout.HORIZONTAL);
         for(int i=0;i<CHORD_NAMES.length;i++){
             final int chord=i;
@@ -264,6 +278,6 @@ public final class MusicActivity extends Activity {
     }
     @Override protected void onDestroy(){generation++;audio.shutdownNow();super.onDestroy();}
     @Override protected void onSaveInstanceState(Bundle out){
-        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putBoolean("hintUsed",hintUsed);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);super.onSaveInstanceState(out);
+        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("lastNote",lastNote);out.putBoolean("hintUsed",hintUsed);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);super.onSaveInstanceState(out);
     }
 }
