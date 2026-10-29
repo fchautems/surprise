@@ -61,11 +61,14 @@ public final class MusicActivity extends Activity {
         catch(IllegalArgumentException | IllegalStateException failure){warnSound(token);}
         finally {if(track!=null){try{track.stop();}catch(IllegalStateException ignored){}track.release();}}
     }
+    private void checkVolume(){
+        AudioManager manager=(AudioManager)getSystemService(AUDIO_SERVICE);
+        soundWarning.setText(manager!=null && manager.getStreamVolume(AudioManager.STREAM_MUSIC)==0 ? "Le volume multimédia est coupé." : "");
+    }
     private void listen(){
         if(playing || freeMode)return;
         position=0;playing=true;final int token=++generation;final int[] copy=phrase.clone();
-        AudioManager manager=(AudioManager)getSystemService(AUDIO_SERVICE);
-        soundWarning.setText(manager!=null && manager.getStreamVolume(AudioManager.STREAM_MUSIC)==0 ? "Le volume multimédia est coupé." : "");
+        checkVolume();
         status.setText("Écoute bien…");
         audio.execute(()->{
             for(int note:copy){if(token!=generation || Thread.currentThread().isInterrupted())break;playNote(note,token);}
@@ -74,6 +77,7 @@ public final class MusicActivity extends Activity {
     }
     private void choose(int note){
         if(playing)return;
+        checkVolume();
         final int token=generation;
         audio.execute(()->{if(token==generation)playNote(note,token);});
         if(freeMode){status.setText("Mode libre · "+NAMES[note]);return;}
