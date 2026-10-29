@@ -436,3 +436,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40929352471 : le test mémoire API 29 révèle que la borne de 560 px est trop stricte pour atteindre le contrôle de retour sur un écran court ; le contrôle est présent, mais le script refuse l'appui. Correctif bba58903 : essayer d'abord la zone intérieure, puis accepter jusqu'à 600 px si le défilement ne peut pas monter davantage ; syntaxe Python valide. Une nouvelle CI doit vérifier les deux API. L'ancienne est susceptible d'être annulée.
 
 - CI 40932256816 sur bba58903 : compilation, tests unitaires et parcours principal Android 10 réussis ; cinq jobs complémentaires en cours. APK debug 12921914421 produit ; archive et APK vérifiés par unzip -t ; SHA-256 02a80777081b234402d54d2ff4f33547648e05db97d5d311fa7e869d2b2d968e. Résultats fonctionnels des correctifs en attente.
+
+
+- Résultat ultérieur de la CI 40932256816 : les six jobs ont réussi, y compris mémoire Android 10 et 15 après correction du test ; APK 12921914421 vérifié précédemment. La cause exacte de l'échec initial n'est pas établie.
+
+## Session du 29 octobre 2026, début 20:05:16 Europe/Zurich (en cours)
+- Base a8c835d475fc4ee008b858347bfd1d680e5ea75b. Commits de code poussés 5a75d4d3b4a2d5e6caefef8e2577c54daccd4951 et dc4f541e5350901efbb552ccc8a3eb20bb8c8387.
+- Ajout du suivi des paires successives et de la meilleure série, réinitialisation après erreur ou indice, conservation à la rotation et présentation en fin de partie ; parcours automate étendu pour valider les séries et leur conservation. Syntaxe Python validée localement ; Android SDK, javac, Gradle et adb non disponibles ici.
+- CI déclenchée pour la nouvelle version ; compilation, tests et APK de cette version non encore vérifiés. Six jobs précédents réussis sur 40932256816 ; APK 12921914421 d'intégrité vérifiée mais antérieur aux changements de cette session. Aucun téléphone physique ni contrôle visuel humain.
+- Prochaine action : identifier la CI du dernier commit, contrôler la compilation, les tests et l'APK ; corriger toute régression, puis consigner le bilan final et la durée réelle.
