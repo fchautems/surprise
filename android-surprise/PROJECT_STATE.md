@@ -418,12 +418,14 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre la finition, vérifier les prochains builds et préparer les instructions de livraison.
 
 
-## Session du 29 octobre 2026, début 18:56:45 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 18:56:45–19:57:50 Europe/Zurich (61 min 5 s, deux relances et validations comprises)
 - Base 81e5b8cf9f73d2d7a537c3aef58915b572fce507 ; commit poussé 73a7ade0ab30bd1e38c26eff7c62cd68e6cbaa2f.
-- Fichiers : MemoryActivity.java +25/-3 ; tests/memory_smoke.py +20/-0 ; total +45/-3 hors journal.
+- Diff final hors journal : MemoryActivity.java +25/-3 ; tests/memory_smoke.py +30/-3 ; total +55/-6.
 - Ajout d'une seconde ambiance visuelle de cartes, enregistrée localement, persistante à la rotation, avec confirmation si une partie est en cours et conservation des records. Parcours d'essai du changement, de la rotation et du retour à l'apparence initiale.
 - Contrôles locaux : syntaxe Python valide ; deux ensembles de 16 symboles uniques vérifiés. SDK Android, Gradle, javac et adb absents ; CI 40926254092 : compilation, tests unitaires et parcours principal Android 10 réussis ; cinq jobs complémentaires en cours. APK debug 12921215687 produit ; archive et APK vérifiés par unzip -t ; SHA-256 8b06591934152b89321c18bf02cc98e03eba5f95fab0c7da1e4f442bec979ae1. CI précédente 40918092684 : six jobs réussis ; APK 12916088132, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni inspection visuelle humaine.
-- Prochaine action : inspecter la CI et l'APK, corriger les échecs éventuels et consigner les résultats.
+- Commits poussés : 73a7ade0, 8ef0bb01, bf176112, bba58903 et suivis 602fd93f, 464a40d1, b3c7b2b7, 788f69c6, e6c8727d, 704f21a4, c5dbe2de, 7e9d64db, fa28ea80 et ce bilan.
+- État final : CI 40932256816 en cours ; build et parcours musicaux API 29/35 réussis, parcours principal API 35 et mémoire API 29/35 en cours. L'échec initial et les deux hypothèses de correction ne sont pas encore validés. APK 12921914421 produit et intégrité vérifiée. La dernière CI complète confirmée reste 40918092684. Aucun téléphone physique ni contrôle visuel humain. Modèle et effort inchangés ; quota restant inconnu.
+- Prochaine action : inspecter les trois jobs en cours sans les annuler ; analyser tout échec, corriger et relancer les tests avant de poursuivre l'amélioration.
 
 - CI 40926254092 : le test mémoire API 35 échoue sur la visibilité de l'accueil après retour ; la sortie de l'activité ou la position de défilement ne sont pas distinguées par le message initial. Hypothèse : écran d'accueil conservé hors du haut du viewport. Correctif 8ef0bb01 : remonter progressivement et afficher les textes observés en cas d'échec ; syntaxe Python valide. Nouvelle CI lancée, hypothèse et correctif non encore confirmés. Les jobs encore en cours du run précédent peuvent être annulés.
 
