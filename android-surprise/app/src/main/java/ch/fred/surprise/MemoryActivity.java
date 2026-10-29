@@ -22,11 +22,11 @@ public final class MemoryActivity extends Activity {
     private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆","♫","★","♠","☁","♬","◉","☂","⌛"};
     private static final int[] INKS={0xffffd27d,0xffaee9e0,0xffffb9b9,0xffcbbdff,
         0xffa6d7ff,0xffffc6e5,0xffcce8a4,0xffffd9a0};
-    private static final int MAX_PAIRS=6;
+    private static final int MAX_PAIRS=8;
     private final int[] deck=new int[MAX_PAIRS*2];
     private final boolean[] matched=new boolean[MAX_PAIRS*2];
     private final Button[] cards=new Button[MAX_PAIRS*2];
-    private static final int COLUMNS=3, ROWS=4;
+    private static final int COLUMNS=4, ROWS=4;
     private final LinearLayout[] rows=new LinearLayout[ROWS];
     private int pairCount=4;
     private Button difficulty;
@@ -64,7 +64,8 @@ public final class MemoryActivity extends Activity {
         first=second=-1; moves=0; newRecord=false; render();
         gameScroll.post(()->gameScroll.fullScroll(View.FOCUS_UP));
     }
-    private String recordKey(){return pairCount==4 ? "best" : "best6";}
+    private String recordKey(){return pairCount==4 ? "best" : pairCount==6 ? "best6" : "best8";}
+    private int nextPairCount(){return pairCount==4 ? 6 : pairCount==6 ? 8 : 4;}
     private int pairsFound(){
         int count=0; for(boolean b:matched)if(b)count++; return count/2;
     }
@@ -104,9 +105,9 @@ public final class MemoryActivity extends Activity {
                 .setTitle("Changer de défi ?")
                 .setMessage("La partie en cours sera perdue.")
                 .setNegativeButton("Continuer", (dialog, which)->dialog.dismiss())
-                .setPositiveButton("Changer", (dialog, which)->{pairCount=pairCount==4?6:4;newGame();})
+                .setPositiveButton("Changer", (dialog, which)->{pairCount=nextPairCount();newGame();})
                 .show();
-        }else{pairCount=pairCount==4?6:4;newGame();}
+        }else{pairCount=nextPairCount();newGame();}
     }
     private void render(){
         int pairs=pairsFound();
@@ -118,7 +119,7 @@ public final class MemoryActivity extends Activity {
             : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
         progress.setMax(pairCount); progress.setProgress(pairs);
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
-        difficulty.setText(pairCount==4 ? "Défi : 6 paires" : "Mode : 4 paires");
+        difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : "Mode : 4 paires");
         for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*COLUMNS<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
             cards[i].setVisibility(i<pairCount*2 ? View.VISIBLE : View.INVISIBLE);
@@ -172,7 +173,7 @@ public final class MemoryActivity extends Activity {
         if(saved!=null && saved.getIntArray("deck")!=null && saved.getBooleanArray("matched")!=null){
             int[] d=saved.getIntArray("deck"); boolean[] m=saved.getBooleanArray("matched");
             if(d.length==deck.length && m.length==matched.length){
-                pairCount=saved.getInt("pairCount",4); if(pairCount!=4 && pairCount!=6)pairCount=4;
+                pairCount=saved.getInt("pairCount",4); if(pairCount!=4 && pairCount!=6 && pairCount!=8)pairCount=4;
                 System.arraycopy(d,0,deck,0,deck.length);System.arraycopy(m,0,matched,0,matched.length);
                 first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);
                 newRecord=saved.getBoolean("newRecord",false);render();
