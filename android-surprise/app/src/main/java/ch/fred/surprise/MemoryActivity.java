@@ -68,6 +68,19 @@ public final class MemoryActivity extends Activity {
         }
         render();
     }
+    private boolean hasUnfinishedGame(){
+        return pairsFound()<PAIRS && (moves>0 || first!=-1);
+    }
+    private void confirmLeaving(){
+        if(!hasUnfinishedGame()){finish();return;}
+        new android.app.AlertDialog.Builder(this)
+            .setTitle("Quitter la partie ?")
+            .setMessage("La partie en cours sera perdue.")
+            .setNegativeButton("Continuer", (dialog, which)->dialog.dismiss())
+            .setPositiveButton("Quitter", (dialog, which)->finish())
+            .show();
+    }
+    @Override public void onBackPressed(){confirmLeaving();}
     private void render(){
         int pairs=pairsFound();
         int best=getPreferences(MODE_PRIVATE).getInt("best",0);
@@ -104,7 +117,7 @@ public final class MemoryActivity extends Activity {
         }
         Button reset=button("Nouvelle partie"); LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,dp(52));
         rp.setMargins(dp(5),dp(10),dp(5),0); root.addView(reset,rp); reset.setOnClickListener(v->{
-            if(pairsFound()<PAIRS && (moves>0 || first!=-1)){
+            if(hasUnfinishedGame()){
                 new android.app.AlertDialog.Builder(this)
                     .setTitle("Nouvelle partie ?")
                     .setMessage("La partie en cours sera perdue.")
@@ -114,7 +127,7 @@ public final class MemoryActivity extends Activity {
             }else newGame();
         });
         Button home=button("Retour à l’accueil"); LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,dp(52));
-        hp.setMargins(dp(5),dp(8),dp(5),0); root.addView(home,hp); home.setOnClickListener(v->finish());
+        hp.setMargins(dp(5),dp(8),dp(5),0); root.addView(home,hp); home.setOnClickListener(v->confirmLeaving());
         setContentView(scroll);
         if(saved!=null && saved.getIntArray("deck")!=null && saved.getBooleanArray("matched")!=null){
             int[] d=saved.getIntArray("deck"); boolean[] m=saved.getBooleanArray("matched");
