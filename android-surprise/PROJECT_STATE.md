@@ -501,7 +501,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - Résultat ultérieur de CI 40959570900 : les six jobs ont réussi ; APK 12935735900 et son intégrité ont été vérifiés précédemment. Le test d'interruption spécifique était absent de cette CI.
 
-## Session du 29 octobre 2026, début 23:03:45 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 23:03:45–23:24:58 Europe/Zurich (21 min 13 s, validations comprises)
 - Base a956fa1c006db5246f1cf92b2c99842a2ae57a0d ; commit code f71bc9c35bfa484c79e646fa5a83989692856312 poussé.
 - La CI sépare la compilation du parcours principal Android 10, lequel part en parallèle des cinq autres parcours après téléchargement du même APK ; aucune validation retirée. Test de reprise après interruption réintroduit avec `run-as ... --user 0`, pour éviter l'erreur inter-utilisateurs constatée précédemment ; cette hypothèse doit être vérifiée sur Android.
 - Contrôles locaux : syntaxe Python valide ; YAML et dépendances de jobs vérifiés avec PyYAML. SDK Android, Gradle et adb absents ; Java disponible via le compilateur du JDK. Aucun téléphone physique ni écoute humaine.
@@ -515,3 +515,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40963667502 sur d20defc2 : compilation et tests unitaires réussis ; six parcours Android lancés ou en attente. APK debug 12937355818 produit ; archive et APK vérifiés par unzip -t ; SHA-256 92ec4c2659465aa8a2111e3abcdb1ed34443fbbae45ba90112d0b81a8fc38922. Les préférences et le workflow en parallèle restent à valider sur émulateurs.
 
 - CI 40963667502 : tests ciblés des préférences réussis sur Android 10 et 15 ; quatre autres parcours en cours. Le test de reprise après interruption reste absent et non validé. La séparation des jobs a permis de lancer les six parcours après le build, sans attendre la fin du parcours principal.
+
+- Bilan final : CI 40963667502 entièrement réussie, sept jobs (compilation, tests unitaires, six parcours sur Android 10 et 15). Tests de persistance des deux préférences réussis sur les deux API. APK debug 12937355818 : archive et APK vérifiés par unzip -t ; SHA-256 92ec4c2659465aa8a2111e3abcdb1ed34443fbbae45ba90112d0b81a8fc38922. Aucun téléphone physique ni écoute humaine. Le test de reprise après interruption reste non validé, et non présent dans la CI finale.
+- Diff final hors journal : .github/workflows/android-surprise.yml +9/-0 ; MusicActivity.java +7/-4 ; tests/music_smoke.py +13/-0 ; total +29/-4. PROJECT_STATE.md : +22/-1. Commits poussés : f71bc9c3, edd1d44e, 2762f2da, d20defc2, af236b90, e42d8f8f, 2b42a952 et ce bilan. Le test de reprise de la première CI a échoué sur les deux API à cause de sa mise en place puis a été retiré ; la CI finale valide les autres changements. Modèle et effort non modifiés ; quota inconnu.
+- Prochaine action : poursuivre la finition ludique et les validations. Réexaminer la reprise en arrière-plan par un test Android adapté ; préparer la livraison de dimanche et les instructions.
