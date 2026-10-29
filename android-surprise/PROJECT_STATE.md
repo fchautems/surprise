@@ -273,3 +273,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : SDK/Gradle/javac absents localement ; aucun téléphone physique, écoute réelle du son ni inspection visuelle humaine. Modèle et niveau non modifiés. Prochaine action : inspecter compilation, APK et six jobs CI, corriger tout échec et noter durée et résultats réels.
 
 - CI 40833355037 : tests Java de synthèse des notes réussis, compilation réussie ; APK debug 12879811321 téléchargé, archive et APK passent unzip -t, SHA-256 0be423a99532d0ca2721bfdcb2bde6e54a3a30291eb03c94b95b4e8b9943be42. Parcours Android encore en cours ; qualité audible non vérifiée.
+
+- Complément CI 40833355037 : compilation, tests du signal, parcours principal API 29 et nouvelle activité API 29 et 35 réussis, y compris erreur, réussite, rotation et persistance ; trois autres jobs Android en cours. L'activation de l'audio et sa qualité perçue n'ont pas été vérifiées par écoute.
