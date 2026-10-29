@@ -231,3 +231,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40815008504 : compilation réussie, parcours API 29 en cours. APK debug 12872585010 téléchargé ; archive et APK passent unzip -t ; SHA-256 1d23298a67237192292437e06ad8004a9d32ecd4158dc49dcba603e01f29de92. Les tests Android restent à confirmer.
 
 - CI 40815008504 : compilation, tests de données et de règles, parcours principal complet sur API 29 réussis, y compris records par thème et persistance ; parcours API 35 et tests mémoire API 29/35 en cours.
+
+- Complément CI : tests mémoire complets réussis sur API 29 et 35 ; le parcours principal API 35 reste en cours.
