@@ -19,7 +19,9 @@ import java.util.Collections;
 public final class MemoryActivity extends Activity {
     private static final int BG=Color.rgb(17,22,42), CARD=Color.rgb(31,42,68);
     private static final int GOLD=Color.rgb(255,195,107), WHITE=Color.rgb(245,242,235);
-    private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆"};
+    private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆","♫","★","♠","☁","♬","◉","☂","⌛"};
+    private static final int[] INKS={0xffffd27d,0xffaee9e0,0xffffb9b9,0xffcbbdff,
+        0xffa6d7ff,0xffffc6e5,0xffcce8a4,0xffffd9a0};
     private static final int MAX_PAIRS=6;
     private final int[] deck=new int[MAX_PAIRS*2];
     private final boolean[] matched=new boolean[MAX_PAIRS*2];
@@ -48,9 +50,14 @@ public final class MemoryActivity extends Activity {
         b.setBackground(shape(CARD,GOLD)); b.setMinHeight(dp(52)); return b;
     }
     private void newGame(){
+        boolean[] previous=new boolean[SYMBOLS.length]; int distinct=0;
+        for(int i=0;i<pairCount*2;i++)if(!previous[deck[i]]){previous[deck[i]]=true;distinct++;}
         ArrayList<Integer> available=new ArrayList<>(), values=new ArrayList<>();
         for(int i=0;i<SYMBOLS.length;i++)available.add(i);
         Collections.shuffle(available);
+        boolean repeated=distinct==pairCount;
+        for(int i=0;i<pairCount;i++)repeated &= previous[available.get(i)];
+        if(repeated)Collections.swap(available,pairCount-1,pairCount);
         for(int i=0;i<pairCount;i++){int value=available.get(i);values.add(value);values.add(value);}
         Collections.shuffle(values);
         for(int i=0;i<deck.length;i++){deck[i]=i<values.size()?values.get(i):0;matched[i]=false;}
@@ -118,6 +125,7 @@ public final class MemoryActivity extends Activity {
             boolean visible=matched[i] || i==first || i==second;
             String value=visible ? SYMBOLS[deck[i]] : "?";
             cards[i].setText(value); cards[i].setEnabled(!matched[i]);
+            cards[i].setTextColor(visible ? INKS[deck[i]%INKS.length] : WHITE);
             cards[i].setContentDescription("Carte "+(i+1)+" : "+(matched[i] ? "trouvée " : visible ? "visible " : "cachée ")+value);
             cards[i].setBackground(shape(matched[i] ? Color.rgb(36,105,88) : CARD,visible ? GOLD : Color.rgb(100,115,145)));
         }
