@@ -440,10 +440,14 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - Résultat ultérieur de la CI 40932256816 : les six jobs ont réussi, y compris mémoire Android 10 et 15 après correction du test ; APK 12921914421 vérifié précédemment. La cause exacte de l'échec initial n'est pas établie.
 
-## Session du 29 octobre 2026, début 20:05:16 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 20:05:16–20:32:42 Europe/Zurich (27 min 26 s, validations comprises)
 - Base a8c835d475fc4ee008b858347bfd1d680e5ea75b. Commits de code poussés 5a75d4d3b4a2d5e6caefef8e2577c54daccd4951 et dc4f541e5350901efbb552ccc8a3eb20bb8c8387.
 - Ajout du suivi des paires successives et de la meilleure série, réinitialisation après erreur ou indice, conservation à la rotation et présentation en fin de partie ; parcours automate étendu pour valider les séries et leur conservation. Syntaxe Python validée localement ; Android SDK, javac, Gradle et adb non disponibles ici.
 - CI déclenchée pour la nouvelle version ; compilation, tests et APK de cette version non encore vérifiés. Six jobs précédents réussis sur 40932256816 ; APK 12921914421 d'intégrité vérifiée mais antérieur aux changements de cette session. Aucun téléphone physique ni contrôle visuel humain.
 - Prochaine action : identifier la CI du dernier commit, contrôler la compilation, les tests et l'APK ; corriger toute régression, puis consigner le bilan final et la durée réelle.
 
 - CI 40936991516 sur dc4f541e : compilation et tests unitaires réussis, parcours principal Android 10 en cours. APK debug 12924268728 produit, archive et APK vérifiés par unzip -t ; SHA-256 58da99c45cedb78f6d1f71f4f1eb9d5e1fc33e6bcf49ee6fbc9c498a0fd50241. Les autres parcours fonctionnels sont à vérifier. CI intermédiaire 40936955187 annulée après extension du test.
+
+- Bilan final : CI 40936991516 entièrement réussie : compilation, tests unitaires et six jobs fonctionnels sur émulateurs Android 10 et 15 ; le test de séries a réussi sur les deux versions. APK debug 12924268728 compilé, archive et APK vérifiés par unzip -t ; SHA-256 58da99c45cedb78f6d1f71f4f1eb9d5e1fc33e6bcf49ee6fbc9c498a0fd50241. Aucun essai sur téléphone physique ni contrôle visuel humain.
+- Diff code hors journal par rapport à la base : MemoryActivity.java +9/-8 ; tests/memory_smoke.py +5/-2 ; total +14/-10. Journal PROJECT_STATE.md modifié également. Commits poussés : 5a75d4d3, dc4f541e, 43f0061d, 67151c66 et ce bilan. La CI intermédiaire 40936955187 a été annulée au profit de la version finale. Aucun changement de modèle ou effort vérifié ; quota inconnu.
+- Prochaine action : poursuivre les améliorations et les validations sur la branche isolée ; préparer la livraison dimanche avec l'APK effectivement disponible et ses instructions.
