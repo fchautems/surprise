@@ -212,6 +212,8 @@ while len(solved6) < 12:
     assert "trouvée " in second_node.attrib["content-desc"]
     solved6.update((first6, second6))
     visible6 = []
+for _ in range(4):
+    adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
 result6 = find_text(wait_dump(), "Bravo !")
 assert result6 and "Nouveau record !" in result6, result6
 record6 = result6.split("Record : ")[1].splitlines()[0]
