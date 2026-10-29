@@ -31,7 +31,7 @@ public final class MusicActivity extends Activity {
     private LinearLayout chords, listenRow;
     private final ExecutorService audio=Executors.newSingleThreadExecutor();
     private final Random random=new Random();
-    private int[] phrase={0,2,4};
+    private int[] phrase;
     private int position=0, wins=0;
     private volatile int generation=0;
     private volatile boolean playing=false;
@@ -113,6 +113,23 @@ public final class MusicActivity extends Activity {
             runOnUiThread(()->{if(token==generation && !isFinishing()){playing=false;status.setText("À toi de jouer !");}});
         });
     }
+    private int[] nextPhrase(int count, int[] previous){
+        int[] next=new int[count];
+        for(int i=0;i<count;i++){
+            int candidate=random.nextInt(NAMES.length);
+            if(i>0 && candidate==next[i-1]){
+                // Every note except the previous one remains equally likely.
+                candidate=(candidate+1+random.nextInt(NAMES.length-1))%NAMES.length;
+            }
+            next[i]=candidate;
+        }
+        if(previous!=null && java.util.Arrays.equals(previous,next)){
+            int original=next[count-1];
+            do{next[count-1]=random.nextInt(NAMES.length);}
+            while(next[count-1]==original || next[count-1]==next[count-2]);
+        }
+        return next;
+    }
     private void choose(int note){
         if(playing)return;
         checkVolume();
@@ -129,7 +146,7 @@ public final class MusicActivity extends Activity {
             int best=getPreferences(MODE_PRIVATE).getInt("melodies",0);
             getPreferences(MODE_PRIVATE).edit().putInt("melodies",Math.max(best,wins)).apply();
             int count=Math.min(6,3+wins/2);
-            phrase=new int[count];for(int i=0;i<count;i++)phrase[i]=random.nextInt(NAMES.length);
+            phrase=nextPhrase(count,phrase);
             position=0;status.setText("✦ Bravo ! "+wins+" mélodie"+(wins>1?"s":"")+" réussie"+(wins>1?"s":"")+"\nÉcoute la suivante.");
         }else status.setText("Bien joué : "+position+" / "+phrase.length+" notes");
     }
@@ -151,7 +168,7 @@ public final class MusicActivity extends Activity {
         status.setText(freeMode ? "Mode libre · joue à ton rythme." : "Écoute la mélodie, puis joue-la.");
     }
     @Override public void onCreate(Bundle saved){
-        super.onCreate(saved);setVolumeControlStream(AudioManager.STREAM_MUSIC);getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
+        super.onCreate(saved);phrase=nextPhrase(3,null);setVolumeControlStream(AudioManager.STREAM_MUSIC);getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
         if(saved!=null){
             int[] p=saved.getIntArray("phrase");
             if(p!=null && p.length>=3 && p.length<=6){phrase=p;position=Math.max(0,Math.min(saved.getInt("position"),p.length-1));}
