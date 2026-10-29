@@ -368,3 +368,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : syntaxe Python valide. SDK Android, Gradle, javac et adb indisponibles localement ; CI 40877672411 : compilation, tests unitaires et six parcours sur émulateurs Android 10 et 15 réussis ; APK debug 12898951872 produit, archive et APK vérifiés par unzip -t, SHA-256 675a43a73edd34fb52aff7f5b81439b01dadbc4a532b67f9e0410482772770d9. CI précédente 40871978414 : six jobs réussis après relance ; APK 12896097667, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni écoute humaine.
 - Commits poussés : 4695e862, a4f0a6df, 45b98a22 et ce bilan. Aucun téléphone physique ni écoute humaine ; modèle et effort inchangés. L'heure exacte de fin de la session interrompue est inconnue : les 65 minutes écoulées avant la reprise ne sont pas comptées comme travail.
 - Prochaine action : poursuivre les améliorations et tester les prochaines modifications.
+
+
+## Session du 29 octobre 2026, début 15:04:52 Europe/Zurich (en cours)
+- Reprise : CI 40877672411 inspectée, six jobs réussis ; l'interruption de la session précédente et sa durée inconnue sont documentées. Base 39e67cd961a967cce63332bbd7badab9730ce14e ; commit de code poussé ab0b1905cc6ca647da6c9619482c8e42a2111431.
+- Fichiers : MusicActivity.java +21/-8 ; tests/music_smoke.py +18/-0 ; total code +39/-8, hors journal. Ajout d'une octave supérieure optionnelle en mode libre, conservée à la rotation, commandes adaptées, test du son démarré et de la persistance.
+- Contrôle local : syntaxe Python valide. SDK Android, Gradle, javac et adb absents ; nouveau workflow et nouvel APK non encore vérifiés. Dernière CI entièrement réussie : 40877672411 ; APK 12898951872 vérifié par unzip -t, SHA-256 675a43a73edd34fb52aff7f5b81439b01dadbc4a532b67f9e0410482772770d9. Aucun téléphone physique ni écoute humaine.
+- Prochaine action : inspecter la CI et l'APK du nouveau commit ; corriger les échecs et consigner les résultats.
