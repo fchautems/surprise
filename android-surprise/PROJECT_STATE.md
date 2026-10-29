@@ -351,3 +351,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : inspecter la CI, corriger les échecs éventuels, vérifier l'APK et consigner les résultats et la durée.
 
 - Diagnostic : les parcours ciblés API 29 et 35 de CI 40869857203 ont échoué avant la vérification fonctionnelle : expression régulière du test trop échappée, coordonnées non extraites. Corrigé dans 1f9b227d ; syntaxe Python et extraction de coordonnées vérifiées localement. Nouvelle CI déclenchée, résultats à vérifier ; les autres jobs du run initial peuvent être annulés par le nouveau commit.
+
+- CI relancée 40871978414 : compilation et tests unitaires réussis ; parcours sur émulateurs en cours. APK debug 12896097667 généré, archive et APK vérifiés par unzip -t ; SHA-256 8f8f0aaa5f30da2b3cdd5438874118414ca5da2508f6b0baef2b427904c1c8d2. Vérification fonctionnelle du correctif encore en attente.
