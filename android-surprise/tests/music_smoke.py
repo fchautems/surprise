@@ -24,11 +24,11 @@ def has(root, fragment):
     return any(fragment in text for text in texts(root))
 
 def tap(root, label):
-    for _ in range(5):
+    for attempt in range(5):
         node=next((n for n in root.iter("node") if n.attrib.get("text", "").casefold()==label.casefold()),None)
         if node is not None:
             b=list(map(int,re.findall(r"\d+",node.attrib["bounds"])))
-            if len(b)==4 and 50 <= (b[1]+b[3])//2 <= 560:
+            if len(b)==4 and 50 <= (b[1]+b[3])//2 <= (600 if attempt>=3 else 560):
                 adb("shell","input","tap",str((b[0]+b[2])//2),str((b[1]+b[3])//2))
                 return
         adb("shell","input","swipe","160","480","160","220","300")
