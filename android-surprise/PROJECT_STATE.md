@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40877672411 réussie sur le commit 4695e862, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40888097787 réussie sur le commit ab0b1905, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à approfondir : qualité visuelle et sonore par une personne et fonctionnement sur appareil physique. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -370,10 +370,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre les améliorations et tester les prochaines modifications.
 
 
-## Session du 29 octobre 2026, début 15:04:52 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 15:04:52–15:28:51 Europe/Zurich (23 min 59 s, validations comprises)
 - Reprise : CI 40877672411 inspectée, six jobs réussis ; l'interruption de la session précédente et sa durée inconnue sont documentées. Base 39e67cd961a967cce63332bbd7badab9730ce14e ; commit de code poussé ab0b1905cc6ca647da6c9619482c8e42a2111431.
 - Fichiers : MusicActivity.java +21/-8 ; tests/music_smoke.py +18/-0 ; total code +39/-8, hors journal. Ajout d'une octave supérieure optionnelle en mode libre, conservée à la rotation, commandes adaptées, test du son démarré et de la persistance.
-- Contrôle local : syntaxe Python valide. SDK Android, Gradle, javac et adb absents ; CI 40888097787 : compilation, tests unitaires et parcours principal sur Android 10 réussis ; cinq autres validations en cours. APK debug 12902883824 produit ; archive et APK vérifiés par unzip -t ; SHA-256 7242401410e88d65b231a2f2135a6de7833b1b426e0cc5cb14cd840f78211e0b. Dernière CI entièrement réussie : 40877672411 ; APK 12898951872 vérifié par unzip -t, SHA-256 675a43a73edd34fb52aff7f5b81439b01dadbc4a532b67f9e0410482772770d9. Aucun téléphone physique ni écoute humaine.
-- Prochaine action : inspecter la CI et l'APK du nouveau commit ; corriger les échecs et consigner les résultats.
+- Contrôle local : syntaxe Python valide. SDK Android, Gradle, javac et adb absents ; CI 40888097787 : compilation, tests unitaires et six jobs sur Android 10 et 15 réussis. APK debug 12902883824 produit ; archive et APK vérifiés par unzip -t ; SHA-256 7242401410e88d65b231a2f2135a6de7833b1b426e0cc5cb14cd840f78211e0b. Dernière CI entièrement réussie : 40877672411 ; APK 12898951872 vérifié par unzip -t, SHA-256 675a43a73edd34fb52aff7f5b81439b01dadbc4a532b67f9e0410482772770d9. Aucun téléphone physique ni écoute humaine.
+- Commits poussés : ab0b1905 et suivis f2cdb7e8, 575b9f3a, 51c5ca04, ff1eb00c et le présent bilan ; le journal inclut aussi la clôture 39e67cd9 de la session interrompue. Aucun échec CI ; aucun téléphone physique ni écoute humaine. Modèle et effort inchangés, quota restant inconnu.
+- Prochaine action : poursuivre la finition, tester les versions futures et préparer la livraison avec APK et instructions.
 
-- CI 40888097787 : parcours ciblés Android 10 et 15 réussis ; leurs journaux confirment l'entrée en lecture de la note haute. Trois autres parcours sont en cours. Il ne s'agit pas d'une écoute humaine ni d'un essai sur appareil physique.
+- CI 40888097787 : parcours ciblés Android 10 et 15 réussis ; leurs journaux confirment l'entrée en lecture de la note haute. Les trois autres parcours ont ensuite réussi. Il ne s'agit pas d'une écoute humaine ni d'un essai sur appareil physique.
