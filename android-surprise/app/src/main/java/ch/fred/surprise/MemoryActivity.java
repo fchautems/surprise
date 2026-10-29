@@ -26,6 +26,7 @@ public final class MemoryActivity extends Activity {
     private final LinearLayout[] rows=new LinearLayout[MAX_PAIRS];
     private int pairCount=4;
     private Button difficulty;
+    private ScrollView gameScroll;
     private int first=-1,second=-1,moves=0;
     private TextView status;
     private boolean newRecord=false;
@@ -51,6 +52,7 @@ public final class MemoryActivity extends Activity {
         Collections.shuffle(values);
         for(int i=0;i<deck.length;i++){deck[i]=i<values.size()?values.get(i):0;matched[i]=false;}
         first=second=-1; moves=0; newRecord=false; render();
+        gameScroll.post(()->gameScroll.fullScroll(View.FOCUS_UP));
     }
     private String recordKey(){return pairCount==4 ? "best" : "best6";}
     private int pairsFound(){
@@ -114,7 +116,7 @@ public final class MemoryActivity extends Activity {
     }
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved); getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
-        ScrollView scroll=new ScrollView(this); scroll.setFillViewport(true); scroll.setBackgroundColor(BG);
+        ScrollView scroll=new ScrollView(this); gameScroll=scroll; scroll.setFillViewport(true); scroll.setBackgroundColor(BG);
         LinearLayout root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER); root.setPadding(dp(18),dp(20),dp(18),dp(20)); scroll.addView(root);
         scroll.setOnApplyWindowInsetsListener((view,insets)->{root.setPadding(dp(18),dp(20)+insets.getSystemWindowInsetTop(),dp(18),dp(20)+insets.getSystemWindowInsetBottom());return insets;});
