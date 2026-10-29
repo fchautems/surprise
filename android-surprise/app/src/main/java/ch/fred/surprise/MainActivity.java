@@ -243,6 +243,9 @@ public class MainActivity extends Activity {
         Button memory=makeMenuButton("Un jeu de mémoire"); choices.addView(memory);
         memory.setBackground(outlinedShape(CARD,Color.rgb(179,185,255)));
         memory.setOnClickListener(v->startActivity(new android.content.Intent(this,MemoryActivity.class)));
+        Button music=makeMenuButton("Jouer en musique"); choices.addView(music);
+        music.setBackground(outlinedShape(CARD,Color.rgb(241,179,122)));
+        music.setOnClickListener(v->startActivity(new android.content.Intent(this,MusicActivity.class)));
         Button theme=makeMenuButton("Choisir un thème");
         choices.addView(theme); theme.setOnClickListener(v->showThemes());
         Button records=makeMenuButton("Mes records"); choices.addView(records); records.setOnClickListener(v->showRecords());
