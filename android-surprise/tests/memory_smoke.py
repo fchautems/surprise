@@ -38,10 +38,10 @@ def tap_text(root, label):
         if node is not None:
             b = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
             assert len(b) == 4, node.attrib
-            if 50 <= (b[1] + b[3]) // 2 <= 600:
+            if 50 <= (b[1] + b[3]) // 2 <= 560:
                 adb("shell", "input", "tap", str((b[0]+b[2])//2), str((b[1]+b[3])//2))
                 return
-            direction = ("160", "480", "160", "240") if b[1] > 560 else ("160", "240", "160", "480")
+            direction = ("160", "480", "160", "240") if (b[1] + b[3]) // 2 > 560 else ("160", "240", "160", "480")
         else:
             direction = ("160", "480", "160", "240")
         adb("shell", "input", "swipe", *direction, "300")
