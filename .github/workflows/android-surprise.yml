@@ -31,6 +31,11 @@ jobs:
           mkdir -p /tmp/surprise-test
           javac -d /tmp/surprise-test app/src/main/java/ch/fred/surprise/QuizRules.java tests/QuizRulesTest.java
           java -cp /tmp/surprise-test ch.fred.surprise.QuizRulesTest
+      - name: Test synthesized notes
+        run: |
+          mkdir -p /tmp/surprise-sound-test
+          javac -d /tmp/surprise-sound-test app/src/main/java/ch/fred/surprise/SoundWave.java tests/SoundWaveTest.java
+          java -cp /tmp/surprise-sound-test ch.fred.surprise.SoundWaveTest
       - name: Compile and test
         run: gradle --no-daemon testDebugUnitTest assembleDebug
       - uses: actions/upload-artifact@v4
@@ -121,3 +126,31 @@ jobs:
           script: |
             adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
             python3 android-surprise/tests/memory_smoke.py || { adb logcat -d -s AndroidRuntime:E; exit 1; }
+  music:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [29, 35]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-debug-apk
+          path: android-surprise/app/build/outputs/apk/debug
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test music game
+        timeout-minutes: 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          disable-animations: true
+          script: |
+            adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
+            python3 android-surprise/tests/music_smoke.py || { adb logcat -d -s AndroidRuntime:E; exit 1; }
