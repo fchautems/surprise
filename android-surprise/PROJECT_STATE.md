@@ -521,7 +521,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre la finition ludique et les validations. Réexaminer la reprise en arrière-plan par un test Android adapté ; préparer la livraison de dimanche et les instructions.
 
 
-## Session du 29 octobre 2026, début 23:57:13 Europe/Zurich (en cours)
+## Session du 29–30 octobre 2026, 23:57:13–00:13:30 Europe/Zurich (16 min 17 s, validations comprises)
 - Base 9643170a53261d11813594f68278fd3d78ba5812 ; commit code 4ac6f171c52bb35951ab41e787df33a55ff09c60 poussé.
 - Ajout d'un indice facultatif, utilisable une fois par mélodie et indiquant la prochaine note ; état préservé à la rotation et remis à zéro à la mélodie suivante. Désactivé pendant l'écoute et masqué en mode libre. Test sur émulateur étendu à l'indice, la rotation et la remise à zéro.
 - Contrôle local : syntaxe Python valide ; SDK Android, Gradle et adb absents. Dernière CI complète 40963667502 : sept jobs réussis, APK 12937355818 et son intégrité vérifiés. Nouvelle compilation, APK et tests Android non encore vérifiés. Aucun téléphone physique ni écoute humaine ; le scénario d'interruption antérieur reste sans test Android dédié.
@@ -530,3 +530,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40969770644 sur 4ac6f171 : compilation et tests unitaires réussis. APK debug 12940116195 produit ; archive et APK vérifiés par unzip -t ; SHA-256 03805d751c892fdca2913178da27b16912dcd4e2f8c86283d2b3cd4b2f98ff35. Les six parcours Android sont à vérifier.
 
 - CI 40969770644 : tests ciblés de l'indice, de sa persistance à la rotation et de sa remise à zéro réussis sur Android 10 et 15 ; quatre autres parcours restent en cours. Aucun contrôle visuel ou sonore humain.
+
+- Bilan final : CI 40969770644 entièrement réussie, sept jobs (compilation, tests unitaires et six parcours Android 10 et 15). Les tests de l'indice et de sa continuité ont réussi sur les deux versions. APK debug 12940116195 : archive et APK vérifiés par unzip -t ; SHA-256 03805d751c892fdca2913178da27b16912dcd4e2f8c86283d2b3cd4b2f98ff35. Aucun téléphone physique ni contrôle visuel ou écoute humaine. Le test antérieur d'interruption reste non validé.
+- Diff final hors journal : MusicActivity.java +22/-8 ; tests/music_smoke.py +13/-0 ; total +35/-8. PROJECT_STATE.md : +16/-1. Commits poussés : 4ac6f171, f8842058, c42cc0bf, c5df9eb6 et ce bilan. Aucun échec CI ; modèle et effort non modifiés ; quota inconnu.
+- Prochaine action : poursuivre les améliorations ludiques et contrôles, envisager un test d'interruption adapté, préparer la livraison et ses instructions.
