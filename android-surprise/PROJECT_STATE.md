@@ -416,3 +416,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : syntaxe Python valide ; calcul vérifiant une réserve suffisante dans chaque thème pour 1 à 8 erreurs. SDK Android, Gradle, javac et adb absents. CI 40918092684 : compilation, tests unitaires et six jobs sur Android 10 et 15 réussis ; parcours thématique et revanche complets vérifiés sur les deux versions. APK debug 12916088132 produit ; archive et APK vérifiés par unzip -t ; SHA-256 9796b50f3da71d7d612ad2c7a6e39700d86f8412a801b02c8ef13ead04d7a246. CI précédente 40903578219 : six jobs réussis ; APK 12911080499, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni inspection visuelle humaine.
 - Commits poussés : 6b8d9da5 et suivis b314543a, 0561c450, b6a22d3e et le présent bilan. Aucun échec CI ; aucun téléphone physique ni inspection visuelle humaine. Modèle et effort inchangés ; quota restant inconnu.
 - Prochaine action : poursuivre la finition, vérifier les prochains builds et préparer les instructions de livraison.
+
+
+## Session du 29 octobre 2026, début 18:56:45 Europe/Zurich (en cours)
+- Base 81e5b8cf9f73d2d7a537c3aef58915b572fce507 ; commit poussé 73a7ade0ab30bd1e38c26eff7c62cd68e6cbaa2f.
+- Fichiers : MemoryActivity.java +25/-3 ; tests/memory_smoke.py +20/-0 ; total +45/-3 hors journal.
+- Ajout d'une seconde ambiance visuelle de cartes, enregistrée localement, persistante à la rotation, avec confirmation si une partie est en cours et conservation des records. Parcours d'essai du changement, de la rotation et du retour à l'apparence initiale.
+- Contrôles locaux : syntaxe Python valide ; deux ensembles de 16 symboles uniques vérifiés. SDK Android, Gradle, javac et adb absents ; nouveau workflow et APK non encore vérifiés. CI précédente 40918092684 : six jobs réussis ; APK 12916088132, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni inspection visuelle humaine.
+- Prochaine action : inspecter la CI et l'APK, corriger les échecs éventuels et consigner les résultats.
