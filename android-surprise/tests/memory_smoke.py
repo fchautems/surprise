@@ -51,6 +51,9 @@ def tap_text(root, label):
 def find_text(root, fragment):
     return next((v for v in texts(root) if fragment in v), None)
 
+def description(root, text):
+    return any(n.attrib.get("content-desc", "") == text for n in root.iter("node"))
+
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "pm", "clear", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
@@ -59,6 +62,7 @@ root = wait_dump()
 tap_text(root, "Un jeu de mémoire")
 root = wait_dump()
 assert find_text(root, "MÉMO DES ÉTOILES"), texts(root)
+assert description(root, "0 paires trouvées sur 4"), "Initial progress missing"
 
 def card(root, index):
     prefix = "Carte " + str(index + 1) + " : "
@@ -147,6 +151,7 @@ else:
 root = wait_dump()
 result = find_text(root, "Bravo !")
 assert result and "Record" in result, texts(root)
+assert description(root, "4 paires trouvées sur 4"), "Completed progress missing"
 assert "Nouveau record !" in result, result
 moves = int(re.search(r"Bravo ! (\d+) essais", result).group(1))
 expected_stars = 3 if moves <= 5 else 2 if moves <= 8 else 1
@@ -184,6 +189,7 @@ assert find_text(root, "Record : " + record), "Memory record lost after restart"
 tap_text(root, "Défi : 6 paires")
 root = wait_dump()
 assert find_text(root, "0 / 6 paires"), texts(root)
+assert description(root, "0 paires trouvées sur 6"), "Long-mode progress missing"
 assert not find_text(root, "Record : "), "Four-pair record leaked into six-pair mode"
 known6 = {}
 for index in range(12):
@@ -226,6 +232,7 @@ for _ in range(4):
     adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
 result6 = find_text(wait_dump(), "Bravo !")
 assert result6 and "Nouveau record !" in result6, result6
+assert description(wait_dump(), "6 paires trouvées sur 6"), "Long-mode progress incomplete"
 moves6 = int(re.search(r"Bravo ! (\d+) essais", result6).group(1))
 expected_stars6 = 3 if moves6 <= 7 else 2 if moves6 <= 12 else 1
 assert result6.splitlines()[-1].count("✦") == expected_stars6, result6
