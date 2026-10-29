@@ -26,8 +26,9 @@ public final class MemoryActivity extends Activity {
     private final int[] deck=new int[MAX_PAIRS*2];
     private final boolean[] matched=new boolean[MAX_PAIRS*2];
     private final Button[] cards=new Button[MAX_PAIRS*2];
-    private static final int COLUMNS=4, ROWS=4;
-    private final LinearLayout[] rows=new LinearLayout[ROWS];
+    private static final int MAX_ROWS=8;
+    private final LinearLayout[] rows=new LinearLayout[MAX_ROWS];
+    private int columns=4;
     private int pairCount=4;
     private Button difficulty;
     private ScrollView gameScroll;
@@ -120,7 +121,7 @@ public final class MemoryActivity extends Activity {
         progress.setMax(pairCount); progress.setProgress(pairs);
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : "Mode : 4 paires");
-        for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*COLUMNS<pairCount*2 ? View.VISIBLE : View.GONE);
+        for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*columns<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
             cards[i].setVisibility(i<pairCount*2 ? View.VISIBLE : View.INVISIBLE);
             boolean visible=matched[i] || i==first || i==second;
@@ -145,10 +146,18 @@ public final class MemoryActivity extends Activity {
         progress=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
         progress.setProgressTintList(android.content.res.ColorStateList.valueOf(GOLD));
         LinearLayout.LayoutParams pp=new LinearLayout.LayoutParams(-1,dp(6)); pp.setMargins(dp(5),dp(8),dp(5),dp(4)); root.addView(progress,pp);
-        for(int row=0;row<ROWS;row++){
+        int width=getResources().getConfiguration().screenWidthDp;
+        columns=width>=268 ? 4 : width>=210 ? 3 : 2;
+        for(int row=0;row<MAX_ROWS;row++){
             LinearLayout line=new LinearLayout(this); line.setOrientation(LinearLayout.HORIZONTAL); rows[row]=line;
-            for(int col=0;col<COLUMNS;col++){
-                int i=row*COLUMNS+col; Button card=button("?"); card.setTextSize(28); cards[i]=card;
+            for(int col=0;col<columns;col++){
+                int i=row*columns+col;
+                if(i>=cards.length){
+                    android.widget.Space spacer=new android.widget.Space(this);
+                    LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(0,dp(58),1);
+                    sp.setMargins(dp(5),dp(5),dp(5),dp(5)); line.addView(spacer,sp); continue;
+                }
+                Button card=button("?"); card.setTextSize(28); cards[i]=card;
                 LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(58),1); p.setMargins(dp(5),dp(5),dp(5),dp(5));
                 line.addView(card,p); card.setOnClickListener(v->select(i));
             }
