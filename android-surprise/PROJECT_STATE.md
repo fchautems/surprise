@@ -534,3 +534,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Bilan final : CI 40969770644 entièrement réussie, sept jobs (compilation, tests unitaires et six parcours Android 10 et 15). Les tests de l'indice et de sa continuité ont réussi sur les deux versions. APK debug 12940116195 : archive et APK vérifiés par unzip -t ; SHA-256 03805d751c892fdca2913178da27b16912dcd4e2f8c86283d2b3cd4b2f98ff35. Aucun téléphone physique ni contrôle visuel ou écoute humaine. Le test antérieur d'interruption reste non validé.
 - Diff final hors journal : MusicActivity.java +22/-8 ; tests/music_smoke.py +13/-0 ; total +35/-8. PROJECT_STATE.md : +16/-1. Commits poussés : 4ac6f171, f8842058, c42cc0bf, c5df9eb6 et ce bilan. Aucun échec CI ; modèle et effort non modifiés ; quota inconnu.
 - Prochaine action : poursuivre les améliorations ludiques et contrôles, envisager un test d'interruption adapté, préparer la livraison et ses instructions.
+
+
+## Session du 30 octobre 2026, début 00:56:11 Europe/Zurich (en cours)
+- Base b7efcba126e212615f5443c8eccefadf7a392813 ; commit code 24cf6064bb96498c5788cf0b0d81c0f88c37ed12 poussé.
+- Finition visuelle : fond harmonisé, touche jouée signalée sans animation et aussi par description accessible ; état sauvegardé à la rotation, effacé au changement de mode, à l'écoute ou à un accord. Tests émulateur étendus à la sélection, rotation et remise à zéro.
+- Syntaxe Python valide. SDK Android, Gradle et adb absents localement ; Java disponible via le compilateur du JDK. Dernière CI complète 40969770644 : sept jobs réussis ; APK 12940116195 d'intégrité vérifiée. Aucun téléphone physique, contrôle visuel ou écoute humaine ; le scénario antérieur d'interruption reste sans test Android dédié.
+- Nouvelle CI, compilation, APK et tests sur Android à contrôler ; corriger les échecs puis consigner bilan et durée.
