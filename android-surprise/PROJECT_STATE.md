@@ -341,3 +341,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : syntaxe Python valide. SDK Android, Gradle, javac et adb absents ; CI 40861840953 intégralement réussie : compilation, tests unitaires et six jobs sur émulateurs Android 10 et 15 ; les deux parcours mémoire comprennent l'indice, son coût et la rotation. APK debug 12890909718 produit, archive et APK vérifiés par unzip -t, SHA-256 c47ee5dd9cc5f5b98d98d23a4c4da18551311988934782b8dd1445dd0fde36e1. CI précédente 40853835903 : six jobs réussis ; APK 12888038098 vérifié par unzip -t, SHA-256 212a8f8bd048c59a594af4595bd4e689d6e12ea703f18aff5c175430be90d5b1. Aucun test sur téléphone physique.
 - Commits de suivi poussés : 89dc517a, 391a5fac, 3260b034, 4e54b81d et le présent bilan. Aucun échec CI ; aucun téléphone physique ni inspection visuelle humaine. Modèle et effort inchangés ; quota restant non mesurable.
 - Prochaine action : poursuivre les améliorations ludiques, vérifier les prochains builds et préparer la livraison avec l'APK et les instructions d'installation.
+
+
+## Session du 29 octobre 2026, début 13:00:35 Europe/Zurich (en cours)
+- Base 80dc6ada81db4a867d58871f8f5b8cde995cd954 ; commit de code poussé 2201b747f058f10f53dc8dc51956c611de8f0629.
+- Fichiers modifiés : MusicActivity.java +9/-7 ; tests/music_smoke.py +16/-0 ; total code +25/-7, hors journal.
+- Correction fonctionnelle : en mode libre, les frappes récentes remplacent les sons devenus obsolètes, sans file d'attente cumulative ; annulation vérifiée toutes les 10 ms pendant la lecture, y compris à la sortie. Ajout d'un parcours de frappes rapides et vérification de la dernière note démarrée. Le mode défi conserve sa séquence.
+- Contrôles locaux : syntaxe Python valide ; Android SDK, Gradle, javac et adb absents. CI du nouveau commit et APK non encore vérifiés. CI précédente 40861840953 : six jobs réussis ; APK 12890909718, archive et APK vérifiés par unzip -t. Aucun téléphone physique ni écoute humaine.
+- Prochaine action : inspecter la CI, corriger les échecs éventuels, vérifier l'APK et consigner les résultats et la durée.
