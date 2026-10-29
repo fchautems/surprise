@@ -289,3 +289,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40839409874 : tests Java de synthèse et compilation réussis ; parcours API 29 en cours. APK debug 12882286662 téléchargé ; archive et APK passent unzip -t ; SHA-256 911c5d2ebc2de30eba709634aa9f3caaf65865be63d1f8dfc5451a80832afd40. Tests Android non encore confirmés.
 
 - Deuxième cycle : le volume coupé est aussi signalé lorsqu'une note est jouée en mode libre ; contrôle Android ajouté. Commits dbf6dc81 et d7583f81 ; diff final de code à ce stade 61 ajouts et 13 suppressions. Run 40839409874 annulé automatiquement par ces commits ; run 40840111062 sur d7583f81 lancé, résultats encore inconnus. Syntaxe Python et test de banque de nouveau réussis localement.
+
+- CI 40840111062 : compilation et tests Java de synthèse réussis ; parcours principal API 29 en cours. APK debug 12881968881 téléchargé, archive et APK passent unzip -t ; SHA-256 e352b1a71ffdbe2a91bfe81a953798ad5bc465bcc08d8deb1ab6556a919085d3. Tests Android encore à confirmer.
