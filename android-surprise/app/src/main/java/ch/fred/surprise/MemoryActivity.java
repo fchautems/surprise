@@ -120,7 +120,7 @@ public final class MemoryActivity extends Activity {
         scroll.setOnApplyWindowInsetsListener((view,insets)->{root.setPadding(dp(18),dp(20)+insets.getSystemWindowInsetTop(),dp(18),dp(20)+insets.getSystemWindowInsetBottom());return insets;});
         TextView title=label("✦  MÉMO DES ÉTOILES  ✦",21,GOLD);
         title.setTypeface(null,Typeface.BOLD); root.addView(title);
-        TextView hint=label("Retrouve les quatre paires, à ton rythme.",15,WHITE);
+        TextView hint=label("Retrouve les paires, à ton rythme.",15,WHITE);
         LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(-1,-2); hintP.setMargins(0,dp(10),0,dp(12)); root.addView(hint,hintP);
         status=label("",16,GOLD); root.addView(status);
         for(int row=0;row<MAX_PAIRS;row++){
