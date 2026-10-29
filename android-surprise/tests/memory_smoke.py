@@ -87,6 +87,14 @@ for index in range(8):
     desc = node.attrib["content-desc"]
     assert "visible " in desc or "trouvée " in desc, desc
     known[index] = desc.split()[-1]
+    if index == 0:
+        tap_text(root, "Nouvelle partie")
+        dialog = wait_dump()
+        assert find_text(dialog, "La partie en cours sera perdue."), texts(dialog)
+        tap_text(dialog, "Continuer")
+        root = wait_dump()
+        root, node = card(root, index)
+        assert node.attrib["content-desc"] == desc, "Cancel reset lost the card"
     if index == 1:
         before = desc
         adb("shell", "settings", "put", "system", "user_rotation", "1")
@@ -118,13 +126,29 @@ else:
 root = wait_dump()
 result = find_text(root, "Bravo !")
 assert result and "Record" in result, texts(root)
-record = result.split("Record : ")[1]
+assert "Nouveau record !" in result, result
+record = result.split("Record : ")[1].splitlines()[0]
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+root = wait_dump()
+assert "Nouveau record !" in find_text(root, "Bravo !"), "Record message lost on rotation"
 tap_text(root, "Nouvelle partie")
 root = wait_dump()
 assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
 for index in range(8):
     root, node = card(root, index)
     assert "cachée " in node.attrib["content-desc"], node.attrib
+root = tap_card(root, 0)
+tap_text(root, "Nouvelle partie")
+dialog = wait_dump()
+assert find_text(dialog, "La partie en cours sera perdue."), texts(dialog)
+tap_text(dialog, "Recommencer")
+root = wait_dump()
+for index in range(8):
+    root, node = card(root, index)
+    assert "cachée " in node.attrib["content-desc"], node.attrib
+assert find_text(root, "Record : " + record), "Reset erased record"
 tap_text(root, "Retour à l’accueil")
 assert find_text(wait_dump(), "BIENVENUE"), "Memory return failed"
 adb("shell", "am", "force-stop", "ch.fred.surprise")
