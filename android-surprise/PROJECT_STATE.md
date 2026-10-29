@@ -453,7 +453,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre les améliorations et les validations sur la branche isolée ; préparer la livraison dimanche avec l'APK effectivement disponible et ses instructions.
 
 
-## Session du 29 octobre 2026, début 20:57:05 Europe/Zurich (en cours)
+## Session du 29 octobre 2026, 20:57:05–21:42:07 Europe/Zurich (45 min 2 s, deux validations comprises)
 - Base c9fb97fd73426f774f23130dd0562c5abaacc3ed ; commit code 25178124823c959b2c17787650079e5c8f3cad5c poussé. MusicActivity.java +20/-3 et tests/music_smoke.py +21/-5, total +41/-8 hors journal.
 - Les mélodies initiales et suivantes sont générées aléatoirement, sans notes voisines identiques ni répétition exacte de la précédente. Le test émulateur déduit les notes réellement jouées des journaux puis joue la séquence, vérifie la rotation et une nouvelle séquence distincte.
 - Contrôles locaux : syntaxe Python valide ; méthode Java de génération compilée et exécutée dans un banc isolé, 400 000 séquences testées pour longueurs 3 à 6, valeurs, absence de répétitions voisines et de répétition de la séquence précédente : réussite. Le binaire javac est absent mais le compilateur du JDK est accessible via java com.sun.tools.javac.Main ; SDK Android, Gradle et adb absents. Pas de test sur téléphone ni écoute humaine.
@@ -467,3 +467,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI de correction 40947237942 : compilation et tests unitaires réussis, premier émulateur en cours. APK debug 12930216188, archive et APK vérifiés par unzip -t ; SHA-256 75d05a6802186a1403736f765cce59913c351ff6b851c04d98eae5cc43e5f59b. CI 40944727584 remplacée, un job en échec et quatre annulés.
 
 - CI 40947237942 : parcours audio corrigés réussis sur Android 10 et 15 ; compilation, tests unitaires et parcours principal Android 10 réussis. Trois parcours restent en cours ; correction de l'isolation du test désormais confirmée sur les deux versions.
+
+- Bilan final : CI 40947237942 entièrement réussie (six jobs : compilation, tests unitaires et parcours Android 10 et 15). Correction du test audio validée sur les deux versions. APK debug 12930216188 : archive et contenu vérifiés par unzip -t ; SHA-256 75d05a6802186a1403736f765cce59913c351ff6b851c04d98eae5cc43e5f59b. Aucun essai sur téléphone physique ni écoute humaine.
+- Diff final hors journal : MusicActivity.java +21/-3 ; tests/music_smoke.py +23/-5 ; total +44/-8. PROJECT_STATE.md : +21/-1. Commits poussés : 25178124, 5e7c4c51, 9813e246, f7c24ea4, 93f3b302, d2813c51, f5ecb4fc et ce bilan. Le premier workflow a connu un échec de test, corrigé puis validé. Modèle et effort non modifiés ; quota inconnu.
+- Prochaine action : poursuivre la finition sur la branche prévue et préparer la livraison avec APK vérifié et instructions, en conservant la surprise.
