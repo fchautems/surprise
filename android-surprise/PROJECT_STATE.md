@@ -323,3 +323,11 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 
 - Résultat final à 10:39:26 : CI 40848237189 entièrement réussie sur 260aa2eb : compilation, tests de signal et de données/règles, six jobs Android API 29/35 ; journaux des deux parcours musique confirmant l'état PLAYING après écriture. Le correctif de l'état statique a résolu l'échec observé sur les deux émulateurs ; une écoute réelle et le comportement sur appareil physique ne sont pas vérifiés. APK debug 12886425482, SHA-256 4ff82f36f017ce11fffb94a2b617a276cd650ad14d96722cbcfe834553d1d388 ; archive et APK vérifiés par unzip -t.
 - Diff final hors journal : MusicActivity.java +18/-5, tests/music_smoke.py +4/-0, total +22/-5 ; commit supplémentaire 260aa2eb ; suivis d3091196, 4fda639b, c5634bf1, 2698224d et 873ed112, plus ce complément. Aucun test sur téléphone physique ni inspection visuelle humaine ; SDK/Gradle/javac absents localement. Modèle et effort inchangés ; limite de quota non mesurée. Durée comprenant diagnostic, correctif et attente effective de deux CI. Prochaine action : poursuivre la finition ludique et visuelle et tester l'APK final avant livraison.
+
+
+## Session du 29 octobre 2026, début 10:57:58 Europe/Zurich (en cours)
+- Base : 60f02dc0551b083f0451df6586f092dccd4d2588. Commit de code poussé : 0ac081e3dbcf0765b9140a3f89f87f627a4f60c5.
+- Fichiers : MusicActivity.java (+29/-1), SoundWave.java (+14/-0), SoundWaveTest.java (+20/-0), music_smoke.py (+8/-0) ; total code +71/-1, hors journal.
+- Ajout de trois accords synthétisés en mode libre, conservés après rotation, avec contrôle de volume et tests de composition spectrale et de parcours sur émulateur.
+- Contrôles : syntaxe Python locale valide ; SDK, Gradle, javac et adb absents localement. CI 40853835903 lancée, résultat et nouvel APK non encore vérifiés. Dernière CI confirmée : 40848237189, six jobs réussis ; APK debug 12886425482, intégrité ZIP vérifiée. Aucun test sur téléphone ni écoute humaine de l'audio.
+- Prochaine action : inspecter la CI, corriger tout échec puis vérifier l'APK et consigner les résultats et durée.
