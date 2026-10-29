@@ -220,3 +220,10 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 
 - Résultat final à 04:19:28 : run 40809295370 entièrement réussi sur e7985c37, y compris compilation, tests de données et règles, parcours API 29 et 35 et vérification de variété. APK debug 12869741901, SHA-256 5cdd360127a48b964526bfbda6342a6c9367143104243819c9fd8a7d432de498 ; archive et APK vérifiés par unzip -t. Commits de suivi 393ecfa9, 42e3325d et 6e6b9c26, plus ce complément.
 - Limites : absence de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine, en particulier des nouveaux symboles. Modèle et effort non modifiés, limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : examiner la lisibilité visuelle et poursuivre la finition, puis revalider l'APK final pour livraison.
+
+
+## Session du 29 octobre 2026, à partir de 04:55:58 Europe/Zurich — suivi provisoire
+- Base c4d19484 ; commits poussés 0ba9e434, b0e84506 et 7fc13666 ; un commit supplémentaire consigne ce suivi. Fichiers : MainActivity.java, tests/emulator_smoke.py, PROJECT_STATE.md ; diff hors journal 44 ajouts, 2 suppressions.
+- Développement : records distincts pour les thèmes de jeu, consultables depuis l'accueil et au résultat ; conservation des records à la rotation et au redémarrage, absence de record pour un thème non terminé. Recentrage automatique de l'accueil et des résultats. Tests Android renforcés pour les records, la rotation et la persistance.
+- Contrôles locaux : syntaxe du script Python et test de banque réussis. CI précédente 40809295370 entièrement réussie sur API 29 et 35 ; APK 12869741901, SHA-256 5cdd360127a48b964526bfbda6342a6c9367143104243819c9fd8a7d432de498, archives vérifiées. Nouveau run 40815008504 sur 7fc13666 en attente ; compilation et tests Android de cette session non encore confirmés.
+- Limites : SDK/Gradle/javac absents localement ; aucun téléphone physique ni inspection visuelle humaine. Modèle et niveau non modifiés. Prochaine action : consulter compilation, APK et les quatre jobs CI, corriger les éventuels échecs et consigner durée et résultats réels.
