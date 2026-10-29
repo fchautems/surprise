@@ -24,6 +24,7 @@ public final class MemoryActivity extends Activity {
     private final Button[] cards=new Button[8];
     private int first=-1,second=-1,moves=0;
     private TextView status;
+    private boolean newRecord=false;
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
         GradientDrawable d=new GradientDrawable(); d.setColor(color); d.setCornerRadius(dp(16));
@@ -45,7 +46,7 @@ public final class MemoryActivity extends Activity {
         for(int i=0;i<PAIRS;i++){int value=available.get(i);values.add(value);values.add(value);}
         Collections.shuffle(values);
         for(int i=0;i<deck.length;i++){deck[i]=values.get(i);matched[i]=false;}
-        first=second=-1; moves=0; render();
+        first=second=-1; moves=0; newRecord=false; render();
     }
     private int pairsFound(){
         int count=0; for(boolean b:matched)if(b)count++; return count/2;
@@ -60,6 +61,7 @@ public final class MemoryActivity extends Activity {
                 if(pairsFound()==PAIRS){
                     android.content.SharedPreferences p=getPreferences(MODE_PRIVATE);
                     int best=p.getInt("best",Integer.MAX_VALUE);
+                    newRecord=moves<best;
                     p.edit().putInt("best",Math.min(best,moves)).apply();
                 }
             }
@@ -70,7 +72,7 @@ public final class MemoryActivity extends Activity {
         int pairs=pairsFound();
         int best=getPreferences(MODE_PRIVATE).getInt("best",0);
         status.setText(pairs==PAIRS
-            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best
+            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")
             : pairs+" / 4 paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
         for(int i=0;i<cards.length;i++){
             boolean visible=matched[i] || i==first || i==second;
@@ -101,7 +103,16 @@ public final class MemoryActivity extends Activity {
             root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
         Button reset=button("Nouvelle partie"); LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,dp(52));
-        rp.setMargins(dp(5),dp(10),dp(5),0); root.addView(reset,rp); reset.setOnClickListener(v->newGame());
+        rp.setMargins(dp(5),dp(10),dp(5),0); root.addView(reset,rp); reset.setOnClickListener(v->{
+            if(pairsFound()<PAIRS && (moves>0 || first!=-1)){
+                new android.app.AlertDialog.Builder(this)
+                    .setTitle("Nouvelle partie ?")
+                    .setMessage("La partie en cours sera perdue.")
+                    .setNegativeButton("Continuer", (dialog, which)->dialog.dismiss())
+                    .setPositiveButton("Recommencer", (dialog, which)->newGame())
+                    .show();
+            }else newGame();
+        });
         Button home=button("Retour à l’accueil"); LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,dp(52));
         hp.setMargins(dp(5),dp(8),dp(5),0); root.addView(home,hp); home.setOnClickListener(v->finish());
         setContentView(scroll);
@@ -109,13 +120,14 @@ public final class MemoryActivity extends Activity {
             int[] d=saved.getIntArray("deck"); boolean[] m=saved.getBooleanArray("matched");
             if(d.length==8 && m.length==8){
                 System.arraycopy(d,0,deck,0,8);System.arraycopy(m,0,matched,0,8);
-                first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);render();
+                first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);
+                newRecord=saved.getBoolean("newRecord",false);render();
             }else newGame();
         }else newGame();
     }
     @Override protected void onSaveInstanceState(Bundle out){
         out.putIntArray("deck",deck);out.putBooleanArray("matched",matched);
-        out.putInt("first",first);out.putInt("second",second);out.putInt("moves",moves);
+        out.putInt("first",first);out.putInt("second",second);out.putInt("moves",moves);out.putBoolean("newRecord",newRecord);
         super.onSaveInstanceState(out);
     }
 }
