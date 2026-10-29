@@ -95,6 +95,13 @@ for index in range(8):
         root = wait_dump()
         root, node = card(root, index)
         assert node.attrib["content-desc"] == desc, "Cancel reset lost the card"
+        adb("shell", "input", "keyevent", "KEYCODE_BACK")
+        dialog = wait_dump()
+        assert find_text(dialog, "Quitter la partie"), texts(dialog)
+        tap_text(dialog, "Continuer")
+        root = wait_dump()
+        root, node = card(root, index)
+        assert node.attrib["content-desc"] == desc, "Cancel exit lost the card"
     if index == 1:
         before = desc
         adb("shell", "settings", "put", "system", "user_rotation", "1")
