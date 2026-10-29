@@ -432,3 +432,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI de correction 40929352471 sur bf176112 : tests unitaires, compilation et parcours principal Android 10 réussis ; cinq autres jobs en cours. APK debug 12921478422 ; archive et APK vérifiés par unzip -t ; SHA-256 463cc2fa0b61ce05ccf16c2850b58d8ed06b8739329a1f271843ef79dea62163. Les CI 40926254092 et 40929298704 ont été annulées après les corrections.
 
 - CI 40929352471 : le test mémoire API 29 révèle que la borne de 560 px est trop stricte pour atteindre le contrôle de retour sur un écran court ; le contrôle est présent, mais le script refuse l'appui. Correctif bba58903 : essayer d'abord la zone intérieure, puis accepter jusqu'à 600 px si le défilement ne peut pas monter davantage ; syntaxe Python valide. Une nouvelle CI doit vérifier les deux API. L'ancienne est susceptible d'être annulée.
+
+- CI 40932256816 sur bba58903 : compilation et tests unitaires réussis ; émulateurs en cours. APK debug 12921914421 produit ; archive et APK vérifiés par unzip -t ; SHA-256 02a80777081b234402d54d2ff4f33547648e05db97d5d311fa7e869d2b2d968e. Résultats fonctionnels des correctifs en attente.
