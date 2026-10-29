@@ -4,6 +4,20 @@ package ch.fred.surprise;
 public final class SoundWave {
     private SoundWave() {}
     public static final int RATE=22050;
+    /** Mix several notes with bounded amplitude and the same gentle envelope. */
+    public static short[] chord(double... frequencies) {
+        if (frequencies == null || frequencies.length < 1 || frequencies.length > 4)
+            throw new IllegalArgumentException("voices");
+        short[][] voices = new short[frequencies.length][];
+        for (int v=0; v<frequencies.length; v++) voices[v]=note(frequencies[v]);
+        short[] mix=new short[voices[0].length];
+        for (int i=0; i<mix.length; i++) {
+            int sum=0;
+            for (short[] voice:voices) sum+=voice[i];
+            mix[i]=(short)(sum/voices.length);
+        }
+        return mix;
+    }
     public static short[] note(double frequency) {
         if (!(frequency>=100 && frequency<=2000)) throw new IllegalArgumentException("frequency");
         int count=RATE*240/1000;

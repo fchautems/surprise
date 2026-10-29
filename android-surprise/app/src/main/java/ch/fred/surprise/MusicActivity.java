@@ -23,6 +23,12 @@ public final class MusicActivity extends Activity {
     private static final int GOLD=Color.rgb(255,195,107), WHITE=Color.rgb(245,242,235);
     private static final String[] NAMES={"Do","Ré","Mi","Sol","La"};
     private static final double[] FREQ={261.63,293.66,329.63,392.00,440.00};
+    private static final String[] CHORD_NAMES={"Do maj7","Fa maj7","Sol 7"};
+    private static final double[][] CHORDS={
+        {261.63,329.63,392.00,493.88}, {349.23,440.00,523.25,659.25},
+        {392.00,493.88,587.33,698.46}
+    };
+    private LinearLayout chords;
     private final ExecutorService audio=Executors.newSingleThreadExecutor();
     private final Random random=new Random();
     private int[] phrase={0,2,4};
@@ -53,7 +59,10 @@ public final class MusicActivity extends Activity {
         }});
     }
     private void playNote(int note,int token){
-        short[] data=SoundWave.note(FREQ[note]);
+        playSamples(SoundWave.note(FREQ[note]),token);
+    }
+    private void playSamples(short[] data,int token){
+        if(token!=generation || Thread.currentThread().isInterrupted())return;
         AudioTrack track=null;
         try {
             int minimum=AudioTrack.getMinBufferSize(SoundWave.RATE,AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT);
@@ -111,10 +120,18 @@ public final class MusicActivity extends Activity {
             position=0;status.setText("✦ Bravo ! "+wins+" mélodie"+(wins>1?"s":"")+" réussie"+(wins>1?"s":"")+"\nÉcoute la suivante.");
         }else status.setText("Bien joué : "+position+" / "+phrase.length+" notes");
     }
+    private void chooseChord(int chord){
+        if(!freeMode || playing)return;
+        checkVolume();
+        int token=generation;
+        audio.execute(()->{if(token==generation)playSamples(SoundWave.chord(CHORDS[chord]),token);});
+        status.setText("Mode libre · "+CHORD_NAMES[chord]);
+    }
     private void switchMode(){
         generation++;playing=false;freeMode=!freeMode;soundWarning.setText("");
         modeButton.setText(freeMode ? "Revenir au défi" : "Jouer librement");
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         status.setText(freeMode ? "Mode libre · joue à ton rythme." : "Écoute la mélodie, puis joue-la.");
     }
     @Override public void onCreate(Bundle saved){
@@ -144,6 +161,17 @@ public final class MusicActivity extends Activity {
                 LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(64),1);p.setMargins(dp(4),dp(5),dp(4),dp(5));line.addView(b,p);b.setOnClickListener(v->choose(i));
             }root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
+        chords=new LinearLayout(this);chords.setOrientation(LinearLayout.HORIZONTAL);
+        for(int i=0;i<CHORD_NAMES.length;i++){
+            final int chord=i;
+            Button b=button(CHORD_NAMES[i]);b.setTextSize(14);
+            b.setContentDescription("Accord "+CHORD_NAMES[i]);
+            LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(56),1);
+            p.setMargins(dp(4),dp(8),dp(4),0);chords.addView(b,p);
+            b.setOnClickListener(v->chooseChord(chord));
+        }
+        root.addView(chords,new LinearLayout.LayoutParams(-1,-2));
+        chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         modeButton=button(freeMode ? "Revenir au défi" : "Jouer librement");
         LinearLayout.LayoutParams mp=new LinearLayout.LayoutParams(-1,dp(56));mp.setMargins(0,dp(12),0,0);root.addView(modeButton,mp);modeButton.setOnClickListener(v->switchMode());
         Button home=button("Retour à l’accueil");LinearLayout.LayoutParams back=new LinearLayout.LayoutParams(-1,dp(56));back.setMargins(0,dp(12),0,0);root.addView(home,back);home.setOnClickListener(v->finish());
