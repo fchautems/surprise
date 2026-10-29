@@ -404,3 +404,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la CI, vérifier le nouvel APK, corriger les échecs éventuels et consigner les résultats.
 
 - Contrôle local complémentaire : calcul des indices de grille pour 2, 3 et 4 colonnes et les quatre tailles de jeu ; les 20 indices sont couverts sans trou et les tailles attendues respectées. Ce calcul ne remplace pas un test Android.
+
+- CI 40903578219 : le parcours mémoire complet avec dix paires réussit sur API 29 ; quatre jobs réussis, deux sur API 35 encore en cours.
