@@ -541,3 +541,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Finition visuelle : fond harmonisé, touche jouée signalée sans animation et aussi par description accessible ; état sauvegardé à la rotation, effacé au changement de mode, à l'écoute ou à un accord. Tests émulateur étendus à la sélection, rotation et remise à zéro.
 - Syntaxe Python valide. SDK Android, Gradle et adb absents localement ; Java disponible via le compilateur du JDK. Dernière CI complète 40969770644 : sept jobs réussis ; APK 12940116195 d'intégrité vérifiée. Aucun téléphone physique, contrôle visuel ou écoute humaine ; le scénario antérieur d'interruption reste sans test Android dédié.
 - Nouvelle CI, compilation, APK et tests sur Android à contrôler ; corriger les échecs puis consigner bilan et durée.
+
+- CI 40976489035 sur 24cf6064 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12942088661 produit ; archive et APK vérifiés par unzip -t ; SHA-256 c586c1b25c0defc841e23ccddfaf47c8b93b790eddea2257c260d4ec259ce4ac. Tests fonctionnels encore à vérifier.
