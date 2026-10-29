@@ -23,7 +23,8 @@ public final class MemoryActivity extends Activity {
     private final int[] deck=new int[MAX_PAIRS*2];
     private final boolean[] matched=new boolean[MAX_PAIRS*2];
     private final Button[] cards=new Button[MAX_PAIRS*2];
-    private final LinearLayout[] rows=new LinearLayout[MAX_PAIRS];
+    private static final int COLUMNS=3, ROWS=4;
+    private final LinearLayout[] rows=new LinearLayout[ROWS];
     private int pairCount=4;
     private Button difficulty;
     private ScrollView gameScroll;
@@ -101,12 +102,15 @@ public final class MemoryActivity extends Activity {
     private void render(){
         int pairs=pairsFound();
         int best=getPreferences(MODE_PRIVATE).getInt(recordKey(),0);
+        int stars=moves<=pairCount+1 ? 3 : moves<=pairCount*2 ? 2 : 1;
+        String reward=stars==3 ? "✦ ✦ ✦" : stars==2 ? "✦ ✦" : "✦";
         status.setText(pairs==pairCount
-            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")
+            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\n"+reward
             : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
         difficulty.setText(pairCount==4 ? "Défi : 6 paires" : "Mode : 4 paires");
-        for(int row=0;row<rows.length;row++)rows[row].setVisibility(row<pairCount ? View.VISIBLE : View.GONE);
+        for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*COLUMNS<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
+            cards[i].setVisibility(i<pairCount*2 ? View.VISIBLE : View.INVISIBLE);
             boolean visible=matched[i] || i==first || i==second;
             String value=visible ? SYMBOLS[deck[i]] : "?";
             cards[i].setText(value); cards[i].setEnabled(!matched[i]);
@@ -125,10 +129,10 @@ public final class MemoryActivity extends Activity {
         TextView hint=label("Retrouve les paires, à ton rythme.",15,WHITE);
         LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(-1,-2); hintP.setMargins(0,dp(10),0,dp(12)); root.addView(hint,hintP);
         status=label("",16,GOLD); root.addView(status);
-        for(int row=0;row<MAX_PAIRS;row++){
+        for(int row=0;row<ROWS;row++){
             LinearLayout line=new LinearLayout(this); line.setOrientation(LinearLayout.HORIZONTAL); rows[row]=line;
-            for(int col=0;col<2;col++){
-                int i=row*2+col; Button card=button("?"); card.setTextSize(28); cards[i]=card;
+            for(int col=0;col<COLUMNS;col++){
+                int i=row*COLUMNS+col; Button card=button("?"); card.setTextSize(28); cards[i]=card;
                 LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(58),1); p.setMargins(dp(5),dp(5),dp(5),dp(5));
                 line.addView(card,p); card.setOnClickListener(v->select(i));
             }
