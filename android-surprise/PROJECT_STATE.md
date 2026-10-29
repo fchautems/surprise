@@ -293,3 +293,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40840111062 : compilation et tests Java de synthèse réussis ; parcours principal API 29 en cours. APK debug 12881968881 téléchargé, archive et APK passent unzip -t ; SHA-256 e352b1a71ffdbe2a91bfe81a953798ad5bc465bcc08d8deb1ab6556a919085d3. Tests Android encore à confirmer.
 
 - Diagnostic CI 40840111062 : compilation, tests de signal et parcours principal API 29 réussis ; tests musique API 29 et 35 échoués. Sur API 35 la commande shell `media` était absente ; sur API 29 un échec audio a remplacé l'indication de volume coupé. Correction : message préservé quand le volume est nul (44da9a8c), simulation du volume par touches Android (bd84fd27). Syntaxe Python et test de banque réussis localement ; run 40841889095 lancé, résultats inconnus. Les autres jobs du run précédent ont été annulés par la correction.
+
+- CI 40841889095 : tests Java et compilation réussis, parcours API 29 en cours ; APK debug 12883376315 téléchargé, archive et APK passent unzip -t, SHA-256 90877cf57203347efe6175b8ca10c0e2036a7e16ccce2a7b7aadf897e7591491. Les tests Android restent à confirmer.
