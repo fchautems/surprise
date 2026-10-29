@@ -46,8 +46,11 @@ adb("shell","am","force-stop","ch.fred.surprise")
 adb("shell","pm","clear","ch.fred.surprise")
 adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
 root=open_game()
+adb("shell","media","volume","--stream","3","--set","0")
 tap(root,"Écouter la mélodie")
 root=dump()
+assert has(root,"volume multimédia est coupé"),texts(root)
+adb("shell","media","volume","--stream","3","--set","5")
 for _ in range(5):
     if has(root,"À toi de jouer"):break
     root=dump()
