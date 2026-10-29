@@ -56,13 +56,20 @@ public final class MusicActivity extends Activity {
         short[] data=SoundWave.note(FREQ[note]);
         AudioTrack track=null;
         try {
+            int minimum=AudioTrack.getMinBufferSize(SoundWave.RATE,AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT);
+            if(minimum<=0){android.util.Log.w("SurpriseAudio","unsupported format: "+minimum);warnSound(token);return;}
+            int bufferBytes=Math.max(data.length*2,minimum);
             track=new AudioTrack(AudioManager.STREAM_MUSIC,SoundWave.RATE,AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT,data.length*2,AudioTrack.MODE_STATIC);
-            if(track.getState()!=AudioTrack.STATE_INITIALIZED){warnSound(token);return;}
-            if(track.write(data,0,data.length)!=data.length){warnSound(token);return;}
-            track.play();Thread.sleep(260);
+                AudioFormat.ENCODING_PCM_16BIT,bufferBytes,AudioTrack.MODE_STATIC);
+            if(track.getState()!=AudioTrack.STATE_INITIALIZED){android.util.Log.w("SurpriseAudio","initialization failed");warnSound(token);return;}
+            int written=track.write(data,0,data.length);
+            if(written!=data.length){android.util.Log.w("SurpriseAudio","write failed: "+written);warnSound(token);return;}
+            track.play();
+            if(track.getPlayState()!=AudioTrack.PLAYSTATE_PLAYING){android.util.Log.w("SurpriseAudio","play failed");warnSound(token);return;}
+            android.util.Log.i("SurpriseAudio","playback started");
+            Thread.sleep(260);
         } catch(InterruptedException interrupted){Thread.currentThread().interrupt();}
-        catch(IllegalArgumentException | IllegalStateException failure){warnSound(token);}
+        catch(IllegalArgumentException | IllegalStateException failure){android.util.Log.w("SurpriseAudio","playback exception",failure);warnSound(token);}
         finally {if(track!=null){try{track.stop();}catch(IllegalStateException ignored){}track.release();}}
     }
     private void checkVolume(){
