@@ -109,6 +109,13 @@ for index in range(8):
         root = wait_dump()
         root, node = card(root, index)
         assert node.attrib["content-desc"] == desc, "Cancel exit lost the card"
+        tap_text(root, "Défi : 6 paires")
+        dialog = wait_dump()
+        assert find_text(dialog, "Changer de défi"), texts(dialog)
+        tap_text(dialog, "Continuer")
+        root = wait_dump()
+        root, node = card(root, index)
+        assert node.attrib["content-desc"] == desc, "Cancel difficulty switch lost the card"
     if index == 1:
         before = desc
         adb("shell", "settings", "put", "system", "user_rotation", "1")
@@ -141,6 +148,9 @@ root = wait_dump()
 result = find_text(root, "Bravo !")
 assert result and "Record" in result, texts(root)
 assert "Nouveau record !" in result, result
+moves = int(re.search(r"Bravo ! (\\d+) essais", result).group(1))
+expected_stars = 3 if moves <= 5 else 2 if moves <= 8 else 1
+assert result.splitlines()[-1].count("✦") == expected_stars, result
 record = result.split("Record : ")[1].splitlines()[0]
 adb("shell", "settings", "put", "system", "user_rotation", "1")
 wait_dump()
@@ -216,6 +226,9 @@ for _ in range(4):
     adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
 result6 = find_text(wait_dump(), "Bravo !")
 assert result6 and "Nouveau record !" in result6, result6
+moves6 = int(re.search(r"Bravo ! (\\d+) essais", result6).group(1))
+expected_stars6 = 3 if moves6 <= 7 else 2 if moves6 <= 12 else 1
+assert result6.splitlines()[-1].count("✦") == expected_stars6, result6
 record6 = result6.split("Record : ")[1].splitlines()[0]
 tap_text(wait_dump(), "Mode : 4 paires")
 root = wait_dump()
