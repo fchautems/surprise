@@ -35,9 +35,9 @@ public final class MusicActivity extends Activity {
     private int position=0, wins=0;
     private volatile int generation=0;
     private volatile boolean playing=false;
-    private boolean freeMode=false, slowMode=false;
+    private boolean freeMode=false, slowMode=false, octaveHigh=false;
     private TextView status, soundWarning;
-    private Button listenButton, modeButton, tempoButton;
+    private Button listenButton, modeButton, tempoButton, octaveButton;
 
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
@@ -58,8 +58,10 @@ public final class MusicActivity extends Activity {
                 ? "Le volume multimédia est coupé." : "Son indisponible : vérifie le volume ou réessaie.");
         }});
     }
-    private void playNote(int note,int token){
-        playSamples(SoundWave.note(FREQ[note]),token,"note "+NAMES[note]);
+    private void playNote(int note,int token){playNote(note,token,false);}
+    private void playNote(int note,int token,boolean high){
+        double frequency=FREQ[note]*(high ? 2 : 1);
+        playSamples(SoundWave.note(frequency),token,"note "+NAMES[note]+(high ? " haute" : ""));
     }
     private void playSamples(short[] data,int token,String description){
         if(token!=generation || Thread.currentThread().isInterrupted())return;
@@ -115,8 +117,9 @@ public final class MusicActivity extends Activity {
         if(playing)return;
         checkVolume();
         final int token=freeMode ? ++generation : generation;
-        audio.execute(()->{if(token==generation)playNote(note,token);});
-        if(freeMode){status.setText("Mode libre · "+NAMES[note]);return;}
+        final boolean high=freeMode && octaveHigh;
+        audio.execute(()->{if(token==generation)playNote(note,token,high);});
+        if(freeMode){status.setText("Mode libre · "+NAMES[note]+(high ? " ↑" : ""));return;}
         if(note!=phrase[position]){
             position=0;status.setText("Presque ! Réécoute et réessaie.");return;
         }
@@ -144,6 +147,7 @@ public final class MusicActivity extends Activity {
         tempoButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
+        octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         status.setText(freeMode ? "Mode libre · joue à ton rythme." : "Écoute la mélodie, puis joue-la.");
     }
     @Override public void onCreate(Bundle saved){
@@ -151,7 +155,7 @@ public final class MusicActivity extends Activity {
         if(saved!=null){
             int[] p=saved.getIntArray("phrase");
             if(p!=null && p.length>=3 && p.length<=6){phrase=p;position=Math.max(0,Math.min(saved.getInt("position"),p.length-1));}
-            wins=Math.max(0,saved.getInt("wins"));freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",false);
+            wins=Math.max(0,saved.getInt("wins"));freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",false);octaveHigh=saved.getBoolean("octaveHigh",false);
         }
         ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(BG);
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);
@@ -194,6 +198,15 @@ public final class MusicActivity extends Activity {
         }
         root.addView(chords,new LinearLayout.LayoutParams(-1,-2));
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
+        octaveButton=button(octaveHigh ? "Octave normale" : "Octave +");
+        LinearLayout.LayoutParams op=new LinearLayout.LayoutParams(-1,dp(52));op.setMargins(0,dp(10),0,0);
+        root.addView(octaveButton,op);
+        octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
+        octaveButton.setOnClickListener(v->{
+            octaveHigh=!octaveHigh;
+            octaveButton.setText(octaveHigh ? "Octave normale" : "Octave +");
+            status.setText(octaveHigh ? "Mode libre · octave haute" : "Mode libre · octave normale");
+        });
         modeButton=button(freeMode ? "Revenir au défi" : "Jouer librement");
         LinearLayout.LayoutParams mp=new LinearLayout.LayoutParams(-1,dp(56));mp.setMargins(0,dp(12),0,0);root.addView(modeButton,mp);modeButton.setOnClickListener(v->switchMode());
         Button home=button("Retour à l’accueil");LinearLayout.LayoutParams back=new LinearLayout.LayoutParams(-1,dp(56));back.setMargins(0,dp(12),0,0);root.addView(home,back);home.setOnClickListener(v->finish());
@@ -202,6 +215,6 @@ public final class MusicActivity extends Activity {
     @Override protected void onStop(){generation++;playing=false;super.onStop();}
     @Override protected void onDestroy(){generation++;audio.shutdownNow();super.onDestroy();}
     @Override protected void onSaveInstanceState(Bundle out){
-        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);super.onSaveInstanceState(out);
+        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);super.onSaveInstanceState(out);
     }
 }
