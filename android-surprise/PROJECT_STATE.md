@@ -506,3 +506,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - La CI sépare la compilation du parcours principal Android 10, lequel part en parallèle des cinq autres parcours après téléchargement du même APK ; aucune validation retirée. Test de reprise après interruption réintroduit avec `run-as ... --user 0`, pour éviter l'erreur inter-utilisateurs constatée précédemment ; cette hypothèse doit être vérifiée sur Android.
 - Contrôles locaux : syntaxe Python valide ; YAML et dépendances de jobs vérifiés avec PyYAML. SDK Android, Gradle et adb absents ; Java disponible via le compilateur du JDK. Aucun téléphone physique ni écoute humaine.
 - La nouvelle CI et son APK restent à vérifier. Prochaine action : suivre les sept jobs, diagnostiquer les échecs, vérifier l'intégrité de l'APK et consigner durée, diff et résultats finaux.
+
+- CI 40963180862 sur f71bc9c3 : compilation et tests unitaires réussis. APK debug 12936457079 produit, archive et APK vérifiés par unzip -t ; SHA-256 4b864923e184b9b0687d9a68e5e0f5b5bdb3bd47f1ffc8fa865cd306ab915726. Les parcours sur émulateurs restent à valider.
