@@ -290,6 +290,7 @@ for index in range(12):
     root, node = card(root, index)
     states6[index] = node.attrib["content-desc"]
 solved6 = {i for i in range(12) if "trouvée " in states6[i]}
+initial_solved6 = len(solved6) // 2
 visible6 = [i for i in range(12) if "visible " in states6[i]]
 if len(visible6) == 2:
     target = next(i for i in range(12) if i not in solved6 and i not in visible6)
@@ -311,7 +312,8 @@ for _ in range(4):
     adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
 result6 = find_text(wait_dump(), "Bravo !")
 assert result6 and "Nouveau record !" in result6, result6
-assert re.search(r"Meilleure série : [1-6]", result6), result6
+streak6 = int(re.search(r"Meilleure série : (\d+)", result6).group(1))
+assert 6 - initial_solved6 <= streak6 <= 6, (initial_solved6, result6)
 assert description(wait_dump(), "6 paires trouvées sur 6"), "Long-mode progress incomplete"
 moves6 = int(re.search(r"Bravo ! (\d+) essais", result6).group(1))
 expected_stars6 = 3 if moves6 <= 7 else 2 if moves6 <= 12 else 1
