@@ -65,13 +65,13 @@ def card(root, index):
     for _ in range(10):
         node = next((n for n in root.iter("node") if n.attrib.get("content-desc", "").startswith(prefix)), None)
         if node is not None:
-            bounds = list(map(int, re.findall(r"\\d+", node.attrib["bounds"])))
+            bounds = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
             if len(bounds) == 4 and 60 <= (bounds[1] + bounds[3]) // 2 <= 560:
                 return root, node
             down = len(bounds) == 4 and (bounds[1] + bounds[3]) // 2 > 560
         else:
             visible = [int(m.group(1))-1 for n in root.iter("node")
-                       if (m := re.match(r"Carte (\\d+) :", n.attrib.get("content-desc", "")))]
+                       if (m := re.match(r"Carte (\d+) :", n.attrib.get("content-desc", "")))]
             down = not visible or index > max(visible)
         if down:
             adb("shell", "input", "swipe", "160", "480", "160", "220", "300")
