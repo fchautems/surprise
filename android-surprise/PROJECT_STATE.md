@@ -332,3 +332,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles : syntaxe Python locale valide ; SDK, Gradle, javac et adb absents localement. CI 40853835903 intégralement réussie : compilation, tests unitaires et six jobs sur Android 10 et 15. Les journaux des deux tests ciblés confirment PLAYING ; aucune écoute humaine n'a vérifié la qualité du son. APK debug 12888038098 produit, archive et APK vérifiés par unzip -t ; SHA-256 APK 212a8f8bd048c59a594af4595bd4e689d6e12ea703f18aff5c175430be90d5b1. Dernière CI confirmée : 40848237189, six jobs réussis ; APK debug 12886425482, intégrité ZIP vérifiée. Aucun test sur téléphone ni écoute humaine de l'audio.
 - Autres commits poussés : 320ccc54, 5d406483, 96038ec7 et le commit de ce bilan (journal seulement). Aucun échec de CI pendant cette session ; aucun appareil physique disponible. Réglage de modèle ou effort non modifié.
 - Prochaine action : poursuivre la finition, vérifier les futurs runs et préparer la livraison avec APK et instructions d'installation.
+
+
+## Session du 29 octobre 2026, début 11:58:36 Europe/Zurich (en cours)
+- Base 8a7b1c23098c200c607ae532effee712a783d88f ; commit de code poussé 63e3fcc4de4034c6883827838f71343a604a08b9.
+- Fichiers modifiés : MemoryActivity.java +26/-6, tests/memory_smoke.py +30/-0 ; total code +56/-6 hors journal.
+- Jeu : indice facultatif utilisable une fois, coût de deux essais, sans clignotement ni temporisation ; conservation lors de la rotation, désactivation après usage, remise à zéro par nouvelle partie. Test du parcours, du coût et de la rotation ajouté.
+- Contrôles locaux : syntaxe Python valide. SDK Android, Gradle, javac et adb absents ; CI 40861840953 lancée, résultat et nouvel APK inconnus. CI précédente 40853835903 : six jobs réussis ; APK 12888038098 vérifié par unzip -t, SHA-256 212a8f8bd048c59a594af4595bd4e689d6e12ea703f18aff5c175430be90d5b1. Aucun test sur téléphone physique.
+- Prochaine action : vérifier compilation, APK et six jobs ; corriger tout échec puis consigner durée et résultats.
