@@ -190,24 +190,28 @@ for index in range(12):
         root, node = card(root, index)
         assert node.attrib["content-desc"] == desc, "Long mode lost its state on rotation"
 assert all(list(known6.values()).count(value) == 2 for value in known6.values()), known6
-for _ in range(30):
-    states = {}
-    for index in range(12):
-        root, node = card(root, index)
-        states[index] = node.attrib["content-desc"]
-    remaining = [i for i in range(12) if "trouvée " not in states[i]]
-    if not remaining:
-        break
-    visible = [i for i in remaining if "visible " in states[i]]
-    if len(visible) == 2:
-        target = next(i for i in remaining if i not in visible)
-    elif len(visible) == 1:
-        target = next(i for i in remaining if i != visible[0] and known6[i] == known6[visible[0]])
-    else:
-        target = remaining[0]
+states6 = {}
+for index in range(12):
+    root, node = card(root, index)
+    states6[index] = node.attrib["content-desc"]
+solved6 = {i for i in range(12) if "trouvée " in states6[i]}
+visible6 = [i for i in range(12) if "visible " in states6[i]]
+if len(visible6) == 2:
+    target = next(i for i in range(12) if i not in solved6 and i not in visible6)
     root = tap_card(root, target)
-else:
-    raise AssertionError("Long memory game did not finish")
+    visible6 = [target]
+while len(solved6) < 12:
+    first6 = visible6[0] if visible6 else next(i for i in range(12) if i not in solved6)
+    if not visible6:
+        root = tap_card(root, first6)
+    second6 = next(i for i in range(12) if i != first6 and i not in solved6 and known6[i] == known6[first6])
+    root = tap_card(root, second6)
+    root, first_node = card(root, first6)
+    root, second_node = card(root, second6)
+    assert "trouvée " in first_node.attrib["content-desc"]
+    assert "trouvée " in second_node.attrib["content-desc"]
+    solved6.update((first6, second6))
+    visible6 = []
 result6 = find_text(wait_dump(), "Bravo !")
 assert result6 and "Nouveau record !" in result6, result6
 record6 = result6.split("Record : ")[1].splitlines()[0]
