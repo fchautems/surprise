@@ -108,7 +108,7 @@ root=dump()
 positions={}
 for label in ("Do","Ré","Mi"):
     node=next(n for n in root.iter("node") if n.attrib.get("text")==label)
-    b=list(map(int,re.findall(r"\\d+",node.attrib["bounds"])))
+    b=list(map(int,re.findall(r"\d+",node.attrib["bounds"])))
     positions[label]=(str((b[0]+b[2])//2),str((b[1]+b[3])//2))
 adb("logcat","-c")
 for label in ("Do","Ré","Mi"):
