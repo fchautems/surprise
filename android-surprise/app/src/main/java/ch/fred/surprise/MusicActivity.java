@@ -168,6 +168,16 @@ public final class MusicActivity extends Activity {
         octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         status.setText(freeMode ? "Mode libre · joue à ton rythme." : "Écoute la mélodie, puis joue-la.");
     }
+    private void confirmLeaving(){
+        if(wins==0 && position==0){finish();return;}
+        new android.app.AlertDialog.Builder(this)
+            .setTitle("Quitter le défi ?")
+            .setMessage("La progression du défi en cours sera perdue.")
+            .setNegativeButton("Continuer",(dialog,which)->dialog.dismiss())
+            .setPositiveButton("Quitter",(dialog,which)->finish())
+            .show();
+    }
+    @Override public void onBackPressed(){confirmLeaving();}
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);phrase=nextPhrase(3,null);setVolumeControlStream(AudioManager.STREAM_MUSIC);getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
         if(saved!=null){
@@ -227,10 +237,14 @@ public final class MusicActivity extends Activity {
         });
         modeButton=button(freeMode ? "Revenir au défi" : "Jouer librement");
         LinearLayout.LayoutParams mp=new LinearLayout.LayoutParams(-1,dp(56));mp.setMargins(0,dp(12),0,0);root.addView(modeButton,mp);modeButton.setOnClickListener(v->switchMode());
-        Button home=button("Retour à l’accueil");LinearLayout.LayoutParams back=new LinearLayout.LayoutParams(-1,dp(56));back.setMargins(0,dp(12),0,0);root.addView(home,back);home.setOnClickListener(v->finish());
+        Button home=button("Retour à l’accueil");LinearLayout.LayoutParams back=new LinearLayout.LayoutParams(-1,dp(56));back.setMargins(0,dp(12),0,0);root.addView(home,back);home.setOnClickListener(v->confirmLeaving());
         setContentView(scroll);
     }
-    @Override protected void onStop(){generation++;playing=false;super.onStop();}
+    @Override protected void onStop(){
+        generation++;
+        if(playing && !freeMode){position=0;status.setText("Lecture interrompue · réécoute la mélodie.");}
+        playing=false;super.onStop();
+    }
     @Override protected void onDestroy(){generation++;audio.shutdownNow();super.onDestroy();}
     @Override protected void onSaveInstanceState(Bundle out){
         out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);super.onSaveInstanceState(out);
