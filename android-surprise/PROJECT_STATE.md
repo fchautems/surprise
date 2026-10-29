@@ -471,3 +471,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Bilan final : CI 40947237942 entièrement réussie (six jobs : compilation, tests unitaires et parcours Android 10 et 15). Correction du test audio validée sur les deux versions. APK debug 12930216188 : archive et contenu vérifiés par unzip -t ; SHA-256 75d05a6802186a1403736f765cce59913c351ff6b851c04d98eae5cc43e5f59b. Aucun essai sur téléphone physique ni écoute humaine.
 - Diff final hors journal : MusicActivity.java +21/-3 ; tests/music_smoke.py +23/-5 ; total +44/-8. PROJECT_STATE.md : +21/-1. Commits poussés : 25178124, 5e7c4c51, 9813e246, f7c24ea4, 93f3b302, d2813c51, f5ecb4fc et ce bilan. Le premier workflow a connu un échec de test, corrigé puis validé. Modèle et effort non modifiés ; quota inconnu.
 - Prochaine action : poursuivre la finition sur la branche prévue et préparer la livraison avec APK vérifié et instructions, en conservant la surprise.
+
+
+## Session du 29 octobre 2026, début 21:46:18 Europe/Zurich (en cours)
+- Base e3ea02ec2f8697a90c9aa82f6fad8484bcfc0631 ; commit code 691029f9a7d286cd23648b2c90ca24c4301efd92 poussé.
+- MusicActivity.java +16/-2, tests/music_smoke.py +17/-0, total +33/-2 hors journal. Confirmation de sortie quand un défi a commencé, par retour système ou bouton d'accueil ; l'annulation conserve la progression, y compris en mode libre. Une lecture interrompue par l'arrêt de l'activité affiche un message invitant à la relancer. Test émulateur étendu aux deux annulations puis à la sortie confirmée ; le cas de lecture interrompue n'a pas encore de test dédié.
+- Contrôle local : syntaxe Python valide. SDK Android, Gradle et adb absents ; compilateur Java disponible via java com.sun.tools.javac.Main. CI nouvelle déclenchée, résultats à vérifier. Dernière CI complète 40947237942 : six jobs réussis et APK 12930216188 d'intégrité vérifiée ; aucun téléphone physique ni écoute humaine.
+- Prochaine action : identifier la CI du commit, suivre tests et compilation, contrôler l'intégrité de l'APK et corriger toute régression avant le bilan final.
