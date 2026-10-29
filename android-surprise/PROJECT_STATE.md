@@ -426,3 +426,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : inspecter la CI et l'APK, corriger les échecs éventuels et consigner les résultats.
 
 - CI 40926254092 : le test mémoire API 35 échoue sur la visibilité de l'accueil après retour ; la sortie de l'activité ou la position de défilement ne sont pas distinguées par le message initial. Hypothèse : écran d'accueil conservé hors du haut du viewport. Correctif 8ef0bb01 : remonter progressivement et afficher les textes observés en cas d'échec ; syntaxe Python valide. Nouvelle CI lancée, hypothèse et correctif non encore confirmés. Les jobs encore en cours du run précédent peuvent être annulés.
+
+- Autre cause plausible : le contrôle était tapé près de la zone système. bf176112 limite les appuis aux coordonnées plus sûres et corrige la direction de défilement en utilisant le centre du contrôle. Syntaxe Python valide. Relance CI à vérifier ; aucune conclusion sur la cause exacte avant résultats.
