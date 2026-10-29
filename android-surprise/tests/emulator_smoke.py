@@ -66,6 +66,10 @@ correct_by_question = {
     m.group(1): m.group(2)
     for m in re.finditer(r'\{"[^"]+","([^"]+)","([^"]+)","[^"]+","[^"]+","[^"]+"\}', source)
 }
+options_by_question = {
+    m.group(1): set(m.groups()[1:])
+    for m in re.finditer(r'\{"[^"]+","([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)"\}', source)
+}
 seen = set()
 missed_questions = set()
 first_missed = None
@@ -233,6 +237,7 @@ assert find_text(root, "BIENVENUE"), "Leaving the game failed"
 tap_text(root, "Choisir un thème")
 tap_text(wait_dump(), "CRYPTO")
 themed_seen = set()
+themed_missed = None
 for index in range(8):
     adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
     root = wait_dump()
@@ -240,29 +245,64 @@ for index in range(8):
     assert len(displayed) == 1 and displayed <= category_bank["CRYPTO"], texts(root)
     assert not (displayed & themed_seen), displayed
     themed_seen.update(displayed)
-    tap_text(root, correct_by_question[next(iter(displayed))])
+    correct = correct_by_question[next(iter(displayed))]
+    if index == 0:
+        themed_missed = next(iter(displayed))
+        buttons = [n.attrib["text"] for n in root.iter("node")
+                   if n.attrib.get("class") == "android.widget.Button"
+                   and n.attrib.get("enabled") == "true"
+                   and n.attrib.get("text") in options_by_question[themed_missed]]
+        chosen = next(value for value in buttons if value != correct)
+    else:
+        chosen = correct
+    tap_text(root, chosen)
     tap_text(wait_dump(), "Continuer" if index < 7 else "Voir le résultat")
 root = wait_dump()
-assert find_text(root, "130 points"), texts(root)
-assert find_text(root, "Record CRYPTO : 130 points"), texts(root)
+assert find_text(root, "110 points"), texts(root)
+assert find_text(root, "Record CRYPTO : 110 points"), texts(root)
 adb("shell", "settings", "put", "system", "user_rotation", "1")
 wait_dump()
 adb("shell", "settings", "put", "system", "user_rotation", "0")
 root = wait_dump()
-assert find_text(root, "Record CRYPTO : 130 points"), "Thematic record lost on rotation"
+assert find_text(root, "Record CRYPTO : 110 points"), "Thematic record lost on rotation"
+tap_text(root, "Prendre ma revanche")
+retry_seen = set()
+for index in range(8):
+    adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
+    retry = wait_dump()
+    shown = set(texts(retry)) & bank
+    assert len(shown)==1 and shown <= category_bank["CRYPTO"], (index,shown,texts(retry))
+    if index == 0:
+        assert shown == {themed_missed}, (shown,themed_missed)
+        adb("shell", "settings", "put", "system", "user_rotation", "1")
+        wait_dump()
+        adb("shell", "settings", "put", "system", "user_rotation", "0")
+        retry = wait_dump()
+        assert (set(texts(retry)) & bank) == shown, "Thematic retry lost on rotation"
+    assert not (shown & retry_seen), shown
+    retry_seen.update(shown)
+    tap_text(retry, correct_by_question[next(iter(shown))])
+    tap_text(wait_dump(), "Continuer" if index < 7 else "Voir le résultat")
+root = wait_dump()
+assert find_text(root, "130 points"), texts(root)
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+root = wait_dump()
+assert find_text(root, "130 points"), "Retry result lost on rotation"
 adb("shell", "input", "keyevent", "4")
 root = wait_dump()
 assert find_text(root, "BIENVENUE"), "Back from thematic result failed"
 tap_text(root, "Mes records")
 dialog = wait_dump()
-assert find_text(dialog, "CRYPTO  ·  130 points"), texts(dialog)
+assert find_text(dialog, "CRYPTO  ·  110 points"), texts(dialog)
 assert find_text(dialog, "À découvrir"), texts(dialog)
 tap_text(dialog, "Fermer")
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 tap_text(wait_dump(), "Mes records")
 dialog = wait_dump()
-assert find_text(dialog, "CRYPTO  ·  130 points"), "Thematic record lost after restart"
+assert find_text(dialog, "CRYPTO  ·  110 points"), "Thematic record lost after restart"
 tap_text(dialog, "Fermer")
 root = wait_dump()
 
