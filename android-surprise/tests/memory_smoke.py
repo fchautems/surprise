@@ -259,10 +259,60 @@ moves6 = int(re.search(r"Bravo ! (\d+) essais", result6).group(1))
 expected_stars6 = 3 if moves6 <= 7 else 2 if moves6 <= 12 else 1
 assert result6.splitlines()[-1].count("✦") == expected_stars6, result6
 record6 = result6.split("Record : ")[1].splitlines()[0]
-tap_text(wait_dump(), "Mode : 4 paires")
+tap_text(wait_dump(), "Défi : 8 paires")
+root = wait_dump()
+assert find_text(root, "0 / 8 paires") and not find_text(root, "Record : "), texts(root)
+assert description(root, "0 paires trouvées sur 8"), "Expert progress missing"
+known8 = {}
+for index in range(16):
+    root = tap_card(root, index)
+    root, node = card(root, index)
+    known8[index] = node.attrib["content-desc"].split()[-1]
+    if index == 0:
+        before = node.attrib["content-desc"]
+        adb("shell", "settings", "put", "system", "user_rotation", "1")
+        wait_dump()
+        adb("shell", "settings", "put", "system", "user_rotation", "0")
+        root = wait_dump()
+        root, node = card(root, index)
+        assert node.attrib["content-desc"] == before, "Expert mode lost state on rotation"
+assert all(list(known8.values()).count(value) == 2 for value in known8.values()), known8
+states8 = {}
+for index in range(16):
+    root, node = card(root, index)
+    states8[index] = node.attrib["content-desc"]
+solved8 = {i for i in range(16) if "trouvée " in states8[i]}
+visible8 = [i for i in range(16) if "visible " in states8[i]]
+if len(visible8) == 2:
+    target = next(i for i in range(16) if i not in solved8 and i not in visible8)
+    root = tap_card(root, target)
+    visible8 = [target]
+while len(solved8) < 16:
+    first8 = visible8[0] if visible8 else next(i for i in range(16) if i not in solved8)
+    if not visible8:
+        root = tap_card(root, first8)
+    second8 = next(i for i in range(16) if i != first8 and i not in solved8 and known8[i] == known8[first8])
+    root = tap_card(root, second8)
+    root, first_node = card(root, first8)
+    root, second_node = card(root, second8)
+    assert "trouvée " in first_node.attrib["content-desc"]
+    assert "trouvée " in second_node.attrib["content-desc"]
+    solved8.update((first8, second8))
+    visible8 = []
+for _ in range(4):
+    adb("shell", "input", "swipe", "160", "220", "160", "480", "300")
+root = wait_dump()
+result8 = find_text(root, "Bravo !")
+assert result8 and "Nouveau record !" in result8, result8
+assert description(root, "8 paires trouvées sur 8"), "Expert progress incomplete"
+record8 = result8.split("Record : ")[1].splitlines()[0]
+tap_text(root, "Mode : 4 paires")
 root = wait_dump()
 assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
 tap_text(root, "Défi : 6 paires")
 root = wait_dump()
 assert find_text(root, "0 / 6 paires") and find_text(root, "Record : " + record6), texts(root)
+tap_text(root, "Défi : 8 paires")
+root = wait_dump()
+assert find_text(root, "0 / 8 paires") and find_text(root, "Record : " + record8), texts(root)
 print("Memory game smoke test passed")
