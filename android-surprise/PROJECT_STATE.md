@@ -459,3 +459,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : syntaxe Python valide ; méthode Java de génération compilée et exécutée dans un banc isolé, 400 000 séquences testées pour longueurs 3 à 6, valeurs, absence de répétitions voisines et de répétition de la séquence précédente : réussite. Le binaire javac est absent mais le compilateur du JDK est accessible via java com.sun.tools.javac.Main ; SDK Android, Gradle et adb absents. Pas de test sur téléphone ni écoute humaine.
 - CI 40944727584 pour le code courant en attente ; build et APK nouveaux pas encore vérifiés. CI précédente 40936991516 : six jobs réussis, APK 12924268728 intégrité vérifiée.
 - Prochaine action : suivre la CI, contrôler l'APK et diagnostiquer les échecs ; terminer le bilan avec durée réelle et état final.
+
+- CI 40944727584 sur 25178124 : compilation et tests unitaires réussis, parcours principal Android 10 en cours. APK debug 12929070974 produit ; archive et APK vérifiés par unzip -t ; SHA-256 99b718b2c0c588a0a0a71d59f00e758447b2919547075b7c90999055205846f5. Les tests sur émulateurs restent à terminer.
