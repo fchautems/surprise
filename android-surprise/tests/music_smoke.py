@@ -69,6 +69,7 @@ adb("shell","settings","put","system","user_rotation","1")
 dump()
 adb("shell","settings","put","system","user_rotation","0")
 root=dump()
+assert has(root,"2 / 3 notes"),"Progress message lost after rotation"
 tap(root,"La")
 root=dump()
 assert has(root,"1 mélodie"),texts(root)
