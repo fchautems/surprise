@@ -135,6 +135,7 @@ public class MainActivity extends Activity {
         {"CRYPTO","Combien de mots contient souvent une phrase de récupération ?","12 ou 24","Un seul obligatoirement","100 exactement","Aucun"}
     };
     private static final int ROUND=8;
+    private static final String[] THEMES={"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS","CRYPTO"};
     private final Random rng=new Random();
     private final ArrayList<Integer> order=new ArrayList<>();
     private int index,score,streak,best,correctCount,longestStreak; private boolean answered, showingHome, jokerUsed, choosingTheme;
@@ -209,6 +210,21 @@ public class MainActivity extends Activity {
         android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
         return QuizRules.award(prefs.getInt("games",0),prefs.getInt("totalCorrect",0),prefs.getInt("longest",0));
     }
+    private boolean isTheme(String mode){
+        for(String theme:THEMES)if(theme.equals(mode))return true;
+        return false;
+    }
+    private void showRecords(){
+        android.content.SharedPreferences p=getPreferences(MODE_PRIVATE);
+        StringBuilder text=new StringBuilder();
+        for(String theme:THEMES){
+            if(text.length()>0)text.append("\n");
+            int record=p.getInt("themeBest_"+theme,-1);
+            text.append(theme).append("  ·  ").append(record<0 ? "À découvrir" : record+" points");
+        }
+        new android.app.AlertDialog.Builder(this).setTitle("Mes records par thème")
+            .setMessage(text.toString()).setPositiveButton("Fermer",(dialog,which)->dialog.dismiss()).show();
+    }
     private void showHome(){
         showingHome=true; choosingTheme=false; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI"); category.setTextColor(GOLD);
@@ -228,6 +244,7 @@ public class MainActivity extends Activity {
         memory.setOnClickListener(v->startActivity(new android.content.Intent(this,MemoryActivity.class)));
         Button theme=makeMenuButton("Choisir un thème");
         choices.addView(theme); theme.setOnClickListener(v->showThemes());
+        Button records=makeMenuButton("Mes records"); choices.addView(records); records.setOnClickListener(v->showRecords());
     }
     private Button makeMenuButton(String text){
         Button b=new Button(this); b.setText(text); b.setAllCaps(false); b.setTextSize(16);
@@ -240,7 +257,7 @@ public class MainActivity extends Activity {
         choices.removeAllViews(); joker.setVisibility(View.GONE); progress.setProgress(0);
         header.setText("CHOISIS TON THÈME"); category.setText("✦  EXPLORATION  ✦"); category.setTextColor(GOLD);
         question.setText("Quelle escale te tente ?"); feedback.setText(""); next.setText("Retour"); next.setVisibility(View.VISIBLE);
-        for(String theme:new String[]{"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS","CRYPTO"}){
+        for(String theme:THEMES){
             Button b=makeMenuButton(theme); b.setTextColor(categoryColor(theme));
             b.setBackground(outlinedShape(CARD,categoryColor(theme))); choices.addView(b);
             b.setOnClickListener(v->{gameMode=theme;newGame();});
@@ -306,6 +323,11 @@ public class MainActivity extends Activity {
             .putInt("longest",Math.max(prefs.getInt("longest",0),longestStreak)).apply();
     }
     private void finishRound(){
+        if(isTheme(gameMode)){
+            android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
+            String key="themeBest_"+gameMode;
+            prefs.edit().putInt(key,Math.max(score,prefs.getInt(key,-1))).apply();
+        }
         if(gameMode.equals("DÉFI")){
             android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
             int old=prefs.getString("dailyDate","").equals(dailyDate) ? prefs.getInt("dailyBest",0) : 0;
@@ -313,7 +335,7 @@ public class MainActivity extends Activity {
         }
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
         choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText(gameMode.equals("DÉFI") ? "✦  DÉFI DU JOUR  ✦" : gameMode.equals("RATTRAPAGE") ? "✦  REVANCHE  ✦" : "✦  BRAVO  ✦");category.setTextColor(GOLD);
-        question.setText(score+" points");feedback.setText((correctCount==ROUND ? "✦ Sans-faute !\n" : "")+correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points\n✦  "+currentAward());feedback.setTextColor(GOLD);
+        question.setText(score+" points");feedback.setText((correctCount==ROUND ? "✦ Sans-faute !\n" : "")+correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points"+(isTheme(gameMode) ? "\nRecord "+gameMode+" : "+getPreferences(MODE_PRIVATE).getInt("themeBest_"+gameMode,0)+" points" : "")+"\n✦  "+currentAward());feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
         if(!review.isEmpty()){
             Button retry=makeMenuButton("Prendre ma revanche"); choices.addView(retry);
