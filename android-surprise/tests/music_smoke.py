@@ -69,6 +69,17 @@ assert len(notes)==3 and all(a!=b for a,b in zip(notes,notes[1:])), (notes,playe
 tap(root,notes[0])
 root=dump()
 assert has(root,"1 / 3 notes"),texts(root)
+tap(root,"Indice")
+root=dump()
+assert has(root,"Indice : prochaine note · "+notes[1]), texts(root)
+node=next(n for n in root.iter("node") if n.attrib.get("text")=="Indice utilisé")
+assert node.attrib.get("enabled")=="false", node.attrib
+adb("shell","settings","put","system","user_rotation","1")
+dump()
+adb("shell","settings","put","system","user_rotation","0")
+root=dump()
+node=next(n for n in root.iter("node") if n.attrib.get("text")=="Indice utilisé")
+assert node.attrib.get("enabled")=="false", "Hint reused after rotation"
 wrong=next(n for n in ("Do","Ré","Mi","Sol","La") if n!=notes[1])
 tap(root,wrong)
 root=dump()
@@ -104,6 +115,8 @@ assert has(root,"Lent"),texts(root)
 tap(root,notes[2])
 root=dump()
 assert has(root,"1 mélodie"),texts(root)
+hint=next(n for n in root.iter("node") if n.attrib.get("text")=="Indice")
+assert hint.attrib.get("enabled")=="true", "New melody did not reset hint"
 # The next tune has the same length initially, but never repeats the last tune
 # and never uses the same pitch twice in a row.
 adb("logcat","-c")

@@ -35,9 +35,9 @@ public final class MusicActivity extends Activity {
     private int position=0, wins=0;
     private volatile int generation=0;
     private volatile boolean playing=false;
-    private boolean freeMode=false, slowMode=false, octaveHigh=false;
+    private boolean freeMode=false, slowMode=false, octaveHigh=false, hintUsed=false;
     private TextView status, soundWarning;
-    private Button listenButton, modeButton, tempoButton, octaveButton;
+    private Button listenButton, modeButton, tempoButton, octaveButton, hintButton;
 
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
@@ -97,7 +97,7 @@ public final class MusicActivity extends Activity {
     }
     private void listen(){
         if(playing || freeMode)return;
-        position=0;playing=true;final int token=++generation;final int[] copy=phrase.clone();final boolean slow=slowMode;
+        position=0;playing=true;hintButton.setEnabled(false);final int token=++generation;final int[] copy=phrase.clone();final boolean slow=slowMode;
         checkVolume();
         status.setText("Écoute bien…");
         audio.execute(()->{
@@ -111,7 +111,7 @@ public final class MusicActivity extends Activity {
                     }catch(InterruptedException interrupted){Thread.currentThread().interrupt();break;}
                 }
             }
-            runOnUiThread(()->{if(token==generation && !isFinishing()){playing=false;status.setText("À toi de jouer !");}});
+            runOnUiThread(()->{if(token==generation && !isFinishing()){playing=false;hintButton.setEnabled(!hintUsed);status.setText("À toi de jouer !");}});
         });
     }
     private int[] nextPhrase(int count, int[] previous){
@@ -131,6 +131,12 @@ public final class MusicActivity extends Activity {
         }
         return next;
     }
+    private void showHint(){
+        if(freeMode || playing || hintUsed)return;
+        hintUsed=true;hintButton.setEnabled(false);
+        hintButton.setText("Indice utilisé");
+        status.setText("Indice : prochaine note · "+NAMES[phrase[position]]);
+    }
     private void choose(int note){
         if(playing)return;
         checkVolume();
@@ -148,6 +154,7 @@ public final class MusicActivity extends Activity {
             getPreferences(MODE_PRIVATE).edit().putInt("melodies",Math.max(best,wins)).apply();
             int count=Math.min(6,3+wins/2);
             phrase=nextPhrase(count,phrase);
+            hintUsed=false;hintButton.setEnabled(true);hintButton.setText("Indice");
             position=0;status.setText("✦ Bravo ! "+wins+" mélodie"+(wins>1?"s":"")+" réussie"+(wins>1?"s":"")+"\nÉcoute la suivante.");
         }else status.setText("Bien joué : "+position+" / "+phrase.length+" notes");
     }
@@ -163,6 +170,8 @@ public final class MusicActivity extends Activity {
         modeButton.setText(freeMode ? "Revenir au défi" : "Jouer librement");
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         tempoButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        hintButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        hintButton.setEnabled(!hintUsed);
         listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
@@ -185,7 +194,7 @@ public final class MusicActivity extends Activity {
         if(saved!=null){
             int[] p=saved.getIntArray("phrase");
             if(p!=null && p.length>=3 && p.length<=6){phrase=p;position=Math.max(0,Math.min(saved.getInt("position"),p.length-1));}
-            wins=Math.max(0,saved.getInt("wins"));freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",slowMode);octaveHigh=saved.getBoolean("octaveHigh",octaveHigh);
+            wins=Math.max(0,saved.getInt("wins"));hintUsed=saved.getBoolean("hintUsed",false);freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",slowMode);octaveHigh=saved.getBoolean("octaveHigh",octaveHigh);
         }
         ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(BG);
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);
@@ -200,12 +209,17 @@ public final class MusicActivity extends Activity {
         listenRow=new LinearLayout(this);listenRow.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(56));lp.setMargins(0,dp(14),0,dp(12));root.addView(listenRow,lp);
         listenButton=button("Écouter la mélodie");listenButton.setTextSize(15);
-        listenRow.addView(listenButton,new LinearLayout.LayoutParams(0,dp(56),3));listenButton.setOnClickListener(v->listen());
+        listenRow.addView(listenButton,new LinearLayout.LayoutParams(0,dp(56),2));listenButton.setOnClickListener(v->listen());
         tempoButton=button(slowMode ? "Normal" : "Lent");tempoButton.setTextSize(14);
         LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(0,dp(56),1);tp.setMargins(dp(6),0,0,0);
         listenRow.addView(tempoButton,tp);
         tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");
         tempoButton.setOnClickListener(v->{slowMode=!slowMode;getPreferences(MODE_PRIVATE).edit().putBoolean("slowMode",slowMode).apply();tempoButton.setText(slowMode ? "Normal" : "Lent");tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");});
+        hintButton=button(hintUsed ? "Indice utilisé" : "Indice");hintButton.setTextSize(12);
+        LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(0,dp(56),1);hintP.setMargins(dp(6),0,0,0);
+        listenRow.addView(hintButton,hintP);hintButton.setEnabled(!hintUsed);
+        hintButton.setOnClickListener(v->showHint());
+        hintButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         listenButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         tempoButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
@@ -246,10 +260,10 @@ public final class MusicActivity extends Activity {
     @Override protected void onStop(){
         generation++;
         if(playing && !freeMode){position=0;status.setText("Lecture interrompue · réécoute la mélodie.");}
-        playing=false;super.onStop();
+        playing=false;hintButton.setEnabled(!hintUsed);super.onStop();
     }
     @Override protected void onDestroy(){generation++;audio.shutdownNow();super.onDestroy();}
     @Override protected void onSaveInstanceState(Bundle out){
-        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);super.onSaveInstanceState(out);
+        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putBoolean("hintUsed",hintUsed);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);super.onSaveInstanceState(out);
     }
 }
