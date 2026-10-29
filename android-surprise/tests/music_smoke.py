@@ -44,6 +44,7 @@ def open_game():
         tap(root,"Jouer en musique")
     raise AssertionError("Music screen not opened")
 
+adb("logcat","-c")
 adb("shell","am","force-stop","ch.fred.surprise")
 adb("shell","pm","clear","ch.fred.surprise")
 adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
@@ -104,4 +105,7 @@ assert has(root,"Écouter la mélodie"),texts(root)
 tap(root,"Retour à l’accueil")
 root=open_game()
 assert has(root,"Record : 1"),"Free play changed the record"
+audio_log=adb("logcat","-d","-s","SurpriseAudio:I")
+print("Audio diagnostic:",audio_log[-3000:])
+assert "playback started" in audio_log, "AudioTrack never entered playing state"
 print("Music UI smoke test passed")
