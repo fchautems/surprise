@@ -252,7 +252,14 @@ dialog = wait_dump()
 tap_text(dialog, "Recommencer")
 root = wait_dump()
 tap_text(root, "Retour à l’accueil")
-assert find_text(wait_dump(), "BIENVENUE"), "Memory return failed"
+root = wait_dump()
+# The previous screen can retain its scroll offset, especially with system insets.
+for _ in range(3):
+    if find_text(root, "BIENVENUE"):
+        break
+    adb("shell", "input", "swipe", "160", "200", "160", "520", "300")
+    root = wait_dump()
+assert find_text(root, "BIENVENUE"), ("Memory return failed", texts(root))
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 root = open_memory()
