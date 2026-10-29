@@ -101,6 +101,7 @@ public final class MusicActivity extends Activity {
         checkVolume();
         status.setText("Écoute bien…");
         audio.execute(()->{
+            android.util.Log.i("SurpriseAudio","melody playback started");
             for(int i=0;i<copy.length;i++){
                 if(token!=generation || Thread.currentThread().isInterrupted())break;
                 playNote(copy[i],token);

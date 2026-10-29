@@ -63,7 +63,8 @@ for _ in range(5):
     root=dump()
 assert has(root,"À toi de jouer"),texts(root)
 played=adb("logcat","-d","-s","SurpriseAudio:I")
-notes=re.findall(r"playback started: note (Do|Ré|Mi|Sol|La)(?:\s|$)", played)
+assert "melody playback started" in played, played
+notes=re.findall(r"playback started: note (Do|Ré|Mi|Sol|La)(?:\s|$)", played.split("melody playback started")[-1])
 assert len(notes)==3 and all(a!=b for a,b in zip(notes,notes[1:])), (notes,played)
 tap(root,notes[0])
 root=dump()
@@ -98,7 +99,8 @@ for _ in range(8):
     if has(root,"À toi de jouer"):break
 assert has(root,"À toi de jouer"),texts(root)
 second_log=adb("logcat","-d","-s","SurpriseAudio:I")
-second=re.findall(r"playback started: note (Do|Ré|Mi|Sol|La)(?:\s|$)",second_log)
+assert "melody playback started" in second_log, second_log
+second=re.findall(r"playback started: note (Do|Ré|Mi|Sol|La)(?:\s|$)",second_log.split("melody playback started")[-1])
 assert len(second)==3 and second!=notes and all(a!=b for a,b in zip(second,second[1:])), (notes,second,second_log)
 tap(root,"Retour à l’accueil")
 adb("shell","input","swipe","160","200","160","520","300")
