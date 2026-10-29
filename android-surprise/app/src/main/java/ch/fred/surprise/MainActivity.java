@@ -226,6 +226,7 @@ public class MainActivity extends Activity {
             .setMessage(text.toString()).setPositiveButton("Fermer",(dialog,which)->dialog.dismiss()).show();
     }
     private void showHome(){
+        scroll.post(()->scroll.scrollTo(0,0));
         showingHome=true; choosingTheme=false; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI"); category.setTextColor(GOLD);
         question.setText("Une petite aventure à chaque partie");
@@ -323,6 +324,7 @@ public class MainActivity extends Activity {
             .putInt("longest",Math.max(prefs.getInt("longest",0),longestStreak)).apply();
     }
     private void finishRound(){
+        scroll.post(()->scroll.scrollTo(0,0));
         if(isTheme(gameMode)){
             android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
             String key="themeBest_"+gameMode;
