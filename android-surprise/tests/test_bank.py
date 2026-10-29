@@ -1,4 +1,6 @@
 """Validate the embedded question bank without Android dependencies."""
+import hashlib
+import json
 import pathlib
 import re
 import unittest
@@ -7,6 +9,14 @@ SOURCE = pathlib.Path(__file__).resolve().parents[1] / "app/src/main/java/ch/fre
 ENTRY = re.compile(r'\{"([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)"\}')
 
 class BankTests(unittest.TestCase):
+    def test_existing_question_ids_remain_stable(self):
+        # Saved rounds and recent-question history store numeric positions.
+        # If legacy content must change deliberately, review this fingerprint.
+        rows = ENTRY.findall(SOURCE.read_text(encoding="utf-8"))
+        prefix = json.dumps(rows[:116], ensure_ascii=False, separators=(",", ":")).encode()
+        self.assertEqual(hashlib.sha256(prefix).hexdigest(),
+                         "5752d8935db6ee9b3c37ffd2086e1cfb30a8932e3b65cbd51d2a14ad05a34cc4")
+
     def test_bank_is_replayable_and_unambiguous(self):
         source = SOURCE.read_text(encoding="utf-8")
         rows = ENTRY.findall(source)
