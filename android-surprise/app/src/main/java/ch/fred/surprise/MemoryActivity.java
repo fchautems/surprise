@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -18,10 +19,13 @@ public final class MemoryActivity extends Activity {
     private static final int BG=Color.rgb(17,22,42), CARD=Color.rgb(31,42,68);
     private static final int GOLD=Color.rgb(255,195,107), WHITE=Color.rgb(245,242,235);
     private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆"};
-    private static final int PAIRS=4;
-    private final int[] deck=new int[8];
-    private final boolean[] matched=new boolean[8];
-    private final Button[] cards=new Button[8];
+    private static final int MAX_PAIRS=6;
+    private final int[] deck=new int[MAX_PAIRS*2];
+    private final boolean[] matched=new boolean[MAX_PAIRS*2];
+    private final Button[] cards=new Button[MAX_PAIRS*2];
+    private final LinearLayout[] rows=new LinearLayout[MAX_PAIRS];
+    private int pairCount=4;
+    private Button difficulty;
     private int first=-1,second=-1,moves=0;
     private TextView status;
     private boolean newRecord=false;
@@ -43,11 +47,12 @@ public final class MemoryActivity extends Activity {
         ArrayList<Integer> available=new ArrayList<>(), values=new ArrayList<>();
         for(int i=0;i<SYMBOLS.length;i++)available.add(i);
         Collections.shuffle(available);
-        for(int i=0;i<PAIRS;i++){int value=available.get(i);values.add(value);values.add(value);}
+        for(int i=0;i<pairCount;i++){int value=available.get(i);values.add(value);values.add(value);}
         Collections.shuffle(values);
-        for(int i=0;i<deck.length;i++){deck[i]=values.get(i);matched[i]=false;}
+        for(int i=0;i<deck.length;i++){deck[i]=i<values.size()?values.get(i):0;matched[i]=false;}
         first=second=-1; moves=0; newRecord=false; render();
     }
+    private String recordKey(){return pairCount==4 ? "best" : "best6";}
     private int pairsFound(){
         int count=0; for(boolean b:matched)if(b)count++; return count/2;
     }
@@ -58,18 +63,18 @@ public final class MemoryActivity extends Activity {
             second=i; moves++;
             if(deck[first]==deck[second]){
                 matched[first]=matched[second]=true; first=second=-1;
-                if(pairsFound()==PAIRS){
+                if(pairsFound()==pairCount){
                     android.content.SharedPreferences p=getPreferences(MODE_PRIVATE);
-                    int best=p.getInt("best",Integer.MAX_VALUE);
+                    int best=p.getInt(recordKey(),Integer.MAX_VALUE);
                     newRecord=moves<best;
-                    p.edit().putInt("best",Math.min(best,moves)).apply();
+                    p.edit().putInt(recordKey(),Math.min(best,moves)).apply();
                 }
             }
         }
         render();
     }
     private boolean hasUnfinishedGame(){
-        return pairsFound()<PAIRS && (moves>0 || first!=-1);
+        return pairsFound()<pairCount && (moves>0 || first!=-1);
     }
     private void confirmLeaving(){
         if(!hasUnfinishedGame()){finish();return;}
@@ -81,12 +86,24 @@ public final class MemoryActivity extends Activity {
             .show();
     }
     @Override public void onBackPressed(){confirmLeaving();}
+    private void switchDifficulty(){
+        if(hasUnfinishedGame()){
+            new android.app.AlertDialog.Builder(this)
+                .setTitle("Changer de défi ?")
+                .setMessage("La partie en cours sera perdue.")
+                .setNegativeButton("Continuer", (dialog, which)->dialog.dismiss())
+                .setPositiveButton("Changer", (dialog, which)->{pairCount=pairCount==4?6:4;newGame();})
+                .show();
+        }else{pairCount=pairCount==4?6:4;newGame();}
+    }
     private void render(){
         int pairs=pairsFound();
-        int best=getPreferences(MODE_PRIVATE).getInt("best",0);
-        status.setText(pairs==PAIRS
+        int best=getPreferences(MODE_PRIVATE).getInt(recordKey(),0);
+        status.setText(pairs==pairCount
             ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")
-            : pairs+" / 4 paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
+            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(best>0 ? "\nRecord : "+best : "")+(second!=-1 ? "\nChoisis une autre carte." : ""));
+        difficulty.setText(pairCount==4 ? "Défi : 6 paires" : "Mode : 4 paires");
+        for(int row=0;row<rows.length;row++)rows[row].setVisibility(row<pairCount ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
             boolean visible=matched[i] || i==first || i==second;
             String value=visible ? SYMBOLS[deck[i]] : "?";
@@ -106,8 +123,8 @@ public final class MemoryActivity extends Activity {
         TextView hint=label("Retrouve les quatre paires, à ton rythme.",15,WHITE);
         LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(-1,-2); hintP.setMargins(0,dp(10),0,dp(12)); root.addView(hint,hintP);
         status=label("",16,GOLD); root.addView(status);
-        for(int row=0;row<4;row++){
-            LinearLayout line=new LinearLayout(this); line.setOrientation(LinearLayout.HORIZONTAL);
+        for(int row=0;row<MAX_PAIRS;row++){
+            LinearLayout line=new LinearLayout(this); line.setOrientation(LinearLayout.HORIZONTAL); rows[row]=line;
             for(int col=0;col<2;col++){
                 int i=row*2+col; Button card=button("?"); card.setTextSize(28); cards[i]=card;
                 LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(58),1); p.setMargins(dp(5),dp(5),dp(5),dp(5));
@@ -115,6 +132,8 @@ public final class MemoryActivity extends Activity {
             }
             root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
+        difficulty=button(""); LinearLayout.LayoutParams dp=new LinearLayout.LayoutParams(-1,dp(52));
+        dp.setMargins(dp(5),dp(10),dp(5),0); root.addView(difficulty,dp); difficulty.setOnClickListener(v->switchDifficulty());
         Button reset=button("Nouvelle partie"); LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,dp(52));
         rp.setMargins(dp(5),dp(10),dp(5),0); root.addView(reset,rp); reset.setOnClickListener(v->{
             if(hasUnfinishedGame()){
@@ -131,15 +150,16 @@ public final class MemoryActivity extends Activity {
         setContentView(scroll);
         if(saved!=null && saved.getIntArray("deck")!=null && saved.getBooleanArray("matched")!=null){
             int[] d=saved.getIntArray("deck"); boolean[] m=saved.getBooleanArray("matched");
-            if(d.length==8 && m.length==8){
-                System.arraycopy(d,0,deck,0,8);System.arraycopy(m,0,matched,0,8);
+            if(d.length==deck.length && m.length==matched.length){
+                pairCount=saved.getInt("pairCount",4); if(pairCount!=4 && pairCount!=6)pairCount=4;
+                System.arraycopy(d,0,deck,0,deck.length);System.arraycopy(m,0,matched,0,matched.length);
                 first=saved.getInt("first",-1);second=saved.getInt("second",-1);moves=saved.getInt("moves",0);
                 newRecord=saved.getBoolean("newRecord",false);render();
             }else newGame();
         }else newGame();
     }
     @Override protected void onSaveInstanceState(Bundle out){
-        out.putIntArray("deck",deck);out.putBooleanArray("matched",matched);
+        out.putIntArray("deck",deck);out.putBooleanArray("matched",matched);out.putInt("pairCount",pairCount);
         out.putInt("first",first);out.putInt("second",second);out.putInt("moves",moves);out.putBoolean("newRecord",newRecord);
         super.onSaveInstanceState(out);
     }
