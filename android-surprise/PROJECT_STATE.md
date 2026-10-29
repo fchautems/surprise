@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40799461717 intégralement réussie sur le commit 3d2d5494, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40804994601 intégralement réussie sur le commit 398ed130, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -190,7 +190,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : aucun téléphone physique ni inspection visuelle humaine ; absence de SDK/Gradle/javac local. Aucun changement effectif du modèle ou de l'effort ; aucune limite précise de quota observée. Durée comprenant implémentation, diagnostic, correction et attente réelle des CI. Prochaine action : continuer la finition ludique et visuelle et vérifier de nouveau la version retenue pour la livraison.
 
 
-## Session du 29 octobre 2026, à partir de 02:56:58 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 02:56:58–03:35:29 Europe/Zurich (38 min 31 s)
 - Base 31d18203 ; commits poussés 480b73d6, 6280bb21, 872af625, 54cf4992 et ef348846 ; un commit supplémentaire consigne ce suivi. Fichiers : MemoryActivity.java, tests/memory_smoke.py, PROJECT_STATE.md ; diff hors journal 37 ajouts, 6 suppressions.
 - Développement : plateau à trois colonnes plus compact, barre de progression avec description accessible, récompenses visuelles proportionnelles aux essais ; ajout de vérifications sur les deux niveaux, les récompenses et l'annulation d'un changement de niveau en cours. Une erreur d'expression régulière dans le nouveau test a été détectée et corrigée avant validation CI.
 - Contrôles locaux : syntaxe Python, test de banque et essai du parseur de score réussis. Validation antérieure CI 40799461717 entièrement réussie sur API 29 et 35 ; APK 12865058230, SHA-256 f737b029dae3adcd54c5e70ac1c6390a0d744a6c03b3f20acd8e95f1119fccb6, archives vérifiées. Nouveau run 40803551852 sur ef348846 en attente ; compilation et parcours de cette session encore à confirmer.
@@ -203,3 +203,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40804994601 : compilation du correctif réussie ; APK artefact 12867812287, archive et APK téléchargés et vérifiés avec unzip -t, SHA-256 30d33b22651591ad074be8450de1590ba6cc99d74b2b779c690cd81e3fcbc016. Les tests Android sont encore en cours ou en attente.
 
 - Complément CI : run 40804994601 sur 398ed130 : compilation, parcours principal API 29 et scénarios mémoire API 29 et 35 réussis, y compris les nouveaux contrôles. Parcours principal API 35 toujours en cours.
+
+- Résultat final à 03:35:29 : CI 40804994601 entièrement réussie sur 398ed130 ; compilation, tests de contenu et de règles, parcours complets API 29 et 35 réussis. APK debug 12867812287, SHA-256 30d33b22651591ad074be8450de1590ba6cc99d74b2b779c690cd81e3fcbc016 ; archive et APK vérifiés par unzip -t. L'échec intermittent d'ouverture du précédent test API 35 n'a pas eu de cause déterminée ; son scénario corrigé a réussi aux deux niveaux d'API.
+- Diff final hors journal par rapport à 31d18203 : MemoryActivity.java 17 ajouts/6 suppressions, tests/memory_smoke.py 31 ajouts/6 suppressions, total 48 ajouts/12 suppressions. Commits de code supplémentaires : 398ed130 ; suivis e6cb60cb, f5c43ed3, ddd8fdfd, 09f3cd08 et ff17ae4c, plus ce complément. Aucune inspection visuelle humaine ni test sur téléphone physique. Pas de changement de modèle ou d'effort ; aucune limite de quota précise observée. Durée comprenant travail, diagnostic et attente réelle des deux CI. Prochaine action : poursuivre la finition visuelle, l'expérience ludique et vérifier l'APK final avant livraison.
