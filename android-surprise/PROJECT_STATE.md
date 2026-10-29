@@ -2,7 +2,7 @@
 
 Application Android native : partie de 8 questions tirées sans répétition parmi 116, quatre choix, séries de points, record local, reprise après rotation et interface sombre adaptée au téléphone. Changements poussés sur la branche anniversaire-2026.
 
-Contrôles actuels : CI 40821273009 intégralement réussie sur le commit 031be47b, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
+Contrôles actuels : CI 40827020425 intégralement réussie sur le commit 9875d5f2, y compris parcours API 29 et 35 ; APK debug produit et intégrité vérifiée. SDK et Gradle absents localement ; aucun test sur téléphone physique.
 
 Points à vérifier : parcours complet, rotation après réponse et fin de partie, affichage sur petits écrans, compilation effective et récupération de l’APK. Enrichir l’expérience et son contenu. Garder le projet secret jusqu’au 1er novembre.
 
@@ -252,7 +252,7 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Limites : aucun test sur téléphone physique ni inspection visuelle humaine, notamment des cibles tactiles sur très petits écrans ; SDK/Gradle/javac absents localement. Modèle et effort inchangés, limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : poursuivre la finition ludique et visuelle et vérifier l'APK final avant livraison.
 
 
-## Session du 29 octobre 2026, à partir de 07:03:26 Europe/Zurich — suivi provisoire
+## Session du 29 octobre 2026, 07:03:26–07:28:00 Europe/Zurich (24 min 34 s)
 - Base 31e49f5f ; commits poussés dec90a03 et 9875d5f2 ; un commit supplémentaire consigne ce suivi. Fichiers : MemoryActivity.java, tests/memory_smoke.py, PROJECT_STATE.md ; diff hors journal 42 ajouts, 6 suppressions.
 - Développement : plateau à deux, trois ou quatre colonnes selon largeur disponible, afin de conserver des cibles tactiles d'au moins 48 dp sur les largeurs de 160 à 800 dp ; repositionnement des cartes et conservation de l'état à la rotation. Test Android ajouté sur écran étroit 240 dp, mesures des cibles et rotation.
 - Contrôles locaux : syntaxe Python et intégrité de banque réussies ; calcul géométrique sur 641 largeurs simulées réussi (modèle indépendant, pas une mesure Android). CI précédente 40821273009 entièrement réussie sur API 29/35 ; APK 12874372742, SHA-256 b8823de3b0943384d75aeabf7a530b498ac055c0797e577b528863f91c67d473, archive et APK vérifiés. Run 40827020425 sur 9875d5f2 lancé ; compilation et tests Android de cette session non encore confirmés.
@@ -261,3 +261,6 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - CI 40827020425 : compilation réussie, parcours API 29 en cours ; APK debug 12877132019 téléchargé, archive et APK passent unzip -t ; SHA-256 4af45366bf0ba4d708a95b03f218c3d3e370b7b6d9bf75de8c649545719e5cef. Les tests Android restent à confirmer.
 
 - Complément CI : parcours principal API 29 et parcours mémoire API 29 et 35 réussis, y compris cibles tactiles mesurées et rotation sur émulateur 240 dp ; parcours principal API 35 en cours.
+
+- Résultat final à 07:28:00 : CI 40827020425 entièrement réussie sur 9875d5f2, compilation, tests de contenu/règles et parcours API 29/35 inclus ; test d'écran étroit 240 dp, mesures de largeur et rotation réussis sur les deux versions. APK debug 12877132019, SHA-256 4af45366bf0ba4d708a95b03f218c3d3e370b7b6d9bf75de8c649545719e5cef ; archive et APK contrôlés par unzip -t. Commits de suivi d94e2640, a5dd4595 et 8f73e347, plus ce complément.
+- Limites : pas de SDK/Gradle/javac local, aucun téléphone physique ni inspection visuelle humaine ; 160–239 dp couverts par modèle géométrique et non testés sur émulateur. Modèle et effort non modifiés, limite de quota non mesurée. Durée comprenant implémentation, tests et attente réelle de la CI. Prochaine action : poursuivre la finition ludique et visuelle et revalider l'APK final avant livraison.
