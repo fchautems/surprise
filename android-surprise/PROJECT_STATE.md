@@ -451,3 +451,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Bilan final : CI 40936991516 entièrement réussie : compilation, tests unitaires et six jobs fonctionnels sur émulateurs Android 10 et 15 ; le test de séries a réussi sur les deux versions. APK debug 12924268728 compilé, archive et APK vérifiés par unzip -t ; SHA-256 58da99c45cedb78f6d1f71f4f1eb9d5e1fc33e6bcf49ee6fbc9c498a0fd50241. Aucun essai sur téléphone physique ni contrôle visuel humain.
 - Diff code hors journal par rapport à la base : MemoryActivity.java +9/-8 ; tests/memory_smoke.py +5/-2 ; total +14/-10. Journal PROJECT_STATE.md modifié également. Commits poussés : 5a75d4d3, dc4f541e, 43f0061d, 67151c66 et ce bilan. La CI intermédiaire 40936955187 a été annulée au profit de la version finale. Aucun changement de modèle ou effort vérifié ; quota inconnu.
 - Prochaine action : poursuivre les améliorations et les validations sur la branche isolée ; préparer la livraison dimanche avec l'APK effectivement disponible et ses instructions.
+
+
+## Session du 29 octobre 2026, début 20:57:05 Europe/Zurich (en cours)
+- Base c9fb97fd73426f774f23130dd0562c5abaacc3ed ; commit code 25178124823c959b2c17787650079e5c8f3cad5c poussé. MusicActivity.java +20/-3 et tests/music_smoke.py +21/-5, total +41/-8 hors journal.
+- Les mélodies initiales et suivantes sont générées aléatoirement, sans notes voisines identiques ni répétition exacte de la précédente. Le test émulateur déduit les notes réellement jouées des journaux puis joue la séquence, vérifie la rotation et une nouvelle séquence distincte.
+- Contrôles locaux : syntaxe Python valide ; méthode Java de génération compilée et exécutée dans un banc isolé, 400 000 séquences testées pour longueurs 3 à 6, valeurs, absence de répétitions voisines et de répétition de la séquence précédente : réussite. Le binaire javac est absent mais le compilateur du JDK est accessible via java com.sun.tools.javac.Main ; SDK Android, Gradle et adb absents. Pas de test sur téléphone ni écoute humaine.
+- CI 40944727584 pour le code courant en attente ; build et APK nouveaux pas encore vérifiés. CI précédente 40936991516 : six jobs réussis, APK 12924268728 intégrité vérifiée.
+- Prochaine action : suivre la CI, contrôler l'APK et diagnostiquer les échecs ; terminer le bilan avec durée réelle et état final.
