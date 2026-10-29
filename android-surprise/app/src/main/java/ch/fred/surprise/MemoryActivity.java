@@ -127,7 +127,7 @@ public final class MemoryActivity extends Activity {
             cards[i].setText(value); cards[i].setEnabled(!matched[i]);
             cards[i].setTextColor(visible ? INKS[deck[i]%INKS.length] : WHITE);
             cards[i].setContentDescription("Carte "+(i+1)+" : "+(matched[i] ? "trouvée " : visible ? "visible " : "cachée ")+value);
-            cards[i].setBackground(shape(matched[i] ? Color.rgb(36,105,88) : CARD,visible ? GOLD : Color.rgb(100,115,145)));
+            cards[i].setBackground(shape(matched[i] ? Color.rgb(27,82,70) : CARD,visible ? GOLD : Color.rgb(100,115,145)));
         }
     }
     @Override public void onCreate(Bundle saved){
