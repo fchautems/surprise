@@ -168,3 +168,5 @@ Points à vérifier : parcours complet, rotation après réponse et fin de parti
 - Nouveau run 40792642660 sur 61d4a0a4 en attente au moment de ce suivi ; les modifications de cette session ne sont pas encore compilées ni testées sur émulateur. Runs intermédiaires annulés automatiquement après commits suivants. Pas de téléphone physique ni inspection visuelle humaine, SDK/Gradle/javac locaux absents ; aucun réglage de modèle modifié. Prochaine action : vérifier les quatre jobs et l'APK de la nouvelle version et corriger tout échec ; consigner durée et résultats réels.
 
 - Complément CI 01:15 Europe/Zurich : run 40792642660 sur 61d4a0a4, compilation et production d'APK réussies, parcours API 29 en cours ; autres parcours non démarrés. Artefact 12862865095 téléchargé ; archive et APK passent unzip -t ; SHA-256 APK ee5515b91312de6007038040cc4feba28b23af6d5c32cd40e9e8874c9556b6ef. La réussite des tests Android reste à établir.
+
+- Complément CI : run 40792642660, compilation, tests de contenu et règles, parcours complet API 29 et tests du nouveau scénario API 29 et 35 réussis. Le parcours complet API 35 reste en cours ; aucun résultat final n'est encore déclaré.
