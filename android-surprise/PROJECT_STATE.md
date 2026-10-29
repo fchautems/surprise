@@ -387,3 +387,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : vérifier les tests de contenu, la compilation, l'APK et les parcours sur émulateurs ; corriger les échecs éventuels.
 
 - Un contrôle comparant précisément les 116 anciennes lignes a révélé qu'un remplacement de doublon avait modifié une entrée existante (index 97) : la première affirmation de préservation était prématurée. Correctif a56320ef : ancienne entrée restaurée, nouveau doublon remplacé en fin de banque ; test local confirmé sur les 116 indices, les 21 ajouts et l'unicité. La CI 40898176551 a été remplacée ; nouveau workflow à vérifier.
+
+- Test durable ajouté dans tests/test_bank.py : empreinte des 116 questions historiques pour détecter toute réorganisation ou modification nécessitant revue. Les deux tests de banque passent localement après le correctif. Commit cc659fd6 ; diff final préliminaire hors journal : MainActivity.java +22/-1, test_bank.py +10/-0, total +32/-1. Une nouvelle CI est déclenchée et remplace les validations intermédiaires.
