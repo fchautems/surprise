@@ -704,3 +704,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre compilation et émulateurs, corriger les échecs, contrôler l'APK puis consigner le bilan.
 
 - CI 41023271660 : compilation et tests unitaires réussis ; six parcours Android en attente ou en cours. APK debug 12962941011 : archive et APK vérifiés par unzip -t ; SHA-256 4217133641c3062bf6b3a11dd4f1933378421d0f2c2aca4ccd180b1e5252ff19. Les tests fonctionnels ne sont pas encore confirmés.
+
+- fd551b65 dispose les notes dans l'ordre et conserve des zones tactiles d'au moins 48 dp ; un test d'ordre et de dimensions est ajouté. Syntaxe Python et deux tests locaux de justesse toujours réussis. La CI intermédiaire est remplacée ; nouveau build et parcours à confirmer.
