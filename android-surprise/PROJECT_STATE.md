@@ -624,3 +624,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Test de contenu local réussi (1 test, trois jeux de données) ; compilation syntaxique Python du test d'interface réussie. SDK Android, Gradle et adb absents localement. Run 41000900188 en attente ; le run intermédiaire 41000857238 est remplacé après le second commit. Compilation, APK et tests Android de la nouvelle version non encore confirmés.
 - Dernière CI complète : 40994675728, sept jobs réussis ; APK debug 12950792574 d'intégrité précédemment vérifiée. Aucun téléphone physique, écoute humaine ou contrôle visuel humain ; scénario d'interruption sonore antérieur non validé. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : examiner la compilation, les six parcours et l'APK ; corriger les échecs éventuels et consigner le bilan et la durée réelle.
+
+- CI 41000900188 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12952854605 : archive et APK vérifiés par unzip -t, SHA-256 e49d16a7d998c8cad8615db20894f6649021498486491f9646c72a5da0ab693e. Les résultats fonctionnels Android ne sont pas encore connus.
