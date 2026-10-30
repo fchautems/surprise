@@ -4,6 +4,17 @@ package ch.fred.surprise;
 public final class SoundWave {
     private SoundWave() {}
     public static final int RATE=22050;
+    /** Transpose a chord without modifying the source; reject unsupported pitches. */
+    public static double[] octave(double[] frequencies, boolean high) {
+        if (frequencies == null || frequencies.length < 1 || frequencies.length > 4)
+            throw new IllegalArgumentException("voices");
+        double[] result=frequencies.clone();
+        for (int i=0;i<result.length;i++) {
+            result[i]*=high ? 2.0 : 1.0;
+            if (!(result[i]>=100 && result[i]<=2000)) throw new IllegalArgumentException("frequency");
+        }
+        return result;
+    }
     /** Mix several notes with bounded amplitude and the same gentle envelope. */
     public static short[] chord(double... frequencies) {
         if (frequencies == null || frequencies.length < 1 || frequencies.length > 4)

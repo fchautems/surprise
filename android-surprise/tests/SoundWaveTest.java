@@ -13,6 +13,20 @@ public final class SoundWaveTest {
             if(peak<1000 || peak>10000)throw new AssertionError("amplitude "+peak);
             if(Math.abs(crossings-hz*wave.length/SoundWave.RATE)>2)throw new AssertionError("pitch "+crossings);
         }
+        double[] original={261.63,329.63,392.00,493.88};
+        double[] normal=SoundWave.octave(original,false), high=SoundWave.octave(original,true);
+        if(normal==original || high==original)throw new AssertionError("shared chord array");
+        for(int i=0;i<original.length;i++){
+            if(normal[i]!=original[i] || high[i]!=2*original[i])throw new AssertionError("octave");
+        }
+        high[0]=999;
+        if(original[0]!=261.63)throw new AssertionError("mutated original");
+        try{SoundWave.octave(new double[]{1100},true);throw new AssertionError("out-of-range octave accepted");}
+        catch(IllegalArgumentException expected){}
+        try{SoundWave.octave(new double[]{Double.NaN},false);throw new AssertionError("NaN octave accepted");}
+        catch(IllegalArgumentException expected){}
+        try{SoundWave.octave(null,false);throw new AssertionError("null octave accepted");}
+        catch(IllegalArgumentException expected){}
         double[] frequencies={261.63,329.63,392.00,493.88};
         short[] chord=SoundWave.chord(frequencies);
         if(chord.length!=5292 || chord[0]!=0 || chord[chord.length-1]!=0)throw new AssertionError("chord envelope");

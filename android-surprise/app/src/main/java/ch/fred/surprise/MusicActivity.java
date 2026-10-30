@@ -189,15 +189,17 @@ public final class MusicActivity extends Activity {
         if(!freeMode || playing)return;
         lastNote=-1;lastExtra=-1;renderKeys();
         checkVolume();
-        final int token=++generation;final boolean broken=arpeggio;
+        final int token=++generation;final boolean broken=arpeggio, high=octaveHigh;
+        final double[] pitches=SoundWave.octave(CHORDS[chord],high);
+        final String register=high ? " haute" : "";
         audio.execute(()->{
             if(token!=generation)return;
             if(broken){
-                for(int i=0;i<CHORDS[chord].length && token==generation;i++)
-                    playSamples(SoundWave.note(CHORDS[chord][i]),token,"arpège "+CHORD_NAMES[chord]+" · "+(i+1));
-            }else playSamples(SoundWave.chord(CHORDS[chord]),token,"accord "+CHORD_NAMES[chord]);
+                for(int i=0;i<pitches.length && token==generation;i++)
+                    playSamples(SoundWave.note(pitches[i]),token,"arpège "+CHORD_NAMES[chord]+register+" · "+(i+1));
+            }else playSamples(SoundWave.chord(pitches),token,"accord "+CHORD_NAMES[chord]+register);
         });
-        status.setText("Mode libre · "+CHORD_NAMES[chord]+(broken ? " · arpège" : ""));
+        status.setText("Mode libre · "+CHORD_NAMES[chord]+(high ? " ↑" : "")+(broken ? " · arpège" : ""));
     }
     private void switchMode(){
         generation++;playing=false;freeMode=!freeMode;lastNote=-1;lastExtra=-1;renderKeys();soundWarning.setText("");

@@ -281,6 +281,11 @@ root=dump()
 tap(root,"Si")
 root=dump()
 assert "playback started: note Si haute" in adb("logcat","-d","-s","SurpriseAudio:I"), "Extra octave playback missing"
+# The octave control also transposes full chords, in both playback styles.
+adb("logcat","-c")
+tap(root,"Do maj7")
+root=dump()
+assert "playback started: accord Do maj7 haute" in adb("logcat","-d","-s","SurpriseAudio:I"), "Chord octave missing"
 # Optional arpeggio plays each chord note in order and survives a rotation.
 tap(root,"Arpège : désactivé")
 root=dump()
@@ -291,7 +296,7 @@ adb("logcat","-c")
 tap(root,"Do maj7")
 time.sleep(2)
 ordered=adb("logcat","-d","-s","SurpriseAudio:I")
-assert re.findall(r"arpège Do maj7 · (\d)",ordered)==["1","2","3","4"], ordered
+assert re.findall(r"arpège Do maj7 haute · (\d)",ordered)==["1","2","3","4"], ordered
 adb("shell","settings","put","system","user_rotation","1")
 dump()
 adb("shell","settings","put","system","user_rotation","0")
