@@ -919,7 +919,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +20/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 22:30:00 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 22:30:00–22:44:25 Europe/Zurich (14 min 25 s, validations comprises)
 - Gel des fonctionnalités maintenu ; priorité ergonomie mains/poignet. Base 6c56d449 ; CI 41129184344 intégralement réussie, APK 13012386612 signé et intègre, SHA-256 e08e126c82bdff5cbc8de8731c8c166edb8749a340695fcd04f8a6a5fc4f9161. Pas de garantie de confort sans essai physique.
 - Commit c7f9a97db0c7c26c38e09eb6138dd5b80bb87ebb poussé : une cible existante passe de 48 à 56 dp de hauteur minimale ; le scénario sur écran 240 dp et texte 1,3 contrôle les dimensions et l'espacement des actions visibles, et vérifie qu'une frappe à côté ne change pas d'écran. Diff hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +16/-0 ; total +17/-1.
 - Syntaxe Python validée localement ; CI 41131571230 lancée, compilation et parcours non encore confirmés. Aucun téléphone physique ni contrôle humain des visuels ou du son ; modèle et effort inchangés, quota inconnu.
@@ -928,3 +928,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41131571230 : compilation, signature Android v2 et ZIP réussis ; APK 13013162787 téléchargé, archive et APK intègres, SHA-256 d5da6bf1b779a650a3bec00fa6e1747b9e3916f5c20fd206104ceda448652845 conforme à la CI. Six parcours sur émulateur en cours.
 
 - CI 41131571230 : deux parcours Android 10 et 15 réussis ; quatre autres, dont les contrôles tactiles visés, restent en cours.
+
+- Bilan : CI 41131571230 entièrement réussie : compilation, signature Android v2 et six parcours Android 10 et 15. Sur écran 240 dp et texte 1,3, les actions visibles testées ont au moins 48×48 dp et 8 dp d'espacement ; une frappe à côté laisse l'écran inchangé et le parcours continue. La commande concernée a une hauteur minimale de 56 dp ; le parcours existant vérifie aussi l'accès à l'action après une erreur. Le confort sur téléphone physique ne peut être garanti sans essai réel.
+- APK 13013162787 signé ; archive et APK téléchargés intègres, SHA-256 d5da6bf1b779a650a3bec00fa6e1747b9e3916f5c20fd206104ceda448652845. Aucun test sur téléphone physique, contrôle visuel humain ou écoute humaine.
+- Comparaison technique avant/après sur capture d'accueil compacte Android 10 : 240×640, 0,14 % de pixels différents, écart moyen 0,18/255, OCR 26 mots pour chaque image. Elle ne montre pas la commande modifiée et ne constitue pas une évaluation esthétique ou de confort humain.
+- Diff final hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +16/-0 ; total +17/-1. Tests locaux : syntaxe Python, intégrité ZIP et SHA-256 ; compilation CI, signature et six parcours Android ; comparaison de captures. Commits poussés : c7f9a97d, 4e16a29b, 56053ed1, a45d8162 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après les validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, respecter le gel et poursuivre les finitions prudentes et la préparation de livraison.
+- PROJECT_STATE.md : +18/-0 pour cette session.
