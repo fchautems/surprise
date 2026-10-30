@@ -651,3 +651,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : workflow +2/-0 ; MusicActivity.java +16/-10 ; music_smoke.py +11/-0 ; test_chords.py +36/-0 ; total +65/-10. Commits poussés : 13038b88, cb31d9ad, 6a0e3319, 74c3f104 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Durée inférieure à l'objectif indicatif : travail et validations effectués jusqu'à leur achèvement, sans attendre artificiellement. Prochaine action : poursuivre la finition et couvrir l'interruption sonore avec une méthode de reprise fiable avant la livraison.
 - PROJECT_STATE.md : +18/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 07:04:45 Europe/Zurich — en cours
+- Base 183baa7134a2547c837cf5cb4384bf6ae0e2546c ; commit de code b1d3cf3045b35cc579240ec7e2032c0807c68e12 poussé.
+- Diff hors journal : MainActivity.java +16/-7 ; emulator_smoke.py +15/-0 ; music_smoke.py +9/-0 ; total +40/-7.
+- Progression et résultat des réponses rendus explicites pour les lecteurs d'écran, y compris après rotation ; tests d'accessibilité ajoutés. Tentative de test d'interruption audio avec reprise de l'activité non exportée par l'identité de l'application debug et l'utilisateur Android explicite : résultat Android inconnu.
+- Contrôles locaux : syntaxe Python des deux parcours valide. SDK Android, Gradle et adb absents localement. CI 41012073095 lancée ; compilation, APK et tests Android de cette version non encore confirmés.
+- Dernière CI complète 41005620812 : sept jobs réussis et APK debug 12954868242 d'intégrité précédemment vérifiée. Aucun téléphone physique, contrôle visuel ou écoute humaine ; scénario d'interruption non encore validé. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : inspecter compilation et parcours, diagnostiquer toute erreur de reprise ou d'accessibilité, corriger et relancer si nécessaire ; contrôler l'APK et consigner le bilan.
