@@ -608,3 +608,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : inspecter la compilation, les six parcours Android et l'APK de la nouvelle version ; corriger toute anomalie, puis consigner résultat et durée réelle.
 
 - CI 40994675728 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12950792574 téléchargé, archive et APK vérifiés par unzip -t ; SHA-256 622aed636cf6974cc4951bdc2c39e5276b99ca77748f5b000ae5ba6dd81428b0. Résultats fonctionnels des émulateurs encore inconnus.
+
+- CI 40994675728 : quatre parcours Android réussis, y compris les nouveaux tests de persistance et de valeur invalide sur API 29 et 35 ; les deux parcours principaux restent en cours.
