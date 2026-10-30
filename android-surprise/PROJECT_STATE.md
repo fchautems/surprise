@@ -731,3 +731,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41051796306 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12974428852 : archive et APK vérifiés par unzip -t ; SHA-256 609a8fa2891a079744c10c7941e951f43ec7591ccd0ee1840c291a988b13868b. Les parcours fonctionnels sont encore à confirmer.
 
 - Contrôle de signature JAR local : outil jarsigner absent, équivalent Java ne trouve pas de signature JAR v1 ; cela ne détermine pas l'état des signatures APK v2/v3. apksigner est absent localement ; l'installation des parcours émulateur reste à vérifier avant toute conclusion sur l'installabilité.
+
+- a0d28e97 ajoute dans la CI une vérification APK avec apksigner avant publication de l'artefact. Syntaxe YAML valide ; le run précédent est remplacé et le nouveau résultat reste à contrôler.
