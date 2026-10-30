@@ -154,7 +154,7 @@ public final class MemoryActivity extends Activity {
         String reward=stars==3 ? "✦ ✦ ✦" : stars==2 ? "✦ ✦" : "✦";
         status.setText(pairs==pairCount
             ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\nMeilleure série : "+bestStreak+"\nSérie record : "+streakRecord+" · Étoiles : "+bestStars+"/3\n"+reward
-            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(streak>=2 ? "\nSérie : "+streak+" paires !" : "")+(best>0 ? "\nRecord : "+best : "")+(streakRecord>0 ? "\nSérie record : "+streakRecord+" · Étoiles : "+bestStars+"/3" : "")+(hintVisible ? "\nUne paire dévoilée · à toi de jouer !" : second!=-1 ? "\nChoisis une autre carte." : ""));
+            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(streak>=2 ? "\nSérie : "+streak+" paires !" : "")+(best>0 ? "\nRecord : "+best+"\nÉtoiles : "+bestStars+"/3" : "")+(streakRecord>0 ? "\nSérie record : "+streakRecord : "")+(hintVisible ? "\nUne paire dévoilée · à toi de jouer !" : second!=-1 ? "\nChoisis une autre carte." : ""));
         progress.setMax(pairCount); progress.setProgress(pairs);
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         hintButton.setEnabled(!hintUsed && pairs<pairCount);
