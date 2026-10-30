@@ -684,3 +684,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : deux tests de banque réussis (149 entrées), tests Java de sélection sur 100 graines, tailles réduites et historique chevauchant réussis ; syntaxe Python de l'émulateur valide. La persistance sur Android, compilation et APK nouveaux restent à vérifier ; SDK Android, Gradle et adb absents localement.
 - CI 41017617295 lancée. Dernière CI complète 41012405570 : sept jobs réussis ; APK debug 12958585599 d'intégrité précédemment vérifiée. Aucun téléphone physique, écoute humaine ni contrôle visuel humain. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre compilation et parcours, notamment persistance après redémarrage, corriger les erreurs éventuelles et contrôler l'APK avant bilan.
+
+- CI 41017617295 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12959544201 : archive et APK vérifiés par unzip -t ; SHA-256 3209fbe2ba1bfbbcc1108904f92918ed3808e01ec51c1575ea1100f41b9743f1. Persistance Android et autres parcours non encore confirmés.
