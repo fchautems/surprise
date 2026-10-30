@@ -146,12 +146,11 @@ public final class MemoryActivity extends Activity {
                 .show();
         }else{pairCount=nextPairCount();newGame();}
     }
-    private int starsFor(int attempts){return attempts<=pairCount+1 ? 3 : attempts<=pairCount*2 ? 2 : 1;}
     private void render(){
         int pairs=pairsFound();
         int best=getPreferences(MODE_PRIVATE).getInt(recordKey(),0);
         int streakRecord=getPreferences(MODE_PRIVATE).getInt(streakKey(),0);
-        int stars=starsFor(moves), bestStars=best>0 ? starsFor(best) : 0;
+        int stars=MemoryRules.starsFor(pairCount,moves), bestStars=best>0 ? MemoryRules.starsFor(pairCount,best) : 0;
         String reward=stars==3 ? "✦ ✦ ✦" : stars==2 ? "✦ ✦" : "✦";
         status.setText(pairs==pairCount
             ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\nMeilleure série : "+bestStreak+"\nSérie record : "+streakRecord+" · Étoiles : "+bestStars+"/3\n"+reward

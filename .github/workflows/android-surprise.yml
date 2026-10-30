@@ -31,6 +31,11 @@ jobs:
           mkdir -p /tmp/surprise-test
           javac -d /tmp/surprise-test app/src/main/java/ch/fred/surprise/QuizRules.java tests/QuizRulesTest.java
           java -cp /tmp/surprise-test ch.fred.surprise.QuizRulesTest
+      - name: Test reward thresholds
+        run: |
+          mkdir -p /tmp/surprise-memory-test
+          javac -d /tmp/surprise-memory-test app/src/main/java/ch/fred/surprise/MemoryRules.java tests/MemoryRulesTest.java
+          java -cp /tmp/surprise-memory-test ch.fred.surprise.MemoryRulesTest
       - name: Test synthesized notes
         run: |
           mkdir -p /tmp/surprise-sound-test
