@@ -708,3 +708,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - fd551b65 dispose les notes dans l'ordre et conserve des zones tactiles d'au moins 48 dp ; un test d'ordre et de dimensions est ajouté. Syntaxe Python et deux tests locaux de justesse toujours réussis. La CI intermédiaire est remplacée ; nouveau build et parcours à confirmer.
 
 - CI 41023655077 sur fd551b65 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12962048398 : archive et APK vérifiés par unzip -t ; SHA-256 657d029585b175908780614194857d4a2634a520912f47a1a76ed9f54e6cde8c. Tests fonctionnels non encore confirmés.
+
+- CI 41023655077 : test Android 15 échoué avant les nouveaux contrôles car l'écran de reprise est resté sur le lanceur après la tentative d'ouverture de la tâche récente. Le diagnostic ne démontre pas de défaut applicatif ; le scénario avait réussi précédemment sur les deux API. 934e5f66 renforce l'attente et permet trois tentatives de reprise, sans supprimer l'assertion fonctionnelle ; syntaxe Python valide. Nouvelle CI à contrôler.
