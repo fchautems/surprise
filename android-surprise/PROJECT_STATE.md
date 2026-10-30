@@ -794,3 +794,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41077664329 : compilation, tests unitaires et signature v2 réussis ; six parcours sur émulateurs encore en cours. APK debug 12988785187 téléchargé, archive et APK intègres selon unzip -t, SHA-256 85191880a593e5bc65da1a5884959dcee8af7e04fc92cfa220d3b5f21083b1f1 ; validation fonctionnelle encore en cours.
 
 - CI 41077664329 : deux parcours Android, API 29 et 35, réussis ; les quatre autres restent en cours.
+
+- CI 41077664329 à 16:23 Suisse : compilation et cinq parcours réussis, dont les tests ciblés sur les deux API ; dernier parcours Android 10 toujours en cours. Aucune évaluation visuelle humaine, ni test physique.
