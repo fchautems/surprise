@@ -742,3 +742,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : workflow +5/-0 ; INSTALLATION.md +17/-0 ; MusicActivity.java +24/-7 ; music_smoke.py +18/-0 ; total +64/-7. Commits poussés : 19b8c068, 6e85cc9a, 57de4985, 282c9202, a0d28e97, 73043a4b, 3564e33e, bdeb37c4 et ce bilan ; le complément 3f062c1a clôture la session précédente. Un run intermédiaire a été remplacé afin d'ajouter la vérification de signature. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : poursuivre la finition et maintenir une CI verte ; le jour de livraison, vérifier la disponibilité de l'artefact final et fournir les instructions préparées.
 - PROJECT_STATE.md : +25/-1 pour cette session, y compris l'actualisation du titre de la session interrompue.
+
+
+## Session du 30 octobre 2026, début 14:04:05 Europe/Zurich — en cours
+- Base e6c8015586ed8faf966b64940c67ff82b29d1ec8 ; commit 04b276dba8d42c8bc43d01ae1f5f1344d2f1d15f poussé.
+- Diff hors journal : MusicActivity.java +7/-5 ; SoundWave.java +11/-0 ; SoundWaveTest.java +14/-0 ; music_smoke.py +6/-1 ; total +38/-6.
+- Le choix d'octave s'applique désormais également aux accords et aux arpèges du jeu libre, sans modifier les fréquences d'origine. Tests Java de transposition, immutabilité et entrées invalides ; tests Android des deux styles en octave haute.
+- Contrôles locaux : compilation et test Java de synthèse réussis ; syntaxe Python du parcours valide. SDK Android, Gradle et adb absents localement ; CI 41060269428 lancée, compilation, signature, APK et parcours Android non encore confirmés.
+- Dernière CI complète 41052034294 : sept jobs réussis et APK debug 12974928165 d'intégrité et signature v2 précédemment vérifiées. Aucun téléphone physique ni contrôle humain du son ou de l'apparence. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : inspecter compilation, signature et six parcours, corriger toute erreur puis contrôler l'APK et consigner le bilan.
