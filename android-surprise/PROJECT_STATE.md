@@ -874,3 +874,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : .github/workflows/android-surprise.yml +1/-1 ; MusicActivity.java +7/-4 ; music_smoke.py +17/-2 ; total +25/-7. Tests locaux : syntaxe Python et YAML, extraction de coordonnées, intégrité ZIP, empreinte SHA-256 et décodage/OCR des captures réussis. Commits poussés : c6df251d, 12883e1a, e2e2a94b, f02a2324, 359cbbc0, c2fb1a33, 87b3af5d, 928bcba8 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : préserver la version validée ; dès samedi 31 octobre heure suisse, gel des fonctionnalités et finition visuelle, ergonomique et tests de non-régression seulement.
 - PROJECT_STATE.md : +23/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 20:55:57 Europe/Zurich — en cours
+- Référence 290a6aea ; CI 41112755619 vérifiée : sept jobs réussis. APK 13004576394 signé, archive et APK intègres, SHA-256 70da1188469d52cb8a8b3f7dbf826aee6f8b2b194f4a2feef063c152a528e213.
+- Commit eaac6fb7df949852756eb7482fa68157e27168db poussé : interligne légèrement augmenté pour plusieurs textes multilignes et états ; scénario principal étendu sur écran 240 dp avec police 1,3 pour tester l'entrée, une réponse et la continuation, avec captures privées. Diff hors journal : MainActivity.java +2/-2, MemoryActivity.java +1/-1, MusicActivity.java +1/-0, emulator_smoke.py +24/-0, total +28/-3.
+- Syntaxe Python locale vérifiée ; compilation et parcours Android encore non confirmés. Aucun téléphone physique ni examen humain des visuels ou du son ; modèle et effort inchangés, quota inconnu.
+- Prochaine action : suivre la CI déclenchée, vérifier l'APK et les six parcours, comparer les captures disponibles et corriger toute régression ; conserver la version précédente tant que la nouvelle n'est pas validée. Gel des fonctionnalités dès samedi heure suisse.
