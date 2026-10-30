@@ -951,3 +951,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MainActivity.java +1/-0 ; MemoryActivity.java +1/-0 ; memory_smoke.py +9/-1 ; test_palette.py +9/-0 ; total +20/-1. Contrôles locaux : trois tests de contraste, syntaxe Python, ZIP et SHA-256 ; compilation CI, signature, six parcours Android et comparaison technique de captures. Commits poussés : 66913b07, 83e19485, 9c032c03 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Session achevée après les validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel, privilégier les finitions prudentes et préparer la livraison.
 - PROJECT_STATE.md : +16/-0 pour cette session.
+
+
+## Session du 31 octobre 2026, début 00:07:29 Europe/Zurich — en cours
+- Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains/poignet et finition prudente. Base 729fed0f ; CI 41134835951 entièrement réussie, APK 13015771339 signé et intègre, SHA-256 d823fbd5a55de1a62021a26ef380744073c93785a799b6d0969dc071622382c3.
+- Commit dc790a7cd05279b946fe5b96099a7c6aa32bb62e poussé : dégradé discret sur une action existante, contraste du texte vérifié ; contrôle sur écran 240 dp et police 1,3 de l'espacement des cibles et de la conservation de sélection après une frappe à côté. Diff hors journal : MainActivity.java +3/-1 ; music_smoke.py +5/-0 ; test_palette.py +6/-0 ; total +14/-1. Aucun nouveau mode.
+- Contrôles locaux : quatre tests de contraste réussis et syntaxe Python valide. CI 41142585307 lancée ; compilation, APK et parcours Android non encore confirmés. Confort physique non garanti sans essai sur téléphone ; aucun examen humain visuel ou sonore. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la CI, vérifier APK, signature et six parcours, comparer les captures si disponibles ; corriger toute régression et préserver la version précédente.
