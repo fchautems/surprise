@@ -937,10 +937,17 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +18/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 22:56:39 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 22:56:39–23:12:05 Europe/Zurich (15 min 26 s, validations comprises)
 - Gel des fonctionnalités maintenu, priorité confort des mains et du poignet. Base c86c3ae6 ; CI 41131571230 réussie, APK 13013162787 signé et intègre, SHA-256 d5da6bf1b779a650a3bec00fa6e1747b9e3916f5c20fd206104ceda448652845. Confort physique non garanti sans essai réel.
 - Commit 66913b077d47267aafa117e6140cdb72720883dc poussé : harmonisation du contraste d'un indicateur existant et contrôle calculé de ses couleurs ; parcours 240 dp et police 1,3 étendu pour contrôler hauteur, largeur et espacement des cibles ainsi qu'une frappe à côté. Diff hors journal : MainActivity.java +1/-0 ; MemoryActivity.java +1/-0 ; memory_smoke.py +9/-1 ; test_palette.py +9/-0 ; total +20/-1.
 - Trois tests locaux de contraste réussis et syntaxe Python vérifiée. Compilation, signature et parcours Android de cette version non encore confirmés. Aucun test physique ni examen humain visuel ou sonore ; modèle et effort inchangés, quota inconnu.
 - Prochaine action : suivre la CI déclenchée, vérifier l'APK et les six parcours, comparer les captures disponibles ; corriger toute régression et conserver la version validée précédente.
 
 - CI 41134835951 : compilation, signature Android v2 et contrôle ZIP réussis ; APK 13015771339 téléchargé, archive et APK intègres, SHA-256 d823fbd5a55de1a62021a26ef380744073c93785a799b6d0969dc071622382c3 conforme à la CI ; six parcours Android en cours.
+
+- Bilan : CI 41134835951 entièrement réussie : compilation, signature v2 et six parcours sur Android 10 et 15. Sur écran 240 dp avec texte 1,3, le parcours ciblé vérifie largeur et hauteur minimales de 48 dp, espacement horizontal d'au moins 8 dp et absence de sélection après une frappe à côté. Les rapports de contraste calculés sont supérieurs à 3:1 pour les couleurs brutes testées ; ils ne mesurent pas le rendu physique.
+- APK 13015771339 signé ; archive et APK téléchargés intègres, SHA-256 d823fbd5a55de1a62021a26ef380744073c93785a799b6d0969dc071622382c3. Confort pour les mains et le poignet non garanti sans essai sur téléphone physique ; aucun examen humain visuel ou sonore.
+- Comparaison technique avant/après sur capture compacte Android 10 : 240×640, 1,20 % de pixels différents, écart moyen 0,94/255, OCR 37 mots pour chaque capture. Conditions et contenu peuvent varier ; ces mesures ne prouvent ni esthétique ni lisibilité humaine.
+- Diff final hors journal : MainActivity.java +1/-0 ; MemoryActivity.java +1/-0 ; memory_smoke.py +9/-1 ; test_palette.py +9/-0 ; total +20/-1. Contrôles locaux : trois tests de contraste, syntaxe Python, ZIP et SHA-256 ; compilation CI, signature, six parcours Android et comparaison technique de captures. Commits poussés : 66913b07, 83e19485, 9c032c03 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après les validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel, privilégier les finitions prudentes et préparer la livraison.
+- PROJECT_STATE.md : +16/-0 pour cette session.
