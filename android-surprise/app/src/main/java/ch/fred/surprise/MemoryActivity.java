@@ -69,6 +69,7 @@ public final class MemoryActivity extends Activity {
         gameScroll.post(()->gameScroll.fullScroll(View.FOCUS_UP));
     }
     private String recordKey(){return pairCount==4 ? "best" : pairCount==6 ? "best6" : pairCount==8 ? "best8" : "best10";}
+    private String streakKey(){return "streak_"+pairCount;}
     private int nextPairCount(){return pairCount==4 ? 6 : pairCount==6 ? 8 : pairCount==8 ? 10 : 4;}
     private int pairsFound(){
         int count=0; for(boolean b:matched)if(b)count++; return count/2;
@@ -87,7 +88,9 @@ public final class MemoryActivity extends Activity {
                     android.content.SharedPreferences p=getPreferences(MODE_PRIVATE);
                     int best=p.getInt(recordKey(),Integer.MAX_VALUE);
                     newRecord=moves<best;
-                    p.edit().putInt(recordKey(),Math.min(best,moves)).apply();
+                    int previousStreak=p.getInt(streakKey(),0);
+                    p.edit().putInt(recordKey(),Math.min(best,moves))
+                        .putInt(streakKey(),Math.max(previousStreak,bestStreak)).apply();
                 }
             }else streak=0;
         }
@@ -146,11 +149,12 @@ public final class MemoryActivity extends Activity {
     private void render(){
         int pairs=pairsFound();
         int best=getPreferences(MODE_PRIVATE).getInt(recordKey(),0);
+        int streakRecord=getPreferences(MODE_PRIVATE).getInt(streakKey(),0);
         int stars=moves<=pairCount+1 ? 3 : moves<=pairCount*2 ? 2 : 1;
         String reward=stars==3 ? "✦ ✦ ✦" : stars==2 ? "✦ ✦" : "✦";
         status.setText(pairs==pairCount
-            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\nMeilleure série : "+bestStreak+"\n"+reward
-            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(streak>=2 ? "\nSérie : "+streak+" paires !" : "")+(best>0 ? "\nRecord : "+best : "")+(hintVisible ? "\nUne paire dévoilée · à toi de jouer !" : second!=-1 ? "\nChoisis une autre carte." : ""));
+            ? "✦ Bravo ! "+moves+" essais\nRecord : "+best+(newRecord ? "\nNouveau record !" : "")+"\nMeilleure série : "+bestStreak+"\nSérie record : "+streakRecord+"\n"+reward
+            : pairs+" / "+pairCount+" paires  ·  "+moves+" essais"+(streak>=2 ? "\nSérie : "+streak+" paires !" : "")+(best>0 ? "\nRecord : "+best : "")+(streakRecord>0 ? "\nSérie record : "+streakRecord : "")+(hintVisible ? "\nUne paire dévoilée · à toi de jouer !" : second!=-1 ? "\nChoisis une autre carte." : ""));
         progress.setMax(pairCount); progress.setProgress(pairs);
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         hintButton.setEnabled(!hintUsed && pairs<pairCount);

@@ -183,6 +183,8 @@ moves = int(re.search(r"Bravo ! (\d+) essais", result).group(1))
 expected_stars = 3 if moves <= 5 else 2 if moves <= 8 else 1
 assert result.splitlines()[-1].count("✦") == expected_stars, result
 record = result.split("Record : ")[1].splitlines()[0]
+series = int(re.search(r"Série record : (\d+)",result).group(1))
+assert series == int(re.search(r"Meilleure série : (\d+)",result).group(1))
 adb("shell", "settings", "put", "system", "user_rotation", "1")
 wait_dump()
 adb("shell", "settings", "put", "system", "user_rotation", "0")
@@ -264,12 +266,15 @@ adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 root = open_memory()
 assert find_text(root, "Record : " + record), "Memory record lost after restart"
+series_text=find_text(root,"Série record : ")
+assert series_text and int(re.search(r"Série record : (\d+)",series_text).group(1)) >= series, "Streak record lost after restart"
 # The longer mode has its own board, saved orientation and separate record.
 tap_text(root, "Défi : 6 paires")
 root = wait_dump()
 assert find_text(root, "0 / 6 paires"), texts(root)
 assert description(root, "0 paires trouvées sur 6"), "Long-mode progress missing"
 assert not find_text(root, "Record : "), "Four-pair record leaked into six-pair mode"
+assert not find_text(root, "Série record : "), "Streak record leaked into six-pair mode"
 known6 = {}
 for index in range(12):
     root = tap_card(root, index)
