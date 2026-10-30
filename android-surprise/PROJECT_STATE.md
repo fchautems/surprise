@@ -712,3 +712,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41023655077 : test Android 15 échoué avant les nouveaux contrôles car l'écran de reprise est resté sur le lanceur après la tentative d'ouverture de la tâche récente. Le diagnostic ne démontre pas de défaut applicatif ; le scénario avait réussi précédemment sur les deux API. 934e5f66 renforce l'attente et permet trois tentatives de reprise, sans supprimer l'assertion fonctionnelle ; syntaxe Python valide. Nouvelle CI à contrôler.
 
 - CI 41024033669 sur 934e5f66 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12962424467 : archive et APK vérifiés par unzip -t ; SHA-256 81565d02d8ff832224aef235118ecdaad47c30a2001c7a3a95eb5f6f2cc78a94. Tests fonctionnels et correction de reprise encore à confirmer.
+
+- CI 41024033669 : les tests ciblés réussissent sur Android 10 et 15, y compris les nouvelles notes, leur ordre, les dimensions tactiles, la rotation, les deux octaves et la reprise après interruption. Quatre autres parcours sont en cours. Pas d'écoute humaine ni d'appareil physique.
