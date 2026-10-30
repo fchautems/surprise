@@ -826,3 +826,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - CI 41094625052 : compilation et vérification apksigner v2 réussies ; APK debug 12994909565 produit en artefact. Son archive n'a pas été téléchargée ni vérifiée indépendamment, car l'environnement d'exécution est indisponible. Six parcours Android en cours.
 - Diff hors journal : MusicActivity.java +4/-4 ; music_smoke.py +7/-0 ; total +11/-4.
+
+- CI 41094625052 : les deux parcours ciblés avec écran 240 dp et texte 1,3 ont réussi sur Android 10 et 15 ; quatre autres parcours en cours. Aucune inspection humaine de lisibilité.
