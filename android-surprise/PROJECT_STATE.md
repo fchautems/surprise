@@ -617,7 +617,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +18/-0 (ajouts de cette session ; le titre de session a été actualisé avant le commit final).
 
 
-## Session du 30 octobre 2026, début 05:04:06 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 05:04:06–05:20:28 Europe/Zurich (16 min 22 s, validations comprises)
 - Base 4b50df1330786873d21de88f212f9410905b3131 ; commits de code poussés 5a519040712aea6ff24e8b9a7ca76ef52309da27 et 81d552dcd7fe48aa98c97adf64702ee83fe9be92.
 - Fichiers hors journal : workflow +2/-0 ; MemoryActivity.java +10/-6 ; memory_smoke.py +40/-1 ; test_memory_content.py +25/-0 ; total +77/-7.
 - Troisième collection jouable, sauvegarde du choix et migration de l'ancienne préférence ; annulation et rotation préservent l'état. Tests d'interface ajoutés pour les trois collections, rotation, redémarrage, annulation et migration ; nouveau test de contenu vérifiant unicité, tailles et capacité de rejouer pour chaque collection.
@@ -628,3 +628,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41000900188 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12952854605 : archive et APK vérifiés par unzip -t, SHA-256 e49d16a7d998c8cad8615db20894f6649021498486491f9646c72a5da0ab693e. Les résultats fonctionnels Android ne sont pas encore connus.
 
 - CI 41000900188 : cinq parcours Android réussis, dont sélection, rotation, reprise et migration de l'ancienne préférence sur API 29 et 35 ; le parcours principal Android 10 reste en cours.
+
+- Bilan : CI 41000900188 entièrement réussie, sept jobs dont compilation, tests unitaires et six parcours sur Android 10 et 15. APK debug 12952854605, archive et APK d'intégrité vérifiée ; SHA-256 e49d16a7d998c8cad8615db20894f6649021498486491f9646c72a5da0ab693e. Aucun test sur téléphone physique ni contrôle humain du son ou de l'apparence ; le scénario d'interruption sonore antérieur reste non validé.
+- Diff final hors journal : workflow +2/-0, MemoryActivity.java +10/-6, memory_smoke.py +40/-1, test_memory_content.py +25/-0 ; total +77/-7. Commits poussés : 5a519040, 81d552dc, 579e2ef8, a02c5e61, 76f9fbd6 et ce bilan. Run intermédiaire remplacé par la CI finale ; modèle et effort inchangés, quota inconnu.
+- Durée inférieure aux 20–40 minutes indicatives, après développement, deux cycles de tests et attente des validations ; pas d'attente artificielle. Prochaine action : poursuivre la finition et tester l'interruption sonore avec une méthode fiable, puis préparer la livraison.
+- PROJECT_STATE.md : +18/-0 pour cette session.
