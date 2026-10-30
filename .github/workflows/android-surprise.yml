@@ -24,6 +24,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+      - name: Test emulator installation recovery
+        run: python3 tests/test_install_apk.py
       - name: Test content integrity
         run: python3 tests/test_bank.py
       - name: Test matching deck content
@@ -81,7 +83,7 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
-            adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
+            bash android-surprise/tests/install_apk.sh android-surprise/app/build/outputs/apk/debug/app-debug.apk
             python3 android-surprise/tests/emulator_smoke.py
       - name: Save emulator screenshots
         if: always()
@@ -113,7 +115,7 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
-            adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
+            bash android-surprise/tests/install_apk.sh android-surprise/app/build/outputs/apk/debug/app-debug.apk
             python3 android-surprise/tests/emulator_smoke.py || { adb logcat -d -s AndroidRuntime:E ActivityTaskManager:I; exit 1; }
       - name: Save emulator screenshots
         if: always()
@@ -149,7 +151,7 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
-            adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
+            bash android-surprise/tests/install_apk.sh android-surprise/app/build/outputs/apk/debug/app-debug.apk
             python3 android-surprise/tests/memory_smoke.py || { adb logcat -d -s AndroidRuntime:E; exit 1; }
   music:
     needs: build
@@ -177,5 +179,5 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
-            adb install android-surprise/app/build/outputs/apk/debug/app-debug.apk
+            bash android-surprise/tests/install_apk.sh android-surprise/app/build/outputs/apk/debug/app-debug.apk
             python3 android-surprise/tests/music_smoke.py || { adb logcat -d -s AndroidRuntime:E; exit 1; }
