@@ -906,3 +906,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la CI, vérifier APK, signature et six parcours ; corriger toute régression, comparer les captures et conserver la version antérieure si nécessaire.
 
 - CI 41127307672 : compilation, signature v2 et contrôle ZIP réussis ; APK 13010578886 téléchargé, archive et APK intègres, SHA-256 39a0b3be1a3479dad0306ae0ff0be266a59879c98235703f4d0ee54edf0c5a1d conforme à la CI ; six parcours Android encore en cours.
+
+- CI 41127307672 : échec du parcours Android 15 sur petit écran : la commande mesurait bien 196×56 dp mais son centre était trop proche du bord inférieur (y=612), en dehors de la zone visée par le test. Correction ca1b0e7b34e49e84b91def3a01609fbe29bf9e5f : marge de défilement inférieure accrue et rectangle demandé élargi pour éloigner la commande du bord. Le test de visibilité et de dimensions reste inchangé ; nouvelle CI déclenchée.
