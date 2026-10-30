@@ -58,6 +58,8 @@ tap(root,"Écouter la mélodie")
 root=dump()
 assert has(root,"volume multimédia est coupé"),texts(root)
 adb("shell","input","keyevent",*(["KEYCODE_VOLUME_UP"]*5))
+# Give the Android system volume panel time to dismiss before tapping a key.
+time.sleep(4)
 for _ in range(5):
     if has(root,"À toi de jouer"):break
     root=dump()
