@@ -883,3 +883,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la CI déclenchée, vérifier l'APK et les six parcours, comparer les captures disponibles et corriger toute régression ; conserver la version précédente tant que la nouvelle n'est pas validée. Gel des fonctionnalités dès samedi heure suisse.
 
 - CI 41119330974 : compilation, vérification v2 et contrôle ZIP réussis. APK 13006998024 téléchargé, archive et APK intègres, SHA-256 576a75c61e04acec76d9f07a16d90526b524e04b04f29e042b8d6af88cd30de1 conforme à la CI ; parcours Android encore en cours.
+
+- CI 41119330974 : échec du scénario d'interruption Android 10 ; le message de lecture achevée était déjà affiché au retour, malgré le précédent regroupement des commandes ADB. La cause exacte demeure incertaine. Commit 2463512214ec6cbc7f9d785aebaee4845526855a : jusqu'à quatre tentatives lorsque la lecture s'achève trop tôt ; le scénario exige toujours explicitement l'état interrompu et échoue si aucune tentative ne l'observe. Syntaxe Python vérifiée localement. Nouvelle CI déclenchée, précédente susceptible d'être annulée.
