@@ -29,6 +29,15 @@ class PaletteContrastTest(unittest.TestCase):
                         (241,179,122),(244,168,141),(218,184,234),(248,196,116)):
                 self.assertGreaterEqual(contrast(background,ink),4.5,(background,ink))
 
+    def test_progress_track_contrast(self):
+        track=(98,110,133)
+        for name in ("MainActivity.java", "MemoryActivity.java"):
+            self.assertIn("setProgressBackgroundTintList", (SOURCE / name).read_text(encoding="utf-8"))
+            self.assertIn("Color.rgb(98,110,133)", (SOURCE / name).read_text(encoding="utf-8"))
+        for background in ((17,22,42),(20,31,53),(34,25,44)):
+            self.assertGreaterEqual(contrast(track,background),3.0)
+        self.assertGreaterEqual(contrast(track,(255,195,107)),3.0)
+
     def test_matched_card_palette(self):
         source = (SOURCE / "MemoryActivity.java").read_text(encoding="utf-8")
         colors = re.search(r"int\[\] INKS=\{(.*?)\};", source, re.S).group(1)

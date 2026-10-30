@@ -428,6 +428,7 @@ public class MainActivity extends Activity {
         header=label("",14,GOLD);header.setTypeface(null,Typeface.BOLD);root.addView(header);
         progress=new android.widget.ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
         progress.setMax(ROUND); progress.setProgressTintList(android.content.res.ColorStateList.valueOf(GOLD));
+        progress.setProgressBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.rgb(98,110,133)));
         LinearLayout.LayoutParams progressParams=new LinearLayout.LayoutParams(-1,dp(6));
         progressParams.setMargins(dp(24),dp(16),dp(24),0); root.addView(progress,progressParams);
         category=label("",14,GOLD);category.setTypeface(null,Typeface.BOLD);category.setLetterSpacing(0.08f);LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);cp.setMargins(0,dp(24),0,dp(8));root.addView(category,cp);

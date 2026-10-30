@@ -202,6 +202,7 @@ public final class MemoryActivity extends Activity {
         status=label("",16,GOLD); status.setLineSpacing(dp(2),1f); root.addView(status);
         progress=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
         progress.setProgressTintList(android.content.res.ColorStateList.valueOf(GOLD));
+        progress.setProgressBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.rgb(98,110,133)));
         LinearLayout.LayoutParams pp=new LinearLayout.LayoutParams(-1,dp(6)); pp.setMargins(dp(5),dp(8),dp(5),dp(4)); root.addView(progress,pp);
         int width=getResources().getConfiguration().screenWidthDp;
         columns=width>=268 ? 4 : width>=210 ? 3 : 2;

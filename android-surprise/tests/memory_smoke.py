@@ -491,10 +491,18 @@ try:
     for index in range(4):
         root, node = card(root, index)
         bounds = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
-        assert bounds[2] - bounds[0] >= 48, ("Narrow touch target", index, bounds)
+        assert bounds[2] - bounds[0] >= 48 and bounds[3] - bounds[1] >= 48, ("Narrow touch target", index, bounds)
         positions.append(bounds)
     assert positions[0][1] == positions[1][1] == positions[2][1], positions
     assert positions[3][1] > positions[0][1], ("Expected three-column layout", positions)
+    assert all(positions[i+1][0]-positions[i][2]>=8 for i in range(2)), ("Narrow targets crowded",positions)
+    root, first=card(root,0)
+    before_outside=first.attrib["content-desc"]
+    first_bounds=list(map(int,re.findall(r"\d+",first.attrib["bounds"])))
+    adb("shell","input","tap","2",str((first_bounds[1]+first_bounds[3])//2))
+    root=wait_dump()
+    root, first=card(root,0)
+    assert first.attrib["content-desc"]==before_outside, "Outside tap selected a card"
     capture("memory-small")
     root = tap_card(root, 0)
     root, node = card(root, 0)
