@@ -307,4 +307,27 @@ assert has(root,"Arpège : désactivé"),texts(root)
 audio_log=adb("logcat","-d","-s","SurpriseAudio:I")
 print("Audio diagnostic:",audio_log[-3000:])
 assert "playback started" in audio_log, "AudioTrack never entered playing state"
+# Small-screen and enlarged-text regression: free-play keys remain tappable.
+try:
+    adb("shell","wm","size","240x640")
+    adb("shell","wm","density","160")
+    adb("shell","settings","put","system","font_scale","1.3")
+    adb("shell","am","force-stop","ch.fred.surprise")
+    adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+    root=open_game()
+    tap(root,"Jouer librement")
+    for _ in range(3):
+        adb("shell","input","swipe","160","200","160","520","300")
+    root=dump()
+    tap(root,"Fa")
+    root=dump()
+    row={n.attrib.get("text"):n for n in root.iter("node") if n.attrib.get("text") in ("Fa","Sol","La")}
+    assert len(row)==3, ("Narrow keys missing",texts(root))
+    bounds={name:list(map(int,re.findall(r"\d+",node.attrib["bounds"]))) for name,node in row.items()}
+    assert all(v[2]-v[0]>=48 and v[3]-v[1]>=48 for v in bounds.values()), ("Narrow target",bounds)
+    assert selected_note(root,"Fa"), "Narrow-screen selection missing"
+finally:
+    adb("shell","wm","size","reset")
+    adb("shell","wm","density","reset")
+    adb("shell","settings","put","system","font_scale","1.0")
 print("Music UI smoke test passed")

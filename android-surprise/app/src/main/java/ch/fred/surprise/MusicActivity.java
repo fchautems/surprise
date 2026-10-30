@@ -45,15 +45,20 @@ public final class MusicActivity extends Activity {
 
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
-        GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(dp(16));
+        GradientDrawable d=color==CARD
+            ? new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{Color.rgb(39,53,80),CARD})
+            : new GradientDrawable();if(color!=CARD)d.setColor(color);d.setCornerRadius(dp(16));
         if(border!=0)d.setStroke(dp(2),border);return d;
+    }
+    private android.graphics.drawable.Drawable touch(GradientDrawable base){
+        return new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(Color.argb(40,255,255,255)),base,null);
     }
     private TextView label(String text,int size,int color){
         TextView t=new TextView(this);t.setText(text);t.setTextSize(size);t.setTextColor(color);t.setGravity(Gravity.CENTER);return t;
     }
     private Button button(String text){
         Button b=new Button(this);b.setAllCaps(false);b.setText(text);b.setTextSize(17);b.setTextColor(WHITE);
-        b.setBackgroundTintList(null);b.setBackground(shape(CARD,GOLD));b.setMinHeight(dp(56));return b;
+        b.setBackgroundTintList(null);b.setBackground(touch(shape(CARD,GOLD)));b.setMinHeight(dp(56));return b;
     }
     private void warnSound(int token){
         runOnUiThread(()->{if(token==generation && !isFinishing()){
@@ -145,13 +150,13 @@ public final class MusicActivity extends Activity {
         for(int i=0;i<keys.length;i++){
             if(keys[i]==null)continue;
             boolean selected=i==lastNote;
-            keys[i].setBackground(shape(selected ? Color.rgb(70,89,120) : CARD,selected ? WHITE : GOLD));
+            keys[i].setBackground(touch(shape(selected ? Color.rgb(70,89,120) : CARD,selected ? WHITE : GOLD)));
             keys[i].setContentDescription("Note "+NAMES[i]+(selected ? " · dernière jouée" : ""));
         }
         for(int i=0;i<extraKeys.length;i++){
             if(extraKeys[i]==null)continue;
             boolean selected=i==lastExtra;
-            extraKeys[i].setBackground(shape(selected ? Color.rgb(70,89,120) : CARD,selected ? WHITE : GOLD));
+            extraKeys[i].setBackground(touch(shape(selected ? Color.rgb(70,89,120) : CARD,selected ? WHITE : GOLD)));
             extraKeys[i].setContentDescription("Note "+EXTRA_NAMES[i]+(selected ? " · dernière jouée" : ""));
         }
     }

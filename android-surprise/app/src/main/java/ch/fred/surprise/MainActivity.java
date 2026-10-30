@@ -184,7 +184,12 @@ public class MainActivity extends Activity {
     private TextView header,category,question,feedback;
     private android.widget.ProgressBar progress;
     private Button next, joker;
-    private GradientDrawable shape(int color,int radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(radius);return d;}
+    private GradientDrawable shape(int color,int radius){GradientDrawable d=color==CARD
+        ? new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{Color.rgb(39,53,80),CARD})
+        : new GradientDrawable();if(color!=CARD)d.setColor(color);d.setCornerRadius(radius);return d;}
+    private android.graphics.drawable.Drawable touch(GradientDrawable base){
+        return new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(Color.argb(40,255,255,255)),base,null);
+    }
     private GradientDrawable outlinedShape(int color,int accent){
         GradientDrawable d=shape(color,dp(16)); d.setStroke(dp(2),accent); return d;
     }
@@ -277,13 +282,13 @@ public class MainActivity extends Activity {
         android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
         int dailyBest=prefs.getString("dailyDate","").equals(today) ? prefs.getInt("dailyBest",0) : 0;
         Button daily=makeMenuButton(dailyBest>0 ? "Défi du jour · record "+dailyBest : "Défi du jour");
-        daily.setBackground(outlinedShape(CARD,GOLD)); daily.setTextColor(GOLD);
+        daily.setBackground(touch(outlinedShape(CARD,GOLD))); daily.setTextColor(GOLD);
         choices.addView(daily); daily.setOnClickListener(v->{gameMode="DÉFI";newGame();});
         Button memory=makeMenuButton("Un jeu de mémoire"); choices.addView(memory);
-        memory.setBackground(outlinedShape(CARD,Color.rgb(179,185,255)));
+        memory.setBackground(touch(outlinedShape(CARD,Color.rgb(179,185,255))));
         memory.setOnClickListener(v->startActivity(new android.content.Intent(this,MemoryActivity.class)));
         Button music=makeMenuButton("Jouer en musique"); choices.addView(music);
-        music.setBackground(outlinedShape(CARD,Color.rgb(241,179,122)));
+        music.setBackground(touch(outlinedShape(CARD,Color.rgb(241,179,122))));
         music.setOnClickListener(v->startActivity(new android.content.Intent(this,MusicActivity.class)));
         Button theme=makeMenuButton("Choisir un thème");
         choices.addView(theme); theme.setOnClickListener(v->showThemes());
@@ -291,7 +296,7 @@ public class MainActivity extends Activity {
     }
     private Button makeMenuButton(String text){
         Button b=new Button(this); b.setText(text); b.setAllCaps(false); b.setTextSize(16);
-        b.setTextColor(WHITE); b.setBackgroundTintList(null); b.setBackground(shape(CARD,dp(16)));
+        b.setTextColor(WHITE); b.setBackgroundTintList(null); b.setBackground(touch(shape(CARD,dp(16))));
         b.setMinHeight(dp(52)); LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);
         lp.setMargins(0,dp(5),0,dp(5)); b.setLayoutParams(lp); return b;
     }
@@ -302,7 +307,7 @@ public class MainActivity extends Activity {
         question.setText("Quelle escale te tente ?"); feedback.setText(""); next.setText("Retour"); next.setVisibility(View.VISIBLE);
         for(String theme:THEMES){
             Button b=makeMenuButton(theme); b.setTextColor(categoryColor(theme));
-            b.setBackground(outlinedShape(CARD,categoryColor(theme))); choices.addView(b);
+            b.setBackground(touch(outlinedShape(CARD,categoryColor(theme)))); choices.addView(b);
             b.setOnClickListener(v->{gameMode=theme;newGame();});
         }
         scroll.post(()->scroll.scrollTo(0,0));
@@ -323,7 +328,7 @@ public class MainActivity extends Activity {
             options=restoredOptions.clone();
         }else{Collections.shuffle(a,gameMode.equals("DÉFI") ? new Random((long)dailyDate.hashCode()*31+index) : rng); options=a.toArray(new String[0]);}
         for(String value:options){
-            Button b=new Button(this);b.setText(value);b.setTextColor(WHITE);b.setTextSize(17);b.setAllCaps(false);b.setBackgroundTintList(null);b.setBackground(outlinedShape(CARD,categoryColor(q[0])));
+            Button b=new Button(this);b.setText(value);b.setTextColor(WHITE);b.setTextSize(17);b.setAllCaps(false);b.setBackgroundTintList(null);b.setBackground(touch(outlinedShape(CARD,categoryColor(q[0]))));
             b.setMinHeight(dp(56)); b.setPadding(dp(12),dp(10),dp(12),dp(10));
             LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.setMargins(0,dp(5),0,dp(5)); choices.addView(b,lp);
             if(hiddenOptions!=null && java.util.Arrays.asList(hiddenOptions).contains(value)) { b.setEnabled(false); b.setAlpha(0.35f); }
@@ -392,7 +397,7 @@ public class MainActivity extends Activity {
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
         if(!review.isEmpty()){
             Button retry=makeMenuButton("Prendre ma revanche"); choices.addView(retry);
-            retry.setBackground(outlinedShape(CARD,GOLD)); retry.setTextColor(GOLD);
+            retry.setBackground(touch(outlinedShape(CARD,GOLD))); retry.setTextColor(GOLD);
             retry.setOnClickListener(v->retryMissed());
             Button recap=makeMenuButton("Revoir mes réponses"); choices.addView(recap);
             recap.setOnClickListener(v->new android.app.AlertDialog.Builder(this)
@@ -424,11 +429,11 @@ public class MainActivity extends Activity {
         question=label("",25,WHITE);question.setTypeface(null,Typeface.BOLD);root.addView(question);
         choices=new LinearLayout(this);choices.setOrientation(LinearLayout.VERTICAL);LinearLayout.LayoutParams choicesP=new LinearLayout.LayoutParams(-1,-2);choicesP.setMargins(0,dp(22),0,0);root.addView(choices,choicesP);
         joker=new Button(this); joker.setAllCaps(false); joker.setTextSize(14); joker.setTextColor(GOLD);
-        joker.setBackgroundTintList(null); joker.setBackground(shape(CARD,dp(12))); joker.setMinHeight(dp(48));
+        joker.setBackgroundTintList(null); joker.setBackground(touch(shape(CARD,dp(12)))); joker.setMinHeight(dp(48));
         LinearLayout.LayoutParams jp=new LinearLayout.LayoutParams(-1,-2);jp.setMargins(0,dp(8),0,0);root.addView(joker,jp);
         joker.setOnClickListener(v->useJoker());
         feedback=label("",16,GOLD);LinearLayout.LayoutParams fp=new LinearLayout.LayoutParams(-1,-2);fp.setMargins(0,dp(16),0,dp(12));root.addView(feedback,fp);
-        next=new Button(this);next.setAllCaps(false);next.setTextColor(BG);next.setTextSize(17);next.setBackgroundTintList(null);next.setBackground(shape(GOLD,dp(16)));next.setMinHeight(dp(56)); root.addView(next,new LinearLayout.LayoutParams(-1,-2));
+        next=new Button(this);next.setAllCaps(false);next.setTextColor(BG);next.setTextSize(17);next.setBackgroundTintList(null);next.setBackground(touch(shape(GOLD,dp(16))));next.setMinHeight(dp(56)); root.addView(next,new LinearLayout.LayoutParams(-1,-2));
         next.setOnClickListener(v->{if(choosingTheme){showHome();}else if(showingHome){gameMode="MÉLANGE";newGame();}else if(index>=ROUND){newGame();}else if(index==ROUND-1){index++;recordRound();finishRound();}else{index++;showQuestion();}});
         setContentView(scroll);
         if(saved!=null && saved.containsKey("order")){

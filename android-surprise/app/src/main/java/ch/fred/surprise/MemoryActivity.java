@@ -42,8 +42,13 @@ public final class MemoryActivity extends Activity {
     private boolean newRecord=false;
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
-        GradientDrawable d=new GradientDrawable(); d.setColor(color); d.setCornerRadius(dp(16));
+        GradientDrawable d=color==CARD
+            ? new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{Color.rgb(39,53,80),CARD})
+            : new GradientDrawable();if(color!=CARD)d.setColor(color);d.setCornerRadius(dp(16));
         if(border!=0)d.setStroke(dp(2),border); return d;
+    }
+    private android.graphics.drawable.Drawable touch(GradientDrawable base){
+        return new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(Color.argb(40,255,255,255)),base,null);
     }
     private TextView label(String text,int size,int color){
         TextView t=new TextView(this); t.setText(text); t.setTextSize(size);
@@ -52,7 +57,7 @@ public final class MemoryActivity extends Activity {
     private Button button(String text){
         Button b=new Button(this); b.setText(text); b.setAllCaps(false);
         b.setTextColor(WHITE); b.setTextSize(16); b.setBackgroundTintList(null);
-        b.setBackground(shape(CARD,GOLD)); b.setMinHeight(dp(52)); return b;
+        b.setBackground(touch(shape(CARD,GOLD))); b.setMinHeight(dp(52)); return b;
     }
     private void newGame(){
         boolean[] previous=new boolean[SYMBOLS.length]; int distinct=0;
@@ -175,7 +180,7 @@ public final class MemoryActivity extends Activity {
             cards[i].setText(value); cards[i].setEnabled(!matched[i]);
             cards[i].setTextColor(visible ? INKS[deck[i]%INKS.length] : WHITE);
             cards[i].setContentDescription("Carte "+(i+1)+" : "+(matched[i] ? "trouvée " : visible ? "visible " : "cachée ")+value);
-            cards[i].setBackground(shape(matched[i] ? Color.rgb(27,82,70) : CARD,visible ? GOLD : Color.rgb(100,115,145)));
+            cards[i].setBackground(touch(shape(matched[i] ? Color.rgb(27,82,70) : CARD,visible ? GOLD : Color.rgb(100,115,145))));
         }
     }
     @Override public void onCreate(Bundle saved){
