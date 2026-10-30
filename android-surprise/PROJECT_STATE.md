@@ -835,7 +835,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +16/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 18:56:14 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 18:56:14–19:13:44 Europe/Zurich (17 min 30 s, validations comprises)
 - Référence 5051911e ; CI 41094625052 vérifiée : sept jobs réussis. APK 12994909565 téléchargé, archive et APK vérifiés par unzip -t ; SHA-256 fd74ddcf256670b6268e1223c69e82f5ba6d7fa02fb1268b100b82e4be9dd1e5. Ceci complète le contrôle indépendant impossible à la session précédente.
 - Commit 3a2c6ebb11bdf196687e8229bcb7bd71308ca37c poussé : la CI contrôle désormais l'intégrité interne et calcule le SHA-256 de l'APK avant publication de l'artefact ; les deux parcours enregistrent chacun un rendu privé sur écran étroit et police agrandie pour les deux API. Workflow +20/-0, memory_smoke.py +1/-0, music_smoke.py +8/-0, total +29/-0 hors journal.
 - Contrôles locaux : syntaxe Python des deux parcours et analyse YAML réussies. CI 41102741393 lancée ; build, capture et six parcours encore non confirmés. Aucun test sur téléphone physique ni jugement humain visuel ou sonore. Modèle et effort inchangés ; quota inconnu.
@@ -845,3 +845,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - CI 41102741393 : compilation, signature APK v2, unzip -t et calcul SHA-256 réussis ; APK 12998003925 téléchargé, archive et APK intègres, SHA-256 082b7d709959a2b94c6375a79d934303dea8cc14cf621f0880d36b7c38a4c63d conforme au journal CI. Les six parcours sont encore indiqués en cours.
 - Captures petit écran API 29/35 : fichiers décodables 240×640, OCR automatique respectivement 53 et 49 mots ; ne prouve pas la lisibilité ni la qualité visuelle. Les deux autres captures sont attendues.
+
+- Bilan : CI 41102741393 entièrement réussie ; compilation, tests, vérification de signature v2 et six parcours Android 10 et 15 réussis. APK 12998003925 : vérification ZIP et SHA-256 en CI puis téléchargement et vérification indépendante réussis ; SHA-256 082b7d709959a2b94c6375a79d934303dea8cc14cf621f0880d36b7c38a4c63d.
+- Quatre nouvelles captures privées 240×640 sont produites et décodables. OCR automatique API 29/35 : 53/49 mots pour un écran et 36/27 pour l'autre ; ces chiffres ne prouvent ni la lisibilité ni l'esthétique et varient avec le contenu. Comparaison inter-API précédente enregistrée ci-dessus ; pas de jugement visuel humain ni test sur téléphone physique ou écoute humaine.
+- Diff final hors journal : .github/workflows/android-surprise.yml +20/-0, memory_smoke.py +1/-0, music_smoke.py +8/-0 ; total +29/-0. Contrôles locaux : syntaxe Python et YAML, intégrité ZIP, SHA-256 et décodage/OCR des captures réussis. Commits poussés : 3a2c6ebb, c6297e1f, 0ec85e5f, e7d8770a et ce bilan. Modèle et effort inchangés ; quota inconnu ; des lectures de CI ont subi des délais de réponse intermittents.
+- Session achevée après les validations utiles, sans attente artificielle. Prochaine action : préserver cette version validée et procéder à des améliorations visuelles ou ergonomiques prudentes, sans nouvelle fonctionnalité dès le 31 octobre en Suisse.
+- PROJECT_STATE.md : +18/-0 pour cette session.
