@@ -446,6 +446,19 @@ root = wait_dump()
 assert find_text(root, "0 / 10 paires") and find_text(root, "Record : " + record10), texts(root)
 assert find_text(root, "Série record : " + str(series10)), "Streak record not isolated for 10 pairs"
 assert "Étoiles : " in find_text(root,"Série record : "), "Best stars missing for 10 pairs"
+# A cancelled change must not overwrite the chosen difficulty, even after restart.
+root = tap_card(root, 0)
+tap_text(root, "Mode : 4 paires")
+dialog = wait_dump()
+assert find_text(dialog, "Changer de défi"), texts(dialog)
+tap_text(dialog, "Continuer")
+adb("shell", "am", "force-stop", "ch.fred.surprise")
+adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+root = open_memory()
+assert find_text(root, "0 / 10 paires") and find_text(root, "Record : " + record10), ("Difficulty lost after restart", texts(root))
+tap_text(root, "Mode : 4 paires")
+root = wait_dump()
+assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
 # On a narrow 240dp display the cards must remain easy to touch.
 try:
     adb("shell", "wm", "size", "240x640")
@@ -488,4 +501,15 @@ adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
 root=open_memory()
 legacy=find_text(root,"Record : ")
 assert legacy and "Étoiles : " in legacy and "Série record :" not in legacy, ("Legacy award missing",texts(root))
+# Invalid stored configuration safely falls back to the original default.
+adb("shell","am","force-stop","ch.fred.surprise")
+prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise","cat",prefs_path))
+choice=next((n for n in prefs if n.attrib.get("name")=="pairCount"),None)
+assert choice is not None, "Persisted difficulty missing"
+choice.set("value","999")
+subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
+               input=ET.tostring(prefs,encoding="unicode"),text=True,stdout=subprocess.DEVNULL,check=True)
+adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+root=open_memory()
+assert find_text(root,"0 / 4 paires") and find_text(root,"Record : "+record), ("Invalid preference fallback failed",texts(root))
 print("Memory game smoke test passed")

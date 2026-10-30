@@ -136,15 +136,20 @@ public final class MemoryActivity extends Activity {
         getPreferences(MODE_PRIVATE).edit().putBoolean("escapade",escapade).apply();
         newGame();
     }
+    private void applyDifficulty(){
+        pairCount=nextPairCount();
+        getPreferences(MODE_PRIVATE).edit().putInt("pairCount",pairCount).apply();
+        newGame();
+    }
     private void switchDifficulty(){
         if(hasUnfinishedGame()){
             new android.app.AlertDialog.Builder(this)
                 .setTitle("Changer de défi ?")
                 .setMessage("La partie en cours sera perdue.")
                 .setNegativeButton("Continuer", (dialog, which)->dialog.dismiss())
-                .setPositiveButton("Changer", (dialog, which)->{pairCount=nextPairCount();newGame();})
+                .setPositiveButton("Changer", (dialog, which)->applyDifficulty())
                 .show();
-        }else{pairCount=nextPairCount();newGame();}
+        }else applyDifficulty();
     }
     private void render(){
         int pairs=pairsFound();
@@ -173,7 +178,10 @@ public final class MemoryActivity extends Activity {
         }
     }
     @Override public void onCreate(Bundle saved){
-        super.onCreate(saved); escapade=getPreferences(MODE_PRIVATE).getBoolean("escapade",false); getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
+        super.onCreate(saved);
+        pairCount=getPreferences(MODE_PRIVATE).getInt("pairCount",4);
+        if(pairCount!=4 && pairCount!=6 && pairCount!=8 && pairCount!=10)pairCount=4;
+        escapade=getPreferences(MODE_PRIVATE).getBoolean("escapade",false); getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
         ScrollView scroll=new ScrollView(this); gameScroll=scroll; scroll.setFillViewport(true); scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         LinearLayout root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER); root.setPadding(dp(18),dp(20),dp(18),dp(20)); scroll.addView(root);
