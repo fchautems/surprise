@@ -926,3 +926,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la CI, vérifier APK et six parcours, corriger ou revenir à la version précédente en cas de régression ; comparer les captures si disponibles.
 
 - CI 41131571230 : compilation, signature Android v2 et ZIP réussis ; APK 13013162787 téléchargé, archive et APK intègres, SHA-256 d5da6bf1b779a650a3bec00fa6e1747b9e3916f5c20fd206104ceda448652845 conforme à la CI. Six parcours sur émulateur en cours.
+
+- CI 41131571230 : deux parcours Android 10 et 15 réussis ; quatre autres, dont les contrôles tactiles visés, restent en cours.
