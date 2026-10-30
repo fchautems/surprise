@@ -718,3 +718,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Complément de reprise le 30 octobre à 12:55 Europe/Zurich : CI 41024033669 terminée avec succès à 09:18:59, sept jobs dont six parcours Android 10 et 15 ; APK debug 12962424467, archive et APK d'intégrité précédemment vérifiée (SHA-256 81565d02d8ff832224aef235118ecdaad47c30a2001c7a3a95eb5f6f2cc78a94). Aucun appareil physique ni contrôle humain de l'apparence ou du son. L'échec intermédiaire relevait du scénario de reprise ; la nouvelle tentative a réussi sur les deux API, sans certitude que toute intermittence soit éliminée.
 - Bilan de la session démarrée à 08:56:21 : diff hors journal MusicActivity.java +45/-7, music_smoke.py +41/-4, test_chords.py +10/-0, total +96/-11. Commits poussés 98355f68, 1edf88a4, d290e442, fd551b65, 6ffdd09b, 64204765, 934e5f66, adfbc03c, c47a82ce, 22f0a446 et ce complément. Dernière activité de suivi confirmée à 09:10:52 ; reprise interrompue avant son bilan, heure effective de fin et durée exacte inconnues. La CI s'est terminée à 09:18:59 sans preuve d'activité de l'agent jusqu'à cette heure.
 - Prochaine action : reprendre le développement et ses tests, puis préparer la livraison.
+
+
+## Session du 30 octobre 2026, début 12:55:43 Europe/Zurich — en cours
+- Base 3f062c1ace4a95fbc4ad67ab14d08f204d6450b2 ; commit de code 19b8c068a27b50848ace85960185b4fb3e945f39 poussé.
+- Diff hors journal : MusicActivity.java +24/-7 ; music_smoke.py +18/-0 ; INSTALLATION.md +17/-0 ; total +59/-7.
+- Ajout d'un mode arpège facultatif pour les accords du jeu libre, avec annulation lors d'une nouvelle action et préférence conservée ; test d'émission ordonnée et de rotation ajouté. Instructions de livraison préparées, comprenant l'APK debug, l'accès à l'artefact, Android 8 minimum et la limite des signatures entre builds.
+- Contrôles locaux : syntaxe Python du test valide ; test Java de synthèse sonore existant réussi. CI 41051796306 lancée ; compilation, APK et parcours Android non encore confirmés. SDK Android, Gradle et adb absents localement.
+- Dernière CI complète 41024033669 : sept jobs réussis, APK debug 12962424467 d'intégrité précédemment vérifiée. Aucun téléphone physique ni contrôle humain du son ou de l'apparence. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la compilation et les émulateurs, corriger les échecs et vérifier l'APK avant bilan.
