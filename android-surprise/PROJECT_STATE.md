@@ -558,3 +558,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Ajout d'un record de séries de paires pour chaque taille de défi, conservé entre parties et affiché à la fin et pendant la partie ; enregistrement atomique avec le record existant. Tests étendus à la valeur initiale, la persistance après redémarrage et l'absence de fuite entre tailles.
 - Syntaxe Python valide ; SDK Android, Gradle et adb absents localement. Dernière CI complète 40976489035 : sept jobs réussis après relance ciblée ; APK 12942088661 d'intégrité vérifiée. Aucun téléphone physique ni contrôle humain visuel ou sonore ; le test d'interruption reste non validé.
 - Nouvelle CI, compilation, APK et tests Android à vérifier ; diagnostiquer les échecs puis consigner bilan et durée.
+
+- Test étendu dans ed33ba9b aux records de séries des quatre tailles, y compris vérification lors du retour dans chaque taille ; syntaxe Python valide. La CI intermédiaire est remplacée par cette version et ses résultats restent à vérifier.
