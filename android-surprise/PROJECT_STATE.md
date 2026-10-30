@@ -562,3 +562,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Test étendu dans ed33ba9b aux records de séries des quatre tailles, y compris vérification lors du retour dans chaque taille ; syntaxe Python valide. La CI intermédiaire est remplacée par cette version et ses résultats restent à vérifier.
 
 - CI 40983756881 sur ed33ba9b : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12945643961 produit ; archive et APK vérifiés par unzip -t ; SHA-256 858b299b91b1e4a18c67c274886ce566d68d3b21dfe8ee17b363a812f23f6a6e. Tests fonctionnels encore à vérifier.
+
+- CI 40983756881 : le parcours audio API 29 échoue au même premier appui après manipulation du volume que lors de la session précédente ; état inchangé, cause non prouvée. Hypothèse : panneau système de volume intercepte l'appui. Correctif de test 9b49e191 : attendre quatre secondes après volume haut pour laisser ce panneau se fermer ; syntaxe Python valide. Nouvelle CI à valider ; ce délai ne démontre pas à lui seul la cause. Les autres jobs du run intermédiaire sont susceptibles d'être annulés.
