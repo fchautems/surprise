@@ -686,3 +686,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre compilation et parcours, notamment persistance après redémarrage, corriger les erreurs éventuelles et contrôler l'APK avant bilan.
 
 - CI 41017617295 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12959544201 : archive et APK vérifiés par unzip -t ; SHA-256 3209fbe2ba1bfbbcc1108904f92918ed3808e01ec51c1575ea1100f41b9743f1. Persistance Android et autres parcours non encore confirmés.
+
+- CI 41017617295 : cinq parcours Android réussis, dont la vérification des deux historiques et de leur persistance après redémarrage sur Android 15 ; le parcours principal Android 10 reste en cours.
