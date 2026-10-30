@@ -642,3 +642,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : syntaxe Python du test d'interface valide ; test musical indépendant réussi (six accords et leurs quatre fréquences). SDK Android, Gradle et adb absents localement. CI 41005620812 lancée, compilation, APK et émulateurs non encore confirmés.
 - Dernière CI complète 41000900188 : sept jobs réussis ; APK debug 12952854605 d'intégrité précédemment vérifiée. Aucun téléphone physique, écoute humaine ou contrôle visuel humain ; scénario antérieur d'interruption sonore non validé. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la compilation et les six parcours, contrôler l'APK et corriger toute défaillance, puis consigner durée et résultats.
+
+- CI 41005620812 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12954868242 : archive et APK vérifiés par unzip -t ; SHA-256 3c25601e84e7bda5628436dc2b3d1d08d67e12e98e61af8c2bf18a181680aed6. Les résultats fonctionnels des émulateurs ne sont pas encore connus.
