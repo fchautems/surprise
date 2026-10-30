@@ -606,3 +606,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Vérification locale : syntaxe Python du test valide. SDK Android, Gradle et adb absents localement. CI 40994675728 sur e8d3ab07 lancée ; compilation et tests en cours, aucun APK de cette version encore confirmé.
 - Dernière CI complète 40989727364 : sept jobs réussis ; APK 12949115516 d'intégrité précédemment vérifiée. Pas de téléphone physique ni contrôle humain de l'apparence ou du son ; scénario antérieur d'interruption non validé. Modèle et effort non modifiés ; quota inconnu.
 - Prochaine action : inspecter la compilation, les six parcours Android et l'APK de la nouvelle version ; corriger toute anomalie, puis consigner résultat et durée réelle.
+
+- CI 40994675728 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12950792574 téléchargé, archive et APK vérifiés par unzip -t ; SHA-256 622aed636cf6974cc4951bdc2c39e5276b99ca77748f5b000ae5ba6dd81428b0. Résultats fonctionnels des émulateurs encore inconnus.
