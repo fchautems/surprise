@@ -644,3 +644,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la compilation et les six parcours, contrôler l'APK et corriger toute défaillance, puis consigner durée et résultats.
 
 - CI 41005620812 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12954868242 : archive et APK vérifiés par unzip -t ; SHA-256 3c25601e84e7bda5628436dc2b3d1d08d67e12e98e61af8c2bf18a181680aed6. Les résultats fonctionnels des émulateurs ne sont pas encore connus.
+
+- CI 41005620812 : tests d'interface des trois nouveaux accords réussis sur Android 10 et 15 ; quatre autres parcours sont en cours. Les logs confirment le déclenchement des trois sorties audio ; ils ne constituent pas une écoute humaine.
