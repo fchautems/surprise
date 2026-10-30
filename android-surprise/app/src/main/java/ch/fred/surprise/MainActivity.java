@@ -372,6 +372,11 @@ public class MainActivity extends Activity {
             }
         }
         next.setText(index==ROUND-1?"Voir le résultat":"Continuer");next.setVisibility(View.VISIBLE);
+        // Bring the next action into view without forcing a swipe after each answer.
+        next.post(()->{
+            if(answered && !showingHome && index<ROUND && next.getVisibility()==View.VISIBLE)
+                next.requestRectangleOnScreen(new android.graphics.Rect(0,0,next.getWidth(),next.getHeight()),true);
+        });
     }
     private void recordRound(){
         android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
