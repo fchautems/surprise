@@ -833,3 +833,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MusicActivity.java +4/-4 ; music_smoke.py +7/-0 ; total +11/-4. Commits poussés : d3d3da61, b9b757ac, 0ede0d05, 6ca60459 et ce bilan. Contrôle local limité à des vérifications statiques en JavaScript ; pas de test sur téléphone physique ni inspection humaine visuelle ou sonore. Modèle et effort inchangés ; quota inconnu.
 - Les captures avant/après n'ont pas pu être comparées indépendamment à cause de l'environnement local indisponible. Prochaine action : vérifier l'archive et le SHA-256 dès retour de l'environnement, préserver l'APK précédent déjà vérifié ; respecter le gel des fonctionnalités à partir du samedi 31 octobre en Suisse.
 - PROJECT_STATE.md : +16/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 18:56:14 Europe/Zurich — en cours
+- Référence 5051911e ; CI 41094625052 vérifiée : sept jobs réussis. APK 12994909565 téléchargé, archive et APK vérifiés par unzip -t ; SHA-256 fd74ddcf256670b6268e1223c69e82f5ba6d7fa02fb1268b100b82e4be9dd1e5. Ceci complète le contrôle indépendant impossible à la session précédente.
+- Commit 3a2c6ebb11bdf196687e8229bcb7bd71308ca37c poussé : la CI contrôle désormais l'intégrité interne et calcule le SHA-256 de l'APK avant publication de l'artefact ; les deux parcours enregistrent chacun un rendu privé sur écran étroit et police agrandie pour les deux API. Workflow +20/-0, memory_smoke.py +1/-0, music_smoke.py +8/-0, total +29/-0 hors journal.
+- Contrôles locaux : syntaxe Python des deux parcours et analyse YAML réussies. CI 41102741393 lancée ; build, capture et six parcours encore non confirmés. Aucun test sur téléphone physique ni jugement humain visuel ou sonore. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la CI, vérifier la signature, l'APK et la production des captures, diagnostiquer les échecs, puis consigner les résultats et la durée effective.
