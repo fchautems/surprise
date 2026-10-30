@@ -615,3 +615,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MemoryActivity.java +11/-3 ; tests/memory_smoke.py +24/-0 ; total +35/-3. Commits poussés : e8d3ab07, 043731cf, 57045f4f, 1f28937c et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Durée inférieure aux 20–40 minutes indicatives : les validations ont terminé après les changements et la vérification de l'APK ; aucun délai artificiel ajouté. Prochaine action : approfondir la finition ludique et le scénario d'interruption, tout en conservant une compilation et des parcours verts.
 - PROJECT_STATE.md : +18/-0 (ajouts de cette session ; le titre de session a été actualisé avant le commit final).
+
+
+## Session du 30 octobre 2026, début 05:04:06 Europe/Zurich — en cours
+- Base 4b50df1330786873d21de88f212f9410905b3131 ; commits de code poussés 5a519040712aea6ff24e8b9a7ca76ef52309da27 et 81d552dcd7fe48aa98c97adf64702ee83fe9be92.
+- Fichiers hors journal : workflow +2/-0 ; MemoryActivity.java +10/-6 ; memory_smoke.py +40/-1 ; test_memory_content.py +25/-0 ; total +77/-7.
+- Troisième collection jouable, sauvegarde du choix et migration de l'ancienne préférence ; annulation et rotation préservent l'état. Tests d'interface ajoutés pour les trois collections, rotation, redémarrage, annulation et migration ; nouveau test de contenu vérifiant unicité, tailles et capacité de rejouer pour chaque collection.
+- Test de contenu local réussi (1 test, trois jeux de données) ; compilation syntaxique Python du test d'interface réussie. SDK Android, Gradle et adb absents localement. Run 41000900188 en attente ; le run intermédiaire 41000857238 est remplacé après le second commit. Compilation, APK et tests Android de la nouvelle version non encore confirmés.
+- Dernière CI complète : 40994675728, sept jobs réussis ; APK debug 12950792574 d'intégrité précédemment vérifiée. Aucun téléphone physique, écoute humaine ou contrôle visuel humain ; scénario d'interruption sonore antérieur non validé. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : examiner la compilation, les six parcours et l'APK ; corriger les échecs éventuels et consigner le bilan et la durée réelle.
