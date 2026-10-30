@@ -866,3 +866,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41112755619 : compilation, vérification v2 et ZIP réussies. APK 13004576394 téléchargé, archive et APK intègres, SHA-256 70da1188469d52cb8a8b3f7dbf826aee6f8b2b194f4a2feef063c152a528e213 conforme à la CI ; parcours sur émulateur non encore terminés.
 
 - CI 41112755619 : parcours ciblé Android 10 réussi, y compris interruption et contrôles du petit écran ; cinq autres parcours encore en cours. Capture privée supplémentaire 240×640 décodable, OCR 28 mots ; ce contrôle automatisé ne prouve pas la qualité visuelle ou la lisibilité humaine.
+
+- CI 41112755619 : les deux parcours ciblés Android 10 et 15 sont réussis, y compris interruption et dimensions tactiles ; quatre autres parcours en cours. Captures privées supplémentaires 240×640 décodables ; OCR 28 et 29 mots. Comparaison entre API : 70,32 % de pixels modifiés, écart moyen 24,69/255 ; ce n'est pas une comparaison avant/après ni une évaluation humaine.
