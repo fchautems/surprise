@@ -735,3 +735,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - a0d28e97 ajoute dans la CI une vérification APK avec apksigner avant publication de l'artefact. Syntaxe YAML valide ; le run précédent est remplacé et le nouveau résultat reste à contrôler.
 
 - CI 41052034294 sur a0d28e97 : compilation et tests unitaires réussis ; apksigner confirme la signature APK v2 avec un certificat Android Debug (v1 absente, conformément au minSdk 26). APK debug 12974928165 : archive et APK vérifiés par unzip -t ; SHA-256 e1093138800335b417abf3a3013af504dfbafd2ba342e6eb5334220b4831dacd. Six parcours Android en cours.
+
+- CI 41052034294 : les tests ciblés du nouvel arpège, de sa séquence de quatre notes et de la rotation réussissent sur Android 10 et 15 ; quatre autres parcours restent en cours. Les logs attestent le déclenchement audio mais pas la qualité perçue par une personne.
