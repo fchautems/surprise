@@ -551,3 +551,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Bilan final : CI 40976489035, sept jobs réussis après relance du seul parcours Android 10 ayant initialement échoué ; la relance a réussi sans modification, la cause initiale reste inconnue. Les tests de sélection, rotation et effacement ont réussi sur Android 10 et 15. APK debug 12942088661 : archive et APK vérifiés par unzip -t ; SHA-256 c586c1b25c0defc841e23ccddfaf47c8b93b790eddea2257c260d4ec259ce4ac. Aucun téléphone physique ni contrôle visuel ou écoute humaine. Le test antérieur d'interruption reste non validé.
 - Diff final hors journal : MusicActivity.java +20/-6 ; tests/music_smoke.py +5/-0 ; total +25/-6. PROJECT_STATE.md : +18/-1. Commits poussés : 24cf6064, a5398532, a47a1060, c691b2f9, eac07c39 et ce bilan. Modèle et effort non modifiés ; quota inconnu.
 - Prochaine action : poursuivre la finition ludique et les tests ; préparer livraison et instructions, puis vérifier le scénario d'interruption avec une méthode adaptée.
+
+
+## Session du 30 octobre 2026, début 02:04:41 Europe/Zurich (en cours)
+- Base 048ece50bc0ee4ba1fe9327ea03459ec6267f2e3 ; commit code 90193f740f55a80065648cc448aa8b97669ffb67 poussé.
+- Ajout d'un record de séries de paires pour chaque taille de défi, conservé entre parties et affiché à la fin et pendant la partie ; enregistrement atomique avec le record existant. Tests étendus à la valeur initiale, la persistance après redémarrage et l'absence de fuite entre tailles.
+- Syntaxe Python valide ; SDK Android, Gradle et adb absents localement. Dernière CI complète 40976489035 : sept jobs réussis après relance ciblée ; APK 12942088661 d'intégrité vérifiée. Aucun téléphone physique ni contrôle humain visuel ou sonore ; le test d'interruption reste non validé.
+- Nouvelle CI, compilation, APK et tests Android à vérifier ; diagnostiquer les échecs puis consigner bilan et durée.
