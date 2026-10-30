@@ -26,6 +26,8 @@ jobs:
           gradle-version: '8.9'
       - name: Test content integrity
         run: python3 tests/test_bank.py
+      - name: Test matching deck content
+        run: python3 tests/test_memory_content.py
       - name: Test scoring logic
         run: |
           mkdir -p /tmp/surprise-test
