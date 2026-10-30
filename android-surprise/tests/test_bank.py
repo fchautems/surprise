@@ -16,6 +16,10 @@ class BankTests(unittest.TestCase):
         prefix = json.dumps(rows[:116], ensure_ascii=False, separators=(",", ":")).encode()
         self.assertEqual(hashlib.sha256(prefix).hexdigest(),
                          "5752d8935db6ee9b3c37ffd2086e1cfb30a8932e3b65cbd51d2a14ad05a34cc4")
+        # Protect the entire previously shipped bank, not just its first 116 entries.
+        full_legacy = json.dumps(rows[:137], ensure_ascii=False, separators=(",", ":")).encode()
+        self.assertEqual(hashlib.sha256(full_legacy).hexdigest(),
+                         "5ee985d84b4d748152732e65a0baddaf434f863e4dd1d54e2f0242cfa8343cfc")
 
     def test_bank_is_replayable_and_unambiguous(self):
         source = SOURCE.read_text(encoding="utf-8")

@@ -5,12 +5,22 @@ final class QuizRules {
     private QuizRules() {}
     /** Prefer unseen questions, then recycle older ones if the bank is small. */
     static java.util.ArrayList<Integer> order(int count, int round, java.util.Set<String> recent, java.util.Random random) {
+        return order(count, round, recent, java.util.Collections.emptySet(), random);
+    }
+    /** Prefer questions absent from both previous rounds; protect the most recent round first. */
+    static java.util.ArrayList<Integer> order(int count, int round, java.util.Set<String> recent,
+                                              java.util.Set<String> earlier, java.util.Random random) {
         if (count < 1 || round < 1 || round > count) throw new IllegalArgumentException("invalid round");
-        java.util.ArrayList<Integer> fresh = new java.util.ArrayList<>(), old = new java.util.ArrayList<>();
-        for (int i=0; i<count; i++) (recent.contains(Integer.toString(i)) ? old : fresh).add(i);
+        java.util.ArrayList<Integer> fresh = new java.util.ArrayList<>(), old = new java.util.ArrayList<>(), newest = new java.util.ArrayList<>();
+        for (int i=0; i<count; i++) {
+            String id=Integer.toString(i);
+            (recent.contains(id) ? newest : earlier.contains(id) ? old : fresh).add(i);
+        }
         java.util.Collections.shuffle(fresh, random);
         java.util.Collections.shuffle(old, random);
+        java.util.Collections.shuffle(newest, random);
         fresh.addAll(old);
+        fresh.addAll(newest);
         return fresh;
     }
     static String award(int games, int correct, int longest) {

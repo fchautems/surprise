@@ -153,7 +153,19 @@ public class MainActivity extends Activity {
         {"TEMPS","Quelle complication affiche généralement le jour du mois ?","Le quantième","Le tachymètre","La lunette tournante","Le fermoir"},
         {"CRYPTO","Dans Bitcoin, quel élément relie un bloc à son prédécesseur ?","Une empreinte cryptographique du bloc précédent","Le nom du propriétaire","Un numéro de téléphone","Une image du portefeuille"},
         {"CRYPTO","Quelle pratique évite de confier sa phrase de récupération à un inconnu ?","La garder secrète","La publier sur un forum","L'envoyer par messagerie à un inconnu","La mettre en commentaire public"},
-        {"CRYPTO","Dans Ethereum, que paie généralement une transaction ?","Des frais de réseau","Un abonnement postal","Une cotisation au canton","Des frais de carte SIM"}
+        {"CRYPTO","Dans Ethereum, que paie généralement une transaction ?","Des frais de réseau","Un abonnement postal","Une cotisation au canton","Des frais de carte SIM"},
+        {"MUSIQUE","Quelles notes composent l'accord de sol majeur ?","Sol · Si · Ré","Sol · Si♭ · Ré","Sol · Do · Mi","La · Do · Mi"},
+        {"MUSIQUE","Quelle est la tonalité mineure relative de do majeur ?","La mineur","Do mineur","Sol mineur","Mi majeur"},
+        {"CUISINE","Pour 300 g de farine, quelle quantité d'eau donne 65 % d'hydratation ?","195 g","65 g","300 g","650 g"},
+        {"CUISINE","Quelle préparation associe généralement mascarpone et café ?","Le tiramisu","La ratatouille","Le guacamole","La polenta"},
+        {"VOYAGE","Quelle ville est la capitale de Madère ?","Funchal","Lisbonne","Porto","Faro"},
+        {"VOYAGE","Quelle mer borde le sud de la France ?","La Méditerranée","La mer Baltique","La mer du Japon","La mer Caspienne"},
+        {"CIEL","Combien de planètes compte le système solaire ?","Huit","Sept","Neuf","Douze"},
+        {"CIEL","Quelle étoile éclaire la Terre pendant la journée ?","Le Soleil","Sirius","Véga","Proxima du Centaure"},
+        {"ALLEMAND","Que signifie « Guten Morgen » ?","Bonjour le matin","Bonsoir","Bonne nuit","À demain"},
+        {"ALLEMAND","Que signifie « der Käse » ?","Le fromage","Le pain","Le beurre","Le lait"},
+        {"TEMPS","Combien de minutes représentent deux heures et demie ?","150","120","180","250"},
+        {"TEMPS","Combien de secondes durent cinq minutes ?","300","50","100","500"}
     };
     private static final int ROUND=8;
     private static final String[] THEMES={"MUSIQUE","CUISINE","VOYAGE","CIEL","ALLEMAND","TEMPS","CRYPTO"};
@@ -196,20 +208,24 @@ public class MainActivity extends Activity {
         boolean daily=gameMode.equals("DÉFI");
         if(daily) dailyDate=java.time.LocalDate.now().toString();
         java.util.Set<String> recent = getPreferences(MODE_PRIVATE).getStringSet("recent", java.util.Collections.emptySet());
-        ArrayList<Integer> pool=new ArrayList<>(); java.util.Set<String> localRecent=new java.util.HashSet<>();
+        java.util.Set<String> earlier = getPreferences(MODE_PRIVATE).getStringSet("recentEarlier", java.util.Collections.emptySet());
+        ArrayList<Integer> pool=new ArrayList<>(); java.util.Set<String> localRecent=new java.util.HashSet<>(), localEarlier=new java.util.HashSet<>();
         for(int i=0;i<BANK.length;i++){
             if(daily || gameMode.equals("MÉLANGE") || BANK[i][0].equals(gameMode)){
                 if(recent.contains(Integer.toString(i))) localRecent.add(Integer.toString(pool.size()));
+                if(earlier.contains(Integer.toString(i))) localEarlier.add(Integer.toString(pool.size()));
                 pool.add(i);
             }
         }
         ArrayList<Integer> picked=QuizRules.order(pool.size(),ROUND,
             daily ? java.util.Collections.emptySet() : localRecent,
+            daily ? java.util.Collections.emptySet() : localEarlier,
             daily ? new Random(dailyDate.hashCode()) : rng);
         order.clear(); for(int i:picked) order.add(pool.get(i));
         java.util.Set<String> played = new java.util.HashSet<>();
         for(int i=0;i<ROUND;i++) played.add(Integer.toString(order.get(i)));
-        if(!daily) getPreferences(MODE_PRIVATE).edit().putStringSet("recent",played).apply();
+        if(!daily) getPreferences(MODE_PRIVATE).edit()
+            .putStringSet("recentEarlier",new java.util.HashSet<>(recent)).putStringSet("recent",played).apply();
         index=score=streak=correctCount=longestStreak=0; answered=false; jokerUsed=false; hiddenOptions=null; review.clear(); missed.clear();
         showQuestion();
     }

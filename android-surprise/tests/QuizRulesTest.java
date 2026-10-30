@@ -21,6 +21,15 @@ public final class QuizRulesTest {
             java.util.ArrayList<Integer> themed = QuizRules.order(16, 8, previous, new java.util.Random(seed));
             if (themed.size()!=16 || new java.util.HashSet<>(themed).size()!=16) throw new AssertionError("themed duplicates");
             for (int i=0; i<8; i++) if (previous.contains(themed.get(i).toString())) throw new AssertionError("themed repetition");
+            java.util.Set<String> earlier = new java.util.HashSet<>();
+            for (int i=8; i<16; i++) earlier.add(Integer.toString(i));
+            java.util.ArrayList<Integer> third = QuizRules.order(24,8,previous,earlier,new java.util.Random(seed));
+            for (int i=0;i<8;i++) if (third.get(i)<16) throw new AssertionError("two-round repeat");
+            java.util.ArrayList<Integer> limited = QuizRules.order(16,8,previous,earlier,new java.util.Random(seed));
+            for (int i=0;i<8;i++) if (previous.contains(limited.get(i).toString())) throw new AssertionError("newest repeat");
+            earlier.add("0"); // An ID in both sets must retain newest priority.
+            java.util.ArrayList<Integer> overlap = QuizRules.order(16,8,previous,earlier,new java.util.Random(seed));
+            for (int i=0;i<8;i++) if (previous.contains(overlap.get(i).toString())) throw new AssertionError("overlap priority");
             java.util.ArrayList<Integer> small = QuizRules.order(8, 8, previous, new java.util.Random(seed));
             if (new java.util.HashSet<>(small).size()!=8) throw new AssertionError("small bank");
         }

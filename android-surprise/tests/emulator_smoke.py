@@ -191,7 +191,19 @@ replay = wait_dump()
 assert find_text(replay, "MANCHE  1"), "Replay failed"
 displayed = set(texts(replay)) & bank
 assert len(displayed) == 1 and not (displayed & seen), ("repeated across games", displayed)
+# Inspect disposable emulator preferences to confirm both full rounds persist.
 adb("shell", "am", "force-stop", "ch.fred.surprise")
+prefs = ET.fromstring(adb("shell", "run-as", "ch.fred.surprise", "cat", "shared_prefs/MainActivity.xml"))
+def ids_for(name):
+    node = next((n for n in prefs if n.tag == "set" and n.attrib.get("name") == name), None)
+    assert node is not None, ("Missing history",name)
+    return {int(child.text) for child in node if child.tag == "string"}
+last_ids, earlier_ids = ids_for("recent"), ids_for("recentEarlier")
+ordered_questions = [m.group(1) for m in re.finditer(r'\{"[^"]+","([^"]+)","[^"]+","[^"]+","[^"]+","[^"]+"\}', source)]
+assert len(last_ids)==len(earlier_ids)==8 and not (last_ids & earlier_ids), (last_ids,earlier_ids)
+assert {ordered_questions[i] for i in earlier_ids} == seen, "Earlier round not saved"
+past_two = {ordered_questions[i] for i in last_ids | earlier_ids}
+
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 root = wait_dump()
 assert find_text(root, "Parties : 2"), texts(root)
@@ -204,6 +216,8 @@ assert find_text(root, "BIENVENUE"), texts(root)
 tap_text(root, "C’est parti")
 root = wait_dump()
 assert find_text(root, "MANCHE  1"), texts(root)
+shown_after_restart = set(texts(root)) & bank
+assert len(shown_after_restart)==1 and not (shown_after_restart & past_two), ("Two-round history lost after restart", shown_after_restart)
 buttons = [n for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("enabled") == "true" and not n.attrib.get("text", "").startswith("Joker")]
 assert buttons, texts(root)
 tap_text(root, buttons[0].attrib["text"])
