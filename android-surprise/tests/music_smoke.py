@@ -281,6 +281,24 @@ root=dump()
 tap(root,"Si")
 root=dump()
 assert "playback started: note Si haute" in adb("logcat","-d","-s","SurpriseAudio:I"), "Extra octave playback missing"
+# Optional arpeggio plays each chord note in order and survives a rotation.
+tap(root,"Arpège : désactivé")
+root=dump()
+for _ in range(3):
+    adb("shell","input","swipe","160","200","160","520","300")
+root=dump()
+adb("logcat","-c")
+tap(root,"Do maj7")
+time.sleep(2)
+ordered=adb("logcat","-d","-s","SurpriseAudio:I")
+assert re.findall(r"arpège Do maj7 · (\d)",ordered)==["1","2","3","4"], ordered
+adb("shell","settings","put","system","user_rotation","1")
+dump()
+adb("shell","settings","put","system","user_rotation","0")
+root=dump()
+tap(root,"Arpège : activé")
+root=dump()
+assert has(root,"Arpège : désactivé"),texts(root)
 audio_log=adb("logcat","-d","-s","SurpriseAudio:I")
 print("Audio diagnostic:",audio_log[-3000:])
 assert "playback started" in audio_log, "AudioTrack never entered playing state"

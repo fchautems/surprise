@@ -39,9 +39,9 @@ public final class MusicActivity extends Activity {
     private final Button[] keys=new Button[NAMES.length], extraKeys=new Button[EXTRA_NAMES.length];
     private volatile int generation=0;
     private volatile boolean playing=false;
-    private boolean freeMode=false, slowMode=false, octaveHigh=false, hintUsed=false;
+    private boolean freeMode=false, slowMode=false, octaveHigh=false, hintUsed=false, arpeggio=false;
     private TextView status, soundWarning;
-    private Button listenButton, modeButton, tempoButton, octaveButton, hintButton;
+    private Button listenButton, modeButton, tempoButton, octaveButton, hintButton, arpeggioButton;
 
     private int dp(int n){return (int)(n*getResources().getDisplayMetrics().density+0.5f);}
     private GradientDrawable shape(int color,int border){
@@ -189,9 +189,15 @@ public final class MusicActivity extends Activity {
         if(!freeMode || playing)return;
         lastNote=-1;lastExtra=-1;renderKeys();
         checkVolume();
-        int token=++generation;
-        audio.execute(()->{if(token==generation)playSamples(SoundWave.chord(CHORDS[chord]),token,"accord "+CHORD_NAMES[chord]);});
-        status.setText("Mode libre · "+CHORD_NAMES[chord]);
+        final int token=++generation;final boolean broken=arpeggio;
+        audio.execute(()->{
+            if(token!=generation)return;
+            if(broken){
+                for(int i=0;i<CHORDS[chord].length && token==generation;i++)
+                    playSamples(SoundWave.note(CHORDS[chord][i]),token,"arpège "+CHORD_NAMES[chord]+" · "+(i+1));
+            }else playSamples(SoundWave.chord(CHORDS[chord]),token,"accord "+CHORD_NAMES[chord]);
+        });
+        status.setText("Mode libre · "+CHORD_NAMES[chord]+(broken ? " · arpège" : ""));
     }
     private void switchMode(){
         generation++;playing=false;freeMode=!freeMode;lastNote=-1;lastExtra=-1;renderKeys();soundWarning.setText("");
@@ -204,6 +210,7 @@ public final class MusicActivity extends Activity {
         extraKeys[0].setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         extraRow.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
+        arpeggioButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         status.setText(freeMode ? "Mode libre · joue à ton rythme." : position>0 ? "Bien joué : "+position+" / "+phrase.length+" notes" : "Écoute la mélodie, puis joue-la.");
     }
@@ -220,13 +227,14 @@ public final class MusicActivity extends Activity {
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);phrase=nextPhrase(3,null);
         slowMode=getPreferences(MODE_PRIVATE).getBoolean("slowMode",false);
+        arpeggio=getPreferences(MODE_PRIVATE).getBoolean("arpeggio",false);
         octaveHigh=getPreferences(MODE_PRIVATE).getBoolean("octaveHigh",false);setVolumeControlStream(AudioManager.STREAM_MUSIC);getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
         if(saved!=null){
             int[] p=saved.getIntArray("phrase");
             if(p!=null && p.length>=3 && p.length<=6){phrase=p;position=Math.max(0,Math.min(saved.getInt("position"),p.length-1));}
             lastNote=saved.getInt("lastNote",-1);if(lastNote<0 || lastNote>=NAMES.length)lastNote=-1;
             lastExtra=saved.getInt("lastExtra",-1);if(lastExtra<0 || lastExtra>=EXTRA_NAMES.length)lastExtra=-1;
-            wins=Math.max(0,saved.getInt("wins"));hintUsed=saved.getBoolean("hintUsed",false);freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",slowMode);octaveHigh=saved.getBoolean("octaveHigh",octaveHigh);
+            wins=Math.max(0,saved.getInt("wins"));hintUsed=saved.getBoolean("hintUsed",false);freeMode=saved.getBoolean("freeMode",false);slowMode=saved.getBoolean("slowMode",slowMode);octaveHigh=saved.getBoolean("octaveHigh",octaveHigh);arpeggio=saved.getBoolean("arpeggio",arpeggio);
         }
         ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);
         scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
@@ -300,6 +308,15 @@ public final class MusicActivity extends Activity {
         }
         root.addView(chords,new LinearLayout.LayoutParams(-1,-2));
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
+        arpeggioButton=button(arpeggio ? "Arpège : activé" : "Arpège : désactivé");
+        LinearLayout.LayoutParams ap=new LinearLayout.LayoutParams(-1,dp(52));ap.setMargins(0,dp(10),0,0);
+        root.addView(arpeggioButton,ap);
+        arpeggioButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
+        arpeggioButton.setOnClickListener(v->{
+            arpeggio=!arpeggio;
+            getPreferences(MODE_PRIVATE).edit().putBoolean("arpeggio",arpeggio).apply();
+            arpeggioButton.setText(arpeggio ? "Arpège : activé" : "Arpège : désactivé");
+        });
         octaveButton=button(octaveHigh ? "Octave normale" : "Octave +");
         LinearLayout.LayoutParams op=new LinearLayout.LayoutParams(-1,dp(52));op.setMargins(0,dp(10),0,0);
         root.addView(octaveButton,op);
@@ -322,6 +339,6 @@ public final class MusicActivity extends Activity {
     }
     @Override protected void onDestroy(){generation++;audio.shutdownNow();super.onDestroy();}
     @Override protected void onSaveInstanceState(Bundle out){
-        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("lastNote",lastNote);out.putInt("lastExtra",lastExtra);out.putBoolean("hintUsed",hintUsed);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);super.onSaveInstanceState(out);
+        out.putIntArray("phrase",phrase);out.putInt("position",position);out.putInt("lastNote",lastNote);out.putInt("lastExtra",lastExtra);out.putBoolean("hintUsed",hintUsed);out.putInt("wins",wins);out.putBoolean("freeMode",freeMode);out.putBoolean("slowMode",slowMode);out.putBoolean("octaveHigh",octaveHigh);out.putBoolean("arpeggio",arpeggio);super.onSaveInstanceState(out);
     }
 }
