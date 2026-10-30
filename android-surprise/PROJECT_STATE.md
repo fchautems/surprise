@@ -583,3 +583,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Nouvelle CI, compilation, APK et tests Android à contrôler ; corriger les échecs puis consigner bilan et durée.
 
 - 7adfe192 extrait le calcul de récompense dans MemoryRules et ajoute un test Java durable dans la CI : seuils de chaque taille et monotonie du meilleur record sur toutes les paires d'essais de la plage. Le code Java de production et le test compilent et passent localement via le compilateur du JDK ; syntaxe YAML valide. La CI intermédiaire est remplacée par cette version.
+
+- CI 40988909334 sur 7adfe192 : compilation, test Java des récompenses et autres tests unitaires réussis ; six parcours Android en cours. APK debug 12948471373 produit ; archive et APK vérifiés par unzip -t ; SHA-256 b4a6c07dcaee6770f9407e5fa61ff0440e19387730fe171a49ad2978623d3f9b. La validation fonctionnelle Android reste à terminer.
