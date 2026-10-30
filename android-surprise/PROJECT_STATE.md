@@ -599,7 +599,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre la finition ludique, les validations et la préparation de la livraison ; examiner le scénario d'interruption avec une méthode Android adaptée.
 
 
-## Session du 30 octobre 2026, début 03:57:18 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 03:57:18–04:13:08 Europe/Zurich (15 min 50 s, validations comprises)
 - Base 6341762c73f94d18ca1b42637312f03f80018276. Commit de code e8d3ab0730be6b6831659f5a00c375e6f6501168 poussé sur anniversaire-2026.
 - Fichiers hors journal : MemoryActivity.java +11/-3 et tests/memory_smoke.py +24/-0 (total +35/-3).
 - Le choix de difficulté est conservé entre sessions ; un choix invalide revient à la valeur initiale et l'annulation ne modifie pas le choix enregistré. Tests Android ajoutés pour annulation, redémarrage, conservation du record et préférence invalide.
@@ -610,3 +610,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40994675728 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12950792574 téléchargé, archive et APK vérifiés par unzip -t ; SHA-256 622aed636cf6974cc4951bdc2c39e5276b99ca77748f5b000ae5ba6dd81428b0. Résultats fonctionnels des émulateurs encore inconnus.
 
 - CI 40994675728 : quatre parcours Android réussis, y compris les nouveaux tests de persistance et de valeur invalide sur API 29 et 35 ; les deux parcours principaux restent en cours.
+
+- Bilan : CI 40994675728 entièrement réussie : compilation, tests unitaires et six parcours Android 10 et 15. Les nouveaux cas sont passés sur les deux API. APK 12950792574 d'intégrité vérifiée ; aucun test sur téléphone physique, ni contrôle visuel ou écoute humaine. Le scénario d'interruption sonore antérieur reste non validé.
+- Diff final hors journal : MemoryActivity.java +11/-3 ; tests/memory_smoke.py +24/-0 ; total +35/-3. Commits poussés : e8d3ab07, 043731cf, 57045f4f, 1f28937c et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Durée inférieure aux 20–40 minutes indicatives : les validations ont terminé après les changements et la vérification de l'APK ; aucun délai artificiel ajouté. Prochaine action : approfondir la finition ludique et le scénario d'interruption, tout en conservant une compilation et des parcours verts.
+- PROJECT_STATE.md : +18/-0 (ajouts de cette session ; le titre de session a été actualisé avant le commit final).
