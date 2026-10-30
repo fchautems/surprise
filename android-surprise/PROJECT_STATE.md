@@ -693,3 +693,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MainActivity.java +19/-3 ; QuizRules.java +12/-2 ; QuizRulesTest.java +9/-0 ; emulator_smoke.py +14/-0 ; test_bank.py +4/-0 ; total +58/-5. Commits poussés : ac50740c, 134d3f38, af8c6d1e, 1f6ba852 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Durée inférieure à la cible indicative : développement, tests locaux et validations CI ont été menés jusqu'à leur terme, sans attente artificielle. Prochaine action : poursuivre la finition ludique et préparer la livraison avec instructions et APK vérifié.
 - PROJECT_STATE.md : +18/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 08:56:21 Europe/Zurich — en cours
+- Base 05c59e8648b99df7cd14d149bb1188fd250d878a ; commit de code 98355f68533ba8809e082dcd1cd962903fdad278 poussé.
+- Diff hors journal : MusicActivity.java +34/-7 ; music_smoke.py +25/-0 ; test_chords.py +10/-0 ; total +69/-7.
+- Deux notes supplémentaires accessibles en jeu libre, dans les deux octaves ; indication de sélection persistante après rotation, masquage en défi et choix réinitialisé lors du changement de mode. Tests d'interface et d'émission audio ajoutés ; test indépendant de justesse des deux fréquences.
+- Contrôles locaux : syntaxe Python du parcours valide ; deux tests de fréquences et accords réussis. CI 41023271660 lancée ; compilation, APK et tests Android non encore confirmés. SDK Android, Gradle et adb absents localement.
+- Dernière CI complète 41017617295 : sept jobs réussis et APK debug 12959544201 d'intégrité précédemment vérifiée. Aucun téléphone physique, contrôle visuel ou écoute humaine. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre compilation et émulateurs, corriger les échecs, contrôler l'APK puis consigner le bilan.
