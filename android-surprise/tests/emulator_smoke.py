@@ -77,6 +77,7 @@ for index in range(8):
     adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
     root = wait_dump()
     assert find_text(root, "MANCHE  " + str(index+1)), texts(root)
+    assert any(n.attrib.get("content-desc")==str(index)+(" étape terminée sur 8" if index==1 else " étapes terminées sur 8") for n in root.iter("node")), "Accessible progress missing"
     displayed = set(texts(root)) & bank
     assert len(displayed) == 1 and not (displayed & seen), displayed
     if index == 0: capture("partie")
@@ -122,8 +123,22 @@ for index in range(8):
         assert before == after, (before, after, texts(root))
         adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
         root = wait_dump()
+        assert any(n.attrib.get("content-desc")=="1 étape terminée sur 8" for n in root.iter("node")), "Accessible progress lost on rotation"
         rotated = [n.attrib.get("text") for n in root.iter("node") if n.attrib.get("class") == "android.widget.Button" and n.attrib.get("text") in original_order]
         assert rotated == original_order[:len(rotated)] and len(rotated) >= 2, (original_order, rotated)
+        # Each answer may sit outside the viewport on a large-font device.
+        for description in (chosen+" · ta réponse, incorrecte",
+                            correct_by_question[first_missed]+" · bonne réponse"):
+            for _ in range(3):
+                adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
+            found=False
+            for _ in range(5):
+                root=wait_dump()
+                if any(n.attrib.get("content-desc")==description for n in root.iter("node")):
+                    found=True
+                    break
+                adb("shell", "input", "swipe", "160", "480", "160", "220", "300")
+            assert found, ("Accessible feedback lost",description,texts(root))
     tap_text(root, "Continuer" if index < 7 else "Voir le résultat")
 root = wait_dump()
 assert find_text(root, "PARTIE TERMINÉE"), texts(root)

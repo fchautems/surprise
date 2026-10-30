@@ -250,7 +250,7 @@ public class MainActivity extends Activity {
     }
     private void showHome(){
         scroll.post(()->scroll.scrollTo(0,0));
-        showingHome=true; choosingTheme=false; answered=false; selected=null; choices.removeAllViews(); progress.setProgress(0); joker.setVisibility(View.GONE);
+        showingHome=true; choosingTheme=false; answered=false; selected=null; choices.removeAllViews(); updateProgress(0); joker.setVisibility(View.GONE);
         header.setText("✦  BIENVENUE  ✦"); category.setText("UN MOMENT POUR TOI"); category.setTextColor(GOLD);
         question.setText("Une petite aventure à chaque partie");
         int record=getPreferences(MODE_PRIVATE).getInt("best",0);
@@ -281,7 +281,7 @@ public class MainActivity extends Activity {
     }
     private void showThemes(){
         showingHome=false; choosingTheme=true; answered=false; selected=null;
-        choices.removeAllViews(); joker.setVisibility(View.GONE); progress.setProgress(0);
+        choices.removeAllViews(); joker.setVisibility(View.GONE); updateProgress(0);
         header.setText("CHOISIS TON THÈME"); category.setText("✦  EXPLORATION  ✦"); category.setTextColor(GOLD);
         question.setText("Quelle escale te tente ?"); feedback.setText(""); next.setText("Retour"); next.setVisibility(View.VISIBLE);
         for(String theme:THEMES){
@@ -291,9 +291,13 @@ public class MainActivity extends Activity {
         }
         scroll.post(()->scroll.scrollTo(0,0));
     }
+    private void updateProgress(int completed){
+        progress.setProgress(completed);
+        progress.setContentDescription(completed+(completed==1 ? " étape terminée sur " : " étapes terminées sur ")+ROUND);
+    }
     private void showQuestion(){hiddenOptions=null; showQuestion(null);}
     private void showQuestion(String[] restoredOptions){
-        answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE); progress.setProgress(index);
+        answered=false; selected=null; earned=0; choices.removeAllViews(); next.setVisibility(View.GONE); updateProgress(index);
         scroll.post(()->scroll.scrollTo(0,0));
         joker.setVisibility(View.VISIBLE); joker.setEnabled(!jokerUsed); joker.setText(jokerUsed ? "Joker utilisé" : "Joker 50 / 50 · une fois");
         String[] q=BANK[order.get(index)]; header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
@@ -326,7 +330,7 @@ public class MainActivity extends Activity {
         }
     }
     private void answer(String value){
-        if(answered)return;answered=true;joker.setEnabled(false);progress.setProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
+        if(answered)return;answered=true;joker.setEnabled(false);updateProgress(index+1);selected=value;String correct=BANK[order.get(index)][2];boolean ok=correct.equals(value);
         if(ok){streak++;longestStreak=Math.max(streak,longestStreak);correctCount++;earned=QuizRules.points(streak);score+=earned;feedback.setText("✦ Bravo !  +"+earned+" points"+(streak>1 ? "  ·  Série : "+streak : ""));}
         else {streak=0;feedback.setText("La réponse : "+correct);
             if(!restoringAnswer){
@@ -338,8 +342,13 @@ public class MainActivity extends Activity {
         header.setText("MANCHE  "+(index+1)+" / "+ROUND+"     ✦  "+score);
         for(int i=0;i<choices.getChildCount();i++){
             Button b=(Button)choices.getChildAt(i);b.setEnabled(false);
-            if(b.getText().toString().equals(correct))b.setBackground(shape(Color.rgb(36,105,88),dp(16)));
-            else if(b.getText().toString().equals(value))b.setBackground(shape(Color.rgb(125,57,70),dp(16)));
+            if(b.getText().toString().equals(correct)){
+                b.setBackground(shape(Color.rgb(36,105,88),dp(16)));
+                b.setContentDescription(b.getText()+" · bonne réponse");
+            }else if(b.getText().toString().equals(value)){
+                b.setBackground(shape(Color.rgb(125,57,70),dp(16)));
+                b.setContentDescription(b.getText()+" · ta réponse, incorrecte");
+            }
         }
         next.setText(index==ROUND-1?"Voir le résultat":"Continuer");next.setVisibility(View.VISIBLE);
     }
@@ -362,7 +371,7 @@ public class MainActivity extends Activity {
             prefs.edit().putString("dailyDate",dailyDate).putInt("dailyBest",Math.max(old,score)).apply();
         }
         best=Math.max(score,getPreferences(MODE_PRIVATE).getInt("best",0));getPreferences(MODE_PRIVATE).edit().putInt("best",best).apply();
-        choices.removeAllViews();joker.setVisibility(View.GONE);progress.setProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText(gameMode.equals("DÉFI") ? "✦  DÉFI DU JOUR  ✦" : gameMode.equals("RATTRAPAGE") ? "✦  REVANCHE  ✦" : "✦  BRAVO  ✦");category.setTextColor(GOLD);
+        choices.removeAllViews();joker.setVisibility(View.GONE);updateProgress(ROUND);header.setText("PARTIE TERMINÉE");category.setText(gameMode.equals("DÉFI") ? "✦  DÉFI DU JOUR  ✦" : gameMode.equals("RATTRAPAGE") ? "✦  REVANCHE  ✦" : "✦  BRAVO  ✦");category.setTextColor(GOLD);
         question.setText(score+" points");feedback.setText((correctCount==ROUND ? "✦ Sans-faute !\n" : "")+correctCount+" bonnes réponses sur "+ROUND+"\nMeilleure série : "+longestStreak+"\nRecord : "+best+" points"+(isTheme(gameMode) ? "\nRecord "+gameMode+" : "+getPreferences(MODE_PRIVATE).getInt("themeBest_"+gameMode,0)+" points" : "")+"\n✦  "+currentAward());feedback.setTextColor(GOLD);
         next.setText("Rejouer");next.setVisibility(View.VISIBLE);
         if(!review.isEmpty()){

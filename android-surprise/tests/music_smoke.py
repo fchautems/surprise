@@ -52,6 +52,15 @@ root=open_game()
 tap(root,"Lent")
 root=dump()
 assert has(root,"Normal"),texts(root)
+# Return to the existing, non-exported activity as the app UID on the same user.
+# Interrupt a slow playback while it is still active, then resume its task.
+tap(root,"Écouter la mélodie")
+adb("shell","input","keyevent","KEYCODE_HOME")
+resumed=adb("shell","run-as","ch.fred.surprise","am","start","--user","0",
+            "--activity-reorder-to-front","-n","ch.fred.surprise/.MusicActivity")
+assert "Error" not in resumed and "Exception" not in resumed, resumed
+root=dump()
+assert has(root,"Lecture interrompue"), ("Interrupted playback not restored",texts(root),resumed)
 adb("shell","input","keyevent",*(["KEYCODE_VOLUME_DOWN"]*20))
 adb("logcat","-c")
 tap(root,"Écouter la mélodie")
