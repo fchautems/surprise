@@ -62,8 +62,13 @@ root=dump()
 assert has(root,"Normal"),texts(root)
 # Background during playback, then resume through Android's recent-apps UI.
 # Starting the non-exported activity through the shell is prohibited.
-tap(root,"Écouter la mélodie")
-adb("shell","input","keyevent","KEYCODE_HOME")
+listen_node=next(n for n in root.iter("node") if n.attrib.get("text")=="Écouter la mélodie")
+coords=list(map(int,re.findall(r"\d+",listen_node.attrib["bounds"])))
+assert len(coords)==4, ("Playback control bounds unavailable",coords)
+x,y=(coords[0]+coords[2])//2,(coords[1]+coords[3])//2
+# One ADB shell avoids an extra connection delay between starting playback and
+# backgrounding the activity; otherwise a slow runner may finish before HOME.
+adb("shell",f"input tap {x} {y}; input keyevent KEYCODE_HOME")
 # Launcher timing varies on shared CI runners. Retry opening the recent card
 # rather than treating a still-visible launcher as an application failure.
 root=None
