@@ -790,3 +790,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : premier essai du test de contraste incomplet, deux fichiers manquants dans le répertoire temporaire ; après récupération, 2 tests réussis ; syntaxe Python du parcours valide. SDK Android et adb indisponibles localement. CI 41077664329 en attente, son APK et ses parcours ne sont pas encore validés.
 - Dernière version validée : 8a23c9fa4f09acebfd839701a635810a05261908, CI 41068793610 avec sept jobs réussis, APK 12984151836 intact et signature v2 vérifiée. Aucun essai sur téléphone ni examen humain des visuels ou des sons. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : inspecter la CI, corriger les échecs éventuels, vérifier l'APK et terminer ce bilan avec durée et état exacts.
+
+- CI 41077664329 : compilation, tests unitaires et signature v2 réussis ; six parcours sur émulateurs encore en cours. APK debug 12988785187 téléchargé, archive et APK intègres selon unzip -t, SHA-256 85191880a593e5bc65da1a5884959dcee8af7e04fc92cfa220d3b5f21083b1f1 ; validation fonctionnelle encore en cours.
