@@ -784,7 +784,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +22/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 16:06:04 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 16:06:04–16:32:07 Europe/Zurich (26 min 03 s, validations comprises)
 - Base c0c23675a49f77bdb6649e4fcf002562c76d80cc ; commit de travail poussé 6b36ee97659feaa359a8258eb6dd5fa7bc086ac8.
 - Changements : MemoryActivity.java +5/-5 ; memory_smoke.py +2/-0 ; test_palette.py +10/-0 ; total hors journal +17/-5. Les cinq commandes s'adaptent à la hauteur du texte ; le scénario petit écran teste aussi une police 1,3 et restaure le réglage ; contraste des huit encres sur trois fonds vérifié automatiquement.
 - Contrôles locaux : premier essai du test de contraste incomplet, deux fichiers manquants dans le répertoire temporaire ; après récupération, 2 tests réussis ; syntaxe Python du parcours valide. SDK Android et adb indisponibles localement. CI 41077664329 en attente, son APK et ses parcours ne sont pas encore validés.
@@ -796,3 +796,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41077664329 : deux parcours Android, API 29 et 35, réussis ; les quatre autres restent en cours.
 
 - CI 41077664329 à 16:23 Suisse : compilation et cinq parcours réussis, dont les tests ciblés sur les deux API ; dernier parcours Android 10 toujours en cours. Aucune évaluation visuelle humaine, ni test physique.
+
+- Fin de session à 16:32:07 : 5 parcours sur six réussis ; dernier parcours Android 10 toujours en cours, proche de sa limite de 25 minutes. Son résultat est inconnu à cette heure ; ne pas considérer la CI complète comme validée. L'exécution peut se terminer après ce bilan. Le dernier ensemble entièrement validé reste 8a23c9fa / CI 41068793610.
+- Fichiers de cette session hors journal : MemoryActivity.java +5/-5 ; memory_smoke.py +2/-0 ; test_palette.py +10/-0, total +17/-5. Journal : ajout de la présente session et remplacement du titre ; commits poussés 6b36ee97, 9aa0cb41, cff5e985, a51df87c, 016c91d5 et ce bilan. Modèle et effort non modifiés ; aucun SDK Android local, aucun appareil physique ni examen humain visuel ou sonore.
+- Prochaine action : lire l'issue du dernier job CI 41077664329 et ses logs en cas d'échec ou de dépassement, corriger ou relancer si nécessaire, puis seulement déclarer la nouvelle version entièrement validée. À partir du 31 octobre en Suisse, gel des fonctionnalités et stabilisation uniquement.
