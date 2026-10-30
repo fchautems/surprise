@@ -774,3 +774,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41068793610 : compilation, tests unitaires dont contraste et signature APK v2 réussis ; six parcours Android en cours. APK debug 12984151836 : archive et APK vérifiés par unzip -t ; SHA-256 f6e026b8633a8c988d7596de0ac21fb43c26edb3d3d2ba2b86a3fa2d8a0ebe3a. Tests fonctionnels encore à confirmer.
 
 - CI 41068793610 : parcours avec écran 240 dp, texte agrandi à 1,3 et zones tactiles réussis sur Android 10 et 15 ; quatre autres parcours en cours. Ces contrôles automatisés ne remplacent pas une inspection visuelle humaine.
+
+- CI 41068793610 : cinq parcours Android réussis, dont les contrôles de petit écran ; le dernier parcours Android 10 reste en cours. Captures du nouveau rendu en attente de disponibilité de cet artefact.
