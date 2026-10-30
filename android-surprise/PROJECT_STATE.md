@@ -705,7 +705,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 
 - CI 41023271660 : compilation et tests unitaires réussis ; six parcours Android en attente ou en cours. APK debug 12962941011 : archive et APK vérifiés par unzip -t ; SHA-256 4217133641c3062bf6b3a11dd4f1933378421d0f2c2aca4ccd180b1e5252ff19. Les tests fonctionnels ne sont pas encore confirmés.
 
-- fd551b65 dispose les notes dans l'ordre et conserve des zones tactiles d'au moins 48 dp ; un test d'ordre et de dimensions est ajouté. Syntaxe Python et deux tests locaux de justesse toujours réussis. La CI intermédiaire est remplacée ; nouveau build et parcours à confirmer.
+- fd551b65 dispose les notes dans l'ordre ; les zones tactiles ont été contrôlées à au moins 48 dp sur l'émulateur de 320 dp ; un test d'ordre et de dimensions est ajouté. Syntaxe Python et deux tests locaux de justesse toujours réussis. La CI intermédiaire est remplacée ; nouveau build et parcours à confirmer.
 
 - CI 41023655077 sur fd551b65 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12962048398 : archive et APK vérifiés par unzip -t ; SHA-256 657d029585b175908780614194857d4a2634a520912f47a1a76ed9f54e6cde8c. Tests fonctionnels non encore confirmés.
 
@@ -714,3 +714,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41024033669 sur 934e5f66 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12962424467 : archive et APK vérifiés par unzip -t ; SHA-256 81565d02d8ff832224aef235118ecdaad47c30a2001c7a3a95eb5f6f2cc78a94. Tests fonctionnels et correction de reprise encore à confirmer.
 
 - CI 41024033669 : les tests ciblés réussissent sur Android 10 et 15, y compris les nouvelles notes, leur ordre, les dimensions tactiles, la rotation, les deux octaves et la reprise après interruption. Quatre autres parcours sont en cours. Pas d'écoute humaine ni d'appareil physique.
+
+- Complément de reprise le 30 octobre à 12:55 Europe/Zurich : CI 41024033669 terminée avec succès à 09:18:59, sept jobs dont six parcours Android 10 et 15 ; APK debug 12962424467, archive et APK d'intégrité précédemment vérifiée (SHA-256 81565d02d8ff832224aef235118ecdaad47c30a2001c7a3a95eb5f6f2cc78a94). Aucun appareil physique ni contrôle humain de l'apparence ou du son. L'échec intermédiaire relevait du scénario de reprise ; la nouvelle tentative a réussi sur les deux API, sans certitude que toute intermittence soit éliminée.
+- Bilan de la session démarrée à 08:56:21 : diff hors journal MusicActivity.java +45/-7, music_smoke.py +41/-4, test_chords.py +10/-0, total +96/-11. Commits poussés 98355f68, 1edf88a4, d290e442, fd551b65, 6ffdd09b, 64204765, 934e5f66, adfbc03c, c47a82ce, 22f0a446 et ce complément. Dernière activité de suivi confirmée à 09:10:52 ; reprise interrompue avant son bilan, heure effective de fin et durée exacte inconnues. La CI s'est terminée à 09:18:59 sans preuve d'activité de l'agent jusqu'à cette heure.
+- Prochaine action : reprendre le développement et ses tests, puis préparer la livraison.
