@@ -760,3 +760,13 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MusicActivity.java +7/-5 ; SoundWave.java +11/-0 ; SoundWaveTest.java +14/-0 ; music_smoke.py +6/-1 ; total +38/-6. Commits poussés : 04b276db, 6e9c5553, 7a93982d, b3a9edba et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Durée inférieure à la cible indicative : développement et validations menés jusqu'à leur achèvement, sans attente artificielle. Prochaine action : poursuivre la finition, maintenir les tests verts et vérifier l'artefact final avant livraison.
 - PROJECT_STATE.md : +18/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 15:03:50 Europe/Zurich — en cours
+- Base 9a08b6724f7f45404f6f657559130962fca4631b ; commit 8a23c9fa4f09acebfd839701a635810a05261908 poussé.
+- Diff hors journal : workflow +2/-0 ; MainActivity.java +15/-10 ; MemoryActivity.java +8/-3 ; MusicActivity.java +9/-4 ; music_smoke.py +23/-0 ; test_palette.py +33/-0 ; total +90/-17.
+- Finition visuelle et ergonomique : surfaces des trois écrans harmonisées en dégradé discret, retour visuel tactile natif, contrastes conservés. Test automatique des contrastes de huit couleurs et des deux extrémités de la surface (toutes au-dessus de 4,5:1), contrôle d'écran étroit 240 dp avec texte agrandi et zones tactiles ajouté au parcours Android.
+- Contrôles locaux : test de contraste réussi, syntaxe Python et YAML valides. Capture de référence de la CI précédente conservée temporairement pour comparaison chiffrée. SDK Android, Gradle et adb absents localement. CI 41068793610 lancée ; compilation, signature, APK et émulateurs non encore confirmés.
+- Dernière CI complète 41060269428 : sept jobs réussis ; APK debug 12977684404 d'intégrité et signature v2 vérifiées. Aucun téléphone physique, contrôle visuel ou écoute humaine. Modèle et effort inchangés ; quota inconnu.
+- Consigne durable : à partir du samedi 31 octobre, gel des fonctionnalités ; corrections, finitions visuelles et ergonomiques limitées et tests de non-régression seulement, sans refonte risquée.
+- Prochaine action : suivre compilation, signature et six parcours, comparer les rendus disponibles sans les divulguer, corriger toute anomalie et consigner le bilan.
