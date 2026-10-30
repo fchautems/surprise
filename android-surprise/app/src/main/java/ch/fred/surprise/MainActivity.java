@@ -434,7 +434,7 @@ public class MainActivity extends Activity {
         question=label("",25,WHITE);question.setTypeface(null,Typeface.BOLD);question.setLineSpacing(dp(3),1f);root.addView(question);
         choices=new LinearLayout(this);choices.setOrientation(LinearLayout.VERTICAL);LinearLayout.LayoutParams choicesP=new LinearLayout.LayoutParams(-1,-2);choicesP.setMargins(0,dp(22),0,0);root.addView(choices,choicesP);
         joker=new Button(this); joker.setAllCaps(false); joker.setTextSize(14); joker.setTextColor(GOLD);
-        joker.setBackgroundTintList(null); joker.setBackground(touch(shape(CARD,dp(12)))); joker.setMinHeight(dp(48));
+        joker.setBackgroundTintList(null); joker.setBackground(touch(shape(CARD,dp(12)))); joker.setMinHeight(dp(56));
         LinearLayout.LayoutParams jp=new LinearLayout.LayoutParams(-1,-2);jp.setMargins(0,dp(8),0,0);root.addView(joker,jp);
         joker.setOnClickListener(v->useJoker());
         feedback=label("",16,GOLD);feedback.setLineSpacing(dp(2),1f);LinearLayout.LayoutParams fp=new LinearLayout.LayoutParams(-1,-2);fp.setMargins(0,dp(16),0,dp(12));root.addView(feedback,fp);

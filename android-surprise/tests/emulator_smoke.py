@@ -387,6 +387,22 @@ try:
     adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
     root=wait_dump()
     assert find_text(root,"BIENVENUE"), ("Compact welcome missing",texts(root))
+    # Fully visible actions must be comfortably sized and separated.
+    visible=[]
+    for node in root.iter("node"):
+        if node.attrib.get("class")!="android.widget.Button" or node.attrib.get("enabled")!="true":
+            continue
+        b=list(map(int,re.findall(r"\d+",node.attrib.get("bounds",""))))
+        if len(b)==4 and b[1]>=50 and b[3]<=600:
+            visible.append(b)
+    assert len(visible)>=2, ("Compact actions missing",texts(root))
+    assert all(b[2]-b[0]>=48 and b[3]-b[1]>=48 for b in visible), ("Compact targets too small",visible)
+    visible.sort(key=lambda b:b[1])
+    assert all(b[1]-a[3]>=8 for a,b in zip(visible,visible[1:])), ("Compact targets crowded",visible)
+    # A tap outside the actions should not start or change a screen.
+    adb("shell","input","tap","2",str((visible[0][1]+visible[0][3])//2))
+    root=wait_dump()
+    assert find_text(root,"BIENVENUE"), ("Outside tap changed screen",texts(root))
     capture("accueil-compact")
     tap_text(root,"C’est parti")
     root=wait_dump()
