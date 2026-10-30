@@ -316,7 +316,7 @@ public final class MusicActivity extends Activity {
         root.addView(chords,new LinearLayout.LayoutParams(-1,-2));
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         arpeggioButton=button(arpeggio ? "Arpège : activé" : "Arpège : désactivé");
-        LinearLayout.LayoutParams ap=new LinearLayout.LayoutParams(-1,dp(52));ap.setMargins(0,dp(10),0,0);
+        LinearLayout.LayoutParams ap=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);ap.setMargins(0,dp(10),0,0);
         root.addView(arpeggioButton,ap);
         arpeggioButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         arpeggioButton.setOnClickListener(v->{
@@ -325,7 +325,7 @@ public final class MusicActivity extends Activity {
             arpeggioButton.setText(arpeggio ? "Arpège : activé" : "Arpège : désactivé");
         });
         octaveButton=button(octaveHigh ? "Octave normale" : "Octave +");
-        LinearLayout.LayoutParams op=new LinearLayout.LayoutParams(-1,dp(52));op.setMargins(0,dp(10),0,0);
+        LinearLayout.LayoutParams op=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);op.setMargins(0,dp(10),0,0);
         root.addView(octaveButton,op);
         octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         octaveButton.setOnClickListener(v->{
@@ -335,8 +335,8 @@ public final class MusicActivity extends Activity {
             status.setText(octaveHigh ? "Mode libre · octave haute" : "Mode libre · octave normale");
         });
         modeButton=button(freeMode ? "Revenir au défi" : "Jouer librement");
-        LinearLayout.LayoutParams mp=new LinearLayout.LayoutParams(-1,dp(56));mp.setMargins(0,dp(12),0,0);root.addView(modeButton,mp);modeButton.setOnClickListener(v->switchMode());
-        Button home=button("Retour à l’accueil");LinearLayout.LayoutParams back=new LinearLayout.LayoutParams(-1,dp(56));back.setMargins(0,dp(12),0,0);root.addView(home,back);home.setOnClickListener(v->confirmLeaving());
+        LinearLayout.LayoutParams mp=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);mp.setMargins(0,dp(12),0,0);root.addView(modeButton,mp);modeButton.setOnClickListener(v->switchMode());
+        Button home=button("Retour à l’accueil");LinearLayout.LayoutParams back=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);back.setMargins(0,dp(12),0,0);root.addView(home,back);home.setOnClickListener(v->confirmLeaving());
         setContentView(scroll);
     }
     @Override protected void onStop(){

@@ -326,6 +326,13 @@ try:
     bounds={name:list(map(int,re.findall(r"\d+",node.attrib["bounds"]))) for name,node in row.items()}
     assert all(v[2]-v[0]>=48 and v[3]-v[1]>=48 for v in bounds.values()), ("Narrow target",bounds)
     assert selected_note(root,"Fa"), "Narrow-screen selection missing"
+    # Long labels remain visible and operable with enlarged text on the narrow display.
+    tap(root,"Arpège : désactivé")
+    root=dump()
+    assert has(root,"Arpège : activé"), ("Narrow control did not toggle",texts(root))
+    tap(root,"Octave normale")
+    root=dump()
+    assert has(root,"Octave +"), ("Narrow control did not update",texts(root))
 finally:
     adb("shell","wm","size","reset")
     adb("shell","wm","density","reset")
