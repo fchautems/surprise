@@ -568,3 +568,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI de relance 40984083199 sur 9b49e191 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12945599508 ; archive et APK vérifiés par unzip -t ; SHA-256 0122cbaa875a350095b31075da7647983e6f78b8c71dc5241d944fd2579e8b17. L'hypothèse du panneau système et les nouveaux records restent à confirmer par les tests.
 
 - CI 40984083199 : parcours audio Android 10 réussi avec le délai ajouté ; cette réussite est compatible avec l'hypothèse d'interception par le panneau système sans la prouver. Cinq autres parcours restent en cours, notamment les deux tests du changement principal.
+
+- CI 40984083199 : les deux parcours ciblés des quatre tailles, de la conservation et de l'isolation des records réussissent sur Android 10 et 15 ; les deux parcours principaux restent en cours. Les deux autres parcours et le build sont réussis.
