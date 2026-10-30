@@ -809,3 +809,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Dernière version entièrement validée : source 8a23c9fa, CI 41068793610 ; APK 12984151836 intègre et signé. Prochaine action : suivre la nouvelle CI, inspecter tout échec et vérifier son APK avant de conclure.
 
 - CI 41086620628 : compilation, trois tests de reprise CI, tests unitaires et signature Android v2 réussis. APK debug 12991373497 téléchargé : archive et APK intègres (`unzip -t`), SHA-256 0bd5963e85a8a4b88408acec4c31b50be36bd085195c1dc56d5716c43e80e67f. Six parcours sur émulateur en cours. Simulation locale additionnelle du code de délai 124 : reprise et bornes de chaque commande conformes.
+
+- CI 41086620628 : trois parcours réussis, trois encore en cours ; ne pas déclarer la validation complète avant leur conclusion.
