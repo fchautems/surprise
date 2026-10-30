@@ -744,7 +744,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +25/-1 pour cette session, y compris l'actualisation du titre de la session interrompue.
 
 
-## Session du 30 octobre 2026, début 14:04:05 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 14:04:05–14:19:26 Europe/Zurich (15 min 21 s, validations comprises)
 - Base e6c8015586ed8faf966b64940c67ff82b29d1ec8 ; commit 04b276dba8d42c8bc43d01ae1f5f1344d2f1d15f poussé.
 - Diff hors journal : MusicActivity.java +7/-5 ; SoundWave.java +11/-0 ; SoundWaveTest.java +14/-0 ; music_smoke.py +6/-1 ; total +38/-6.
 - Le choix d'octave s'applique désormais également aux accords et aux arpèges du jeu libre, sans modifier les fréquences d'origine. Tests Java de transposition, immutabilité et entrées invalides ; tests Android des deux styles en octave haute.
@@ -755,3 +755,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41060269428 : compilation, tests unitaires et signature APK v2 réussis ; six parcours Android en cours. APK debug 12977684404 : archive et APK vérifiés par unzip -t ; SHA-256 3c38aafe2f6f56439a66f032a6e7a75c7d62d4ff19f72d8d7e67f0d9aec2f2ab. Résultats fonctionnels non encore confirmés.
 
 - CI 41060269428 : les tests ciblés des accords et arpèges transposés réussissent sur Android 10 et 15 ; quatre autres parcours restent en cours. Les logs confirment le déclenchement audio, sans écoute humaine.
+
+- Bilan : CI 41060269428 entièrement réussie : sept jobs comprenant compilation, tests unitaires, vérification apksigner v2 et six parcours Android 10 et 15. Les accords et arpèges transposés sont testés sur les deux API. APK debug 12977684404 : archive et APK d'intégrité vérifiée ; SHA-256 3c38aafe2f6f56439a66f032a6e7a75c7d62d4ff19f72d8d7e67f0d9aec2f2ab. Aucun téléphone physique ni contrôle humain du son ou de l'apparence.
+- Diff final hors journal : MusicActivity.java +7/-5 ; SoundWave.java +11/-0 ; SoundWaveTest.java +14/-0 ; music_smoke.py +6/-1 ; total +38/-6. Commits poussés : 04b276db, 6e9c5553, 7a93982d, b3a9edba et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Durée inférieure à la cible indicative : développement et validations menés jusqu'à leur achèvement, sans attente artificielle. Prochaine action : poursuivre la finition, maintenir les tests verts et vérifier l'artefact final avant livraison.
+- PROJECT_STATE.md : +18/-0 pour cette session.
