@@ -889,3 +889,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41119803867 : compilation, signature Android v2 et intégrité ZIP réussies ; APK 13007063592 téléchargé, archive et APK intègres, SHA-256 0f3399cd6fd30a64710994e7503d358d6e98a5980954997c857463700c777317 conforme à la CI. Six parcours Android en cours.
 
 - Décision du 30 octobre 2026 au soir, heure suisse : GEL IMMÉDIAT DES FONCTIONNALITÉS, remplaçant la date du 31 octobre indiquée plus haut. Seules corrections, stabilisation, finitions visuelles et ergonomiques prudentes et non-régressions sont autorisées ; aucune refonte ni fonctionnalité nouvelle. Préserver la dernière version validée et vérifier la livraison.
+
+- CI 41119803867 : les deux parcours ciblés Android 10 et 15 sont réussis ; les quatre autres restent en cours. Les journaux détaillés ont temporairement renvoyé une erreur interne ; le statut des jobs est disponible.
