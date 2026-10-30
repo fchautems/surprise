@@ -695,7 +695,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +18/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 08:56:21 Europe/Zurich — en cours
+## Session du 30 octobre 2026, début 08:56:21 Europe/Zurich — interrompue, bilan repris à 12:55
 - Base 05c59e8648b99df7cd14d149bb1188fd250d878a ; commit de code 98355f68533ba8809e082dcd1cd962903fdad278 poussé.
 - Diff hors journal : MusicActivity.java +34/-7 ; music_smoke.py +25/-0 ; test_chords.py +10/-0 ; total +69/-7.
 - Deux notes supplémentaires accessibles en jeu libre, dans les deux octaves ; indication de sélection persistante après rotation, masquage en défi et choix réinitialisé lors du changement de mode. Tests d'interface et d'émission audio ajoutés ; test indépendant de justesse des deux fréquences.
@@ -720,7 +720,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : reprendre le développement et ses tests, puis préparer la livraison.
 
 
-## Session du 30 octobre 2026, début 12:55:43 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 12:55:43–13:15:58 Europe/Zurich (20 min 15 s, validations comprises)
 - Base 3f062c1ace4a95fbc4ad67ab14d08f204d6450b2 ; commit de code 19b8c068a27b50848ace85960185b4fb3e945f39 poussé.
 - Diff hors journal : MusicActivity.java +24/-7 ; music_smoke.py +18/-0 ; INSTALLATION.md +17/-0 ; total +59/-7.
 - Ajout d'un mode arpège facultatif pour les accords du jeu libre, avec annulation lors d'une nouvelle action et préférence conservée ; test d'émission ordonnée et de rotation ajouté. Instructions de livraison préparées, comprenant l'APK debug, l'accès à l'artefact, Android 8 minimum et la limite des signatures entre builds.
@@ -737,3 +737,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41052034294 sur a0d28e97 : compilation et tests unitaires réussis ; apksigner confirme la signature APK v2 avec un certificat Android Debug (v1 absente, conformément au minSdk 26). APK debug 12974928165 : archive et APK vérifiés par unzip -t ; SHA-256 e1093138800335b417abf3a3013af504dfbafd2ba342e6eb5334220b4831dacd. Six parcours Android en cours.
 
 - CI 41052034294 : les tests ciblés du nouvel arpège, de sa séquence de quatre notes et de la rotation réussissent sur Android 10 et 15 ; quatre autres parcours restent en cours. Les logs attestent le déclenchement audio mais pas la qualité perçue par une personne.
+
+- Bilan : CI 41052034294 entièrement réussie, sept jobs comprenant compilation, test apksigner de signature v2 et six parcours sur Android 10 et 15. APK debug 12974928165 : archive et APK d'intégrité vérifiée ; SHA-256 e1093138800335b417abf3a3013af504dfbafd2ba342e6eb5334220b4831dacd ; certificat Android Debug confirmé. Aucun téléphone physique ni contrôle humain du son ou de l'apparence ; Android 8 et 9 ne sont pas couverts par les émulateurs CI.
+- Diff final hors journal : workflow +5/-0 ; INSTALLATION.md +17/-0 ; MusicActivity.java +24/-7 ; music_smoke.py +18/-0 ; total +64/-7. Commits poussés : 19b8c068, 6e85cc9a, 57de4985, 282c9202, a0d28e97, 73043a4b, 3564e33e, bdeb37c4 et ce bilan ; le complément 3f062c1a clôture la session précédente. Un run intermédiaire a été remplacé afin d'ajouter la vérification de signature. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : poursuivre la finition et maintenir une CI verte ; le jour de livraison, vérifier la disponibilité de l'artefact final et fournir les instructions préparées.
+- PROJECT_STATE.md : +25/-1 pour cette session, y compris l'actualisation du titre de la session interrompue.
