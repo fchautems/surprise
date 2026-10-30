@@ -668,3 +668,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41012405570 sur 98914281 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12958585599 : archive et APK vérifiés par unzip -t ; SHA-256 6d8562cc6409b530351c076de11afd21c8744df5350ded9b455731405bbf561b. La reprise depuis les applications récentes et l'accessibilité restent à confirmer.
 
 - CI 41012405570 : reprise par l'écran des applications récentes et message d'interruption validés sur émulateur Android 10 ; cinq autres parcours restent en cours, dont Android 15. Cette vérification ne constitue ni une écoute humaine ni un test sur téléphone physique.
+
+- CI 41012405570 : la reprise après interruption est validée sur émulateurs Android 10 et 15 ; quatre parcours, dont les tests d'accessibilité, sont encore en cours. Pas de test sur appareil physique.
