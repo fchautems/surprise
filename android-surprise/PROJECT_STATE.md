@@ -762,7 +762,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +18/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 15:03:50 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 15:03:50–15:23:50 Europe/Zurich (20 min, validations et comparaison comprises)
 - Base 9a08b6724f7f45404f6f657559130962fca4631b ; commit 8a23c9fa4f09acebfd839701a635810a05261908 poussé.
 - Diff hors journal : workflow +2/-0 ; MainActivity.java +15/-10 ; MemoryActivity.java +8/-3 ; MusicActivity.java +9/-4 ; music_smoke.py +23/-0 ; test_palette.py +33/-0 ; total +90/-17.
 - Finition visuelle et ergonomique : surfaces des trois écrans harmonisées en dégradé discret, retour visuel tactile natif, contrastes conservés. Test automatique des contrastes de huit couleurs et des deux extrémités de la surface (toutes au-dessus de 4,5:1), contrôle d'écran étroit 240 dp avec texte agrandi et zones tactiles ajouté au parcours Android.
@@ -776,3 +776,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41068793610 : parcours avec écran 240 dp, texte agrandi à 1,3 et zones tactiles réussis sur Android 10 et 15 ; quatre autres parcours en cours. Ces contrôles automatisés ne remplacent pas une inspection visuelle humaine.
 
 - CI 41068793610 : cinq parcours Android réussis, dont les contrôles de petit écran ; le dernier parcours Android 10 reste en cours. Captures du nouveau rendu en attente de disponibilité de cet artefact.
+
+- Bilan : CI 41068793610 entièrement réussie, sept jobs comprenant compilation, test de contraste, vérification apksigner v2 et six parcours Android 10 et 15. L'écran étroit 240 dp avec texte 1,3 et les zones tactiles a été contrôlé sur les deux API. APK debug 12984151836 : archive et APK d'intégrité vérifiée ; SHA-256 f6e026b8633a8c988d7596de0ac21fb43c26edb3d3d2ba2b86a3fa2d8a0ebe3a.
+- Comparaison technique privée des captures de référence et finale sur l'écran d'accueil Android 10 : dimensions identiques 320 × 640, 31,27 % des pixels modifiés, écart moyen de 1,83/255 ; OCR automatique 35 mots avant, 34 après, 33 en commun. Ceci confirme un changement de rendu et une détection de texte comparable, sans prouver l'esthétique ni la lisibilité humaine. Contraste calculé des couleurs de cartes : minimum 7,17:1 sur la surface claire. Aucun téléphone physique ni contrôle humain visuel ou sonore.
+- Diff final hors journal : workflow +2/-0 ; MainActivity.java +15/-10 ; MemoryActivity.java +8/-3 ; MusicActivity.java +9/-4 ; music_smoke.py +23/-0 ; test_palette.py +33/-0 ; total +90/-17. Commits poussés : 8a23c9fa, 2cf581be, a5a81038, 4594ced4, 25072306 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : conserver la version validée ; dès le 31 octobre, respecter le gel des fonctionnalités et privilégier les corrections, tests et finitions visuelles prudentes avant la livraison.
+- PROJECT_STATE.md : +22/-0 pour cette session.
