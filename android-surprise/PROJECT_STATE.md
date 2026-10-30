@@ -597,3 +597,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Bilan final : CI 40989727364 entièrement réussie : sept jobs, dont compilation, tests unitaires et six parcours sur Android 10 et 15. Les tests de compatibilité avec un ancien record sans série ont réussi sur les deux API. APK debug 12949115516 : archive et APK vérifiés par unzip -t ; SHA-256 51b250d457421d1acc6ebc78c615f7de3aee6fb3d7260d7c400d2b28bdee3ddf. Aucun téléphone physique ni contrôle visuel ou écoute humaine ; le scénario antérieur d'interruption reste non validé.
 - Diff final hors journal : workflow +5/-0 ; MemoryActivity.java +3/-3 ; MemoryRules.java +9/-0 ; MemoryRulesTest.java +22/-0 ; tests/memory_smoke.py +22/-0 ; total +61/-3. PROJECT_STATE.md : +24/-1. Commits poussés : 80bc87aa, d1b768e3, 7adfe192, 1f4509e6, 6e5358b9, 5a83a5f1, 9d6a9fe3, 1cf6a582, b7b7a49b, d6abb634, 6dee4b1e et ce bilan. Deux CI intermédiaires ont été remplacées pour compléter les tests et corriger la compatibilité ; aucun échec constaté dans la CI finale. Modèle et effort non modifiés ; quota inconnu.
 - Prochaine action : poursuivre la finition ludique, les validations et la préparation de la livraison ; examiner le scénario d'interruption avec une méthode Android adaptée.
+
+
+## Session du 30 octobre 2026, début 03:57:18 Europe/Zurich — en cours
+- Base 6341762c73f94d18ca1b42637312f03f80018276. Commit de code e8d3ab0730be6b6831659f5a00c375e6f6501168 poussé sur anniversaire-2026.
+- Fichiers hors journal : MemoryActivity.java +11/-3 et tests/memory_smoke.py +24/-0 (total +35/-3).
+- Le choix de difficulté est conservé entre sessions ; un choix invalide revient à la valeur initiale et l'annulation ne modifie pas le choix enregistré. Tests Android ajoutés pour annulation, redémarrage, conservation du record et préférence invalide.
+- Vérification locale : syntaxe Python du test valide. SDK Android, Gradle et adb absents localement. CI 40994675728 sur e8d3ab07 lancée ; compilation et tests en cours, aucun APK de cette version encore confirmé.
+- Dernière CI complète 40989727364 : sept jobs réussis ; APK 12949115516 d'intégrité précédemment vérifiée. Pas de téléphone physique ni contrôle humain de l'apparence ou du son ; scénario antérieur d'interruption non validé. Modèle et effort non modifiés ; quota inconnu.
+- Prochaine action : inspecter la compilation, les six parcours Android et l'APK de la nouvelle version ; corriger toute anomalie, puis consigner résultat et durée réelle.
