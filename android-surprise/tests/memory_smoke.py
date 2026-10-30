@@ -324,6 +324,8 @@ moves6 = int(re.search(r"Bravo ! (\d+) essais", result6).group(1))
 expected_stars6 = 3 if moves6 <= 7 else 2 if moves6 <= 12 else 1
 assert result6.splitlines()[-1].count("✦") == expected_stars6, result6
 record6 = result6.split("Record : ")[1].splitlines()[0]
+series6 = int(re.search(r"Série record : (\d+)",result6).group(1))
+assert series6 == int(re.search(r"Meilleure série : (\d+)",result6).group(1))
 tap_text(wait_dump(), "Défi : 8 paires")
 root = wait_dump()
 assert find_text(root, "0 / 8 paires") and not find_text(root, "Record : "), texts(root)
@@ -371,6 +373,8 @@ result8 = find_text(root, "Bravo !")
 assert result8 and "Nouveau record !" in result8, result8
 assert description(root, "8 paires trouvées sur 8"), "Expert progress incomplete"
 record8 = result8.split("Record : ")[1].splitlines()[0]
+series8 = int(re.search(r"Série record : (\d+)",result8).group(1))
+assert series8 == int(re.search(r"Meilleure série : (\d+)",result8).group(1))
 # The longest mode has its own 20-card deck and record, including rotation.
 tap_text(root, "Défi : 10 paires")
 root = wait_dump()
@@ -418,18 +422,23 @@ result10 = find_text(root, "Bravo !")
 assert result10 and "Nouveau record !" in result10, result10
 assert description(root, "10 paires trouvées sur 10"), texts(root)
 record10 = result10.split("Record : ")[1].splitlines()[0]
+series10 = int(re.search(r"Série record : (\d+)",result10).group(1))
+assert series10 == int(re.search(r"Meilleure série : (\d+)",result10).group(1))
 tap_text(root, "Mode : 4 paires")
 root = wait_dump()
 assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record), texts(root)
 tap_text(root, "Défi : 6 paires")
 root = wait_dump()
 assert find_text(root, "0 / 6 paires") and find_text(root, "Record : " + record6), texts(root)
+assert find_text(root, "Série record : " + str(series6)), "Streak record not isolated for 6 pairs"
 tap_text(root, "Défi : 8 paires")
 root = wait_dump()
 assert find_text(root, "0 / 8 paires") and find_text(root, "Record : " + record8), texts(root)
+assert find_text(root, "Série record : " + str(series8)), "Streak record not isolated for 8 pairs"
 tap_text(root, "Défi : 10 paires")
 root = wait_dump()
 assert find_text(root, "0 / 10 paires") and find_text(root, "Record : " + record10), texts(root)
+assert find_text(root, "Série record : " + str(series10)), "Streak record not isolated for 10 pairs"
 # On a narrow 240dp display the cards must remain easy to touch.
 try:
     adb("shell", "wm", "size", "240x640")
