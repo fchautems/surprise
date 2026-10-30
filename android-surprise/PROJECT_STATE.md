@@ -770,3 +770,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Dernière CI complète 41060269428 : sept jobs réussis ; APK debug 12977684404 d'intégrité et signature v2 vérifiées. Aucun téléphone physique, contrôle visuel ou écoute humaine. Modèle et effort inchangés ; quota inconnu.
 - Consigne durable : à partir du samedi 31 octobre, gel des fonctionnalités ; corrections, finitions visuelles et ergonomiques limitées et tests de non-régression seulement, sans refonte risquée.
 - Prochaine action : suivre compilation, signature et six parcours, comparer les rendus disponibles sans les divulguer, corriger toute anomalie et consigner le bilan.
+
+- CI 41068793610 : compilation, tests unitaires dont contraste et signature APK v2 réussis ; six parcours Android en cours. APK debug 12984151836 : archive et APK vérifiés par unzip -t ; SHA-256 f6e026b8633a8c988d7596de0ac21fb43c26edb3d3d2ba2b86a3fa2d8a0ebe3a. Tests fonctionnels encore à confirmer.
