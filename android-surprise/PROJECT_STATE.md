@@ -802,7 +802,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : lire l'issue du dernier job CI 41077664329 et ses logs en cas d'échec ou de dépassement, corriger ou relancer si nécessaire, puis seulement déclarer la nouvelle version entièrement validée. À partir du 31 octobre en Suisse, gel des fonctionnalités et stabilisation uniquement.
 
 
-## Session du 30 octobre 2026, début 17:04:29 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 17:04:29–17:20:28 Europe/Zurich (15 min 59 s, validations comprises)
 - CI précédente 41077664329 : échec final du parcours Android 10, étape émulateur expirée après 25 minutes. Le journal montre que l'émulateur a démarré mais que `adb install` n'a pas rendu la main ; la cause exacte du blocage est inconnue. Cinq autres parcours et le build avaient réussi.
 - Correction poussée 1ef9811404958c29027e02f8a6a75a46472e483e : installation ADB limitée en durée, redémarrage du serveur et une nouvelle tentative ; échec propagé si la reprise échoue. Les quatre familles de parcours utilisent la même procédure. Trois tests locaux avec ADB simulé réussis (réussite directe, reprise, échec répété) ; `bash -n` et syntaxe Python valides.
 - Diff hors journal : workflow +6/-4 ; tests/install_apk.sh +15/-0 ; tests/test_install_apk.py +52/-0 ; total +73/-4. CI relancée par le commit, résultat en attente. SDK Android et adb absents localement ; pas de test physique ni examen visuel ou sonore humain. Modèle et effort inchangés ; quota inconnu.
@@ -811,3 +811,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41086620628 : compilation, trois tests de reprise CI, tests unitaires et signature Android v2 réussis. APK debug 12991373497 téléchargé : archive et APK intègres (`unzip -t`), SHA-256 0bd5963e85a8a4b88408acec4c31b50be36bd085195c1dc56d5716c43e80e67f. Six parcours sur émulateur en cours. Simulation locale additionnelle du code de délai 124 : reprise et bornes de chaque commande conformes.
 
 - CI 41086620628 : trois parcours réussis, trois encore en cours ; ne pas déclarer la validation complète avant leur conclusion.
+
+- Bilan : CI 41086620628 réussie intégralement : compilation, tests unitaires et de reprise, signature APK v2, six parcours Android 10 et 15. Le journal du parcours qui échouait confirme l'utilisation du script et l'installation réussie sans recours à la nouvelle tentative ; le blocage d'origine reste d'origine inconnue et la reprise a été validée par simulation, pas par panne réelle.
+- APK debug 12991373497 : archive et APK intègres ; SHA-256 0bd5963e85a8a4b88408acec4c31b50be36bd085195c1dc56d5716c43e80e67f. Aucun téléphone physique ni contrôle humain visuel ou sonore ; SDK Android et adb indisponibles localement.
+- Diff final hors journal : .github/workflows/android-surprise.yml +6/-4 ; android-surprise/tests/install_apk.sh +15/-0 ; android-surprise/tests/test_install_apk.py +52/-0 ; total +73/-4. Commits poussés : 1ef98114, f920e152, 180e9852, 2c79aed8 et ce bilan. Modèle et effort non changés ; quota inconnu.
+- Session achevée après les validations utiles, sans attente artificielle. Prochaine action : préserver cette version validée ; dès samedi en Suisse, gel des fonctionnalités, contrôles de non-régression et finitions prudentes en vue de la livraison.
+- PROJECT_STATE.md : +17/-0 pour cette session.
