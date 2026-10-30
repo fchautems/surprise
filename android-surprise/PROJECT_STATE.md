@@ -751,3 +751,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles locaux : compilation et test Java de synthèse réussis ; syntaxe Python du parcours valide. SDK Android, Gradle et adb absents localement ; CI 41060269428 lancée, compilation, signature, APK et parcours Android non encore confirmés.
 - Dernière CI complète 41052034294 : sept jobs réussis et APK debug 12974928165 d'intégrité et signature v2 précédemment vérifiées. Aucun téléphone physique ni contrôle humain du son ou de l'apparence. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : inspecter compilation, signature et six parcours, corriger toute erreur puis contrôler l'APK et consigner le bilan.
+
+- CI 41060269428 : compilation, tests unitaires et signature APK v2 réussis ; six parcours Android en cours. APK debug 12977684404 : archive et APK vérifiés par unzip -t ; SHA-256 3c38aafe2f6f56439a66f032a6e7a75c7d62d4ff19f72d8d7e67f0d9aec2f2ab. Résultats fonctionnels non encore confirmés.
