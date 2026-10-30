@@ -817,3 +817,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : .github/workflows/android-surprise.yml +6/-4 ; android-surprise/tests/install_apk.sh +15/-0 ; android-surprise/tests/test_install_apk.py +52/-0 ; total +73/-4. Commits poussés : 1ef98114, f920e152, 180e9852, 2c79aed8 et ce bilan. Modèle et effort non changés ; quota inconnu.
 - Session achevée après les validations utiles, sans attente artificielle. Prochaine action : préserver cette version validée ; dès samedi en Suisse, gel des fonctionnalités, contrôles de non-régression et finitions prudentes en vue de la livraison.
 - PROJECT_STATE.md : +17/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 17:57:32 Europe/Zurich — en cours
+- Référence initiale 9328a988 ; dernière CI entièrement validée 41086620628 (compilation, signature, six parcours Android 10/15), APK 12991373497 intègre, SHA-256 0bd5963e85a8a4b88408acec4c31b50be36bd085195c1dc56d5716c43e80e67f.
+- L'environnement d'exécution local ne démarre pas : aucun test local Java/Python ni construction locale possible. Accès GitHub opérationnel ; quatre commandes longues adoptent une hauteur adaptable pour les grands caractères et le scénario Android petit écran vérifie deux commandes après agrandissement du texte. Contrôles statiques JavaScript des modifications réussis ; ils ne remplacent pas la compilation ou l'exécution Android. Commit d3d3da61cadc10f457e696e9f6eb4f999ba5089f poussé.
+- Prochaine action : inspecter la CI déclenchée, vérifier compilation, signature et six parcours ; consigner toute limite, éviter toute nouvelle fonctionnalité dès samedi heure suisse. Aucun test physique ni examen humain visuel ou sonore.
