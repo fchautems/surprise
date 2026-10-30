@@ -935,3 +935,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +16/-0 ; total +17/-1. Tests locaux : syntaxe Python, intégrité ZIP et SHA-256 ; compilation CI, signature et six parcours Android ; comparaison de captures. Commits poussés : c7f9a97d, 4e16a29b, 56053ed1, a45d8162 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Session achevée après les validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, respecter le gel et poursuivre les finitions prudentes et la préparation de livraison.
 - PROJECT_STATE.md : +18/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 22:56:39 Europe/Zurich — en cours
+- Gel des fonctionnalités maintenu, priorité confort des mains et du poignet. Base c86c3ae6 ; CI 41131571230 réussie, APK 13013162787 signé et intègre, SHA-256 d5da6bf1b779a650a3bec00fa6e1747b9e3916f5c20fd206104ceda448652845. Confort physique non garanti sans essai réel.
+- Commit 66913b077d47267aafa117e6140cdb72720883dc poussé : harmonisation du contraste d'un indicateur existant et contrôle calculé de ses couleurs ; parcours 240 dp et police 1,3 étendu pour contrôler hauteur, largeur et espacement des cibles ainsi qu'une frappe à côté. Diff hors journal : MainActivity.java +1/-0 ; MemoryActivity.java +1/-0 ; memory_smoke.py +9/-1 ; test_palette.py +9/-0 ; total +20/-1.
+- Trois tests locaux de contraste réussis et syntaxe Python vérifiée. Compilation, signature et parcours Android de cette version non encore confirmés. Aucun test physique ni examen humain visuel ou sonore ; modèle et effort inchangés, quota inconnu.
+- Prochaine action : suivre la CI déclenchée, vérifier l'APK et les six parcours, comparer les captures disponibles ; corriger toute régression et conserver la version validée précédente.
