@@ -842,3 +842,6 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : suivre la CI, vérifier la signature, l'APK et la production des captures, diagnostiquer les échecs, puis consigner les résultats et la durée effective.
 
 - Comparaison technique privée des captures d'accueil des émulateurs API 35 et 29 de la CI 41094625052 : dimensions 320×640 identiques, 46,20 % de pixels différents, écart moyen 14,35/255 ; OCR 39 et 40 mots, 30 mots distincts en commun. Comparaison inter-versions, pas avant/après ; elle n'établit pas l'esthétique ni la lisibilité humaine. CI 41102741393 toujours en file d'attente au moment de ce constat.
+
+- CI 41102741393 : compilation, signature APK v2, unzip -t et calcul SHA-256 réussis ; APK 12998003925 téléchargé, archive et APK intègres, SHA-256 082b7d709959a2b94c6375a79d934303dea8cc14cf621f0880d36b7c38a4c63d conforme au journal CI. Les six parcours sont encore indiqués en cours.
+- Captures petit écran API 29/35 : fichiers décodables 240×640, OCR automatique respectivement 53 et 49 mots ; ne prouve pas la lisibilité ni la qualité visuelle. Les deux autres captures sont attendues.
