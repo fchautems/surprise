@@ -483,6 +483,7 @@ assert find_text(root, "0 / 4 paires") and find_text(root, "Record : " + record)
 try:
     adb("shell", "wm", "size", "240x640")
     adb("shell", "wm", "density", "160")
+    adb("shell", "settings", "put", "system", "font_scale", "1.3")
     adb("shell", "am", "force-stop", "ch.fred.surprise")
     adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
     root = open_memory()
@@ -506,6 +507,7 @@ try:
 finally:
     adb("shell", "wm", "size", "reset")
     adb("shell", "wm", "density", "reset")
+    adb("shell", "settings", "delete", "system", "font_scale")
 # Simulate an older installation: it has a move record but no streak record.
 # Only the disposable emulator's private debug preferences are edited.
 adb("shell","am","force-stop","ch.fred.surprise")

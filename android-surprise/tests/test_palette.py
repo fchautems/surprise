@@ -29,5 +29,15 @@ class PaletteContrastTest(unittest.TestCase):
                         (241,179,122),(244,168,141),(218,184,234),(248,196,116)):
                 self.assertGreaterEqual(contrast(background,ink),4.5,(background,ink))
 
+    def test_matched_card_palette(self):
+        source = (SOURCE / "MemoryActivity.java").read_text(encoding="utf-8")
+        colors = re.search(r"int\[\] INKS=\{(.*?)\};", source, re.S).group(1)
+        inks = [tuple(bytes.fromhex(h)) for h in re.findall(r"0xff([0-9a-f]{6})", colors)]
+        self.assertEqual(len(inks), 8)
+        self.assertIn("Color.rgb(27,82,70)", source)
+        for background in ((27,82,70), (39,53,80), (31,42,68)):
+            for ink in inks:
+                self.assertGreaterEqual(contrast(background, ink), 4.5, (background, ink))
+
 if __name__ == "__main__":
     unittest.main()

@@ -220,16 +220,16 @@ public final class MemoryActivity extends Activity {
             }
             root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
-        hintButton=button(""); LinearLayout.LayoutParams ih=new LinearLayout.LayoutParams(-1,dp(52));
+        hintButton=button(""); LinearLayout.LayoutParams ih=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);
         ih.setMargins(dp(5),dp(10),dp(5),0);root.addView(hintButton,ih);
         hintButton.setOnClickListener(v->showHint());
-        difficulty=button(""); LinearLayout.LayoutParams dp=new LinearLayout.LayoutParams(-1,dp(52));
+        difficulty=button(""); LinearLayout.LayoutParams dp=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);
         dp.setMargins(dp(5),dp(10),dp(5),0); root.addView(difficulty,dp); difficulty.setOnClickListener(v->switchDifficulty());
         paletteButton=button("");
-        LinearLayout.LayoutParams paletteParams=new LinearLayout.LayoutParams(-1,dp(52));
+        LinearLayout.LayoutParams paletteParams=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);
         paletteParams.setMargins(dp(5),dp(10),dp(5),0);root.addView(paletteButton,paletteParams);
         paletteButton.setOnClickListener(v->changePalette());
-        Button reset=button("Nouvelle partie"); LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,dp(52));
+        Button reset=button("Nouvelle partie"); LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);
         rp.setMargins(dp(5),dp(10),dp(5),0); root.addView(reset,rp); reset.setOnClickListener(v->{
             if(hasUnfinishedGame()){
                 new android.app.AlertDialog.Builder(this)
@@ -240,7 +240,7 @@ public final class MemoryActivity extends Activity {
                     .show();
             }else newGame();
         });
-        Button home=button("Retour à l’accueil"); LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,dp(52));
+        Button home=button("Retour à l’accueil"); LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,LinearLayout.LayoutParams.WRAP_CONTENT);
         hp.setMargins(dp(5),dp(8),dp(5),0); root.addView(home,hp); home.setOnClickListener(v->confirmLeaving());
         setContentView(scroll);
         if(saved!=null && saved.getIntArray("deck")!=null && saved.getBooleanArray("matched")!=null){
