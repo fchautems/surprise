@@ -635,7 +635,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +18/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 05:55:31 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 05:55:31–06:11:29 Europe/Zurich (15 min 58 s, validations comprises)
 - Base 08028fab30e57fb8e77e06b2c5211d355a676117 ; commit de code poussé 13038b881d33afb32821936bd50e85e14fda0249.
 - Diff hors journal : workflow +2/-0 ; MusicActivity.java +16/-10 ; music_smoke.py +11/-0 ; test_chords.py +36/-0 ; total +65/-10.
 - Jeu libre enrichi de trois accords mineurs supplémentaires, disposés en deux rangées ; test des trois commandes sur émulateur, vérification du déclenchement audio. Nouveau test autonome vérifiant six accords : fondamentale, intervalles, justesse, nombre, unicité et registre.
@@ -646,3 +646,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41005620812 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12954868242 : archive et APK vérifiés par unzip -t ; SHA-256 3c25601e84e7bda5628436dc2b3d1d08d67e12e98e61af8c2bf18a181680aed6. Les résultats fonctionnels des émulateurs ne sont pas encore connus.
 
 - CI 41005620812 : tests d'interface des trois nouveaux accords réussis sur Android 10 et 15 ; quatre autres parcours sont en cours. Les logs confirment le déclenchement des trois sorties audio ; ils ne constituent pas une écoute humaine.
+
+- Bilan : CI 41005620812 entièrement réussie, sept jobs comprenant compilation, test des fondamentales et intervalles et six parcours sur Android 10 et 15. APK debug 12954868242, archive et APK d'intégrité vérifiée ; SHA-256 3c25601e84e7bda5628436dc2b3d1d08d67e12e98e61af8c2bf18a181680aed6. Aucun test sur téléphone physique ni contrôle humain du son ou de l'apparence ; le scénario d'interruption sonore reste non validé.
+- Diff final hors journal : workflow +2/-0 ; MusicActivity.java +16/-10 ; music_smoke.py +11/-0 ; test_chords.py +36/-0 ; total +65/-10. Commits poussés : 13038b88, cb31d9ad, 6a0e3319, 74c3f104 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Durée inférieure à l'objectif indicatif : travail et validations effectués jusqu'à leur achèvement, sans attendre artificiellement. Prochaine action : poursuivre la finition et couvrir l'interruption sonore avec une méthode de reprise fiable avant la livraison.
+- PROJECT_STATE.md : +18/-0 pour cette session.
