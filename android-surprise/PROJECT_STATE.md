@@ -553,7 +553,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre la finition ludique et les tests ; préparer livraison et instructions, puis vérifier le scénario d'interruption avec une méthode adaptée.
 
 
-## Session du 30 octobre 2026, début 02:04:41 Europe/Zurich (en cours)
+## Session du 30 octobre 2026, 02:04:41–02:25:08 Europe/Zurich (20 min 27 s, validations et relance comprises)
 - Base 048ece50bc0ee4ba1fe9327ea03459ec6267f2e3 ; commit code 90193f740f55a80065648cc448aa8b97669ffb67 poussé.
 - Ajout d'un record de séries de paires pour chaque taille de défi, conservé entre parties et affiché à la fin et pendant la partie ; enregistrement atomique avec le record existant. Tests étendus à la valeur initiale, la persistance après redémarrage et l'absence de fuite entre tailles.
 - Syntaxe Python valide ; SDK Android, Gradle et adb absents localement. Dernière CI complète 40976489035 : sept jobs réussis après relance ciblée ; APK 12942088661 d'intégrité vérifiée. Aucun téléphone physique ni contrôle humain visuel ou sonore ; le test d'interruption reste non validé.
@@ -570,3 +570,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40984083199 : parcours audio Android 10 réussi avec le délai ajouté ; cette réussite est compatible avec l'hypothèse d'interception par le panneau système sans la prouver. Cinq autres parcours restent en cours, notamment les deux tests du changement principal.
 
 - CI 40984083199 : les deux parcours ciblés des quatre tailles, de la conservation et de l'isolation des records réussissent sur Android 10 et 15 ; les deux parcours principaux restent en cours. Les deux autres parcours et le build sont réussis.
+
+- Bilan final : CI 40984083199 entièrement réussie, sept jobs (compilation, tests unitaires et six parcours Android 10 et 15). Les tests des records, de leur persistance et de leur isolation par niveau ont réussi sur les deux API. APK debug 12945599508 : archive et APK vérifiés par unzip -t ; SHA-256 0122cbaa875a350095b31075da7647983e6f78b8c71dc5241d944fd2579e8b17. Aucun téléphone physique ni contrôle visuel ou écoute humaine. Le scénario antérieur d'interruption reste non validé.
+- Diff final hors journal : MemoryActivity.java +7/-3 ; tests/memory_smoke.py +14/-0 ; tests/music_smoke.py +2/-0 ; total +23/-3. PROJECT_STATE.md : +24/-1. Commits poussés : 90193f74, e8fa0fa6, ed33ba9b, a9419de5, 660747c0, 9b49e191, 3ff54083, 7c6fe6b8, 59907696, 431f11a0 et ce bilan. Le premier run a eu un échec de test récurrent ; la relance après temporisation a réussi, sans preuve définitive de la cause. Modèle et effort non modifiés ; quota inconnu.
+- Prochaine action : poursuivre la finition ludique et les tests, préparer la livraison de dimanche, puis examiner le scénario d'interruption avec une méthode Android adaptée.
