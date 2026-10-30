@@ -753,3 +753,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : inspecter compilation, signature et six parcours, corriger toute erreur puis contrôler l'APK et consigner le bilan.
 
 - CI 41060269428 : compilation, tests unitaires et signature APK v2 réussis ; six parcours Android en cours. APK debug 12977684404 : archive et APK vérifiés par unzip -t ; SHA-256 3c38aafe2f6f56439a66f032a6e7a75c7d62d4ff19f72d8d7e67f0d9aec2f2ab. Résultats fonctionnels non encore confirmés.
+
+- CI 41060269428 : les tests ciblés des accords et arpèges transposés réussissent sur Android 10 et 15 ; quatre autres parcours restent en cours. Les logs confirment le déclenchement audio, sans écoute humaine.
