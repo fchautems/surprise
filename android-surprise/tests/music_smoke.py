@@ -52,15 +52,16 @@ root=open_game()
 tap(root,"Lent")
 root=dump()
 assert has(root,"Normal"),texts(root)
-# Return to the existing, non-exported activity as the app UID on the same user.
-# Interrupt a slow playback while it is still active, then resume its task.
+# Background during playback, then resume through Android's recent-apps UI.
+# Starting the non-exported activity through the shell is prohibited.
 tap(root,"Écouter la mélodie")
 adb("shell","input","keyevent","KEYCODE_HOME")
-resumed=adb("shell","run-as","ch.fred.surprise","am","start","--user","0",
-            "--activity-reorder-to-front","-n","ch.fred.surprise/.MusicActivity")
-assert "Error" not in resumed and "Exception" not in resumed, resumed
+adb("shell","input","keyevent","KEYCODE_APP_SWITCH")
+time.sleep(1)
+adb("shell","input","tap","160","320")
 root=dump()
-assert has(root,"Lecture interrompue"), ("Interrupted playback not restored",texts(root),resumed)
+assert has(root,"PETITES MÉLODIES"), ("Recent task did not resume",texts(root))
+assert has(root,"Lecture interrompue"), ("Interrupted playback not restored",texts(root))
 adb("shell","input","keyevent",*(["KEYCODE_VOLUME_DOWN"]*20))
 adb("logcat","-c")
 tap(root,"Écouter la mélodie")
