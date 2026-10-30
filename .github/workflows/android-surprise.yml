@@ -47,6 +47,11 @@ jobs:
           java -cp /tmp/surprise-sound-test ch.fred.surprise.SoundWaveTest
       - name: Compile and test
         run: gradle --no-daemon testDebugUnitTest assembleDebug
+      - name: Verify APK signature
+        run: |
+          signer="$(find "${ANDROID_HOME:?}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          test -x "$signer"
+          "$signer" verify --verbose --print-certs app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
           name: android-debug-apk
