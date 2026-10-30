@@ -322,6 +322,16 @@ try:
     adb("shell","am","force-stop","ch.fred.surprise")
     adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
     root=open_game()
+    # Compact challenge controls must remain touch-sized with enlarged text.
+    labels=("Écouter la mélodie", "Lent", "Indice")
+    controls={n.attrib.get("text"): n for n in root.iter("node") if n.attrib.get("text") in labels}
+    assert len(controls)==3, ("Narrow challenge controls missing",texts(root))
+    bounds={name:list(map(int,re.findall(r"\d+",node.attrib["bounds"]))) for name,node in controls.items()}
+    assert all(v[2]-v[0]>=48 and v[3]-v[1]>=64 for v in bounds.values()), ("Narrow challenge target",bounds)
+    capture("music-small-challenge")
+    tap(root,"Indice")
+    root=dump()
+    assert has(root,"Indice utilisé"), ("Narrow challenge hint failed",texts(root))
     tap(root,"Jouer librement")
     for _ in range(3):
         adb("shell","input","swipe","160","200","160","520","300")

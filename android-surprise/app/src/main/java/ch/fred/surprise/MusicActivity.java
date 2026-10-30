@@ -255,16 +255,19 @@ public final class MusicActivity extends Activity {
         status=label(freeMode ? "Mode libre · joue à ton rythme." : position>0 ? "Bien joué : "+position+" / "+phrase.length+" notes" : best>0?"Record : "+best+" · Écoute la mélodie.":"Écoute la mélodie, puis joue-la.",16,GOLD);root.addView(status);
         soundWarning=label("",14,WHITE);root.addView(soundWarning);
         listenRow=new LinearLayout(this);listenRow.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(56));lp.setMargins(0,dp(14),0,dp(12));root.addView(listenRow,lp);
+        // Give wrapped labels more vertical room on compact screens or with large text.
+        android.content.res.Configuration config=getResources().getConfiguration();
+        int controlsHeight=(config.screenWidthDp<300 || config.fontScale>1.2f) ? 72 : 56;
+        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(controlsHeight));lp.setMargins(0,dp(14),0,dp(12));root.addView(listenRow,lp);
         listenButton=button("Écouter la mélodie");listenButton.setTextSize(15);
-        listenRow.addView(listenButton,new LinearLayout.LayoutParams(0,dp(56),2));listenButton.setOnClickListener(v->listen());
+        listenRow.addView(listenButton,new LinearLayout.LayoutParams(0,dp(controlsHeight),2));listenButton.setOnClickListener(v->listen());
         tempoButton=button(slowMode ? "Normal" : "Lent");tempoButton.setTextSize(14);
-        LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(0,dp(56),1);tp.setMargins(dp(6),0,0,0);
+        LinearLayout.LayoutParams tp=new LinearLayout.LayoutParams(0,dp(controlsHeight),1);tp.setMargins(dp(6),0,0,0);
         listenRow.addView(tempoButton,tp);
         tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");
         tempoButton.setOnClickListener(v->{slowMode=!slowMode;getPreferences(MODE_PRIVATE).edit().putBoolean("slowMode",slowMode).apply();tempoButton.setText(slowMode ? "Normal" : "Lent");tempoButton.setContentDescription(slowMode ? "Revenir à la vitesse normale" : "Ralentir la lecture");});
         hintButton=button(hintUsed ? "Indice utilisé" : "Indice");hintButton.setTextSize(12);
-        LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(0,dp(56),1);hintP.setMargins(dp(6),0,0,0);
+        LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(0,dp(controlsHeight),1);hintP.setMargins(dp(6),0,0,0);
         listenRow.addView(hintButton,hintP);hintButton.setEnabled(!hintUsed);
         hintButton.setOnClickListener(v->showHint());
         hintButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
