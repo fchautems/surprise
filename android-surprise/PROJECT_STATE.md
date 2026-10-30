@@ -677,7 +677,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +24/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 08:01:02 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 08:01:02–08:17:35 Europe/Zurich (16 min 33 s, validations comprises)
 - Base 2dbbbf3697be2b626e6fd682eebe7aa9e533355c ; commit de code ac50740c77ed36a39c04a91d3bce24367e9032d3 poussé.
 - Diff hors journal : MainActivity.java +19/-3 ; QuizRules.java +12/-2 ; QuizRulesTest.java +9/-0 ; emulator_smoke.py +14/-0 ; test_bank.py +4/-0 ; total +58/-5.
 - Douze questions ajoutées en fin de banque, sans modifier les 137 positions existantes ; test de stabilité étendu aux 137 anciennes entrées. La sélection privilégie les questions absentes des deux dernières parties, tout en protégeant d'abord la plus récente si la banque est courte ; compatibilité avec l'historique existant et défi quotidien préservée dans le code.
@@ -688,3 +688,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41017617295 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12959544201 : archive et APK vérifiés par unzip -t ; SHA-256 3209fbe2ba1bfbbcc1108904f92918ed3808e01ec51c1575ea1100f41b9743f1. Persistance Android et autres parcours non encore confirmés.
 
 - CI 41017617295 : cinq parcours Android réussis, dont la vérification des deux historiques et de leur persistance après redémarrage sur Android 15 ; le parcours principal Android 10 reste en cours.
+
+- Bilan : CI 41017617295 entièrement réussie : sept jobs, dont compilation, tests unitaires et six parcours sur Android 10 et 15. Le contrôle des deux historiques et de leur persistance après redémarrage a réussi sur les deux API. APK debug 12959544201 : archive et APK d'intégrité vérifiée ; SHA-256 3209fbe2ba1bfbbcc1108904f92918ed3808e01ec51c1575ea1100f41b9743f1. Aucun test sur téléphone physique ni contrôle humain du son ou de l'apparence.
+- Diff final hors journal : MainActivity.java +19/-3 ; QuizRules.java +12/-2 ; QuizRulesTest.java +9/-0 ; emulator_smoke.py +14/-0 ; test_bank.py +4/-0 ; total +58/-5. Commits poussés : ac50740c, 134d3f38, af8c6d1e, 1f6ba852 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Durée inférieure à la cible indicative : développement, tests locaux et validations CI ont été menés jusqu'à leur terme, sans attente artificielle. Prochaine action : poursuivre la finition ludique et préparer la livraison avec instructions et APK vérifié.
+- PROJECT_STATE.md : +18/-0 pour cette session.
