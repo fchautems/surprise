@@ -576,7 +576,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre la finition ludique et les tests, préparer la livraison de dimanche, puis examiner le scénario d'interruption avec une méthode Android adaptée.
 
 
-## Session du 30 octobre 2026, début 02:56:46 Europe/Zurich (en cours)
+## Session du 30 octobre 2026, 02:56:46–03:22:01 Europe/Zurich (25 min 15 s, validations comprises)
 - Base 0c2407a47426e01e5b73ee8a93a01ae227396747 ; commit code 80bc87aa408494fab4f7b47160026ed76e9710e5 poussé.
 - Progression ludique : le meilleur nombre d'étoiles est affiché pour chaque taille, déduit du record d'essais déjà enregistré, ce qui conserve les résultats antérieurs sans migration. Test étendu à la première récompense, la persistance au redémarrage et la disponibilité dans les quatre défis.
 - Contrôles locaux : syntaxe Python valide ; seuils et monotonie mathématiques vérifiés pour les quatre tailles sur toutes les paires d'essais de la plage testée. SDK Android, Gradle et adb absents localement. Dernière CI complète 40984083199 : sept jobs réussis ; APK 12945599508 d'intégrité vérifiée. Aucun téléphone physique, contrôle visuel ou écoute humaine ; le scénario d'interruption antérieur reste sans test Android dédié.
@@ -593,3 +593,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI finale 40989727364 sur 1cf6a582 : compilation, test des règles de récompense et autres tests unitaires réussis ; six parcours Android en cours. APK debug 12949115516, archive et APK vérifiés par unzip -t ; SHA-256 51b250d457421d1acc6ebc78c615f7de3aee6fb3d7260d7c400d2b28bdee3ddf. La compatibilité des anciennes données est en attente du test émulateur.
 
 - CI 40989727364 : tests ciblés des récompenses, des quatre tailles et du cas d'ancien record sans série réussis sur Android 10 et 15. Les deux parcours principaux restent en cours ; les autres jobs sont réussis.
+
+- Bilan final : CI 40989727364 entièrement réussie : sept jobs, dont compilation, tests unitaires et six parcours sur Android 10 et 15. Les tests de compatibilité avec un ancien record sans série ont réussi sur les deux API. APK debug 12949115516 : archive et APK vérifiés par unzip -t ; SHA-256 51b250d457421d1acc6ebc78c615f7de3aee6fb3d7260d7c400d2b28bdee3ddf. Aucun téléphone physique ni contrôle visuel ou écoute humaine ; le scénario antérieur d'interruption reste non validé.
+- Diff final hors journal : workflow +5/-0 ; MemoryActivity.java +3/-3 ; MemoryRules.java +9/-0 ; MemoryRulesTest.java +22/-0 ; tests/memory_smoke.py +22/-0 ; total +61/-3. PROJECT_STATE.md : +24/-1. Commits poussés : 80bc87aa, d1b768e3, 7adfe192, 1f4509e6, 6e5358b9, 5a83a5f1, 9d6a9fe3, 1cf6a582, b7b7a49b, d6abb634, 6dee4b1e et ce bilan. Deux CI intermédiaires ont été remplacées pour compléter les tests et corriger la compatibilité ; aucun échec constaté dans la CI finale. Modèle et effort non modifiés ; quota inconnu.
+- Prochaine action : poursuivre la finition ludique, les validations et la préparation de la livraison ; examiner le scénario d'interruption avec une méthode Android adaptée.
