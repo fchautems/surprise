@@ -536,7 +536,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : poursuivre les améliorations ludiques et contrôles, envisager un test d'interruption adapté, préparer la livraison et ses instructions.
 
 
-## Session du 30 octobre 2026, début 00:56:11 Europe/Zurich (en cours)
+## Session du 30 octobre 2026, 00:56:11–01:15:55 Europe/Zurich (19 min 44 s, validations et relance comprises)
 - Base b7efcba126e212615f5443c8eccefadf7a392813 ; commit code 24cf6064bb96498c5788cf0b0d81c0f88c37ed12 poussé.
 - Finition visuelle : fond harmonisé, touche jouée signalée sans animation et aussi par description accessible ; état sauvegardé à la rotation, effacé au changement de mode, à l'écoute ou à un accord. Tests émulateur étendus à la sélection, rotation et remise à zéro.
 - Syntaxe Python valide. SDK Android, Gradle et adb absents localement ; Java disponible via le compilateur du JDK. Dernière CI complète 40969770644 : sept jobs réussis ; APK 12940116195 d'intégrité vérifiée. Aucun téléphone physique, contrôle visuel ou écoute humaine ; le scénario antérieur d'interruption reste sans test Android dédié.
@@ -547,3 +547,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40976489035 : parcours ciblé Android 15 réussi. Android 10 échoue au premier appui après lecture : l'écran conserve exactement son état précédent ; le journal ne distingue pas un appui non livré d'une régression applicative. Les autres jobs sont en cours. Ne pas conclure à une cause ni à la validation Android 10 ; une relance ciblée après fin du workflow permettra de vérifier la reproductibilité.
 
 - CI 40976489035 : six jobs réussis et un échec ciblé Android 10 au premier appui. Relance du seul job 123806109387 demandée après fin de tous les autres ; cause de l'échec initial non déterminée et résultat de la relance en attente.
+
+- Bilan final : CI 40976489035, sept jobs réussis après relance du seul parcours Android 10 ayant initialement échoué ; la relance a réussi sans modification, la cause initiale reste inconnue. Les tests de sélection, rotation et effacement ont réussi sur Android 10 et 15. APK debug 12942088661 : archive et APK vérifiés par unzip -t ; SHA-256 c586c1b25c0defc841e23ccddfaf47c8b93b790eddea2257c260d4ec259ce4ac. Aucun téléphone physique ni contrôle visuel ou écoute humaine. Le test antérieur d'interruption reste non validé.
+- Diff final hors journal : MusicActivity.java +20/-6 ; tests/music_smoke.py +5/-0 ; total +25/-6. PROJECT_STATE.md : +18/-1. Commits poussés : 24cf6064, a5398532, a47a1060, c691b2f9, eac07c39 et ce bilan. Modèle et effort non modifiés ; quota inconnu.
+- Prochaine action : poursuivre la finition ludique et les tests ; préparer livraison et instructions, puis vérifier le scénario d'interruption avec une méthode adaptée.
