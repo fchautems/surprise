@@ -473,4 +473,19 @@ try:
 finally:
     adb("shell", "wm", "size", "reset")
     adb("shell", "wm", "density", "reset")
+# Simulate an older installation: it has a move record but no streak record.
+# Only the disposable emulator's private debug preferences are edited.
+adb("shell","am","force-stop","ch.fred.surprise")
+prefs_path="shared_prefs/MemoryActivity.xml"
+prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise","cat",prefs_path))
+old_streak=next((n for n in prefs if n.attrib.get("name")=="streak_4"),None)
+assert old_streak is not None and any(n.attrib.get("name")=="best" for n in prefs), "Legacy fixture missing records"
+prefs.remove(old_streak)
+updated=ET.tostring(prefs,encoding="unicode")
+subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
+               input=updated,text=True,stdout=subprocess.DEVNULL,check=True)
+adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+root=open_memory()
+legacy=find_text(root,"Record : ")
+assert legacy and "Étoiles : " in legacy and "Série record :" not in legacy, ("Legacy award missing",texts(root))
 print("Memory game smoke test passed")
