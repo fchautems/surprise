@@ -782,3 +782,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : workflow +2/-0 ; MainActivity.java +15/-10 ; MemoryActivity.java +8/-3 ; MusicActivity.java +9/-4 ; music_smoke.py +23/-0 ; test_palette.py +33/-0 ; total +90/-17. Commits poussés : 8a23c9fa, 2cf581be, a5a81038, 4594ced4, 25072306 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : conserver la version validée ; dès le 31 octobre, respecter le gel des fonctionnalités et privilégier les corrections, tests et finitions visuelles prudentes avant la livraison.
 - PROJECT_STATE.md : +22/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 16:06:04 Europe/Zurich — en cours
+- Base c0c23675a49f77bdb6649e4fcf002562c76d80cc ; commit de travail poussé 6b36ee97659feaa359a8258eb6dd5fa7bc086ac8.
+- Changements : MemoryActivity.java +5/-5 ; memory_smoke.py +2/-0 ; test_palette.py +10/-0 ; total hors journal +17/-5. Les cinq commandes s'adaptent à la hauteur du texte ; le scénario petit écran teste aussi une police 1,3 et restaure le réglage ; contraste des huit encres sur trois fonds vérifié automatiquement.
+- Contrôles locaux : premier essai du test de contraste incomplet, deux fichiers manquants dans le répertoire temporaire ; après récupération, 2 tests réussis ; syntaxe Python du parcours valide. SDK Android et adb indisponibles localement. CI 41077664329 en attente, son APK et ses parcours ne sont pas encore validés.
+- Dernière version validée : 8a23c9fa4f09acebfd839701a635810a05261908, CI 41068793610 avec sept jobs réussis, APK 12984151836 intact et signature v2 vérifiée. Aucun essai sur téléphone ni examen humain des visuels ou des sons. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : inspecter la CI, corriger les échecs éventuels, vérifier l'APK et terminer ce bilan avec durée et état exacts.
