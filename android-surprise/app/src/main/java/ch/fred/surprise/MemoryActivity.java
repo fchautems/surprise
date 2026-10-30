@@ -21,6 +21,7 @@ public final class MemoryActivity extends Activity {
     private static final int GOLD=Color.rgb(255,195,107), WHITE=Color.rgb(245,242,235);
     private static final String[] SYMBOLS={"♪","☕","✦","♛","☀","♥","♣","◆","♫","★","♠","☁","♬","◉","☂","⌛"};
     private static final String[] ESCAPADE={"🎹","🍕","⌚","☕","🌙","🎷","🍇","🏔","🎸","🚂","⭐","🍋","🌻","🎺","🐈","🎲"};
+    private static final String[] NATURE={"🌸","🌿","🍀","🌵","🍄","🌼","🍁","🌳","🐝","🦋","🐞","🐬","🦉","🐢","🐟","🌷"};
     private static final int[] INKS={0xffffd27d,0xffaee9e0,0xffffb9b9,0xffcbbdff,
         0xffa6d7ff,0xffffc6e5,0xffcce8a4,0xffffd9a0};
     private static final int MAX_PAIRS=10;
@@ -32,7 +33,7 @@ public final class MemoryActivity extends Activity {
     private int columns=4;
     private int pairCount=4;
     private Button difficulty, hintButton, paletteButton;
-    private boolean escapade=false;
+    private int palette=0;
     private boolean hintUsed=false, hintVisible=false;
     private ScrollView gameScroll;
     private int first=-1,second=-1,moves=0,streak=0,bestStreak=0;
@@ -132,8 +133,8 @@ public final class MemoryActivity extends Activity {
         }else applyPalette();
     }
     private void applyPalette(){
-        escapade=!escapade;
-        getPreferences(MODE_PRIVATE).edit().putBoolean("escapade",escapade).apply();
+        palette=(palette+1)%3;
+        getPreferences(MODE_PRIVATE).edit().putInt("palette",palette).apply();
         newGame();
     }
     private void applyDifficulty(){
@@ -164,13 +165,13 @@ public final class MemoryActivity extends Activity {
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         hintButton.setEnabled(!hintUsed && pairs<pairCount);
         hintButton.setText(hintUsed ? "Indice utilisé" : "Indice · une fois (+2 essais)");
-        paletteButton.setText(escapade ? "Cartes : étoiles" : "Cartes : escapade");
+        paletteButton.setText(palette==0 ? "Cartes : escapade" : palette==1 ? "Cartes : nature" : "Cartes : étoiles");
         difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : pairCount==8 ? "Défi : 10 paires" : "Mode : 4 paires");
         for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*columns<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
             cards[i].setVisibility(i<pairCount*2 ? View.VISIBLE : View.INVISIBLE);
             boolean visible=matched[i] || i==first || i==second;
-            String value=visible ? (escapade ? ESCAPADE : SYMBOLS)[deck[i]] : "?";
+            String value=visible ? (palette==0 ? SYMBOLS : palette==1 ? ESCAPADE : NATURE)[deck[i]] : "?";
             cards[i].setText(value); cards[i].setEnabled(!matched[i]);
             cards[i].setTextColor(visible ? INKS[deck[i]%INKS.length] : WHITE);
             cards[i].setContentDescription("Carte "+(i+1)+" : "+(matched[i] ? "trouvée " : visible ? "visible " : "cachée ")+value);
@@ -181,7 +182,10 @@ public final class MemoryActivity extends Activity {
         super.onCreate(saved);
         pairCount=getPreferences(MODE_PRIVATE).getInt("pairCount",4);
         if(pairCount!=4 && pairCount!=6 && pairCount!=8 && pairCount!=10)pairCount=4;
-        escapade=getPreferences(MODE_PRIVATE).getBoolean("escapade",false); getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
+        android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);
+        palette=prefs.getInt("palette",prefs.getBoolean("escapade",false) ? 1 : 0);
+        if(palette<0 || palette>2)palette=0;
+        getWindow().setStatusBarColor(BG); getWindow().setNavigationBarColor(BG);
         ScrollView scroll=new ScrollView(this); gameScroll=scroll; scroll.setFillViewport(true); scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         LinearLayout root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER); root.setPadding(dp(18),dp(20),dp(18),dp(20)); scroll.addView(root);

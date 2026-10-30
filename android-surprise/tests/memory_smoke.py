@@ -110,10 +110,30 @@ adb("shell", "settings", "put", "system", "user_rotation", "0")
 root = wait_dump()
 root, node = card(root, 0)
 assert node.attrib["content-desc"] == pack_desc, "Visual set lost after rotation"
-tap_text(root, "Cartes : étoiles")
+tap_text(root, "Cartes : nature")
 dialog = wait_dump()
 assert find_text(dialog, "Changer les cartes"), texts(dialog)
 tap_text(dialog, "Changer")
+root = wait_dump()
+assert description(root, "0 paires trouvées sur 4"), texts(root)
+root = tap_card(root, 0)
+root, node = card(root, 0)
+nature_desc = node.attrib["content-desc"]
+assert "visible " in nature_desc and nature_desc.split()[-1] in {"🌸","🌿","🍀","🌵","🍄","🌼","🍁","🌳","🐝","🦋","🐞","🐬","🦉","🐢","🐟","🌷"}, nature_desc
+adb("shell", "settings", "put", "system", "user_rotation", "1")
+wait_dump()
+adb("shell", "settings", "put", "system", "user_rotation", "0")
+root = wait_dump()
+root, node = card(root, 0)
+assert node.attrib["content-desc"] == nature_desc, "Third visual set lost on rotation"
+# A cancelled switch must not change the selected pack across process restart.
+tap_text(root, "Cartes : étoiles")
+dialog = wait_dump()
+tap_text(dialog, "Continuer")
+adb("shell", "am", "force-stop", "ch.fred.surprise")
+adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+root = open_memory()
+tap_text(root, "Cartes : étoiles")
 root = wait_dump()
 assert description(root, "0 paires trouvées sur 4"), texts(root)
 
@@ -512,4 +532,23 @@ subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
 adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
 root=open_memory()
 assert find_text(root,"0 / 4 paires") and find_text(root,"Record : "+record), ("Invalid preference fallback failed",texts(root))
+# Upgrade a pre-palette preference without discarding its chosen card set.
+adb("shell","am","force-stop","ch.fred.surprise")
+prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise","cat",prefs_path))
+palette=next((n for n in prefs if n.attrib.get("name")=="palette"),None)
+assert palette is not None, "Saved palette missing"
+prefs.remove(palette)
+legacy_pack=next((n for n in prefs if n.attrib.get("name")=="escapade"),None)
+if legacy_pack is None:
+    legacy_pack=ET.SubElement(prefs,"boolean",{"name":"escapade"})
+legacy_pack.set("value","true")
+subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
+               input=ET.tostring(prefs,encoding="unicode"),text=True,stdout=subprocess.DEVNULL,check=True)
+adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+root=open_memory()
+tap_text(root,"Cartes : nature")  # Legacy selection migrated; switch to the third pack.
+root=wait_dump()
+root=tap_card(root,0)
+root,node=card(root,0)
+assert node.attrib["content-desc"].split()[-1] in {"🌸","🌿","🍀","🌵","🍄","🌼","🍁","🌳","🐝","🦋","🐞","🐬","🦉","🐢","🐟","🌷"}, node.attrib
 print("Memory game smoke test passed")
