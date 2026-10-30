@@ -899,7 +899,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +23/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 21:57:09 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 21:57:09–22:27:31 Europe/Zurich (30 min 22 s, correction et validations comprises)
 - Gel des fonctionnalités immédiat maintenu ; priorité à l'ergonomie des mains et du poignet sans nouveaux modes. Base 726dc9c6 ; CI 41119803867 entièrement réussie, APK 13007063592 signé et intègre, SHA-256 0f3399cd6fd30a64710994e7503d358d6e98a5980954997c857463700c777317.
 - Commit 92ff82c2df9c15ae19c3340967968ab76e659cab poussé : la prochaine action est amenée dans la zone visible après réponse, afin d'éviter un défilement répétitif. Test d'une réponse erronée sur écran 240 dp, texte 1,3 : contrôle du retour, de la visibilité sans glissé préalable, dimensions tactiles d'au moins 48 dp et continuation ; capture privée. Diff hors journal : MainActivity.java +5/-0 ; emulator_smoke.py +14/-2 ; total +19/-2. Aucune garantie de confort sans essai sur téléphone physique.
 - Syntaxe Python vérifiée localement ; CI 41127307672 en attente. La compilation, le confort réel et les nouveaux scénarios ne sont pas encore vérifiés. Aucun examen humain des visuels ou du son ; modèle et effort inchangés ; quota inconnu.
@@ -910,3 +910,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41127307672 : échec du parcours Android 15 sur petit écran : la commande mesurait bien 196×56 dp mais son centre était trop proche du bord inférieur (y=612), en dehors de la zone visée par le test. Correction ca1b0e7b34e49e84b91def3a01609fbe29bf9e5f : marge de défilement inférieure accrue et rectangle demandé élargi pour éloigner la commande du bord. Le test de visibilité et de dimensions reste inchangé ; nouvelle CI déclenchée.
 
 - CI 41129184344 : compilation, signature Android v2 et intégrité ZIP réussies ; APK 13012386612 téléchargé, archive et APK intègres, SHA-256 e08e126c82bdff5cbc8de8731c8c166edb8749a340695fcd04f8a6a5fc4f9161 conforme à la CI. Six parcours Android en cours ; la correction d'ergonomie n'est pas encore validée.
+
+- Bilan : CI 41129184344 entièrement réussie après correction de la position inférieure : compilation, signature v2 et six parcours sur Android 10 et 15. En écran 240 dp et texte 1,3, le test vérifie une réponse erronée, le retour visible et la continuation sans glissé préalable ; cible 196×56 dp, centre y=540 sur Android 10 et y=492 sur Android 15. L'échec précédent et sa correction sont consignés ci-dessus. L'ergonomie physique ne peut pas être garantie sans essai réel.
+- APK 13012386612 signé ; archive et APK téléchargés intègres, SHA-256 e08e126c82bdff5cbc8de8731c8c166edb8749a340695fcd04f8a6a5fc4f9161. Pas de test sur téléphone physique ni d'examen humain des visuels ou du son.
+- Comparaison technique avant/après sur capture d'accueil compacte Android 10 : 240×640, 0,18 % de pixels différents, écart moyen 0,15/255, OCR 26 mots dans chaque rendu ; cela ne constitue pas une évaluation visuelle humaine et ne mesure pas l'écran de réponse modifié.
+- Diff final hors journal : MainActivity.java +7/-2 ; emulator_smoke.py +14/-2 ; total +21/-4. Syntaxe Python, compilation CI, signature, contrôles ZIP et SHA-256, six parcours Android et comparaison de captures réussis. Commits poussés : 92ff82c2, 0c003556, 0bc0ff7b, ca1b0e7b, 1a1f2383, ac647e26 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : conserver la version validée, poursuivre le gel des fonctionnalités et les finitions prudentes centrées sur le confort, la non-régression et la livraison.
+- PROJECT_STATE.md : +20/-0 pour cette session.
