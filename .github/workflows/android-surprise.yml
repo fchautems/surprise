@@ -38,6 +38,8 @@ jobs:
           mkdir -p /tmp/surprise-memory-test
           javac -d /tmp/surprise-memory-test app/src/main/java/ch/fred/surprise/MemoryRules.java tests/MemoryRulesTest.java
           java -cp /tmp/surprise-memory-test ch.fred.surprise.MemoryRulesTest
+      - name: Test chord content
+        run: python3 tests/test_chords.py
       - name: Test synthesized notes
         run: |
           mkdir -p /tmp/surprise-sound-test

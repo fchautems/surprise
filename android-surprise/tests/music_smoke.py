@@ -185,6 +185,17 @@ tap(root,"Fa maj7")
 adb("shell","input","swipe","160","200","160","520","300")
 root=dump()
 assert has(root,"Mode libre · Fa maj7"),texts(root)
+# New chords remain accessible, produce audio and do not alter challenge records.
+for chord_name in ("La m7", "Ré m7", "Mi m7"):
+    adb("logcat","-c")
+    tap(root,chord_name)
+    root=dump()
+    sound=adb("logcat","-d","-s","SurpriseAudio:I")
+    assert "playback started: accord "+chord_name in sound, (chord_name,sound)
+    for _ in range(3):
+        adb("shell","input","swipe","160","200","160","520","300")
+    root=dump()
+    assert has(root,"Mode libre · "+chord_name),texts(root)
 tap(root,"Octave +")
 adb("shell","input","swipe","160","200","160","520","300")
 root=dump()

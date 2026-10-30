@@ -23,10 +23,11 @@ public final class MusicActivity extends Activity {
     private static final int GOLD=Color.rgb(255,195,107), WHITE=Color.rgb(245,242,235);
     private static final String[] NAMES={"Do","Ré","Mi","Sol","La"};
     private static final double[] FREQ={261.63,293.66,329.63,392.00,440.00};
-    private static final String[] CHORD_NAMES={"Do maj7","Fa maj7","Sol 7"};
+    private static final String[] CHORD_NAMES={"Do maj7","Fa maj7","Sol 7","La m7","Ré m7","Mi m7"};
     private static final double[][] CHORDS={
         {261.63,329.63,392.00,493.88}, {349.23,440.00,523.25,659.25},
-        {392.00,493.88,587.33,698.46}
+        {392.00,493.88,587.33,698.46}, {220.00,261.63,329.63,392.00},
+        {293.66,349.23,440.00,523.25}, {329.63,392.00,493.88,587.33}
     };
     private LinearLayout chords, listenRow;
     private final ExecutorService audio=Executors.newSingleThreadExecutor();
@@ -245,14 +246,19 @@ public final class MusicActivity extends Activity {
             }root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
         renderKeys();
-        chords=new LinearLayout(this);chords.setOrientation(LinearLayout.HORIZONTAL);
-        for(int i=0;i<CHORD_NAMES.length;i++){
-            final int chord=i;
-            Button b=button(CHORD_NAMES[i]);b.setTextSize(14);
-            b.setContentDescription("Accord "+CHORD_NAMES[i]);
-            LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(56),1);
-            p.setMargins(dp(4),dp(8),dp(4),0);chords.addView(b,p);
-            b.setOnClickListener(v->chooseChord(chord));
+        chords=new LinearLayout(this);chords.setOrientation(LinearLayout.VERTICAL);
+        for(int row=0;row<(CHORD_NAMES.length+2)/3;row++){
+            LinearLayout line=new LinearLayout(this);line.setOrientation(LinearLayout.HORIZONTAL);
+            for(int col=0;col<3;col++){
+                final int chord=row*3+col;
+                if(chord>=CHORD_NAMES.length)break;
+                Button b=button(CHORD_NAMES[chord]);b.setTextSize(14);
+                b.setContentDescription("Accord "+CHORD_NAMES[chord]);
+                LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(56),1);
+                p.setMargins(dp(4),dp(8),dp(4),0);line.addView(b,p);
+                b.setOnClickListener(v->chooseChord(chord));
+            }
+            chords.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
         root.addView(chords,new LinearLayout.LayoutParams(-1,-2));
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
