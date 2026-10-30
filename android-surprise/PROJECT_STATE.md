@@ -662,3 +662,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : inspecter compilation et parcours, diagnostiquer toute erreur de reprise ou d'accessibilité, corriger et relancer si nécessaire ; contrôler l'APK et consigner le bilan.
 
 - CI 41012073095 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12958047315 : archive et APK vérifiés par unzip -t ; SHA-256 c5c5bd8acb1e334534d878ba9f4bd56c1fe05c181831d3f349a257909a73c6d9. Tests fonctionnels non encore confirmés.
+
+- CI 41012073095 : le test d'interruption Android 15 a échoué avant de reprendre l'activité ; la commande am sous run-as a été refusée car son identité ne correspond pas à com.android.shell. Cela ne démontre pas un défaut de l'application. Correction du scénario dans 98914281 : reprise via l'écran Android des applications récentes ; syntaxe Python valide. Une nouvelle CI remplace le run initial ; la reprise reste à confirmer.
