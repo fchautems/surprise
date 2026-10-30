@@ -543,3 +543,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Nouvelle CI, compilation, APK et tests sur Android à contrôler ; corriger les échecs puis consigner bilan et durée.
 
 - CI 40976489035 sur 24cf6064 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12942088661 produit ; archive et APK vérifiés par unzip -t ; SHA-256 c586c1b25c0defc841e23ccddfaf47c8b93b790eddea2257c260d4ec259ce4ac. Tests fonctionnels encore à vérifier.
+
+- CI 40976489035 : parcours ciblé Android 15 réussi. Android 10 échoue au premier appui après lecture : l'écran conserve exactement son état précédent ; le journal ne distingue pas un appui non livré d'une régression applicative. Les autres jobs sont en cours. Ne pas conclure à une cause ni à la validation Android 10 ; une relance ciblée après fin du workflow permettra de vérifier la reproductibilité.
