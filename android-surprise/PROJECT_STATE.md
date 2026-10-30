@@ -860,3 +860,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : vérifier la CI, ses captures, les dimensions tactiles, la signature et l'APK ; corriger toute régression, conserver la version précédente jusqu'à validation. Gel des fonctionnalités dès samedi heure suisse.
 
 - CI 41112198417 : compilation, signature v2 et contrôle ZIP réussis ; APK 13003583217 téléchargé et vérifié indépendamment (archive et APK intègres), SHA-256 31fcae409328607d4cffdf009aeb187c2bbd674e4a4a4b4a8047c00ab835cc05 conforme à la CI. Six parcours encore en cours.
+
+- CI 41112198417 : échec du parcours Android 10 avant le nouveau test, car l'interruption attendue n'a pas été observée ; la lecture était déjà terminée au retour sur l'écran. Les journaux ne permettent pas de confirmer la cause exacte ; délai entre deux commandes ADB possible. Test corrigé au commit f02a2324ef9bdd4def2a0d24c530569351f4e705 : démarrage et mise en arrière-plan dans une seule commande ADB ; l'assertion d'interruption est conservée. Syntaxe Python vérifiée. Nouvelle CI déclenchée ; l'exécution précédente peut être annulée par la concurrence.
