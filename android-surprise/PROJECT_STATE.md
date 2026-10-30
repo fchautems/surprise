@@ -851,3 +851,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : .github/workflows/android-surprise.yml +20/-0, memory_smoke.py +1/-0, music_smoke.py +8/-0 ; total +29/-0. Contrôles locaux : syntaxe Python et YAML, intégrité ZIP, SHA-256 et décodage/OCR des captures réussis. Commits poussés : 3a2c6ebb, c6297e1f, 0ec85e5f, e7d8770a et ce bilan. Modèle et effort inchangés ; quota inconnu ; des lectures de CI ont subi des délais de réponse intermittents.
 - Session achevée après les validations utiles, sans attente artificielle. Prochaine action : préserver cette version validée et procéder à des améliorations visuelles ou ergonomiques prudentes, sans nouvelle fonctionnalité dès le 31 octobre en Suisse.
 - PROJECT_STATE.md : +18/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 20:03:55 Europe/Zurich — en cours
+- Base d7ba93f5 ; CI 41102741393 précédemment entièrement réussie, APK 12998003925 d'intégrité et signature vérifiées, SHA-256 082b7d709959a2b94c6375a79d934303dea8cc14cf621f0880d36b7c38a4c63d.
+- Commit c6df251dc4cd79e8ae0f4bc5f14139c67d7e8d64 poussé : hauteur des trois commandes adaptée sur petit écran ou texte agrandi pour réduire le risque de texte tronqué ; parcours Android étendu avec contrôle de dimensions tactiles et d'une interaction en 240 dp à échelle 1,3, capture privée supplémentaire. Diff : workflow +1/-1 ; MusicActivity.java +7/-4 ; music_smoke.py +10/-0 ; total hors journal +18/-5.
+- Contrôles locaux : syntaxe Python et YAML réussies ; expression de lecture des coordonnées vérifiée après correction d'un échappement dans le test préparé. CI 41112198417 en attente : compilation et parcours non encore confirmés. Aucun téléphone physique ni jugement humain de l'apparence ou du son. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : vérifier la CI, ses captures, les dimensions tactiles, la signature et l'APK ; corriger toute régression, conserver la version précédente jusqu'à validation. Gel des fonctionnalités dès samedi heure suisse.
