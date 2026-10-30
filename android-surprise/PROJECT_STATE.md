@@ -587,3 +587,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 40988909334 sur 7adfe192 : compilation, test Java des récompenses et autres tests unitaires réussis ; six parcours Android en cours. APK debug 12948471373 produit ; archive et APK vérifiés par unzip -t ; SHA-256 b4a6c07dcaee6770f9407e5fa61ff0440e19387730fe171a49ad2978623d3f9b. La validation fonctionnelle Android reste à terminer.
 
 - Revue de compatibilité : un ancien record d'essais peut exister sans record de série ; la première version ne montrait alors pas sa récompense pendant la partie. 5a83a5f1 conditionne l'affichage des étoiles à l'existence du record d'essais lui-même. Le calcul utilise toujours les anciennes données ; la validation Android de ce cas précis reste à réaliser. Une nouvelle CI remplace le run précédent.
+
+- Test de migration ajouté dans 1cf6a582 : sur l'émulateur jetable, un ancien enregistrement d'essais sans record de série est recréé dans les préférences privées, puis l'affichage de sa récompense est vérifié après redémarrage. Syntaxe Python valide ; le résultat Android reste à confirmer. La CI intermédiaire est remplacée par celle de ce commit.
