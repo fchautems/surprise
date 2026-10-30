@@ -626,3 +626,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Prochaine action : examiner la compilation, les six parcours et l'APK ; corriger les échecs éventuels et consigner le bilan et la durée réelle.
 
 - CI 41000900188 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12952854605 : archive et APK vérifiés par unzip -t, SHA-256 e49d16a7d998c8cad8615db20894f6649021498486491f9646c72a5da0ab693e. Les résultats fonctionnels Android ne sont pas encore connus.
+
+- CI 41000900188 : cinq parcours Android réussis, dont sélection, rotation, reprise et migration de l'ancienne préférence sur API 29 et 35 ; le parcours principal Android 10 reste en cours.
