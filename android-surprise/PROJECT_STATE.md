@@ -653,7 +653,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +18/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 07:04:45 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 07:04:45–07:25:18 Europe/Zurich (20 min 33 s, correction et validations comprises)
 - Base 183baa7134a2547c837cf5cb4384bf6ae0e2546c ; commit de code b1d3cf3045b35cc579240ec7e2032c0807c68e12 poussé.
 - Diff hors journal : MainActivity.java +16/-7 ; emulator_smoke.py +15/-0 ; music_smoke.py +9/-0 ; total +40/-7.
 - Progression et résultat des réponses rendus explicites pour les lecteurs d'écran, y compris après rotation ; tests d'accessibilité ajoutés. Tentative de test d'interruption audio avec reprise de l'activité non exportée par l'identité de l'application debug et l'utilisateur Android explicite : résultat Android inconnu.
@@ -670,3 +670,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41012405570 : reprise par l'écran des applications récentes et message d'interruption validés sur émulateur Android 10 ; cinq autres parcours restent en cours, dont Android 15. Cette vérification ne constitue ni une écoute humaine ni un test sur téléphone physique.
 
 - CI 41012405570 : la reprise après interruption est validée sur émulateurs Android 10 et 15 ; quatre parcours, dont les tests d'accessibilité, sont encore en cours. Pas de test sur appareil physique.
+
+- Bilan : CI 41012405570 entièrement réussie, sept jobs dont compilation, tests unitaires et six parcours sur Android 10 et 15. Les descriptions d'accessibilité, la rotation et la reprise après interruption sont validées sur les deux API. APK debug 12958585599, archive et APK d'intégrité vérifiée ; SHA-256 6d8562cc6409b530351c076de11afd21c8744df5350ded9b455731405bbf561b. Aucun test sur téléphone physique ni contrôle humain du son ou de l'apparence ; le test de reprise ne prouve pas la qualité audible.
+- Diff final hors journal : MainActivity.java +16/-7 ; emulator_smoke.py +15/-0 ; music_smoke.py +10/-0 ; total +41/-7. Commits poussés : b1d3cf30, e9492903, dcf7d5cb, 98914281, 413f4a87, 06833347, 25b7a049, c4eaa076 et ce bilan. L'échec initial concernait la commande de test et a été corrigé par l'usage des applications récentes. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : poursuivre la finition ludique, conserver les validations et préparer la livraison avec instructions et APK vérifié.
+- PROJECT_STATE.md : +24/-0 pour cette session.
