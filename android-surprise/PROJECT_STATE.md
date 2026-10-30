@@ -633,3 +633,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : workflow +2/-0, MemoryActivity.java +10/-6, memory_smoke.py +40/-1, test_memory_content.py +25/-0 ; total +77/-7. Commits poussés : 5a519040, 81d552dc, 579e2ef8, a02c5e61, 76f9fbd6 et ce bilan. Run intermédiaire remplacé par la CI finale ; modèle et effort inchangés, quota inconnu.
 - Durée inférieure aux 20–40 minutes indicatives, après développement, deux cycles de tests et attente des validations ; pas d'attente artificielle. Prochaine action : poursuivre la finition et tester l'interruption sonore avec une méthode fiable, puis préparer la livraison.
 - PROJECT_STATE.md : +18/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 05:55:31 Europe/Zurich — en cours
+- Base 08028fab30e57fb8e77e06b2c5211d355a676117 ; commit de code poussé 13038b881d33afb32821936bd50e85e14fda0249.
+- Diff hors journal : workflow +2/-0 ; MusicActivity.java +16/-10 ; music_smoke.py +11/-0 ; test_chords.py +36/-0 ; total +65/-10.
+- Jeu libre enrichi de trois accords mineurs supplémentaires, disposés en deux rangées ; test des trois commandes sur émulateur, vérification du déclenchement audio. Nouveau test autonome vérifiant six accords : fondamentale, intervalles, justesse, nombre, unicité et registre.
+- Contrôles locaux : syntaxe Python du test d'interface valide ; test musical indépendant réussi (six accords et leurs quatre fréquences). SDK Android, Gradle et adb absents localement. CI 41005620812 lancée, compilation, APK et émulateurs non encore confirmés.
+- Dernière CI complète 41000900188 : sept jobs réussis ; APK debug 12952854605 d'intégrité précédemment vérifiée. Aucun téléphone physique, écoute humaine ou contrôle visuel humain ; scénario antérieur d'interruption sonore non validé. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la compilation et les six parcours, contrôler l'APK et corriger toute défaillance, puis consigner durée et résultats.
