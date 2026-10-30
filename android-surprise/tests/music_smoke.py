@@ -352,7 +352,12 @@ try:
     assert len(row)==3, ("Narrow keys missing",texts(root))
     bounds={name:list(map(int,re.findall(r"\d+",node.attrib["bounds"]))) for name,node in row.items()}
     assert all(v[2]-v[0]>=48 and v[3]-v[1]>=48 for v in bounds.values()), ("Narrow target",bounds)
+    ordered=sorted(bounds.values(),key=lambda b:b[0])
+    assert all(b[0]-a[2]>=8 for a,b in zip(ordered,ordered[1:])), ("Narrow targets crowded",bounds)
     assert selected_note(root,"Fa"), "Narrow-screen selection missing"
+    adb("shell","input","tap","2",str((bounds["Fa"][1]+bounds["Fa"][3])//2))
+    root=dump()
+    assert selected_note(root,"Fa"), "Outside tap changed the selection"
     capture("music-small")
     # Long labels remain visible and operable with enlarged text on the narrow display.
     tap(root,"Arpège : désactivé")

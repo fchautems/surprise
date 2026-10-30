@@ -29,6 +29,12 @@ class PaletteContrastTest(unittest.TestCase):
                         (241,179,122),(244,168,141),(218,184,234),(248,196,116)):
                 self.assertGreaterEqual(contrast(background,ink),4.5,(background,ink))
 
+    def test_primary_action_contrast(self):
+        source=(SOURCE / "MainActivity.java").read_text(encoding="utf-8")
+        self.assertIn("Color.rgb(255,216,151),GOLD",source)
+        for fill in ((255,216,151),(255,195,107)):
+            self.assertGreaterEqual(contrast((17,22,42),fill),7.0)
+
     def test_progress_track_contrast(self):
         track=(98,110,133)
         for name in ("MainActivity.java", "MemoryActivity.java"):

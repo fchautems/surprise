@@ -186,7 +186,9 @@ public class MainActivity extends Activity {
     private Button next, joker;
     private GradientDrawable shape(int color,int radius){GradientDrawable d=color==CARD
         ? new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{Color.rgb(39,53,80),CARD})
-        : new GradientDrawable();if(color!=CARD)d.setColor(color);d.setCornerRadius(radius);return d;}
+        : color==GOLD
+        ? new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{Color.rgb(255,216,151),GOLD})
+        : new GradientDrawable();if(color!=CARD && color!=GOLD)d.setColor(color);d.setCornerRadius(radius);return d;}
     private android.graphics.drawable.Drawable touch(GradientDrawable base){
         return new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(Color.argb(40,255,255,255)),base,null);
     }
