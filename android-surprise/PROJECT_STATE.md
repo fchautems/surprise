@@ -675,3 +675,12 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MainActivity.java +16/-7 ; emulator_smoke.py +15/-0 ; music_smoke.py +10/-0 ; total +41/-7. Commits poussés : b1d3cf30, e9492903, dcf7d5cb, 98914281, 413f4a87, 06833347, 25b7a049, c4eaa076 et ce bilan. L'échec initial concernait la commande de test et a été corrigé par l'usage des applications récentes. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : poursuivre la finition ludique, conserver les validations et préparer la livraison avec instructions et APK vérifié.
 - PROJECT_STATE.md : +24/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 08:01:02 Europe/Zurich — en cours
+- Base 2dbbbf3697be2b626e6fd682eebe7aa9e533355c ; commit de code ac50740c77ed36a39c04a91d3bce24367e9032d3 poussé.
+- Diff hors journal : MainActivity.java +19/-3 ; QuizRules.java +12/-2 ; QuizRulesTest.java +9/-0 ; emulator_smoke.py +14/-0 ; test_bank.py +4/-0 ; total +58/-5.
+- Douze questions ajoutées en fin de banque, sans modifier les 137 positions existantes ; test de stabilité étendu aux 137 anciennes entrées. La sélection privilégie les questions absentes des deux dernières parties, tout en protégeant d'abord la plus récente si la banque est courte ; compatibilité avec l'historique existant et défi quotidien préservée dans le code.
+- Contrôles locaux : deux tests de banque réussis (149 entrées), tests Java de sélection sur 100 graines, tailles réduites et historique chevauchant réussis ; syntaxe Python de l'émulateur valide. La persistance sur Android, compilation et APK nouveaux restent à vérifier ; SDK Android, Gradle et adb absents localement.
+- CI 41017617295 lancée. Dernière CI complète 41012405570 : sept jobs réussis ; APK debug 12958585599 d'intégrité précédemment vérifiée. Aucun téléphone physique, écoute humaine ni contrôle visuel humain. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre compilation et parcours, notamment persistance après redémarrage, corriger les erreurs éventuelles et contrôler l'APK avant bilan.
