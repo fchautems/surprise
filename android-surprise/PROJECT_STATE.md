@@ -819,7 +819,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +17/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 17:57:32 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 17:57:32–18:13:08 Europe/Zurich (15 min 36 s, validations comprises)
 - Référence initiale 9328a988 ; dernière CI entièrement validée 41086620628 (compilation, signature, six parcours Android 10/15), APK 12991373497 intègre, SHA-256 0bd5963e85a8a4b88408acec4c31b50be36bd085195c1dc56d5716c43e80e67f.
 - L'environnement d'exécution local ne démarre pas : aucun test local Java/Python ni construction locale possible. Accès GitHub opérationnel ; quatre commandes longues adoptent une hauteur adaptable pour les grands caractères et le scénario Android petit écran vérifie deux commandes après agrandissement du texte. Contrôles statiques JavaScript des modifications réussis ; ils ne remplacent pas la compilation ou l'exécution Android. Commit d3d3da61cadc10f457e696e9f6eb4f999ba5089f poussé.
 - Prochaine action : inspecter la CI déclenchée, vérifier compilation, signature et six parcours ; consigner toute limite, éviter toute nouvelle fonctionnalité dès samedi heure suisse. Aucun test physique ni examen humain visuel ou sonore.
@@ -828,3 +828,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff hors journal : MusicActivity.java +4/-4 ; music_smoke.py +7/-0 ; total +11/-4.
 
 - CI 41094625052 : les deux parcours ciblés avec écran 240 dp et texte 1,3 ont réussi sur Android 10 et 15 ; quatre autres parcours en cours. Aucune inspection humaine de lisibilité.
+
+- Bilan : CI 41094625052 réussie intégralement : compilation et tests unitaires, signature apksigner v2, six parcours sur Android 10 et 15, dont les nouveaux contrôles sur écran 240 dp et texte 1,3. APK debug 12994909565 produit ; l'intégrité de son archive et le SHA-256 de l'APK n'ont pas été vérifiés indépendamment car l'environnement local ne démarre pas. La signature a été vérifiée dans la CI.
+- Diff final hors journal : MusicActivity.java +4/-4 ; music_smoke.py +7/-0 ; total +11/-4. Commits poussés : d3d3da61, b9b757ac, 0ede0d05, 6ca60459 et ce bilan. Contrôle local limité à des vérifications statiques en JavaScript ; pas de test sur téléphone physique ni inspection humaine visuelle ou sonore. Modèle et effort inchangés ; quota inconnu.
+- Les captures avant/après n'ont pas pu être comparées indépendamment à cause de l'environnement local indisponible. Prochaine action : vérifier l'archive et le SHA-256 dès retour de l'environnement, préserver l'APK précédent déjà vérifié ; respecter le gel des fonctionnalités à partir du samedi 31 octobre en Suisse.
+- PROJECT_STATE.md : +16/-0 pour cette session.
