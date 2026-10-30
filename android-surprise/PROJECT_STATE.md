@@ -924,3 +924,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit c7f9a97db0c7c26c38e09eb6138dd5b80bb87ebb poussé : une cible existante passe de 48 à 56 dp de hauteur minimale ; le scénario sur écran 240 dp et texte 1,3 contrôle les dimensions et l'espacement des actions visibles, et vérifie qu'une frappe à côté ne change pas d'écran. Diff hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +16/-0 ; total +17/-1.
 - Syntaxe Python validée localement ; CI 41131571230 lancée, compilation et parcours non encore confirmés. Aucun téléphone physique ni contrôle humain des visuels ou du son ; modèle et effort inchangés, quota inconnu.
 - Prochaine action : suivre la CI, vérifier APK et six parcours, corriger ou revenir à la version précédente en cas de régression ; comparer les captures si disponibles.
+
+- CI 41131571230 : compilation, signature Android v2 et ZIP réussis ; APK 13013162787 téléchargé, archive et APK intègres, SHA-256 d5da6bf1b779a650a3bec00fa6e1747b9e3916f5c20fd206104ceda448652845 conforme à la CI. Six parcours sur émulateur en cours.
