@@ -706,3 +706,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41023271660 : compilation et tests unitaires réussis ; six parcours Android en attente ou en cours. APK debug 12962941011 : archive et APK vérifiés par unzip -t ; SHA-256 4217133641c3062bf6b3a11dd4f1933378421d0f2c2aca4ccd180b1e5252ff19. Les tests fonctionnels ne sont pas encore confirmés.
 
 - fd551b65 dispose les notes dans l'ordre et conserve des zones tactiles d'au moins 48 dp ; un test d'ordre et de dimensions est ajouté. Syntaxe Python et deux tests locaux de justesse toujours réussis. La CI intermédiaire est remplacée ; nouveau build et parcours à confirmer.
+
+- CI 41023655077 sur fd551b65 : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12962048398 : archive et APK vérifiés par unzip -t ; SHA-256 657d029585b175908780614194857d4a2634a520912f47a1a76ed9f54e6cde8c. Tests fonctionnels non encore confirmés.
