@@ -57,10 +57,16 @@ assert has(root,"Normal"),texts(root)
 # Starting the non-exported activity through the shell is prohibited.
 tap(root,"Écouter la mélodie")
 adb("shell","input","keyevent","KEYCODE_HOME")
-adb("shell","input","keyevent","KEYCODE_APP_SWITCH")
-time.sleep(1)
-adb("shell","input","tap","160","320")
-root=dump()
+# Launcher timing varies on shared CI runners. Retry opening the recent card
+# rather than treating a still-visible launcher as an application failure.
+root=None
+for _ in range(3):
+    adb("shell","input","keyevent","KEYCODE_APP_SWITCH")
+    time.sleep(2)
+    adb("shell","input","tap","160","320")
+    root=dump()
+    if has(root,"PETITES MÉLODIES"):
+        break
 assert has(root,"PETITES MÉLODIES"), ("Recent task did not resume",texts(root))
 assert has(root,"Lecture interrompue"), ("Interrupted playback not restored",texts(root))
 adb("shell","input","keyevent",*(["KEYCODE_VOLUME_DOWN"]*20))
