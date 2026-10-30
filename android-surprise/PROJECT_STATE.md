@@ -591,3 +591,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Test de migration ajouté dans 1cf6a582 : sur l'émulateur jetable, un ancien enregistrement d'essais sans record de série est recréé dans les préférences privées, puis l'affichage de sa récompense est vérifié après redémarrage. Syntaxe Python valide ; le résultat Android reste à confirmer. La CI intermédiaire est remplacée par celle de ce commit.
 
 - CI finale 40989727364 sur 1cf6a582 : compilation, test des règles de récompense et autres tests unitaires réussis ; six parcours Android en cours. APK debug 12949115516, archive et APK vérifiés par unzip -t ; SHA-256 51b250d457421d1acc6ebc78c615f7de3aee6fb3d7260d7c400d2b28bdee3ddf. La compatibilité des anciennes données est en attente du test émulateur.
+
+- CI 40989727364 : tests ciblés des récompenses, des quatre tailles et du cas d'ancien record sans série réussis sur Android 10 et 15. Les deux parcours principaux restent en cours ; les autres jobs sont réussis.
