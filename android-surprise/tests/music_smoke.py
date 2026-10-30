@@ -49,6 +49,7 @@ adb("shell","am","force-stop","ch.fred.surprise")
 adb("shell","pm","clear","ch.fred.surprise")
 adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
 root=open_game()
+assert "Fa" not in texts(root) and "Si" not in texts(root), "Extra keys appeared in challenge"
 tap(root,"Lent")
 root=dump()
 assert has(root,"Normal"),texts(root)
@@ -244,6 +245,30 @@ assert has(root,"Lent"),texts(root)
 tap(root,"Jouer librement")
 root=dump()
 tap(root,"Octave normale")  # Missing control fails if the choice was not restored.
+for _ in range(3):
+    adb("shell","input","swipe","160","200","160","520","300")
+root=dump()
+adb("logcat","-c")
+tap(root,"Fa")
+root=dump()
+assert selected_note(root,"Fa"), "Extra key not marked"
+assert "playback started: note Fa" in adb("logcat","-d","-s","SurpriseAudio:I")
+adb("shell","settings","put","system","user_rotation","1")
+dump()
+adb("shell","settings","put","system","user_rotation","0")
+root=dump()
+assert selected_note(root,"Fa"), "Extra key selection lost on rotation"
+tap(root,"Si")
+root=dump()
+assert selected_note(root,"Si") and not selected_note(root,"Fa"), "Extra selection not updated"
+assert "playback started: note Si" in adb("logcat","-d","-s","SurpriseAudio:I")
+tap(root,"Octave +")
+for _ in range(3):
+    adb("shell","input","swipe","160","200","160","520","300")
+root=dump()
+tap(root,"Si")
+root=dump()
+assert "playback started: note Si haute" in adb("logcat","-d","-s","SurpriseAudio:I"), "Extra octave playback missing"
 audio_log=adb("logcat","-d","-s","SurpriseAudio:I")
 print("Audio diagnostic:",audio_log[-3000:])
 assert "playback started" in audio_log, "AudioTrack never entered playing state"
