@@ -853,7 +853,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +18/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 20:03:55 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 20:03:55–20:25:07 Europe/Zurich (21 min 12 s, correction et validations comprises)
 - Base d7ba93f5 ; CI 41102741393 précédemment entièrement réussie, APK 12998003925 d'intégrité et signature vérifiées, SHA-256 082b7d709959a2b94c6375a79d934303dea8cc14cf621f0880d36b7c38a4c63d.
 - Commit c6df251dc4cd79e8ae0f4bc5f14139c67d7e8d64 poussé : hauteur des trois commandes adaptée sur petit écran ou texte agrandi pour réduire le risque de texte tronqué ; parcours Android étendu avec contrôle de dimensions tactiles et d'une interaction en 240 dp à échelle 1,3, capture privée supplémentaire. Diff : workflow +1/-1 ; MusicActivity.java +7/-4 ; music_smoke.py +10/-0 ; total hors journal +18/-5.
 - Contrôles locaux : syntaxe Python et YAML réussies ; expression de lecture des coordonnées vérifiée après correction d'un échappement dans le test préparé. CI 41112198417 en attente : compilation et parcours non encore confirmés. Aucun téléphone physique ni jugement humain de l'apparence ou du son. Modèle et effort inchangés ; quota inconnu.
@@ -868,3 +868,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - CI 41112755619 : parcours ciblé Android 10 réussi, y compris interruption et contrôles du petit écran ; cinq autres parcours encore en cours. Capture privée supplémentaire 240×640 décodable, OCR 28 mots ; ce contrôle automatisé ne prouve pas la qualité visuelle ou la lisibilité humaine.
 
 - CI 41112755619 : les deux parcours ciblés Android 10 et 15 sont réussis, y compris interruption et dimensions tactiles ; quatre autres parcours en cours. Captures privées supplémentaires 240×640 décodables ; OCR 28 et 29 mots. Comparaison entre API : 70,32 % de pixels modifiés, écart moyen 24,69/255 ; ce n'est pas une comparaison avant/après ni une évaluation humaine.
+
+- Bilan : CI 41112755619 réussie entièrement après correction du test d'interruption : compilation, signature v2, six parcours Android 10 et 15, dont contrôle de dimensions tactiles et interaction sur écran 240 dp avec texte 1,3. APK 13004576394 signé, archive et APK intègres après téléchargement indépendant ; SHA-256 70da1188469d52cb8a8b3f7dbf826aee6f8b2b194f4a2feef063c152a528e213. L'échec initial 41112198417 et sa cause incertaine restent consignés plus haut.
+- Captures 240×640 de la nouvelle disposition décodables sur les deux API ; OCR 28 et 29 mots. Comparaison inter-API et non avant/après : 70,32 % de pixels différents, écart moyen 24,69/255, sans jugement humain de lisibilité ou d'esthétique. Aucun test physique ni écoute humaine.
+- Diff final hors journal : .github/workflows/android-surprise.yml +1/-1 ; MusicActivity.java +7/-4 ; music_smoke.py +17/-2 ; total +25/-7. Tests locaux : syntaxe Python et YAML, extraction de coordonnées, intégrité ZIP, empreinte SHA-256 et décodage/OCR des captures réussis. Commits poussés : c6df251d, 12883e1a, e2e2a94b, f02a2324, 359cbbc0, c2fb1a33, 87b3af5d, 928bcba8 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : préserver la version validée ; dès samedi 31 octobre heure suisse, gel des fonctionnalités et finition visuelle, ergonomique et tests de non-régression seulement.
+- PROJECT_STATE.md : +23/-0 pour cette session.
