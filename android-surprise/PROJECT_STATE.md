@@ -917,3 +917,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MainActivity.java +7/-2 ; emulator_smoke.py +14/-2 ; total +21/-4. Syntaxe Python, compilation CI, signature, contrôles ZIP et SHA-256, six parcours Android et comparaison de captures réussis. Commits poussés : 92ff82c2, 0c003556, 0bc0ff7b, ca1b0e7b, 1a1f2383, ac647e26 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : conserver la version validée, poursuivre le gel des fonctionnalités et les finitions prudentes centrées sur le confort, la non-régression et la livraison.
 - PROJECT_STATE.md : +20/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 22:30:00 Europe/Zurich — en cours
+- Gel des fonctionnalités maintenu ; priorité ergonomie mains/poignet. Base 6c56d449 ; CI 41129184344 intégralement réussie, APK 13012386612 signé et intègre, SHA-256 e08e126c82bdff5cbc8de8731c8c166edb8749a340695fcd04f8a6a5fc4f9161. Pas de garantie de confort sans essai physique.
+- Commit c7f9a97db0c7c26c38e09eb6138dd5b80bb87ebb poussé : une cible existante passe de 48 à 56 dp de hauteur minimale ; le scénario sur écran 240 dp et texte 1,3 contrôle les dimensions et l'espacement des actions visibles, et vérifie qu'une frappe à côté ne change pas d'écran. Diff hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +16/-0 ; total +17/-1.
+- Syntaxe Python validée localement ; CI 41131571230 lancée, compilation et parcours non encore confirmés. Aucun téléphone physique ni contrôle humain des visuels ou du son ; modèle et effort inchangés, quota inconnu.
+- Prochaine action : suivre la CI, vérifier APK et six parcours, corriger ou revenir à la version précédente en cas de régression ; comparer les captures si disponibles.
