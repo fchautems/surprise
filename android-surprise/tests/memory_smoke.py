@@ -495,6 +495,7 @@ try:
         positions.append(bounds)
     assert positions[0][1] == positions[1][1] == positions[2][1], positions
     assert positions[3][1] > positions[0][1], ("Expected three-column layout", positions)
+    capture("memory-small")
     root = tap_card(root, 0)
     root, node = card(root, 0)
     before = node.attrib["content-desc"]

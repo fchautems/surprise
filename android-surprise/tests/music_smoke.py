@@ -3,6 +3,7 @@ import re
 import subprocess
 import time
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 def adb(*args):
     return subprocess.check_output(["adb", *args], text=True)
@@ -16,6 +17,12 @@ def dump():
         except (subprocess.CalledProcessError, ET.ParseError):
             pass
     raise AssertionError("UI unavailable")
+
+def capture(name):
+    dest=Path(__file__).resolve().parents[1] / "test-screens"
+    dest.mkdir(exist_ok=True)
+    with (dest / (name + ".png")).open("wb") as output:
+        subprocess.run(["adb","exec-out","screencap","-p"], stdout=output, check=True)
 
 def texts(root):
     return [n.attrib.get("text", "") for n in root.iter("node")]
@@ -326,6 +333,7 @@ try:
     bounds={name:list(map(int,re.findall(r"\d+",node.attrib["bounds"]))) for name,node in row.items()}
     assert all(v[2]-v[0]>=48 and v[3]-v[1]>=48 for v in bounds.values()), ("Narrow target",bounds)
     assert selected_note(root,"Fa"), "Narrow-screen selection missing"
+    capture("music-small")
     # Long labels remain visible and operable with enlarged text on the narrow display.
     tap(root,"Arpège : désactivé")
     root=dump()

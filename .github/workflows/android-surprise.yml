@@ -56,6 +56,10 @@ jobs:
           signer="$(find "${ANDROID_HOME:?}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
           test -x "$signer"
           "$signer" verify --verbose --print-certs app/build/outputs/apk/debug/app-debug.apk
+      - name: Check APK archive and compute checksum
+        run: |
+          unzip -t app/build/outputs/apk/debug/app-debug.apk
+          sha256sum app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
           name: android-debug-apk
@@ -153,6 +157,14 @@ jobs:
           script: |
             bash android-surprise/tests/install_apk.sh android-surprise/app/build/outputs/apk/debug/app-debug.apk
             python3 android-surprise/tests/memory_smoke.py || { adb logcat -d -s AndroidRuntime:E; exit 1; }
+      - name: Save private small-screen capture
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: memory-small-screen-${{ matrix.api-level }}
+          path: android-surprise/test-screens/memory-small.png
+          if-no-files-found: ignore
+          retention-days: 7
   music:
     needs: build
     runs-on: ubuntu-latest
@@ -181,3 +193,11 @@ jobs:
           script: |
             bash android-surprise/tests/install_apk.sh android-surprise/app/build/outputs/apk/debug/app-debug.apk
             python3 android-surprise/tests/music_smoke.py || { adb logcat -d -s AndroidRuntime:E; exit 1; }
+      - name: Save private small-screen capture
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: music-small-screen-${{ matrix.api-level }}
+          path: android-surprise/test-screens/music-small.png
+          if-no-files-found: ignore
+          retention-days: 7
