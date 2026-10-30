@@ -201,6 +201,7 @@ public final class MusicActivity extends Activity {
         hintButton.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         hintButton.setEnabled(!hintUsed);
         listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
+        extraKeys[0].setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         extraRow.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         chords.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
         octaveButton.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
@@ -257,6 +258,13 @@ public final class MusicActivity extends Activity {
         listenRow.setVisibility(freeMode ? android.view.View.GONE : android.view.View.VISIBLE);
         for(int row=0;row<2;row++){
             LinearLayout line=new LinearLayout(this);line.setOrientation(LinearLayout.HORIZONTAL);
+            if(row==1){
+                Button fa=button(EXTRA_NAMES[0]);extraKeys[0]=fa;
+                LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(0,dp(64),1);
+                ep.setMargins(dp(4),dp(5),dp(4),dp(5));line.addView(fa,ep);
+                fa.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);
+                fa.setOnClickListener(v->chooseExtra(0));
+            }
             for(int col=0;col<3;col++){
                 int i=row*3+col;if(i>=NAMES.length)break;
                 Button b=button(NAMES[i]);keys[i]=b;
@@ -264,11 +272,14 @@ public final class MusicActivity extends Activity {
             }root.addView(line,new LinearLayout.LayoutParams(-1,-2));
         }
         extraRow=new LinearLayout(this);extraRow.setOrientation(LinearLayout.HORIZONTAL);
-        for(int i=0;i<EXTRA_NAMES.length;i++){
-            final int note=i;Button b=button(EXTRA_NAMES[i]);extraKeys[i]=b;
-            LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(64),1);
-            p.setMargins(dp(4),dp(5),dp(4),dp(5));extraRow.addView(b,p);
-            b.setOnClickListener(v->chooseExtra(note));
+        Button si=button(EXTRA_NAMES[1]);extraKeys[1]=si;
+        LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(0,dp(64),1);
+        sp.setMargins(dp(4),dp(5),dp(4),dp(5));extraRow.addView(si,sp);
+        si.setOnClickListener(v->chooseExtra(1));
+        for(int i=0;i<2;i++){
+            android.widget.Space space=new android.widget.Space(this);
+            LinearLayout.LayoutParams blank=new LinearLayout.LayoutParams(0,dp(64),1);
+            blank.setMargins(dp(4),dp(5),dp(4),dp(5));extraRow.addView(space,blank);
         }
         root.addView(extraRow,new LinearLayout.LayoutParams(-1,-2));
         extraRow.setVisibility(freeMode ? android.view.View.VISIBLE : android.view.View.GONE);

@@ -251,6 +251,12 @@ root=dump()
 adb("logcat","-c")
 tap(root,"Fa")
 root=dump()
+# Fa must precede Sol and La; all three targets must remain touch-sized.
+row_nodes={n.attrib.get("text"): n for n in root.iter("node") if n.attrib.get("text") in ("Fa","Sol","La")}
+assert len(row_nodes)==3, ("Free keys missing",texts(root))
+bounds={name:list(map(int,re.findall(r"\d+",node.attrib["bounds"]))) for name,node in row_nodes.items()}
+assert all(v[2]-v[0]>=48 for v in bounds.values()), ("Targets too narrow",bounds)
+assert bounds["Fa"][0]<bounds["Sol"][0]<bounds["La"][0], ("Unexpected key order",bounds)
 assert selected_note(root,"Fa"), "Extra key not marked"
 assert "playback started: note Fa" in adb("logcat","-d","-s","SurpriseAudio:I")
 adb("shell","settings","put","system","user_rotation","1")
