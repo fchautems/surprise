@@ -897,3 +897,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal depuis 290a6aea : MainActivity.java +2/-2 ; MemoryActivity.java +1/-1 ; MusicActivity.java +1/-0 ; emulator_smoke.py +24/-0 ; music_smoke.py +23/-18 ; total +51/-21. Contrôles locaux : syntaxe Python, signature et intégrité APK via CI, téléchargement, unzip et SHA-256, décodage d'images ; six parcours Android réussis. Commits poussés : eaac6fb7, 9e72f872, bb7c2c97, 24635122, cd000b6e, fa2db7b7, cd6911ec, 36f8f181 et ce bilan. Modèle et effort non changés ; quota inconnu.
 - Prochaine action : gel des fonctionnalités en vigueur depuis le vendredi 30 octobre au soir ; seules finitions prudentes, corrections et non-régressions, en conservant la version validée et en préparant la livraison.
 - PROJECT_STATE.md : +23/-0 pour cette session.
+
+
+## Session du 30 octobre 2026, début 21:57:09 Europe/Zurich — en cours
+- Gel des fonctionnalités immédiat maintenu ; priorité à l'ergonomie des mains et du poignet sans nouveaux modes. Base 726dc9c6 ; CI 41119803867 entièrement réussie, APK 13007063592 signé et intègre, SHA-256 0f3399cd6fd30a64710994e7503d358d6e98a5980954997c857463700c777317.
+- Commit 92ff82c2df9c15ae19c3340967968ab76e659cab poussé : la prochaine action est amenée dans la zone visible après réponse, afin d'éviter un défilement répétitif. Test d'une réponse erronée sur écran 240 dp, texte 1,3 : contrôle du retour, de la visibilité sans glissé préalable, dimensions tactiles d'au moins 48 dp et continuation ; capture privée. Diff hors journal : MainActivity.java +5/-0 ; emulator_smoke.py +14/-2 ; total +19/-2. Aucune garantie de confort sans essai sur téléphone physique.
+- Syntaxe Python vérifiée localement ; CI 41127307672 en attente. La compilation, le confort réel et les nouveaux scénarios ne sont pas encore vérifiés. Aucun examen humain des visuels ou du son ; modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la CI, vérifier APK, signature et six parcours ; corriger toute régression, comparer les captures et conserver la version antérieure si nécessaire.
