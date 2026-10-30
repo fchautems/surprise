@@ -876,7 +876,7 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +23/-0 pour cette session.
 
 
-## Session du 30 octobre 2026, début 20:55:57 Europe/Zurich — en cours
+## Session du 30 octobre 2026, 20:55:57–21:21:04 Europe/Zurich (25 min 07 s, correction et validations comprises)
 - Référence 290a6aea ; CI 41112755619 vérifiée : sept jobs réussis. APK 13004576394 signé, archive et APK intègres, SHA-256 70da1188469d52cb8a8b3f7dbf826aee6f8b2b194f4a2feef063c152a528e213.
 - Commit eaac6fb7df949852756eb7482fa68157e27168db poussé : interligne légèrement augmenté pour plusieurs textes multilignes et états ; scénario principal étendu sur écran 240 dp avec police 1,3 pour tester l'entrée, une réponse et la continuation, avec captures privées. Diff hors journal : MainActivity.java +2/-2, MemoryActivity.java +1/-1, MusicActivity.java +1/-0, emulator_smoke.py +24/-0, total +28/-3.
 - Syntaxe Python locale vérifiée ; compilation et parcours Android encore non confirmés. Aucun téléphone physique ni examen humain des visuels ou du son ; modèle et effort inchangés, quota inconnu.
@@ -891,3 +891,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Décision du 30 octobre 2026 au soir, heure suisse : GEL IMMÉDIAT DES FONCTIONNALITÉS, remplaçant la date du 31 octobre indiquée plus haut. Seules corrections, stabilisation, finitions visuelles et ergonomiques prudentes et non-régressions sont autorisées ; aucune refonte ni fonctionnalité nouvelle. Préserver la dernière version validée et vérifier la livraison.
 
 - CI 41119803867 : les deux parcours ciblés Android 10 et 15 sont réussis ; les quatre autres restent en cours. Les journaux détaillés ont temporairement renvoyé une erreur interne ; le statut des jobs est disponible.
+
+- Bilan : CI 41119803867 entièrement réussie après correction du test intermittent ; compilation, signature APK v2, six parcours Android 10 et 15 dont écran 240 dp et texte 1,3. APK 13007063592 : archive et APK intègres après téléchargement indépendant, SHA-256 0f3399cd6fd30a64710994e7503d358d6e98a5980954997c857463700c777317. L'échec antérieur 41119330974 et la cause incertaine restent consignés ci-dessus ; le test d'interruption exige toujours une interruption observée.
+- Comparaison technique avant/après sur capture d'accueil Android 15 : dimensions 320×640, 31,86 % de pixels différents et écart moyen 10,23/255 ; les différences incluent les conditions de rendu, et ne prouvent ni qualité ni lisibilité humaine. Deux captures compactes sont décodables en 240×640. Aucun test sur téléphone physique, contrôle visuel ou écoute humaine.
+- Diff final hors journal depuis 290a6aea : MainActivity.java +2/-2 ; MemoryActivity.java +1/-1 ; MusicActivity.java +1/-0 ; emulator_smoke.py +24/-0 ; music_smoke.py +23/-18 ; total +51/-21. Contrôles locaux : syntaxe Python, signature et intégrité APK via CI, téléchargement, unzip et SHA-256, décodage d'images ; six parcours Android réussis. Commits poussés : eaac6fb7, 9e72f872, bb7c2c97, 24635122, cd000b6e, fa2db7b7, cd6911ec, 36f8f181 et ce bilan. Modèle et effort non changés ; quota inconnu.
+- Prochaine action : gel des fonctionnalités en vigueur depuis le vendredi 30 octobre au soir ; seules finitions prudentes, corrections et non-régressions, en conservant la version validée et en préparant la livraison.
+- PROJECT_STATE.md : +23/-0 pour cette session.
