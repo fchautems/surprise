@@ -560,3 +560,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Nouvelle CI, compilation, APK et tests Android à vérifier ; diagnostiquer les échecs puis consigner bilan et durée.
 
 - Test étendu dans ed33ba9b aux records de séries des quatre tailles, y compris vérification lors du retour dans chaque taille ; syntaxe Python valide. La CI intermédiaire est remplacée par cette version et ses résultats restent à vérifier.
+
+- CI 40983756881 sur ed33ba9b : compilation et tests unitaires réussis ; six parcours Android en cours. APK debug 12945643961 produit ; archive et APK vérifiés par unzip -t ; SHA-256 858b299b91b1e4a18c67c274886ce566d68d3b21dfe8ee17b363a812f23f6a6e. Tests fonctionnels encore à vérifier.
