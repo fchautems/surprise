@@ -253,6 +253,7 @@ public final class MusicActivity extends Activity {
         LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,-2);hp.setMargins(0,dp(12),0,dp(10));root.addView(hint,hp);
         int best=getPreferences(MODE_PRIVATE).getInt("melodies",0);
         status=label(freeMode ? "Mode libre · joue à ton rythme." : position>0 ? "Bien joué : "+position+" / "+phrase.length+" notes" : best>0?"Record : "+best+" · Écoute la mélodie.":"Écoute la mélodie, puis joue-la.",16,GOLD);root.addView(status);
+        status.setLineSpacing(dp(2),1f);
         soundWarning=label("",14,WHITE);root.addView(soundWarning);
         listenRow=new LinearLayout(this);listenRow.setOrientation(LinearLayout.HORIZONTAL);
         // Give wrapped labels more vertical room on compact screens or with large text.

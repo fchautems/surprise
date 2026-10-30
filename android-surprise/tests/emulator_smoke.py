@@ -378,4 +378,28 @@ assert find_text(root, "Défi du jour · record 130"), texts(root)
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 assert find_text(wait_dump(), "Défi du jour · record 130"), "Daily record lost on restart"
+# Compact display and enlarged font: entry, answers, and continuation remain usable.
+try:
+    adb("shell", "wm", "size", "240x640")
+    adb("shell", "wm", "density", "160")
+    adb("shell", "settings", "put", "system", "font_scale", "1.3")
+    adb("shell", "am", "force-stop", "ch.fred.surprise")
+    adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+    root=wait_dump()
+    assert find_text(root,"BIENVENUE"), ("Compact welcome missing",texts(root))
+    capture("accueil-compact")
+    tap_text(root,"C’est parti")
+    root=wait_dump()
+    displayed=set(texts(root)) & bank
+    assert len(displayed)==1, ("Compact question missing",texts(root))
+    capture("question-compact")
+    tap_text(root,correct_by_question[next(iter(displayed))])
+    tap_text(wait_dump(),"Continuer")
+    adb("shell","input","swipe","120","180","120","550","300")
+    root=wait_dump()
+    assert find_text(root,"MANCHE  2"), ("Compact continuation failed",texts(root))
+finally:
+    adb("shell","wm","size","reset")
+    adb("shell","wm","density","reset")
+    adb("shell","settings","put","system","font_scale","1.0")
 print("Android UI smoke test passed")

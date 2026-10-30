@@ -199,7 +199,7 @@ public final class MemoryActivity extends Activity {
         title.setTypeface(null,Typeface.BOLD); root.addView(title);
         TextView hint=label("Retrouve les paires, à ton rythme.",15,WHITE);
         LinearLayout.LayoutParams hintP=new LinearLayout.LayoutParams(-1,-2); hintP.setMargins(0,dp(10),0,dp(12)); root.addView(hint,hintP);
-        status=label("",16,GOLD); root.addView(status);
+        status=label("",16,GOLD); status.setLineSpacing(dp(2),1f); root.addView(status);
         progress=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
         progress.setProgressTintList(android.content.res.ColorStateList.valueOf(GOLD));
         LinearLayout.LayoutParams pp=new LinearLayout.LayoutParams(-1,dp(6)); pp.setMargins(dp(5),dp(8),dp(5),dp(4)); root.addView(progress,pp);
