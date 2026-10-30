@@ -182,6 +182,7 @@ assert "Nouveau record !" in result, result
 moves = int(re.search(r"Bravo ! (\d+) essais", result).group(1))
 expected_stars = 3 if moves <= 5 else 2 if moves <= 8 else 1
 assert result.splitlines()[-1].count("✦") == expected_stars, result
+assert "Étoiles : "+str(expected_stars)+"/3" in result, result
 record = result.split("Record : ")[1].splitlines()[0]
 series = int(re.search(r"Série record : (\d+)",result).group(1))
 assert series == int(re.search(r"Meilleure série : (\d+)",result).group(1))
@@ -268,6 +269,9 @@ root = open_memory()
 assert find_text(root, "Record : " + record), "Memory record lost after restart"
 series_text=find_text(root,"Série record : ")
 assert series_text and int(re.search(r"Série record : (\d+)",series_text).group(1)) >= series, "Streak record lost after restart"
+best_moves=int(record)
+best_stars=3 if best_moves<=5 else 2 if best_moves<=8 else 1
+assert "Étoiles : "+str(best_stars)+"/3" in series_text, "Best stars lost after restart"
 # The longer mode has its own board, saved orientation and separate record.
 tap_text(root, "Défi : 6 paires")
 root = wait_dump()
@@ -431,14 +435,17 @@ tap_text(root, "Défi : 6 paires")
 root = wait_dump()
 assert find_text(root, "0 / 6 paires") and find_text(root, "Record : " + record6), texts(root)
 assert find_text(root, "Série record : " + str(series6)), "Streak record not isolated for 6 pairs"
+assert "Étoiles : " in find_text(root,"Série record : "), "Best stars missing for 6 pairs"
 tap_text(root, "Défi : 8 paires")
 root = wait_dump()
 assert find_text(root, "0 / 8 paires") and find_text(root, "Record : " + record8), texts(root)
 assert find_text(root, "Série record : " + str(series8)), "Streak record not isolated for 8 pairs"
+assert "Étoiles : " in find_text(root,"Série record : "), "Best stars missing for 8 pairs"
 tap_text(root, "Défi : 10 paires")
 root = wait_dump()
 assert find_text(root, "0 / 10 paires") and find_text(root, "Record : " + record10), texts(root)
 assert find_text(root, "Série record : " + str(series10)), "Streak record not isolated for 10 pairs"
+assert "Étoiles : " in find_text(root,"Série record : "), "Best stars missing for 10 pairs"
 # On a narrow 240dp display the cards must remain easy to touch.
 try:
     adb("shell", "wm", "size", "240x640")
