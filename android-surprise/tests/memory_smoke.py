@@ -98,7 +98,7 @@ def tap_card(root, index):
     return wait_dump()
 
 # Change the visual set, preserve it on rotation, and return without losing records.
-tap_text(root, "Cartes : escapade")
+tap_text(root, "Passer aux cartes escapade")
 root = wait_dump()
 root = tap_card(root, 0)
 root, node = card(root, 0)
@@ -110,7 +110,7 @@ adb("shell", "settings", "put", "system", "user_rotation", "0")
 root = wait_dump()
 root, node = card(root, 0)
 assert node.attrib["content-desc"] == pack_desc, "Visual set lost after rotation"
-tap_text(root, "Cartes : nature")
+tap_text(root, "Passer aux cartes nature")
 dialog = wait_dump()
 assert find_text(dialog, "Changer les cartes"), texts(dialog)
 tap_text(dialog, "Changer")
@@ -127,13 +127,13 @@ root = wait_dump()
 root, node = card(root, 0)
 assert node.attrib["content-desc"] == nature_desc, "Third visual set lost on rotation"
 # A cancelled switch must not change the selected pack across process restart.
-tap_text(root, "Cartes : étoiles")
+tap_text(root, "Passer aux cartes étoiles")
 dialog = wait_dump()
 tap_text(dialog, "Continuer")
 adb("shell", "am", "force-stop", "ch.fred.surprise")
 adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
 root = open_memory()
-tap_text(root, "Cartes : étoiles")
+tap_text(root, "Passer aux cartes étoiles")
 root = wait_dump()
 assert description(root, "0 paires trouvées sur 4"), texts(root)
 
@@ -513,6 +513,13 @@ try:
     root = wait_dump()
     root, node = card(root, 0)
     assert node.attrib["content-desc"] == before, "Narrow-screen rotation lost state"
+    tap_text(root, "Passer aux cartes escapade")
+    dialog = wait_dump()
+    assert find_text(dialog, "Changer les cartes"), texts(dialog)
+    tap_text(dialog, "Continuer")
+    root = wait_dump()
+    root, node = card(root, 0)
+    assert node.attrib["content-desc"] == before, "Cancel on narrow screen lost state"
 finally:
     adb("shell", "wm", "size", "reset")
     adb("shell", "wm", "density", "reset")
@@ -557,7 +564,7 @@ subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
                input=ET.tostring(prefs,encoding="unicode"),text=True,stdout=subprocess.DEVNULL,check=True)
 adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
 root=open_memory()
-tap_text(root,"Cartes : nature")  # Legacy selection migrated; switch to the third pack.
+tap_text(root,"Passer aux cartes nature")  # Legacy selection migrated; switch to the third pack.
 root=wait_dump()
 root=tap_card(root,0)
 root,node=card(root,0)

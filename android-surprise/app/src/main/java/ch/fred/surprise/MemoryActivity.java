@@ -170,7 +170,7 @@ public final class MemoryActivity extends Activity {
         progress.setContentDescription(pairs+" paires trouvées sur "+pairCount);
         hintButton.setEnabled(!hintUsed && pairs<pairCount);
         hintButton.setText(hintUsed ? "Indice utilisé" : "Indice · une fois (+2 essais)");
-        paletteButton.setText(palette==0 ? "Cartes : escapade" : palette==1 ? "Cartes : nature" : "Cartes : étoiles");
+        paletteButton.setText(palette==0 ? "Passer aux cartes escapade" : palette==1 ? "Passer aux cartes nature" : "Passer aux cartes étoiles");
         difficulty.setText(pairCount==4 ? "Défi : 6 paires" : pairCount==6 ? "Défi : 8 paires" : pairCount==8 ? "Défi : 10 paires" : "Mode : 4 paires");
         for(int row=0;row<rows.length;row++)rows[row].setVisibility(row*columns<pairCount*2 ? View.VISIBLE : View.GONE);
         for(int i=0;i<cards.length;i++){
