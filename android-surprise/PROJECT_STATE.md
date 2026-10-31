@@ -1081,10 +1081,16 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +16/-0 pour cette session.
 
 
-## Session du 31 octobre 2026, début 06:57:24 Europe/Zurich — en cours
+## Session du 31 octobre 2026, 06:57:24–07:12:00 Europe/Zurich (14 min 36 s, validations comprises)
 - Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base d0c2e5e7, CI 41170696137 entièrement réussie, APK 13030702965 signé et intègre, SHA-256 6fbd49e0b879731a9a2ee6a22b62528f21958fe9cdc0d7cd5373222d81c7208b.
 - Commit ad13fb45 poussé : test sur écran 240 dp et police 1,5 vérifiant qu'après une réponse correcte l'action suivante est accessible sans balayage supplémentaire. Aucun changement de l'application ni nouvelle fonctionnalité ; diff hors journal : emulator_smoke.py +14/-0.
 - Environnement local indisponible : syntaxe Python, comparaison locale des rendus et contrôle indépendant de l'APK impossibles pour le moment. Compilation et parcours Android non encore confirmés. Aucun essai physique : confort mains/poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, vérifier signature et intégrité de l'APK ainsi que les six parcours ; corriger toute régression et conserver la version précédente.
 
 - CI 41174626093 : compilation, signature Android v2 et contrôle ZIP réussis ; APK 13031499183, SHA-256 CI 246d765531a683ff43f24eb41d3a30c411aeddff66263da3333be449e1dbac78. L'artefact est accessible par le connecteur, mais l'environnement local indisponible empêche une vérification indépendante du ZIP et du SHA-256. Six parcours Android en cours.
+
+- Bilan : CI 41174626093 entièrement réussie : compilation, signature v2, contrôle ZIP et six parcours sur émulateurs Android 10 et 15. Sur Android 10, écran 240 dp et police 1,5, le test vérifie la continuation sans balayage supplémentaire après une réponse correcte. Le confort des mains et du poignet ne peut être garanti sans essai sur téléphone physique.
+- APK 13031499183 signé ; SHA-256 calculé par la CI 246d765531a683ff43f24eb41d3a30c411aeddff66263da3333be449e1dbac78 ; artefact accessible par le connecteur. L'environnement local restant indisponible, ni l'archive ni l'APK n'ont pu être vérifiés indépendamment et les captures n'ont pu être comparées. L'APK 13030702965 précédent, indépendamment vérifié, reste disponible. Aucun test sur téléphone physique ni examen humain visuel ou sonore.
+- Diff final hors journal : emulator_smoke.py +14/-0 ; aucun code applicatif modifié. Syntaxe Python non vérifiée localement ; test exécuté sur émulateur CI. Commits poussés : ad13fb45, 70b542e4, 78261e42 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après validations possibles ; prochaine action : réessayer la vérification indépendante lorsque l'environnement local redevient disponible, préserver les versions validées, maintenir le gel et préparer la livraison.
+- PROJECT_STATE.md : +15/-0 pour cette session.
