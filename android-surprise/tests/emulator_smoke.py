@@ -460,6 +460,20 @@ try:
     adb("shell","input","tap",str((b[0]+b[2])//2),str((b[1]+b[3])//2))
     root=wait_dump()
     assert find_text(root,"MANCHE  2"), ("Large-text continuation failed",texts(root))
+    # A correct answer must also make the next action reachable without a swipe.
+    displayed=set(texts(root)) & bank
+    assert len(displayed)==1, ("Large-text second question missing",texts(root))
+    question=next(iter(displayed))
+    tap_text(root,correct_by_question[question])
+    root=wait_dump()
+    node=next((n for n in root.iter("node") if n.attrib.get("text")=="Continuer"),None)
+    assert node is not None, ("Large-text next action missing after success",texts(root))
+    b=list(map(int,re.findall(r"\d+",node.attrib["bounds"])))
+    assert len(b)==4 and b[2]-b[0]>=48 and b[3]-b[1]>=48, ("Large-text next target after success",b)
+    assert 50<=(b[1]+b[3])//2<=600, ("Large-text success needs a swipe",b)
+    adb("shell","input","tap",str((b[0]+b[2])//2),str((b[1]+b[3])//2))
+    root=wait_dump()
+    assert find_text(root,"MANCHE  3"), ("Large-text success continuation failed",texts(root))
 finally:
     adb("shell","wm","size","reset")
     adb("shell","wm","density","reset")
