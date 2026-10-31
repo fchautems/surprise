@@ -1070,3 +1070,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit 9df0b9ce poussé : test sur écran 240 dp et police 1,5 d'une erreur suivie d'une action de continuation accessible sans balayage supplémentaire. Aucun changement de l'application ni nouvelle fonctionnalité. Diff hors journal : emulator_smoke.py +15/-0.
 - Syntaxe Python vérifiée localement ; compilation et parcours Android non encore confirmés. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, vérifier signature, intégrité de l'APK et six parcours ; corriger toute régression et conserver la version précédente.
+
+- CI 41170696137 : compilation, signature Android v2 et ZIP réussis ; APK 13030702965 téléchargé, archive et APK intègres, SHA-256 6fbd49e0b879731a9a2ee6a22b62528f21958fe9cdc0d7cd5373222d81c7208b conforme à la CI ; six parcours Android en attente ou en cours.
