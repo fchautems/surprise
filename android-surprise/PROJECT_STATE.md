@@ -1015,3 +1015,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MemoryActivity.java +1/-1 ; memory_smoke.py +5/-1 ; total +6/-2. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : e3109d21, f88d954b, 3f7ba743 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
 - PROJECT_STATE.md : +16/-0 pour cette session.
+
+
+## Session du 31 octobre 2026, début 03:13:13 Europe/Zurich — en cours
+- Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base 02a4095b, CI 41157735663 entièrement réussie, APK 13024944626 signé et intègre, SHA-256 82b7ae0018186b168ec6d6aa5c50c9596bfe61418f84da2a7a0e96e6dc0a15d3.
+- Commit 3a030d23 poussé : contrôles de la hauteur et largeur d'une commande existante sur écran 240 dp, texte 1,3 et vérification supplémentaire d'une frappe proche du bord opposé d'une cible. Aucun changement de l'application ni nouvelle fonctionnalité ; diff hors journal : memory_smoke.py +10/-2.
+- Syntaxe Python vérifiée localement ; compilation et parcours Android de ce commit non encore confirmés. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la CI, contrôler la signature, l'intégrité de l'APK et les six parcours ; corriger toute régression de test et conserver la version précédente.
