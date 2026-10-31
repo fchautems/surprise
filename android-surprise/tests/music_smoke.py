@@ -338,6 +338,8 @@ try:
     assert len(controls)==3, ("Narrow challenge controls missing",texts(root))
     bounds={name:list(map(int,re.findall(r"\d+",node.attrib["bounds"]))) for name,node in controls.items()}
     assert all(v[2]-v[0]>=48 and v[3]-v[1]>=64 for v in bounds.values()), ("Narrow challenge target",bounds)
+    ordered=sorted(bounds.values(),key=lambda b:b[0])
+    assert all(b[0]-a[2]>=8 for a,b in zip(ordered,ordered[1:])), ("Challenge controls crowded",bounds)
     capture("music-small-challenge")
     tap(root,"Indice")
     root=dump()
