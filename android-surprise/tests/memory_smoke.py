@@ -40,7 +40,7 @@ def tap_text(root, label):
             assert len(b) == 4, node.attrib
             if 50 <= (b[1] + b[3]) // 2 <= (600 if attempt >= 2 else 560):
                 adb("shell", "input", "tap", str((b[0]+b[2])//2), str((b[1]+b[3])//2))
-                return
+                return b
             direction = ("160", "480", "160", "240") if (b[1] + b[3]) // 2 > 560 else ("160", "240", "160", "480")
         else:
             direction = ("160", "480", "160", "240")
@@ -517,13 +517,21 @@ try:
     root = wait_dump()
     root, node = card(root, 0)
     assert node.attrib["content-desc"] == before, "Narrow-screen rotation lost state"
-    tap_text(root, "Passer aux cartes escapade")
+    control = tap_text(root, "Passer aux cartes escapade")
+    assert control[2] - control[0] >= 48 and control[3] - control[1] >= 56, ("Narrow control target", control)
     dialog = wait_dump()
     assert find_text(dialog, "Changer les cartes"), texts(dialog)
     tap_text(dialog, "Continuer")
     root = wait_dump()
     root, node = card(root, 0)
     assert node.attrib["content-desc"] == before, "Cancel on narrow screen lost state"
+    root, second = card(root, 1)
+    edge = list(map(int, re.findall(r"\d+", second.attrib["bounds"])))
+    adb("shell", "input", "tap", str(edge[2] - 5), str(edge[3] - 5))
+    root = wait_dump()
+    root, second = card(root, 1)
+    desc = second.attrib["content-desc"]
+    assert "visible " in desc or "trouvée " in desc, "Opposite target edge was not registered"
 finally:
     adb("shell", "wm", "size", "reset")
     adb("shell", "wm", "density", "reset")
