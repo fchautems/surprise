@@ -1096,10 +1096,17 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +15/-0 pour cette session.
 
 
-## Session du 31 octobre 2026, début 08:05:21 Europe/Zurich — en cours
+## Session du 31 octobre 2026, 08:05:21–08:20:48 Europe/Zurich (15 min 27 s, validations comprises)
 - Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base d49258e6 ; CI 41174626093 et six parcours réussis. Environnement local rétabli : APK 13031499183 et son archive téléchargés, intégrité ZIP et SHA-256 246d765531a683ff43f24eb41d3a30c411aeddff66263da3333be449e1dbac78 vérifiés indépendamment.
 - Commit d81967bf poussé : test sur écran 240 dp et police 1,5 de l'espacement des commandes visibles et d'une frappe hors cible. Aucun changement de l'application ni nouvelle fonctionnalité. Diff hors journal : emulator_smoke.py +5/-0.
 - Syntaxe Python et intégrité de l'APK précédent vérifiées localement ; compilation et parcours Android de ce commit non encore confirmés. Aucun essai physique : confort mains/poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, vérifier signature, intégrité de l'APK et six parcours, comparer les rendus ; corriger toute régression et conserver la version précédente.
 
 - CI 41179235986 : compilation, signature Android v2 et ZIP réussis ; APK 13034342038 téléchargé, archive et APK intègres, SHA-256 0d8fa1efe4b5ccd5a3d793ab6797e0d5bee9ea9c668eea8e58dbd8982ac4a81f conforme à la CI ; six parcours Android en cours.
+
+- Bilan : CI 41179235986 entièrement réussie : compilation, signature v2 et six parcours sur émulateurs Android 10 et 15. Sur Android 10, écran 240 dp et police 1,5, le test vérifie qu'une frappe hors cible ne change pas d'écran et contrôle l'espacement des commandes entièrement visibles ; ce contrôle d'espacement est conditionnel au nombre de commandes visibles. Le confort des mains et du poignet ne peut être garanti sans essai sur téléphone physique.
+- APK 13034342038 signé ; archive et APK téléchargés intègres, SHA-256 0d8fa1efe4b5ccd5a3d793ab6797e0d5bee9ea9c668eea8e58dbd8982ac4a81f. L'APK précédent 13031499183 a également été vérifié indépendamment après rétablissement de l'environnement. Aucun essai physique ni examen humain visuel ou sonore.
+- Comparaison technique de captures à police 1,5 sur petit écran Android 10 : 240×640, 0,276 % de pixels différents, écart moyen 0,378/255 ; contenu et conditions peuvent varier. Aucun code d'interface changé ; ces mesures ne prouvent ni esthétique ni lisibilité humaine.
+- Diff final hors journal : emulator_smoke.py +5/-0 ; aucun code applicatif modifié. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : d81967bf, 923f9d5c, f9148ceb et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
+- PROJECT_STATE.md : +16/-0 pour cette session.
