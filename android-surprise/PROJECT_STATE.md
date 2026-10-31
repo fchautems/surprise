@@ -974,3 +974,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit 0f9a9d8e poussé : espacement de deux commandes porté de 6 à 8 dp, marges latérales réduites de 18 à 16 dp sur écran de moins de 300 dp afin de préserver des cibles de 48 dp ; ajout d'une assertion d'espacement sur écran 240 dp à police 1,3. Aucun nouveau mode, aucune refonte.
 - Syntaxe Python du test vérifiée localement ; CI 41148142484 déclenchée et en attente. Compilation, APK et tests Android de cette modification restent à confirmer. Aucun test sur téléphone physique ; confort non garanti sans essai réel. Modèle et effort inchangés, quota inconnu.
 - Prochaine action : suivre compilation et six parcours Android, vérifier signature et intégrité de l'APK, comparer les rendus disponibles ; garder la version précédente en cas de régression.
+
+- CI 41148142484 : compilation, signature v2 et contrôle ZIP réussis ; APK 13022340056 téléchargé, archive et APK intègres, SHA-256 30f954a3fc33e9425f189e67ed556ea0501165e3db1b4a03522daff6314fbcb7 conforme à la CI ; six parcours Android en attente ou en cours.
