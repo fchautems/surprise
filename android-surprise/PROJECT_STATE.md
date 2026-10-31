@@ -1065,10 +1065,17 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +16/-0 pour cette session.
 
 
-## Session du 31 octobre 2026, début 05:58:19 Europe/Zurich — en cours
+## Session du 31 octobre 2026, 05:58:19–06:12:23 Europe/Zurich (14 min 04 s, validations comprises)
 - Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base 5113cbcd, CI 41167103775 entièrement réussie, APK 13029273253 signé et intègre, SHA-256 8f51b825f4fecacec4139ddd1711c3d3030d3d0afffda41c5e9587d1732fabdf.
 - Commit 9df0b9ce poussé : test sur écran 240 dp et police 1,5 d'une erreur suivie d'une action de continuation accessible sans balayage supplémentaire. Aucun changement de l'application ni nouvelle fonctionnalité. Diff hors journal : emulator_smoke.py +15/-0.
 - Syntaxe Python vérifiée localement ; compilation et parcours Android non encore confirmés. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, vérifier signature, intégrité de l'APK et six parcours ; corriger toute régression et conserver la version précédente.
 
 - CI 41170696137 : compilation, signature Android v2 et ZIP réussis ; APK 13030702965 téléchargé, archive et APK intègres, SHA-256 6fbd49e0b879731a9a2ee6a22b62528f21958fe9cdc0d7cd5373222d81c7208b conforme à la CI ; six parcours Android en attente ou en cours.
+
+- Bilan : CI 41170696137 entièrement réussie : compilation, signature v2 et six parcours sur émulateurs Android 10 et 15. Sur Android 10, écran 240 dp et police 1,5, le test vérifie une reprise après erreur avec action suivante accessible sans balayage supplémentaire. Le confort des mains et du poignet ne peut être garanti sans essai sur téléphone physique.
+- APK 13030702965 signé ; archive et APK téléchargés intègres, SHA-256 6fbd49e0b879731a9a2ee6a22b62528f21958fe9cdc0d7cd5373222d81c7208b. Aucun test physique ni examen humain visuel ou sonore.
+- Comparaison technique de captures à police 1,5 sur petit écran Android 10 : 240×640, 0,163 % de pixels différents, écart moyen 0,171/255 ; contenu et conditions peuvent varier. Aucun code d'interface changé ; ces mesures ne prouvent ni esthétique ni lisibilité humaine.
+- Diff final hors journal : emulator_smoke.py +15/-0 ; aucun code applicatif modifié. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : 9df0b9ce, c14ce3c7, a69afac8 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
+- PROJECT_STATE.md : +16/-0 pour cette session.
