@@ -1101,3 +1101,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit d81967bf poussé : test sur écran 240 dp et police 1,5 de l'espacement des commandes visibles et d'une frappe hors cible. Aucun changement de l'application ni nouvelle fonctionnalité. Diff hors journal : emulator_smoke.py +5/-0.
 - Syntaxe Python et intégrité de l'APK précédent vérifiées localement ; compilation et parcours Android de ce commit non encore confirmés. Aucun essai physique : confort mains/poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, vérifier signature, intégrité de l'APK et six parcours, comparer les rendus ; corriger toute régression et conserver la version précédente.
+
+- CI 41179235986 : compilation, signature Android v2 et ZIP réussis ; APK 13034342038 téléchargé, archive et APK intègres, SHA-256 0d8fa1efe4b5ccd5a3d793ab6797e0d5bee9ea9c668eea8e58dbd8982ac4a81f conforme à la CI ; six parcours Android en cours.
