@@ -969,10 +969,17 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +16/-0 pour cette session.
 
 
-## Session du 31 octobre 2026, début 01:03:50 Europe/Zurich — en cours
+## Session du 31 octobre 2026, 01:03:50–01:18:57 Europe/Zurich (15 min 07 s, validations comprises)
 - Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base a9ad61ef, CI 41142585307 et six parcours réussis, APK 13018996650 signé et vérifié SHA-256 ef1b62c01672d9b112fb00c0c081370d2ee2171e1e412c9c4ac18fabd954b38d.
 - Commit 0f9a9d8e poussé : espacement de deux commandes porté de 6 à 8 dp, marges latérales réduites de 18 à 16 dp sur écran de moins de 300 dp afin de préserver des cibles de 48 dp ; ajout d'une assertion d'espacement sur écran 240 dp à police 1,3. Aucun nouveau mode, aucune refonte.
 - Syntaxe Python du test vérifiée localement ; CI 41148142484 déclenchée et en attente. Compilation, APK et tests Android de cette modification restent à confirmer. Aucun test sur téléphone physique ; confort non garanti sans essai réel. Modèle et effort inchangés, quota inconnu.
 - Prochaine action : suivre compilation et six parcours Android, vérifier signature et intégrité de l'APK, comparer les rendus disponibles ; garder la version précédente en cas de régression.
 
 - CI 41148142484 : compilation, signature v2 et contrôle ZIP réussis ; APK 13022340056 téléchargé, archive et APK intègres, SHA-256 30f954a3fc33e9425f189e67ed556ea0501165e3db1b4a03522daff6314fbcb7 conforme à la CI ; six parcours Android en attente ou en cours.
+
+- Bilan : CI 41148142484 entièrement réussie : compilation, signature v2 et six parcours sur émulateurs Android 10 et 15. Sur écran 240 dp avec texte 1,3, le test ciblé vérifie trois cibles d'au moins 48 dp de largeur et 64 dp de hauteur et leur espacement horizontal d'au moins 8 dp ; les parcours couvrent aussi des frappes à côté. Le confort des mains et du poignet ne peut être garanti sans essai sur téléphone physique.
+- APK 13022340056 signé ; archive et APK téléchargés intègres, SHA-256 30f954a3fc33e9425f189e67ed556ea0501165e3db1b4a03522daff6314fbcb7. Aucun test physique ni examen humain visuel ou sonore.
+- Comparaison technique de captures avant/après sur petit écran Android 10 : 240×640, 7,990 % de pixels différents, écart moyen 7,922/255 ; contenu et conditions peuvent varier. Ces mesures ne prouvent ni esthétique ni lisibilité humaine.
+- Diff final hors journal : MusicActivity.java +5/-4 ; music_smoke.py +2/-0 ; total +7/-4. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : 0f9a9d8e, 3c449038, 18512bcd et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
+- PROJECT_STATE.md : +16/-0 pour cette session.
