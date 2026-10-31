@@ -1038,3 +1038,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit 512e75e2 poussé : hauteur minimale de commandes existantes portée de 52 à 56 dp et vérification renforcée de leur taille sur écran 240 dp et texte 1,3. Aucune nouvelle fonctionnalité ni refonte. Diff hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +1/-1 ; total +2/-2.
 - Syntaxe Python vérifiée localement ; compilation, APK et tests Android de cette modification restent à confirmer. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, vérifier la signature, l'intégrité de l'APK et les six parcours, comparer les rendus ; préserver la version précédente en cas de régression.
+
+- CI 41162762487 : compilation, signature Android v2 et ZIP réussis ; APK 13028012222 téléchargé, archive et APK intègres, SHA-256 b5635467c361b4d730104773dbd650191ba0a41cc6c39cca976412f1cdbe35b0 conforme à la CI ; six parcours Android en cours.
