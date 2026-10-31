@@ -396,7 +396,7 @@ try:
         if len(b)==4 and b[1]>=50 and b[3]<=600:
             visible.append(b)
     assert len(visible)>=2, ("Compact actions missing",texts(root))
-    assert all(b[2]-b[0]>=48 and b[3]-b[1]>=48 for b in visible), ("Compact targets too small",visible)
+    assert all(b[2]-b[0]>=48 and b[3]-b[1]>=56 for b in visible), ("Compact targets too small",visible)
     visible.sort(key=lambda b:b[1])
     assert all(b[1]-a[3]>=8 for a,b in zip(visible,visible[1:])), ("Compact targets crowded",visible)
     # A tap outside the actions should not start or change a screen.

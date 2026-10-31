@@ -299,7 +299,7 @@ public class MainActivity extends Activity {
     private Button makeMenuButton(String text){
         Button b=new Button(this); b.setText(text); b.setAllCaps(false); b.setTextSize(16);
         b.setTextColor(WHITE); b.setBackgroundTintList(null); b.setBackground(touch(shape(CARD,dp(16))));
-        b.setMinHeight(dp(52)); LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);
+        b.setMinHeight(dp(56)); LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);
         lp.setMargins(0,dp(5),0,dp(5)); b.setLayoutParams(lp); return b;
     }
     private void showThemes(){
