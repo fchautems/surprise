@@ -967,3 +967,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MainActivity.java +3/-1 ; music_smoke.py +5/-0 ; test_palette.py +6/-0 ; total +14/-1. Contrôles locaux : quatre tests de contraste, syntaxe Python, ZIP et SHA-256 ; compilation CI, signature, six parcours Android et comparaison technique de captures. Commits poussés : dc790a7c, 4951525b, 2d1a4e2e et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Session achevée après les validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel, privilégier les finitions prudentes et préparer la livraison.
 - PROJECT_STATE.md : +16/-0 pour cette session.
+
+
+## Session du 31 octobre 2026, début 01:03:50 Europe/Zurich — en cours
+- Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base a9ad61ef, CI 41142585307 et six parcours réussis, APK 13018996650 signé et vérifié SHA-256 ef1b62c01672d9b112fb00c0c081370d2ee2171e1e412c9c4ac18fabd954b38d.
+- Commit 0f9a9d8e poussé : espacement de deux commandes porté de 6 à 8 dp, marges latérales réduites de 18 à 16 dp sur écran de moins de 300 dp afin de préserver des cibles de 48 dp ; ajout d'une assertion d'espacement sur écran 240 dp à police 1,3. Aucun nouveau mode, aucune refonte.
+- Syntaxe Python du test vérifiée localement ; CI 41148142484 déclenchée et en attente. Compilation, APK et tests Android de cette modification restent à confirmer. Aucun test sur téléphone physique ; confort non garanti sans essai réel. Modèle et effort inchangés, quota inconnu.
+- Prochaine action : suivre compilation et six parcours Android, vérifier signature et intégrité de l'APK, comparer les rendus disponibles ; garder la version précédente en cas de régression.
