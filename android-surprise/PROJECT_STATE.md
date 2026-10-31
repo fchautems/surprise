@@ -1047,3 +1047,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +1/-1 ; total +2/-2. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : 512e75e2, 3dcead66, c2b1a729 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
 - PROJECT_STATE.md : +16/-0 pour cette session.
+
+
+## Session du 31 octobre 2026, début 05:05:01 Europe/Zurich — en cours
+- Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base 3df926d5, CI 41162762487 entièrement réussie, APK 13028012222 signé et intègre, SHA-256 b5635467c361b4d730104773dbd650191ba0a41cc6c39cca976412f1cdbe35b0.
+- Commit 82b464a6 poussé : extension du test sur écran 240 dp à une police système 1,5, vérifiant les commandes visibles et l'entrée dans le parcours principal. Aucun changement de l'application ni nouvelle fonctionnalité. Diff hors journal : emulator_smoke.py +19/-0.
+- Syntaxe Python vérifiée localement ; compilation et parcours Android non encore confirmés. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la CI, vérifier la signature, l'intégrité de l'APK et les six parcours ; corriger toute régression et conserver la version précédente.
