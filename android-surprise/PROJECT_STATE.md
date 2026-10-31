@@ -1001,10 +1001,17 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +16/-0 pour cette session.
 
 
-## Session du 31 octobre 2026, début 02:56:40 Europe/Zurich — en cours
+## Session du 31 octobre 2026, 02:56:40–03:11:06 Europe/Zurich (14 min 26 s, validations comprises)
 - Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base b13d6200, CI 41152896251 réussie sur six parcours, APK 13024120111 signé et intègre, SHA-256 9f72ce13bcf37621b93d4ddceefd1b232a4b8c2a41ec13edb1a7850741da4b38.
 - Commit e3109d21 poussé : hauteur minimale de commandes existantes portée de 52 à 56 dp ; test d'une frappe près du bord d'une cible sur écran 240 dp et texte 1,3. Aucune nouvelle fonctionnalité ni refonte. Diff hors journal : MemoryActivity.java +1/-1 ; memory_smoke.py +5/-1 ; total +6/-2.
 - Syntaxe Python vérifiée localement ; compilation, APK et tests Android de cette modification non encore confirmés. Aucun test sur téléphone physique : confort non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la compilation et les six parcours, vérifier signature et intégrité de l'APK et comparer les rendus ; préserver la version précédente en cas de régression.
 
 - CI 41157735663 : compilation, signature Android v2 et ZIP réussis ; APK 13024944626 téléchargé, archive et APK intègres, SHA-256 82b7ae0018186b168ec6d6aa5c50c9596bfe61418f84da2a7a0e96e6dc0a15d3 conforme à la CI ; six parcours Android en attente ou en cours.
+
+- Bilan : CI 41157735663 entièrement réussie : compilation, signature v2 et six parcours sur émulateurs Android 10 et 15. Sur écran 240 dp et texte 1,3, les tests vérifient les dimensions et espacements des cibles, une frappe hors cible et une frappe à 4 dp du bord d'une cible, qui est bien enregistrée. Le confort des mains et du poignet ne peut être garanti sans essai sur téléphone physique.
+- APK 13024944626 signé ; archive et APK téléchargés intègres, SHA-256 82b7ae0018186b168ec6d6aa5c50c9596bfe61418f84da2a7a0e96e6dc0a15d3. Aucun test physique ni examen humain visuel ou sonore.
+- Comparaison technique de captures sur petit écran Android 10 : 240×640, 1,037 % de pixels différents, écart moyen 0,505/255 ; contenu et conditions peuvent varier. Ces mesures ne prouvent ni esthétique ni lisibilité humaine.
+- Diff final hors journal : MemoryActivity.java +1/-1 ; memory_smoke.py +5/-1 ; total +6/-2. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : e3109d21, f88d954b, 3f7ba743 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
+- PROJECT_STATE.md : +16/-0 pour cette session.
