@@ -426,6 +426,25 @@ try:
     adb("shell","input","swipe","120","180","120","550","300")
     root=wait_dump()
     assert find_text(root,"MANCHE  2"), ("Compact continuation failed",texts(root))
+    # Recheck the most common entry path with even larger system text.
+    adb("shell","settings","put","system","font_scale","1.5")
+    adb("shell","am","force-stop","ch.fred.surprise")
+    adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+    root=wait_dump()
+    assert find_text(root,"BIENVENUE"), ("Large-text welcome missing",texts(root))
+    visible_large=[]
+    for node in root.iter("node"):
+        if node.attrib.get("class")!="android.widget.Button" or node.attrib.get("enabled")!="true":
+            continue
+        b=list(map(int,re.findall(r"\d+",node.attrib.get("bounds",""))))
+        if len(b)==4 and b[1]>=50 and b[3]<=600:
+            visible_large.append(b)
+    assert visible_large, ("Large-text actions missing",texts(root))
+    assert all(b[2]-b[0]>=48 and b[3]-b[1]>=56 for b in visible_large), ("Large-text targets too small",visible_large)
+    capture("accueil-police-tres-grande")
+    tap_text(root,"C’est parti")
+    root=wait_dump()
+    assert find_text(root,"MANCHE  1"), ("Large-text entry failed",texts(root))
 finally:
     adb("shell","wm","size","reset")
     adb("shell","wm","density","reset")
