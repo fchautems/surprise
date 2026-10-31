@@ -1031,3 +1031,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : memory_smoke.py +10/-2 ; aucun code applicatif modifié. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : 3a030d23, 0904a1f4, 455bc550 et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Session achevée après les validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
 - PROJECT_STATE.md : +16/-0 pour cette session.
+
+
+## Session du 31 octobre 2026, début 04:03:55 Europe/Zurich — en cours
+- Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base 918debd3, CI 41159016160 entièrement réussie, APK 13026680493 signé et intègre, SHA-256 80f0b89b73aad8a22e2d3e35e864195600780142f6d455528608b31d887f390d.
+- Commit 512e75e2 poussé : hauteur minimale de commandes existantes portée de 52 à 56 dp et vérification renforcée de leur taille sur écran 240 dp et texte 1,3. Aucune nouvelle fonctionnalité ni refonte. Diff hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +1/-1 ; total +2/-2.
+- Syntaxe Python vérifiée localement ; compilation, APK et tests Android de cette modification restent à confirmer. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
+- Prochaine action : suivre la CI, vérifier la signature, l'intégrité de l'APK et les six parcours, comparer les rendus ; préserver la version précédente en cas de régression.
