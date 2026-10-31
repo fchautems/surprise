@@ -504,9 +504,13 @@ try:
     root, first=card(root,0)
     assert first.attrib["content-desc"]==before_outside, "Outside tap selected a card"
     capture("memory-small")
-    root = tap_card(root, 0)
+    root, node = card(root, 0)
+    edge = list(map(int, re.findall(r"\d+", node.attrib["bounds"])))
+    adb("shell", "input", "tap", str(edge[0] + 4), str(edge[1] + 4))
+    root = wait_dump()
     root, node = card(root, 0)
     before = node.attrib["content-desc"]
+    assert "visible " in before, "Touch near target edge was not registered"
     adb("shell", "settings", "put", "system", "user_rotation", "1")
     wait_dump()
     adb("shell", "settings", "put", "system", "user_rotation", "0")

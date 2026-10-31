@@ -57,7 +57,7 @@ public final class MemoryActivity extends Activity {
     private Button button(String text){
         Button b=new Button(this); b.setText(text); b.setAllCaps(false);
         b.setTextColor(WHITE); b.setTextSize(16); b.setBackgroundTintList(null);
-        b.setBackground(touch(shape(CARD,GOLD))); b.setMinHeight(dp(52)); return b;
+        b.setBackground(touch(shape(CARD,GOLD))); b.setMinHeight(dp(56)); return b;
     }
     private void newGame(){
         boolean[] previous=new boolean[SYMBOLS.length]; int distinct=0;
