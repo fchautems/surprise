@@ -1033,10 +1033,17 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - PROJECT_STATE.md : +16/-0 pour cette session.
 
 
-## Session du 31 octobre 2026, début 04:03:55 Europe/Zurich — en cours
+## Session du 31 octobre 2026, 04:03:55–04:18:26 Europe/Zurich (14 min 31 s, validations comprises)
 - Gel des fonctionnalités maintenu depuis le 30 au soir ; priorité confort mains et poignet. Base 918debd3, CI 41159016160 entièrement réussie, APK 13026680493 signé et intègre, SHA-256 80f0b89b73aad8a22e2d3e35e864195600780142f6d455528608b31d887f390d.
 - Commit 512e75e2 poussé : hauteur minimale de commandes existantes portée de 52 à 56 dp et vérification renforcée de leur taille sur écran 240 dp et texte 1,3. Aucune nouvelle fonctionnalité ni refonte. Diff hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +1/-1 ; total +2/-2.
 - Syntaxe Python vérifiée localement ; compilation, APK et tests Android de cette modification restent à confirmer. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, vérifier la signature, l'intégrité de l'APK et les six parcours, comparer les rendus ; préserver la version précédente en cas de régression.
 
 - CI 41162762487 : compilation, signature Android v2 et ZIP réussis ; APK 13028012222 téléchargé, archive et APK intègres, SHA-256 b5635467c361b4d730104773dbd650191ba0a41cc6c39cca976412f1cdbe35b0 conforme à la CI ; six parcours Android en cours.
+
+- Bilan : CI 41162762487 entièrement réussie : compilation, signature v2 et six parcours sur émulateurs Android 10 et 15. Sur écran 240 dp avec texte 1,3, le test vérifie que les commandes visibles ont au moins 48×56 dp et 8 dp d'espacement, ainsi que le comportement après une frappe hors cible. Le confort des mains et du poignet ne peut être garanti sans essai sur téléphone physique.
+- APK 13028012222 signé ; archive et APK téléchargés intègres, SHA-256 b5635467c361b4d730104773dbd650191ba0a41cc6c39cca976412f1cdbe35b0. Aucun test physique ni examen humain visuel ou sonore.
+- Comparaison technique de captures sur petit écran Android 10 : 240×640, 19,965 % de pixels différents, écart moyen 7,731/255 ; contenu et conditions peuvent varier. Ces mesures ne prouvent ni esthétique ni lisibilité humaine.
+- Diff final hors journal : MainActivity.java +1/-1 ; emulator_smoke.py +1/-1 ; total +2/-2. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : 512e75e2, 3dcead66, c2b1a729 et ce bilan. Modèle et effort inchangés ; quota inconnu.
+- Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
+- PROJECT_STATE.md : +16/-0 pour cette session.
