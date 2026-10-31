@@ -1006,3 +1006,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit e3109d21 poussé : hauteur minimale de commandes existantes portée de 52 à 56 dp ; test d'une frappe près du bord d'une cible sur écran 240 dp et texte 1,3. Aucune nouvelle fonctionnalité ni refonte. Diff hors journal : MemoryActivity.java +1/-1 ; memory_smoke.py +5/-1 ; total +6/-2.
 - Syntaxe Python vérifiée localement ; compilation, APK et tests Android de cette modification non encore confirmés. Aucun test sur téléphone physique : confort non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la compilation et les six parcours, vérifier signature et intégrité de l'APK et comparer les rendus ; préserver la version précédente en cas de régression.
+
+- CI 41157735663 : compilation, signature Android v2 et ZIP réussis ; APK 13024944626 téléchargé, archive et APK intègres, SHA-256 82b7ae0018186b168ec6d6aa5c50c9596bfe61418f84da2a7a0e96e6dc0a15d3 conforme à la CI ; six parcours Android en attente ou en cours.
