@@ -1022,3 +1022,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit 3a030d23 poussé : contrôles de la hauteur et largeur d'une commande existante sur écran 240 dp, texte 1,3 et vérification supplémentaire d'une frappe proche du bord opposé d'une cible. Aucun changement de l'application ni nouvelle fonctionnalité ; diff hors journal : memory_smoke.py +10/-2.
 - Syntaxe Python vérifiée localement ; compilation et parcours Android de ce commit non encore confirmés. Aucun essai physique : confort des mains et du poignet non garanti sans essai réel. Modèle et effort inchangés ; quota inconnu.
 - Prochaine action : suivre la CI, contrôler la signature, l'intégrité de l'APK et les six parcours ; corriger toute régression de test et conserver la version précédente.
+
+- CI 41159016160 : compilation, signature Android v2 et ZIP réussis ; APK 13026680493 téléchargé, archive et APK intègres, SHA-256 80f0b89b73aad8a22e2d3e35e864195600780142f6d455528608b31d887f390d conforme à la CI ; six parcours Android en attente ou en cours.
