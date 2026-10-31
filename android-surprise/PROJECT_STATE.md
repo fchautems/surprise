@@ -990,3 +990,5 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Commit 28cff3aa poussé : clarification des libellés d'une commande existante qui désignaient la prochaine option sans expliciter le changement ; test d'annulation après rotation sur écran 240 dp et texte 1,3. Diff hors journal : MemoryActivity.java +1/-1 ; memory_smoke.py +12/-5 ; total +13/-6. Aucune fonctionnalité nouvelle ni refonte.
 - Syntaxe Python vérifiée localement ; compilation et validations Android pour ce commit à confirmer. Aucun essai sur téléphone physique ; le confort ne peut être garanti sans cet essai. Modèle et effort inchangés, quota inconnu.
 - Prochaine action : suivre la CI, vérifier la signature et l'intégrité de l'APK et les six parcours, comparer les rendus et revenir à la version précédente si régression.
+
+- CI 41152896251 : compilation, signature Android v2 et ZIP réussis ; APK 13024120111 téléchargé, archive et APK intègres, SHA-256 9f72ce13bcf37621b93d4ddceefd1b232a4b8c2a41ec13edb1a7850741da4b38 conforme à la CI ; six parcours Android en attente ou en cours.
