@@ -1110,3 +1110,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Diff final hors journal : emulator_smoke.py +5/-0 ; aucun code applicatif modifié. Tests locaux : syntaxe Python, ZIP et SHA-256 ; CI : compilation, signature et six parcours Android. Commits poussés : d81967bf, 923f9d5c, f9148ceb et ce bilan. Modèle et effort inchangés ; quota inconnu.
 - Session achevée après validations utiles, sans attente artificielle ; prochaine action : préserver la version validée, maintenir le gel et préparer la livraison.
 - PROJECT_STATE.md : +16/-0 pour cette session.
+
+
+## 1 novembre 2026 — refus d'installation sur Pixel 9 Android 17
+- État vérifié : l'APK précédent (SHA-256 0d8fa1efe4b5ccd5a3d793ab6797e0d5bee9ea9c668eea8e58dbd8982ac4a81f) est intègre, mais l'installation physique échoue avec le message générique « L'appli n'a pas été installée » ; autorisation de source inconnue sans effet. Aucun diagnostic ADB disponible, conformément à l'exigence sans PC.
+- Changement : compileSdk/targetSdk 36, versionCode 2, versionName 0.2 pour produire un nouveau paquet et éliminer une incompatibilité éventuelle de ciblage ; la cause exacte n'est pas prouvée.
+- Contrôles : nouvelle compilation CI déclenchée par modification Gradle, résultat et test Android 17 encore inconnus. Ne pas déclarer la correction validée avant installation physique.
+- Blocage : aucun appareil Android 17 accessible pour tester ; pas de PC côté utilisateur.
+- Prochaine action : vérifier CI et signature, récupérer le nouvel APK, puis demander uniquement l'essai d'installation directe sur téléphone.
