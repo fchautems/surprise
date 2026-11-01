@@ -193,7 +193,7 @@ displayed = set(texts(replay)) & bank
 assert len(displayed) == 1 and not (displayed & seen), ("repeated across games", displayed)
 # Inspect disposable emulator preferences to confirm both full rounds persist.
 adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
-prefs = ET.fromstring(adb("shell", "run-as", "ch.fred.surprise.anniversaire2026", "cat", "shared_prefs/MainActivity.xml"))
+prefs = ET.fromstring(adb("shell", "run-as", "ch.fred.surprise.anniversaire2026", "cat", "shared_prefs/ch.fred.surprise.MainActivity.xml"))
 def ids_for(name):
     node = next((n for n in prefs if n.tag == "set" and n.attrib.get("name") == name), None)
     assert node is not None, ("Missing history",name)

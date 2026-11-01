@@ -253,12 +253,12 @@ jobs:
           manager="$(find "${ANDROID_HOME:?}/cmdline-tools" -type f -name sdkmanager | head -n 1)"
           test -x "$manager"
           "$manager" --list --channel=3 | grep -E 'platforms;android-37|system-images;android-37' || true
-          yes | "$manager" --channel=3 --install 'platforms;android-37' 'system-images;android-37;google_apis;x86_64' || test "${PIPESTATUS[1]}" -eq 0
+          yes | "$manager" --channel=3 --install 'platforms;android-37.0' 'system-images;android-37.0;google_apis;x86_64' || test "${PIPESTATUS[1]}" -eq 0
       - name: Attempt installation on Android 17 emulator
         timeout-minutes: 25
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 37
+          api-level: '37.0'
           arch: x86_64
           target: google_apis
           channel: canary

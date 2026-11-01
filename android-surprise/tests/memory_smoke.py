@@ -539,7 +539,7 @@ finally:
 # Simulate an older installation: it has a move record but no streak record.
 # Only the disposable emulator's private debug preferences are edited.
 adb("shell","am","force-stop","ch.fred.surprise.anniversaire2026")
-prefs_path="shared_prefs/MemoryActivity.xml"
+prefs_path="shared_prefs/ch.fred.surprise.MemoryActivity.xml"
 prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise.anniversaire2026","cat",prefs_path))
 old_streak=next((n for n in prefs if n.attrib.get("name")=="streak_4"),None)
 assert old_streak is not None and any(n.attrib.get("name")=="best" for n in prefs), "Legacy fixture missing records"
