@@ -1,0 +1,66 @@
+name: Android minimal installation diagnostic
+on:
+  push:
+    branches: [anniversaire-2026]
+    paths: ['android-minimal/**', '.github/workflows/android-minimal.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android-minimal
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Build APK
+        run: gradle --no-daemon assembleDebug
+      - name: Verify APK signature and integrity
+        run: |
+          set -euo pipefail
+          apk=app/build/outputs/apk/debug/app-debug.apk
+          signer="$(find "${ANDROID_HOME:?}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          "$signer" verify --verbose --print-certs "$apk"
+          unzip -t "$apk"
+          sha256sum "$apk"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: minimal-diagnostic-apk
+          path: android-minimal/app/build/outputs/apk/debug/app-debug.apk
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: anniversaire-2026
+      - uses: actions/download-artifact@v4
+        with:
+          name: minimal-diagnostic-apk
+          path: android-minimal/app/build/outputs/apk/debug
+      - name: Publish test APK
+        run: |
+          set -euo pipefail
+          apk=android-minimal/app/build/outputs/apk/debug/app-debug.apk
+          signer="$(find "${ANDROID_HOME:?}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          "$signer" verify "$apk"
+          unzip -t "$apk"
+          mkdir -p dist
+          cp "$apk" dist/surprise-install-test.apk
+          (cd dist && sha256sum surprise-install-test.apk > surprise-install-test.sha256)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f dist/surprise-install-test.apk dist/surprise-install-test.sha256
+          git commit -m "Publish minimal diagnostic APK"
+          git pull --rebase origin anniversaire-2026
+          git push origin HEAD:anniversaire-2026
