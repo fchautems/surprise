@@ -1189,3 +1189,8 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Workflow `.github/workflows/android-minimal.yml` : compilation Gradle, vérification de signature et intégrité ZIP, publication conditionnelle vers `dist/surprise-install-test.apk` avec SHA-256.
 - Contrôles : fichiers poussés, CI et publication pas encore confirmées. Aucun test sur Pixel 9. Ne pas présenter de lien de téléchargement tant que le fichier n'est pas vérifié.
 - Prochaine action : suivre la CI, confirmer signature/empreinte, livrer l'APK minimal pour un essai unique sur téléphone. Si l'installation réussit, comparer les APK minimal et Surprise pour isoler la cause.
+
+### 1 novembre 2026 — Correction configuration test minimal
+- Correctif commit `0806e4f1dd2509dd0f4e03930be3e18c3840f351` : version du plugin Android Gradle 8.7.3 déclarée directement dans `android-minimal/app/build.gradle`, résolvant la configuration manquante du projet.
+- Contrôle : aucune exécution CI associée au commit n'a été retournée ; `dist/surprise-install-test.sha256` absent à la vérification. APK minimal non publié et non vérifié.
+- Blocage : déclenchement/exécution GitHub Actions non confirmé. Prochaine action : diagnostiquer le déclenchement de workflow et produire une APK vérifiée avant partage.
