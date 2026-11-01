@@ -53,9 +53,9 @@ def tap_text(root, label):
 def find_text(root, fragment):
     return next((v for v in texts(root) if fragment in v), None)
 
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "pm", "clear", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "pm", "clear", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root = wait_dump()
 assert find_text(root, "BIENVENUE"), texts(root)
 capture("accueil")
@@ -192,8 +192,8 @@ assert find_text(replay, "MANCHE  1"), "Replay failed"
 displayed = set(texts(replay)) & bank
 assert len(displayed) == 1 and not (displayed & seen), ("repeated across games", displayed)
 # Inspect disposable emulator preferences to confirm both full rounds persist.
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-prefs = ET.fromstring(adb("shell", "run-as", "ch.fred.surprise", "cat", "shared_prefs/MainActivity.xml"))
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+prefs = ET.fromstring(adb("shell", "run-as", "ch.fred.surprise.anniversaire2026", "cat", "shared_prefs/MainActivity.xml"))
 def ids_for(name):
     node = next((n for n in prefs if n.tag == "set" and n.attrib.get("name") == name), None)
     assert node is not None, ("Missing history",name)
@@ -204,13 +204,13 @@ assert len(last_ids)==len(earlier_ids)==8 and not (last_ids & earlier_ids), (las
 assert {ordered_questions[i] for i in earlier_ids} == seen, "Earlier round not saved"
 past_two = {ordered_questions[i] for i in last_ids | earlier_ids}
 
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root = wait_dump()
 assert find_text(root, "Parties : 2"), texts(root)
 # Repeat entry navigation with larger system text; scrolling must remain usable.
 adb("shell", "settings", "put", "system", "font_scale", "1.3")
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root = wait_dump()
 assert find_text(root, "BIENVENUE"), texts(root)
 tap_text(root, "C’est parti")
@@ -227,8 +227,8 @@ adb("shell", "input", "swipe", "160", "180", "160", "550", "300")
 root = wait_dump()
 assert find_text(root, "MANCHE  2"), ("Large-font continuation failed", texts(root))
 adb("shell", "settings", "put", "system", "font_scale", "1.0")
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root = wait_dump()
 tap_text(root, "Choisir un thème")
 root = wait_dump()
@@ -246,8 +246,8 @@ category_bank = {}
 for match in re.finditer(r'\{"([^"]+)","([^"]+)","[^"]+","[^"]+","[^"]+","[^"]+"\}', source):
     category_bank.setdefault(match.group(1), set()).add(match.group(2))
 for theme in ("MUSIQUE", "CUISINE", "VOYAGE", "CIEL", "ALLEMAND", "TEMPS", "CRYPTO"):
-    adb("shell", "am", "force-stop", "ch.fred.surprise")
-    adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+    adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+    adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
     tap_text(wait_dump(), "Choisir un thème")
     tap_text(wait_dump(), theme)
     root = wait_dump()
@@ -327,8 +327,8 @@ dialog = wait_dump()
 assert find_text(dialog, "CRYPTO  ·  110 points"), texts(dialog)
 assert find_text(dialog, "À découvrir"), texts(dialog)
 tap_text(dialog, "Fermer")
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 tap_text(wait_dump(), "Mes records")
 dialog = wait_dump()
 assert find_text(dialog, "CRYPTO  ·  110 points"), "Thematic record lost after restart"
@@ -375,16 +375,16 @@ adb("shell", "input", "keyevent", "4")
 tap_text(wait_dump(), "Quitter")
 root = wait_dump()
 assert find_text(root, "Défi du jour · record 130"), texts(root)
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 assert find_text(wait_dump(), "Défi du jour · record 130"), "Daily record lost on restart"
 # Compact display and enlarged font: entry, answers, and continuation remain usable.
 try:
     adb("shell", "wm", "size", "240x640")
     adb("shell", "wm", "density", "160")
     adb("shell", "settings", "put", "system", "font_scale", "1.3")
-    adb("shell", "am", "force-stop", "ch.fred.surprise")
-    adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+    adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+    adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
     root=wait_dump()
     assert find_text(root,"BIENVENUE"), ("Compact welcome missing",texts(root))
     # Fully visible actions must be comfortably sized and separated.
@@ -428,8 +428,8 @@ try:
     assert find_text(root,"MANCHE  2"), ("Compact continuation failed",texts(root))
     # Recheck the most common entry path with even larger system text.
     adb("shell","settings","put","system","font_scale","1.5")
-    adb("shell","am","force-stop","ch.fred.surprise")
-    adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+    adb("shell","am","force-stop","ch.fred.surprise.anniversaire2026")
+    adb("shell","am","start","-n","ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
     root=wait_dump()
     assert find_text(root,"BIENVENUE"), ("Large-text welcome missing",texts(root))
     visible_large=[]
