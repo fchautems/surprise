@@ -1118,3 +1118,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles : nouvelle compilation CI déclenchée par modification Gradle, résultat et test Android 17 encore inconnus. Ne pas déclarer la correction validée avant installation physique.
 - Blocage : aucun appareil Android 17 accessible pour tester ; pas de PC côté utilisateur.
 - Prochaine action : vérifier CI et signature, récupérer le nouvel APK, puis demander uniquement l'essai d'installation directe sur téléphone.
+
+### Suivi du 1 novembre 2026, 07:33 Europe/Zurich
+- État vérifié : dépôt public et branche anniversaire-2026 accessibles, `build.gradle` à compileSdk 36 / targetSdk 36 / versionCode 2. Aucune preuve d'installation sur Pixel 9 Android 17.
+- Changement poussé (commit a5134ff6) : la CI tente aussi un émulateur Android 17/API 37 (non bloquant si SDK indisponible) ; après réussite de la compilation, de la signature et des six parcours habituels, elle publiera automatiquement `dist/surprise-anniversaire-v2.apk` et son SHA-256 sur la branche, pour téléchargement direct sur téléphone sans PC.
+- Contrôles : syntaxe du nouveau workflow non encore exécutée par CI ; anciens contrôles Android 10/15 validés sur APK v1 uniquement. Le workflow nouvellement poussé doit être suivi jusqu'au résultat et l'APK v2 contrôlé indépendamment.
+- Blocages : pas d'accès aux logs de nouvelles exécutions GitHub Actions via les fonctions de liste disponibles ; aucun appareil Pixel 9 Android 17 pour test physique. Les restrictions de sideloading Android/Play Protect pourraient empêcher l'installation même d'un APK valide.
+- Prochaine action : vérifier apparition de `dist/surprise-anniversaire-v2.apk` et de son empreinte, puis contrôler l'APK livré. Ne prévenir l'utilisateur que si un fichier corrigé concret et vérifié est accessible, en distinguant ce contrôle de l'installation réelle sur Pixel 9.
