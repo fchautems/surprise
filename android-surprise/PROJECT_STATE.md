@@ -1152,3 +1152,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôles ajoutés : signature APK vérifiée avec `apksigner --min-sdk-version 37` ; CI Android 16 doit passer avant publication de v3 ; Android 17 reste non bloquant si SDK indisponible.
 - Blocages : pas de cause confirmée du refus Play Protect / installateur sur le Pixel, et aucune preuve d'installation réelle sur Android 17. Ne pas notifier d'APK corrigé tant que la cause n'est pas identifiée.
 - Prochaine action : vérifier la CI, corriger les régressions éventuelles, puis documenter les résultats et préparer une méthode de distribution autorisée si le Pixel bloque toute installation hors Play Store.
+
+### Suivi CI v3 — 1 novembre 2026, 09:05 Europe/Zurich
+- Commit 3ed29a4ad6fb471d928130d877a8115ea2481510 : CI 41287058939, compilation et vérification de signature pour minSdk 37 **réussies**. Les parcours Android 10/15/16 sont encore en cours au moment de ce relevé ; APK v3 pas encore publié ni validé en installation sur Pixel.
+- Android 17 canary : échec de préparation du SDK. Le pré-step `sdkmanager --channel=3` ne s'exécute pas (`sdkmanager: command not found` dans le PATH du job) ; l'action émulateur tente ensuite `platforms;android-37` sur canal stable et échoue. Aucun émulateur Android 17 n'a démarré ; aucune conclusion sur l'installation Android 17.
+- Correctif de navigation arrière compilé ; succès fonctionnel à confirmer par le parcours Android 16. La compatibilité de signature cryptographique API37 ne suffit pas à prouver l'installation réelle sur Pixel 9.
+- Prochaine action : récupérer les résultats de tous les jobs, ajuster l'appel sdkmanager via son chemin absolu si possible, ne publier une version présentée comme réparée qu'après diagnostic réel du refus sur Pixel.
