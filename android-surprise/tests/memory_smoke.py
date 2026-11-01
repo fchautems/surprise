@@ -54,9 +54,9 @@ def find_text(root, fragment):
 def description(root, text):
     return any(n.attrib.get("content-desc", "") == text for n in root.iter("node"))
 
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "pm", "clear", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "pm", "clear", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 # A separate matching game: discover every card, rotate, then solve the board.
 def open_memory():
     root = wait_dump()
@@ -130,8 +130,8 @@ assert node.attrib["content-desc"] == nature_desc, "Third visual set lost on rot
 tap_text(root, "Passer aux cartes étoiles")
 dialog = wait_dump()
 tap_text(dialog, "Continuer")
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root = open_memory()
 tap_text(root, "Passer aux cartes étoiles")
 root = wait_dump()
@@ -283,8 +283,8 @@ for _ in range(3):
     adb("shell", "input", "swipe", "160", "200", "160", "520", "300")
     root = wait_dump()
 assert find_text(root, "BIENVENUE"), ("Memory return failed", texts(root))
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root = open_memory()
 assert find_text(root, "Record : " + record), "Memory record lost after restart"
 series_text=find_text(root,"Série record : ")
@@ -472,8 +472,8 @@ tap_text(root, "Mode : 4 paires")
 dialog = wait_dump()
 assert find_text(dialog, "Changer de défi"), texts(dialog)
 tap_text(dialog, "Continuer")
-adb("shell", "am", "force-stop", "ch.fred.surprise")
-adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root = open_memory()
 assert find_text(root, "0 / 10 paires") and find_text(root, "Record : " + record10), ("Difficulty lost after restart", texts(root))
 tap_text(root, "Mode : 4 paires")
@@ -484,8 +484,8 @@ try:
     adb("shell", "wm", "size", "240x640")
     adb("shell", "wm", "density", "160")
     adb("shell", "settings", "put", "system", "font_scale", "1.3")
-    adb("shell", "am", "force-stop", "ch.fred.surprise")
-    adb("shell", "am", "start", "-n", "ch.fred.surprise/.MainActivity")
+    adb("shell", "am", "force-stop", "ch.fred.surprise.anniversaire2026")
+    adb("shell", "am", "start", "-n", "ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
     root = open_memory()
     positions = []
     for index in range(4):
@@ -538,33 +538,33 @@ finally:
     adb("shell", "settings", "delete", "system", "font_scale")
 # Simulate an older installation: it has a move record but no streak record.
 # Only the disposable emulator's private debug preferences are edited.
-adb("shell","am","force-stop","ch.fred.surprise")
+adb("shell","am","force-stop","ch.fred.surprise.anniversaire2026")
 prefs_path="shared_prefs/MemoryActivity.xml"
-prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise","cat",prefs_path))
+prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise.anniversaire2026","cat",prefs_path))
 old_streak=next((n for n in prefs if n.attrib.get("name")=="streak_4"),None)
 assert old_streak is not None and any(n.attrib.get("name")=="best" for n in prefs), "Legacy fixture missing records"
 prefs.remove(old_streak)
 updated=ET.tostring(prefs,encoding="unicode")
-subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
+subprocess.run(["adb","shell","run-as","ch.fred.surprise.anniversaire2026","tee",prefs_path],
                input=updated,text=True,stdout=subprocess.DEVNULL,check=True)
-adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+adb("shell","am","start","-n","ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root=open_memory()
 legacy=find_text(root,"Record : ")
 assert legacy and "Étoiles : " in legacy and "Série record :" not in legacy, ("Legacy award missing",texts(root))
 # Invalid stored configuration safely falls back to the original default.
-adb("shell","am","force-stop","ch.fred.surprise")
-prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise","cat",prefs_path))
+adb("shell","am","force-stop","ch.fred.surprise.anniversaire2026")
+prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise.anniversaire2026","cat",prefs_path))
 choice=next((n for n in prefs if n.attrib.get("name")=="pairCount"),None)
 assert choice is not None, "Persisted difficulty missing"
 choice.set("value","999")
-subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
+subprocess.run(["adb","shell","run-as","ch.fred.surprise.anniversaire2026","tee",prefs_path],
                input=ET.tostring(prefs,encoding="unicode"),text=True,stdout=subprocess.DEVNULL,check=True)
-adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+adb("shell","am","start","-n","ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root=open_memory()
 assert find_text(root,"0 / 4 paires") and find_text(root,"Record : "+record), ("Invalid preference fallback failed",texts(root))
 # Upgrade a pre-palette preference without discarding its chosen card set.
-adb("shell","am","force-stop","ch.fred.surprise")
-prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise","cat",prefs_path))
+adb("shell","am","force-stop","ch.fred.surprise.anniversaire2026")
+prefs=ET.fromstring(adb("shell","run-as","ch.fred.surprise.anniversaire2026","cat",prefs_path))
 palette=next((n for n in prefs if n.attrib.get("name")=="palette"),None)
 assert palette is not None, "Saved palette missing"
 prefs.remove(palette)
@@ -572,9 +572,9 @@ legacy_pack=next((n for n in prefs if n.attrib.get("name")=="escapade"),None)
 if legacy_pack is None:
     legacy_pack=ET.SubElement(prefs,"boolean",{"name":"escapade"})
 legacy_pack.set("value","true")
-subprocess.run(["adb","shell","run-as","ch.fred.surprise","tee",prefs_path],
+subprocess.run(["adb","shell","run-as","ch.fred.surprise.anniversaire2026","tee",prefs_path],
                input=ET.tostring(prefs,encoding="unicode"),text=True,stdout=subprocess.DEVNULL,check=True)
-adb("shell","am","start","-n","ch.fred.surprise/.MainActivity")
+adb("shell","am","start","-n","ch.fred.surprise.anniversaire2026/ch.fred.surprise.MainActivity")
 root=open_memory()
 tap_text(root,"Passer aux cartes nature")  # Legacy selection migrated; switch to the third pack.
 root=wait_dump()
