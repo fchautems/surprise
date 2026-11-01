@@ -1181,3 +1181,11 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Contrôle indépendant depuis l'artefact CI `13076924911` : archive ZIP et APK intègres ; taille APK 57 475 octets ; SHA-256 `ea6fad5caea1bb6368b385a14d5d155d046881bada75d34f98b85195a526dd0f` identique au `.sha256` publié ; blob Git SHA-1 `717456b848e2704cf5a285dcd364a28ff9e12405` identique au fichier GitHub publié.
 - Vérification cryptographique indépendante du bloc APK Signature Scheme v2 : certificat SHA-256 `27432f55c3d8396bf74eb736e7790b7b60e4307d70b3f33f9dc9cc46ed4c883e`, signature RSA SHA-256 (algorithme 0x0103) valide sur les données signées et digest SHA-256 du contenu APK conforme. CI `apksigner verify` et contrôle de compatibilité minSdk 37 réussis.
 - Limite explicite : aucun test physique sur Pixel 9 Android 17 ; le refus d'installation de v2 demeure de cause non prouvée. V4 est une tentative ciblée (nouvel applicationId), pas une preuve de résolution sur téléphone. Prochaine action : demander un essai unique de l'APK v4 depuis le téléphone, sans PC et sans désactiver Play Protect ; en cas d'échec, demander uniquement le message exact et les réglages de Protection avancée.
+
+
+### 1 novembre 2026 — APK minimal indépendant pour isoler le refus
+- Retour utilisateur : installation directe de l'APK K-9 Mail réussie sur Pixel 9 Android 17, alors que Surprise v4 échoue ; le sideloading fonctionne sur cet appareil.
+- Ajout d'un projet autonome `android-minimal/` : package inédit `ch.fred.installtest`, une seule Activity native affichant « Installation APK réussie ! », aucune permission, aucun code ni ressource de Surprise. compileSdk 36, targetSdk 35, minSdk 26.
+- Workflow `.github/workflows/android-minimal.yml` : compilation Gradle, vérification de signature et intégrité ZIP, publication conditionnelle vers `dist/surprise-install-test.apk` avec SHA-256.
+- Contrôles : fichiers poussés, CI et publication pas encore confirmées. Aucun test sur Pixel 9. Ne pas présenter de lien de téléchargement tant que le fichier n'est pas vérifié.
+- Prochaine action : suivre la CI, confirmer signature/empreinte, livrer l'APK minimal pour un essai unique sur téléphone. Si l'installation réussit, comparer les APK minimal et Surprise pour isoler la cause.
