@@ -232,7 +232,12 @@ public final class MusicActivity extends Activity {
     }
     @Override public void onBackPressed(){confirmLeaving();}
     @Override public void onCreate(Bundle saved){
-        super.onCreate(saved);phrase=nextPhrase(3,null);
+        super.onCreate(saved);
+        if(android.os.Build.VERSION.SDK_INT>=33){
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT, this::confirmLeaving);
+        }
+        phrase=nextPhrase(3,null);
         slowMode=getPreferences(MODE_PRIVATE).getBoolean("slowMode",false);
         arpeggio=getPreferences(MODE_PRIVATE).getBoolean("arpeggio",false);
         octaveHigh=getPreferences(MODE_PRIVATE).getBoolean("octaveHigh",false);setVolumeControlStream(AudioManager.STREAM_MUSIC);getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);

@@ -56,6 +56,10 @@ jobs:
           signer="$(find "${ANDROID_HOME:?}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
           test -x "$signer"
           "$signer" verify --verbose --print-certs app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify signature compatibility on Android 17
+        run: |
+          signer="$(find "${ANDROID_HOME:?}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          "$signer" verify --min-sdk-version 37 --verbose app/build/outputs/apk/debug/app-debug.apk
       - name: Check APK archive and compute checksum
         run: |
           unzip -t app/build/outputs/apk/debug/app-debug.apk
@@ -243,6 +247,10 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Check and install preview Android 17 SDK
+        run: |
+          sdkmanager --list --channel=3 | grep -E 'platforms;android-37|system-images;android-37' || true
+          sdkmanager --channel=3 --install 'platforms;android-37' || true
       - name: Attempt installation on Android 17 emulator
         timeout-minutes: 25
         uses: reactivecircus/android-emulator-runner@v2
@@ -278,15 +286,15 @@ jobs:
           "$signer" verify --verbose --print-certs "$apk"
           unzip -t "$apk"
           mkdir -p dist
-          cp "$apk" dist/surprise-anniversaire-v2.apk
-          (cd dist && sha256sum surprise-anniversaire-v2.apk > surprise-anniversaire-v2.sha256)
+          cp "$apk" dist/surprise-anniversaire-v3.apk
+          (cd dist && sha256sum surprise-anniversaire-v3.apk > surprise-anniversaire-v3.sha256)
       - name: Publish directly downloadable APK to branch
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f dist/surprise-anniversaire-v2.apk dist/surprise-anniversaire-v2.sha256
+          git add -f dist/surprise-anniversaire-v3.apk dist/surprise-anniversaire-v3.sha256
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Publish verified Android birthday APK v2"
+          git commit -m "Publish verified Android birthday APK v3"
           git pull --rebase origin anniversaire-2026
           git push origin HEAD:anniversaire-2026

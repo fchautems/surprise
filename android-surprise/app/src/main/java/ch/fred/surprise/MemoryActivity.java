@@ -185,6 +185,10 @@ public final class MemoryActivity extends Activity {
     }
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);
+        if(android.os.Build.VERSION.SDK_INT>=33){
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT, this::confirmLeaving);
+        }
         pairCount=getPreferences(MODE_PRIVATE).getInt("pairCount",4);
         if(pairCount!=4 && pairCount!=6 && pairCount!=8 && pairCount!=10)pairCount=4;
         android.content.SharedPreferences prefs=getPreferences(MODE_PRIVATE);

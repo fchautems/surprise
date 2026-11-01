@@ -413,9 +413,10 @@ public class MainActivity extends Activity {
         }
         Button home=makeMenuButton("Accueil"); choices.addView(home); home.setOnClickListener(v->showHome());
     }
-    @Override public void onBackPressed(){
+    @Override public void onBackPressed(){handleBackNavigation();}
+    private void handleBackNavigation(){
         if(choosingTheme || (!showingHome && index>=ROUND)){showHome(); return;}
-        if(showingHome){super.onBackPressed(); return;}
+        if(showingHome){finish(); return;}
         new android.app.AlertDialog.Builder(this).setTitle("Quitter la partie ?")
             .setMessage("Ta partie en cours sera perdue.")
             .setNegativeButton("Rester",(dialog,which)->dialog.dismiss())
@@ -423,6 +424,10 @@ public class MainActivity extends Activity {
     }
     @Override public void onCreate(Bundle saved){
         super.onCreate(saved);
+        if(android.os.Build.VERSION.SDK_INT>=33){
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT, this::handleBackNavigation);
+        }
         getWindow().setStatusBarColor(BG);getWindow().setNavigationBarColor(BG);
         scroll=new android.widget.ScrollView(this);scroll.setFillViewport(true);scroll.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.rgb(20,31,53),BG,Color.rgb(34,25,44)}));
         root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER);root.setPadding(dp(22),dp(24),dp(22),dp(72));scroll.addView(root);
