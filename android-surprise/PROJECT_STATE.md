@@ -1201,3 +1201,9 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Important : la clé de signature générée par exécution n'est PAS persistante. Cela empêche les mises à jour in-place ultérieures sans désinstallation ; remplacer par une clé de signature durable protégée avant une distribution définitive.
 - Vérification : les modifications GitHub sont confirmées ; aucune exécution workflow associée au commit retournée. APK v5 non compilée ni vérifiée, lien de téléchargement non validé.
 - Prochaine action : déclencher la CI via un mécanisme autorisé et inspecter les logs, puis vérifier l'artefact publié. Ne pas prétendre que la v5 fonctionne sur Pixel physique.
+
+### 2 novembre 2026 — Signature release persistante sécurisée
+- Commit `7dc8d8cde67b384c4fa3a809aa37c3c155748edf` : suppression de la génération d'une clé éphémère à chaque build. Le workflow requiert désormais `SURPRISE_RELEASE_KEYSTORE_B64`, `SURPRISE_RELEASE_STORE_PASSWORD`, `SURPRISE_RELEASE_KEY_PASSWORD` (alias `release`) dans les secrets GitHub Actions. Les secrets sont validés avant signature ; aucune clé ou mot de passe en clair n'est versionné. Publication nommée v5 corrigée.
+- État vérifié : modification enregistrée sur GitHub ; absence de capacité disponible pour configurer les secrets GitHub ou déclencher `workflow_dispatch` depuis ce contexte. La CI n'a pas produit de release vérifiée. Ne pas partager de lien v5 non existant.
+- Blocages : secrets de signature non configurés/état inconnu ; déclenchement GitHub Actions indisponible via outils autorisés. La réussite d'installation sur Pixel reste inconnue.
+- Prochaine action : utiliser un accès autorisé à GitHub Actions secrets et dispatch, puis contrôler les logs, la signature, le SHA256 et l'installation physique.
