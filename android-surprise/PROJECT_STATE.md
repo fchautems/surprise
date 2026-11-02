@@ -1194,3 +1194,10 @@ Points à approfondir : qualité visuelle et sonore par une personne et fonction
 - Correctif commit `0806e4f1dd2509dd0f4e03930be3e18c3840f351` : version du plugin Android Gradle 8.7.3 déclarée directement dans `android-minimal/app/build.gradle`, résolvant la configuration manquante du projet.
 - Contrôle : aucune exécution CI associée au commit n'a été retournée ; `dist/surprise-install-test.sha256` absent à la vérification. APK minimal non publié et non vérifié.
 - Blocage : déclenchement/exécution GitHub Actions non confirmé. Prochaine action : diagnostiquer le déclenchement de workflow et produire une APK vérifiée avant partage.
+
+### 2 novembre 2026 — Préparation APK release v5
+- Commit `06ed50536f8c34789793a099933c64b95f9de173` : versionCode 5 / versionName 0.5.
+- Commit `1290593bc2b48258fd307ecbe9c62b1764d514fc` : workflow compile `assembleRelease` en plus des tests debug, signe l'APK release avec une clé générée durant le job, vérifie la signature et l'archive ZIP, publie `dist/surprise-anniversaire-v5-release.apk` et SHA256 après tests.
+- Important : la clé de signature générée par exécution n'est PAS persistante. Cela empêche les mises à jour in-place ultérieures sans désinstallation ; remplacer par une clé de signature durable protégée avant une distribution définitive.
+- Vérification : les modifications GitHub sont confirmées ; aucune exécution workflow associée au commit retournée. APK v5 non compilée ni vérifiée, lien de téléchargement non validé.
+- Prochaine action : déclencher la CI via un mécanisme autorisé et inspecter les logs, puis vérifier l'artefact publié. Ne pas prétendre que la v5 fonctionne sur Pixel physique.
