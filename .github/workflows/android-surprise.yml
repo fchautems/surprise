@@ -64,13 +64,21 @@ jobs:
         run: |
           unzip -t app/build/outputs/apk/debug/app-debug.apk
           sha256sum app/build/outputs/apk/debug/app-debug.apk
-      - name: Sign release APK
+      - name: Sign release APK using persistent protected key
+        env:
+          RELEASE_KEYSTORE_B64: ${{ secrets.SURPRISE_RELEASE_KEYSTORE_B64 }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.SURPRISE_RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.SURPRISE_RELEASE_KEY_PASSWORD }}
         run: |
           set -euo pipefail
-          keytool -genkeypair -noprompt -keystore "$RUNNER_TEMP/release.jks" -storepass android -keypass android -alias release -keyalg RSA -keysize 3072 -validity 3650 -dname "CN=Surprise"
+          : "${RELEASE_KEYSTORE_B64:?Missing persistent release keystore secret}"
+          : "${RELEASE_STORE_PASSWORD:?Missing release store password secret}"
+          : "${RELEASE_KEY_PASSWORD:?Missing release key password secret}"
+          printf '%s' "$RELEASE_KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/release.jks"
+          chmod 600 "$RUNNER_TEMP/release.jks"
           signer="$(find "${ANDROID_HOME:?}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
-          "$signer" sign --ks "$RUNNER_TEMP/release.jks" --ks-key-alias release --ks-pass pass:android --key-pass pass:android --out app/build/outputs/apk/release/app-release-signed.apk app/build/outputs/apk/release/app-release-unsigned.apk
-          "$signer" verify --verbose app/build/outputs/apk/release/app-release-signed.apk
+          "$signer" sign --ks "$RUNNER_TEMP/release.jks" --ks-key-alias release --ks-pass env:RELEASE_STORE_PASSWORD --key-pass env:RELEASE_KEY_PASSWORD --out app/build/outputs/apk/release/app-release-signed.apk app/build/outputs/apk/release/app-release-unsigned.apk
+          "$signer" verify --verbose --print-certs app/build/outputs/apk/release/app-release-signed.apk
           unzip -t app/build/outputs/apk/release/app-release-signed.apk
       - uses: actions/upload-artifact@v4
         with:
@@ -311,6 +319,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f dist/surprise-anniversaire-v5-release.apk dist/surprise-anniversaire-v5-release.sha256
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Publish verified Android birthday APK v4"
+          git commit -m "Publish verified Android birthday release APK v5"
           git pull --rebase origin anniversaire-2026
           git push origin HEAD:anniversaire-2026
